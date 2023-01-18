@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="60" height="50" viewBox="0 0 60 50">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Path_205755" data-name="Path 205755" d="M0,0H60V50H0Z" transform="translate(71.187 301.18)" fill="#1976d2"/>
+    </clipPath>
+  </defs>
+  <g id="dakhlia" transform="translate(-71.187 -301.18)" clip-path="url(#clip-path)">
+    <g id="svgexport-11_1_" data-name="svgexport-11 (1)" transform="translate(74.187 301.18)">
+      <g id="Group_74922" data-name="Group 74922">
+        <g id="Group_74921" data-name="Group 74921">
+          <path id="Path_205756" data-name="Path 205756" d="M51,45V0H9V45H3v5H57V45ZM27,5h6v5H27Zm0,10h6v5H27Zm0,10h6v5H27Zm-6,5H15V25h6Zm0-10H15V15h6Zm0-10H15V5h6ZM36,45H24V40c0-2.75,2.7-5,6-5s6,2.25,6,5Zm9-15H39V25h6Zm0-10H39V15h6Zm0-10H39V5h6Z" transform="translate(-3)" fill="#7c5295"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

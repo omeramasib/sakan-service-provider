@@ -1,0 +1,52 @@
+name: sakan
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  flutter:
+    sdk: flutter
+  flutter_svg: ^1.1.6
+  get_storage: ^2.0.3
+  # flutter_otp_text_field: ^1.1.1
+  pin_code_fields: ^7.4.0
+  status_change: ^2.0.0
+
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+  - assets/images/
+
+  fonts:
+  - family:  Montserrat-Arabic
+    fonts:
+      - asset: assets/fonts/Montserrat-Arabic-Black.ttf
+        weight: 700
+      - asset: assets/fonts/Montserrat-Arabic-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/Montserrat-Arabic-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/Montserrat-Arabic-ExtraBold.ttf
+        weight: 800
+      - asset: assets/fonts/Montserrat-Arabic-ExtraLight.ttf
+        weight: 400
+      - asset: assets/fonts/Montserrat-Arabic-Light.ttf
+        weight: 300
+      - asset: assets/fonts/Montserrat-Arabic-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/Montserrat-Arabic-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/Montserrat-Arabic-Thin.ttf
+        weight: 100
+

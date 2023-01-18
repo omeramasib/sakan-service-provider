@@ -1,0 +1,56 @@
+import 'package:get/get.dart';
+import 'package:sakan/app/modules/completeDakliaAccount1/bindings/complete_daklia_account1_binding.dart';
+
+import '../modules/Auth/bindings/auth_binding.dart';
+import '../modules/Auth/resetpassword/bindings/resetpassword_binding.dart';
+import '../modules/Auth/resetpassword/views/resetpassword_view.dart';
+import '../modules/Auth/views/auth_view.dart';
+import '../modules/completeDakliaAccount1/views/complete_daklia_account1_view.dart';
+import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/home_view.dart';
+import '../modules/notifications/bindings/notifications_binding.dart';
+import '../modules/notifications/views/notifications_view.dart';
+import '../modules/splashScreen/bindings/splash_screen_binding.dart';
+import '../modules/splashScreen/views/splash_screen_view.dart';
+
+part 'app_routes.dart';
+
+class AppPages {
+  AppPages._();
+
+  static const INITIAL = Routes.COMPLETE_DAKLIA_ACCOUNT1;
+  static final routes = [
+    GetPage(
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.SPLASH_SCREEN,
+      page: () => const SplashScreenView(),
+      binding: SplashScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.AUTH,
+      page: () => const AuthView(),
+      binding: AuthBinding(),
+      children: [
+        GetPage(
+          name: _Paths.RESETPASSWORD,
+          page: () => const ResetpasswordView(),
+          binding: ResetpasswordBinding(),
+        ),
+      ],
+    ),
+    GetPage(
+      name: _Paths.NOTIFICATIONS,
+      page: () => const NotificationsView(),
+      binding: NotificationsBinding(),
+    ),
+    GetPage(
+      name: _Paths.COMPLETE_DAKLIA_ACCOUNT1,
+      page: () => const CompleteDakliaAccount1View(),
+      binding: CompleteDakliaAccount1Binding(),
+    ),
+  ];
+}
