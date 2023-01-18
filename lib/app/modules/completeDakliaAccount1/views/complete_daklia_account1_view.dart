@@ -45,7 +45,7 @@ class CompleteDakliaAccount1View
                       width: 90,
                     ),
                     Text(
-                     'daklia_management'.tr,
+                      'daklia_management'.tr,
                       style: getMediumStyle(
                         fontSize: FontSizeManager.s15,
                         color: ColorsManager.whiteColor,
