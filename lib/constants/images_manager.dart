@@ -78,4 +78,5 @@ class ImagesManager {
   static const String booking = 'assets/images/booking.svg';
   static const String setting = 'assets/images/setting.svg';
   static const String terms = 'assets/images/law.svg';
+  static const String daklia_image = 'assets/images/paperclip-Regular.svg';
 }

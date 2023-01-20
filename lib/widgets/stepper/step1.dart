@@ -6,7 +6,6 @@ import 'package:sakan/constants/styles_manager.dart';
 
 Widget step1(BuildContext context , String title1, String title2, String title3){
   return Container(
-    height: 78,
     width: Get.width,
     decoration: BoxDecoration(
       color: ColorsManager.whiteColor,
@@ -18,120 +17,125 @@ Widget step1(BuildContext context , String title1, String title2, String title3)
        blurRadius: 7,
     )]
     ),
-    child: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 25,
-            right: 20,
-          ),
-          child: Row(
-            children: [
-            Column(
-              children: [
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                    color: ColorsManager.mainColor,
-                    borderRadius: BorderRadius.circular(50),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  // "daklia_information".tr,
-                  title1,
-                  style: getRegularStyle(
-                    fontSize: FontSizeManager.s13,
-                    color: ColorsManager.fontColor,
-                    )
-                ),
-              ]
-            ),
+    child: LayoutBuilder(
+      builder: (BuildContext , BoxConstraints constraints) {
+         return SizedBox(
+          height: 78,
+          width: constraints.maxWidth,
+           child: Column(
+           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                bottom: 20,
+              padding: EdgeInsets.only(
+                top: 25,
+                right: Get.width * 0.05,
               ),
-              child: SizedBox(
-                width: 60,
-                child: Divider(
-                      color: ColorsManager.lightGreyColor,
-                      thickness: 4,
-                      height: 10,
+              child: Row(
+                children: [
+                Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        color: ColorsManager.mainColor,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
                     ),
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: ColorsManager.mainColor,
-                      width: 1,
-                    )
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      title1,
+                      style: getRegularStyle(
+                        fontSize: FontSizeManager.s10,
+                        color: ColorsManager.fontColor,
+                        )
+                    ),
+                  ]
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  child: SizedBox(
+                    width: 60,
+                    child: Divider(
+                          color: ColorsManager.lightGreyColor,
+                          thickness: 4,
+                          height: 10,
+                        ),
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  // "address".tr,
-                  title2,
-                  style: getRegularStyle(
-                    fontSize: FontSizeManager.s13,
-                    color: ColorsManager.fontColor,
-                    )
-                ),
-              ]
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 20,
-              ),
-              child: SizedBox(
-                width: 60,
-                child: Divider(
-                      color: ColorsManager.lightGreyColor,
-                      thickness: 4,
-                      height: 10,
+                Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                          color: ColorsManager.mainColor,
+                          width: 1,
+                        )
+                      ),
                     ),
-              ),
-            ),
-            Column(
-              children: [
-                Container(
-                  height: 20,
-                  width: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: ColorsManager.mainColor,
-                      width: 1,
-                    )
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      title2,
+                      style: getRegularStyle(
+                        fontSize: FontSizeManager.s10,
+                        color: ColorsManager.fontColor,
+                        )
+                    ),
+                  ]
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+                  child: SizedBox(
+                    width: 60,
+                    child: Divider(
+                          color: ColorsManager.lightGreyColor,
+                          thickness: 4,
+                          height: 10,
+                        ),
                   ),
                 ),
-                SizedBox(
-                  height: 5,
+                Column(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        border: Border.all(
+                          color: ColorsManager.mainColor,
+                          width: 1,
+                        )
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      title3,
+                      style: getRegularStyle(
+                        fontSize: FontSizeManager.s10,
+                        color: ColorsManager.fontColor,
+                        )
+                    ),
+                  ]
                 ),
-                Text(
-                  // "daklia_documentation".tr,
-                  title3,
-                  style: getRegularStyle(
-                    fontSize: FontSizeManager.s13,
-                    color: ColorsManager.fontColor,
-                    )
-                ),
-              ]
+                ],
+              ),
             ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
+         );
+        },
     )
   );
 }

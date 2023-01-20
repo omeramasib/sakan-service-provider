@@ -11,7 +11,7 @@ class ColorsManager {
   static const Color errorColor = Colors.red;
   static const Color warningStyleColor = Color(0xFFE6A23C);
   static const Color successStyleColor = Color(0xFF67C23A);
-  static const Color blackColor = Colors.black;
+  static const Color blackColor = Color(0xFF020202);
   static const Color darkGreyColor = Color(0x707070);
   static const Color defaultGreyColor = Colors.grey;
   static const Color borderColor = Color(0xFFEAF2F7);

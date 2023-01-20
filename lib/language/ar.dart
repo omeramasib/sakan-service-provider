@@ -75,6 +75,10 @@ const Map<String, String> arSA = {
   'det': 'تفاصيل',
   'obstruction_question': 'هل لديك إعاقة ؟',
   'obstruction_name': 'مااسم الإعاقة؟',
+  'warning':  'ستظهر هذه البيانات في الملف التعريفي للداخلية\nتأكد من كتابتها بشكل جيد وإضافة صور ذات جودة عالية',
+  'daklia_image': 'صورة الداخلية',
+  'daklia_description': 'وصف عن الداخلية',
+  'room_count': 'عدد الغرف',
   // otp screen
   'enter_otp': 'ادخل كود التحقق',
   'description1_otp': 'ارسلنا كود التحقق في رسالة على رقم جوالك',

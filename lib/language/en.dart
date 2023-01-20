@@ -86,6 +86,9 @@ const Map<String, String> enUS = {
   'genetic_diseases': 'Do you have any genetic diseases ?',
   'disease name': 'Disease Name',
   'medicament name': 'Medicament Name',
+  'daklia_image': 'Daklia Image',
+  'daklia_description': 'Daklia Description',
+  'room_count': 'Room Count',
   // otp screen
   'enter_otp': 'Enter the verification code',
   'verify': 'Verify',

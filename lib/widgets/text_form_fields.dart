@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sakan/constants/images_manager.dart';
 import '../constants/colors_manager.dart';
 import '../constants/fonts_manager.dart';
@@ -50,8 +53,7 @@ Widget phoneNumberFormField(
                   width: 15,
                 ),
                 GestureDetector(
-                  onTap: () {
-                  },
+                  onTap: () {},
                   child: Obx(
                     () => Row(
                       children: [
@@ -130,8 +132,8 @@ Widget passwordFormField(BuildContext context, dynamic controller, Color color,
 }
 
 // old password form field
-Widget oldPasswordFormField(
-    BuildContext context, Color color, String hinText, Color hintTextColor, dynamic controller) {
+Widget oldPasswordFormField(BuildContext context, Color color, String hinText,
+    Color hintTextColor, dynamic controller) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: Obx(
@@ -176,8 +178,8 @@ Widget oldPasswordFormField(
 }
 
 // new password form field
-Widget newPasswordFormField(
-    BuildContext context, Color color, String hinText, Color hintTextColor, dynamic controller) {
+Widget newPasswordFormField(BuildContext context, Color color, String hinText,
+    Color hintTextColor, dynamic controller) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: Obx(
@@ -221,11 +223,9 @@ Widget newPasswordFormField(
   );
 }
 
-
-
 // Daklia name form field
-Widget dakliaNameFormField(BuildContext context, dynamic controller, Color color,
-    String hinText, Color hinTextColor) {
+Widget dakliaNameFormField(BuildContext context, dynamic controller,
+    Color color, String hinText, Color hinTextColor) {
   return SizedBox(
     width: 315,
     child: TextFormField(
@@ -703,6 +703,136 @@ Widget detailsWidget(BuildContext context, dynamic controller, Color color,
       ),
       filled: true,
       fillColor: color,
+    ),
+  );
+}
+
+// add photo widget
+Widget addPhotoWidget(BuildContext context, dynamic controller, String text) {
+  return Obx(
+    () => controller.imagePath.value == ''
+        ? Container(
+            height: 94,
+            width: 315,
+            decoration: BoxDecoration(
+              color: ColorsManager.whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.getImage(ImageSource.gallery);
+                    },
+                    child: SvgPicture.asset(
+                      ImagesManager.daklia_image,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    text,
+                    style: getRegularStyle(
+                      color: ColorsManager.blackColor,
+                      fontSize: FontSizeManager.s14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container(
+            height: 94,
+            width: 315,
+            decoration: BoxDecoration(
+              color: ColorsManager.whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Image.file(
+                File(controller.imagePath.value),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+  );
+}
+
+// add description widget
+Widget addDescriptionWidget(BuildContext context, dynamic controller) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controller.descriptionController,
+        enabled: true,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 80,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.whiteColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+// room count widget
+
+Widget roomCountWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controller.roomCountController,
+        enabled: true,
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 20,
+            bottom: 30,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.whiteColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
     ),
   );
 }
