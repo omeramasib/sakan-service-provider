@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sakan/constants/buttons_manager.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/widgets/text_form_fields.dart';
 
@@ -41,6 +42,45 @@ class CompleteDakliaAccount1View
               ),
               onPressed: () => Get.back(),
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        width: Get.width,
+        height: 78,
+        decoration: BoxDecoration(
+          color: ColorsManager.whiteColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            right: 50,
+          ),
+          child: Row(
+            children: [
+              ButtonsManager.primaryButton(
+                text: 'next'.tr,
+                onPressed: (){
+                  // Get.toNamed('/completeDakliaAccount2');
+                },
+                context: context,
+                maximumSize: Size(174, 50),
+                minimumSize: Size(174, 50),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+              ButtonsManager.primaryButton(
+                text: 'previous'.tr,
+                onPressed: (){
+                  Get.back();
+                },
+                context: context,
+                maximumSize: Size(134, 50),
+                minimumSize: Size(134, 50),
+                buttonColor: ColorsManager.greyColor,
+                textColor: ColorsManager.blackColor,
+                )
+            ],
           ),
         ),
       ),
@@ -154,6 +194,7 @@ class CompleteDakliaAccount1View
             roomCountWidget(context, controller, 'room_count'.tr,)
           ],
         ),
+
       ),
     );
   }
