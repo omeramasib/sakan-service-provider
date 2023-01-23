@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/buttons_manager.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/widgets/text_form_fields.dart';
@@ -60,7 +61,8 @@ class CompleteDakliaAccount1View
               ButtonsManager.primaryButton(
                 text: 'next'.tr,
                 onPressed: (){
-                  // Get.toNamed('/completeDakliaAccount2');
+                  Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
+                  print('clicked');
                 },
                 context: context,
                 maximumSize: Size(174, 50),

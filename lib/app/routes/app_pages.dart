@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
-import 'package:sakan/app/modules/completeDakliaAccount1/bindings/complete_daklia_account1_binding.dart';
 
 import '../modules/Auth/bindings/auth_binding.dart';
 import '../modules/Auth/resetpassword/bindings/resetpassword_binding.dart';
 import '../modules/Auth/resetpassword/views/resetpassword_view.dart';
 import '../modules/Auth/views/auth_view.dart';
+import '../modules/completeDakliaAccount1/bindings/complete_daklia_account1_binding.dart';
 import '../modules/completeDakliaAccount1/views/complete_daklia_account1_view.dart';
+import '../modules/completeDakliaAccount2/bindings/complete_daklia_account2_binding.dart';
+import '../modules/completeDakliaAccount2/views/complete_daklia_account2_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
@@ -51,6 +53,11 @@ class AppPages {
       name: _Paths.COMPLETE_DAKLIA_ACCOUNT1,
       page: () => const CompleteDakliaAccount1View(),
       binding: CompleteDakliaAccount1Binding(),
+    ),
+    GetPage(
+      name: _Paths.COMPLETE_DAKLIA_ACCOUNT2,
+      page: () => const CompleteDakliaAccount2View(),
+      binding: CompleteDakliaAccount2Binding(),
     ),
   ];
 }

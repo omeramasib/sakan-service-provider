@@ -16,12 +16,23 @@ dependencies:
   pin_code_fields: ^7.4.0
   status_change: ^2.0.0
   image_picker: ^0.8.6
+  google_maps_flutter: ^2.2.3
+  geolocator: ^9.0.2
+  geocoding: ^2.0.5
+
 
 
 dev_dependencies:
   flutter_lints: ^2.0.0
+
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.11.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/sakan-logo.png"
 
 flutter:
   uses-material-design: true

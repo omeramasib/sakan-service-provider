@@ -9,6 +9,7 @@ abstract class Routes {
   static const RESETPASSWORD = _Paths.AUTH + _Paths.RESETPASSWORD;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
   static const COMPLETE_DAKLIA_ACCOUNT1 = _Paths.COMPLETE_DAKLIA_ACCOUNT1;
+  static const COMPLETE_DAKLIA_ACCOUNT2 = _Paths.COMPLETE_DAKLIA_ACCOUNT2;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const RESETPASSWORD = '/resetpassword';
   static const NOTIFICATIONS = '/notifications';
   static const COMPLETE_DAKLIA_ACCOUNT1 = '/complete-daklia-account1';
+  static const COMPLETE_DAKLIA_ACCOUNT2 = '/complete-daklia-account2';
 }
