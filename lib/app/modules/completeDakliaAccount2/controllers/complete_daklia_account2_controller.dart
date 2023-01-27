@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 
 class CompleteDakliaAccount2Controller extends GetxController {
   //TODO: Implement CompleteDakliaAccount2Controller
@@ -51,6 +53,8 @@ class CompleteDakliaAccount2Controller extends GetxController {
       log('this is the lon and lat: ${lat.value} , ${lon.value}');
       getAddresFromLatLon(position);
     });
+    // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
+    update();
 
     return await Geolocator.getCurrentPosition();
   }
@@ -64,6 +68,25 @@ class CompleteDakliaAccount2Controller extends GetxController {
       print(e);
     }
   }
+
+  // void _currentLocation() async {
+  //  final GoogleMapController controller = await _controller.future;
+  //  LocationData currentLocation;
+  //  var location = new Location();
+  //  try {
+  //    currentLocation = await location.getLocation();
+  //    } on Exception {
+  //      currentLocation = null;
+  //      }
+
+  //   controller.animateCamera(CameraUpdate.newCameraPosition(
+  //     CameraPosition(
+  //       bearing: 0,
+  //       target: LatLng(currentLocation.latitude, currentLocation.longitude),
+  //       zoom: 17.0,
+  //     ),
+  //   ));
+  // }
   @override
   void onInit() async{
     super.onInit();
