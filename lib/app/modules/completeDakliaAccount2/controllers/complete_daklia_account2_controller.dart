@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 
 class CompleteDakliaAccount2Controller extends GetxController {
-  //TODO: Implement CompleteDakliaAccount2Controller
+
+  TextEditingController addressDetailsController = TextEditingController();
 
   final count = 0.obs;
   RxDouble lat = 0.0.obs ;
@@ -90,7 +92,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
   @override
   void onInit() async{
     super.onInit();
-    await getCurrentLocation();
+    // await getCurrentLocation();
   }
 
   @override

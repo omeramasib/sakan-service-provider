@@ -17,4 +17,5 @@ class ColorsManager {
   static const Color borderColor = Color(0xFFEAF2F7);
   static const Color lightGreyColor = Color(0xFFF5F6F7);
   static const Color shadowColor = Color(0xFFF7F0FA);
+  static const Color greenColor = Color(0xFF4CAF50);
 }

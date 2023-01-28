@@ -79,4 +79,5 @@ class ImagesManager {
   static const String setting = 'assets/images/setting.svg';
   static const String terms = 'assets/images/law.svg';
   static const String daklia_image = 'assets/images/paperclip-Regular.svg';
+  static const String confirmation = 'assets/images/comfirmation.svg';
 }
