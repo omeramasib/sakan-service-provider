@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/buttons_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
@@ -8,19 +9,19 @@ import 'package:sakan/constants/styles_manager.dart';
 import '../../constants/colors_manager.dart';
 import '../../constants/fonts_manager.dart';
 
-accountConfirmation(BuildContext context){
+accountConfirmation(BuildContext context) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     constraints: BoxConstraints(
       maxHeight: Get.height,
     ),
-     shape: const RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(20.0),
       ),
     ),
-        builder: (BuildContext context) {
+    builder: (BuildContext context) {
       return Container(
         width: Get.width,
         height: Get.height * 0.5,
@@ -33,7 +34,7 @@ accountConfirmation(BuildContext context){
         ),
         child: Column(
           children: [
-                        Padding(
+            Padding(
               padding: const EdgeInsets.only(
                 top: 20,
               ),
@@ -71,31 +72,26 @@ accountConfirmation(BuildContext context){
             SizedBox(
               height: 10,
             ),
-            Text(
-              'confirm_account'.tr,
-              style: getMediumStyle(
-                color: ColorsManager.greenColor,
-                fontSize: FontSizeManager.s16,
-                )
-            ),
+            Text('confirm_account'.tr,
+                style: getMediumStyle(
+                  color: ColorsManager.greenColor,
+                  fontSize: FontSizeManager.s16,
+                )),
             SizedBox(
               height: 10,
             ),
             Padding(
-              padding:  EdgeInsets.only(
+              padding: EdgeInsets.only(
                 right: Get.width * 0.15,
               ),
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      'confirm_account_des'.tr,
-                      style: getRegularStyle(
-                        color: ColorsManager.blackColor,
-                        fontSize: FontSizeManager.s14,
-                        height: 2
-                        )
-                    ),
+                    child: Text('confirm_account_des'.tr,
+                        style: getRegularStyle(
+                            color: ColorsManager.blackColor,
+                            fontSize: FontSizeManager.s14,
+                            height: 2)),
                   ),
                 ],
               ),
@@ -105,15 +101,16 @@ accountConfirmation(BuildContext context){
             ),
             ButtonsManager.primaryButton(
               text: 'daklia_page'.tr,
-              onPressed: (){
+              onPressed: () {
+                Get.offAllNamed(Routes.DAKLIA_PROFILE);
               },
               context: context,
               maximumSize: Size(287, 50),
               minimumSize: Size(287, 50),
-              )
+            )
           ],
         ),
       );
     },
-    );
+  );
 }

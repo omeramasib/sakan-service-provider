@@ -80,4 +80,7 @@ class ImagesManager {
   static const String terms = 'assets/images/law.svg';
   static const String daklia_image = 'assets/images/paperclip-Regular.svg';
   static const String confirmation = 'assets/images/comfirmation.svg';
+  static const String camera = 'assets/images/camera.png';
+  static const String gallery = 'assets/images/photo.png';
+  static const String edit = 'assets/images/Iconly-Light-Edit.svg';
 }

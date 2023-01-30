@@ -12,12 +12,24 @@ class CompleteDakliaAccount1Controller extends GetxController {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController roomCountController = TextEditingController();
 
-  void getImage(ImageSource imageSource) async {
+    void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
       image = File(pickedFile.path);
       imagePath.value = pickedFile.path;
       update();
+      Get.back();
+    }
+    update();
+  }
+
+  void getImageFromCamera(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+      imagePath.value = pickedFile.path;
+      update();
+      Get.back();
     }
     update();
   }

@@ -134,6 +134,7 @@ const Map<String, String> enUS = {
   'not_bokking_appointment': 'You did not book any appointment',
   'see_doctors_list': 'See Doctors List',
   // profile screen
+  'confirmed': 'Confirmed',
   'my_profile': 'Profile',
   'name': 'Mohammed Ibn Turky',
   'medical_profile': 'Medical Profile',

@@ -2,15 +2,19 @@
 
 A new Flutter project.
 
-## Getting Started
+- flutter pub global activate get_cli
+- export PATH="$PATH":"$HOME/development/flutter/.pub-cache/bin"
+- export PATH="$PATH":"$HOME/.pub-cache/bin"
+- get init
+- get create project:project_name
+- get create page:login [controller,view,binding]
 
-This project is a starting point for a Flutter application.
+- get create controller:another on [page]
+- get create view:another on [page]
+- get create provider:another on [page]
 
-A few resources to get you started if this is your first Flutter project:
+- get generate model on [page]
+- get generate model on [page] from [api]
+- get generate model on [page] with [assets/models]
+- get generate locales assets/locales
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.

@@ -135,7 +135,7 @@ class CompleteDakliaAccount3View
         ),
 
       ),
-            bottomNavigationBar: Container(
+        bottomNavigationBar: Container(
         width: Get.width,
         height: 78,
         decoration: BoxDecoration(

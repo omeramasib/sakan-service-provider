@@ -10,6 +10,8 @@ import '../modules/completeDakliaAccount2/bindings/complete_daklia_account2_bind
 import '../modules/completeDakliaAccount2/views/complete_daklia_account2_view.dart';
 import '../modules/completeDakliaAccount3/bindings/complete_daklia_account3_binding.dart';
 import '../modules/completeDakliaAccount3/views/complete_daklia_account3_view.dart';
+import '../modules/dakliaProfile/bindings/daklia_profile_binding.dart';
+import '../modules/dakliaProfile/views/daklia_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
@@ -65,6 +67,11 @@ class AppPages {
       name: _Paths.COMPLETE_DAKLIA_ACCOUNT3,
       page: () => const CompleteDakliaAccount3View(),
       binding: CompleteDakliaAccount3Binding(),
+    ),
+    GetPage(
+      name: _Paths.DAKLIA_PROFILE,
+      page: () => const DakliaProfileView(),
+      binding: DakliaProfileBinding(),
     ),
   ];
 }

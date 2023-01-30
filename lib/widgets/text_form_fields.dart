@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sakan/constants/images_manager.dart';
+import 'package:sakan/widgets/choose_image/choose_image.dart';
 import '../constants/colors_manager.dart';
 import '../constants/fonts_manager.dart';
 import '../constants/styles_manager.dart';
@@ -726,7 +727,8 @@ Widget addPhotoWidget(BuildContext context, dynamic controller, String text) {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      controller.getImage(ImageSource.camera);
+                      // controller.getImage(ImageSource.camera);
+                      selectImage(context, controller);
                     },
                     child: SvgPicture.asset(
                       ImagesManager.daklia_image,
