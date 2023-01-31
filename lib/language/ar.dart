@@ -150,6 +150,9 @@ const Map<String, String> arSA = {
   'appointments_management' : 'إدارة الحجوزات',
   'settings' : 'الإعدادات',
   'terms': 'إدارة اللوائح',
+  'room': 'الغرف',
+  'services': 'الخدمات',
+  'conditions': 'اللوائح',
   // medical_profile screen
   'Q1': 'هل سبق وان زرت طبيب شخصي من قبل ؟',
   'Q2': 'هل يوجد لديك إعاقة؟',
@@ -158,7 +161,8 @@ const Map<String, String> arSA = {
   'yes': 'نعم',
   'no': 'لا',
   // edit_profile screen
-  'edit_profile': 'تعديل الملف الشخصي',
+  'edit_profile': 'تعديل البيانات',
+  'warning_edit_profile': 'رجاء تأكد من ادخال بيانات صحيحة حيث ستظهر هذه البيانات\nفي حساب الداخلية المعروض للمستخدمين',
   'single': 'أعزب/عزباء',
   'married': 'متزوج/ ة',
   'divorced': 'مطلق/ ة',

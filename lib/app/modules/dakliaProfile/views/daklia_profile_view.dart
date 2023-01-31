@@ -8,6 +8,7 @@ import 'package:sakan/constants/values_manager.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/daklia_profile_controller.dart';
 
 class DakliaProfileView extends GetView<DakliaProfileController> {
@@ -51,8 +52,13 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                           ),
                         ),
                       ),
-                      SvgPicture.asset(
-                        ImagesManager.edit,
+                      GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.EDIT_DAKLIA_PROFILE);
+                        },
+                        child: SvgPicture.asset(
+                          ImagesManager.edit,
+                        ),
                       ),
                     ],
                   ),
@@ -152,11 +158,11 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
           ),
           Padding(
             padding: isEnglish
-                ? const EdgeInsets.only(
-                    left: AppPadding.p20,
+                ?  EdgeInsets.only(
+                    left: Get.width * 0.1,
                   )
-                : const EdgeInsets.only(
-                    right: AppPadding.p20,
+                :  EdgeInsets.only(
+                    right: Get.width * 0.1,
                   ),
             child: Row(
               children: [
@@ -174,23 +180,31 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                       ),
                     ],
                   ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Container(
-                  width: 105,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    color: ColorsManager.whiteColor,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color: ColorsManager.shadowColor,
-                        blurRadius: 6,
-                        offset: Offset(0, 3),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top:  AppPadding.p20
+                        ),
+                        child: Text(
+                          '0',
+                          style: getSemiBoldStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s18,
+                            ),
+                        ),
                       ),
-                    ],
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'room'.tr,
+                        style: getRegularStyle(
+                          color: ColorsManager.fontColor,
+                          fontSize: FontSizeManager.s14
+                          ),
+                      )
+                    ]
                   ),
                 ),
                 SizedBox(
@@ -209,6 +223,76 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                         offset: Offset(0, 3),
                       ),
                     ],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top:  AppPadding.p20
+                        ),
+                        child: Text(
+                          '0',
+                          style: getSemiBoldStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s18,
+                            ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'services'.tr,
+                        style: getRegularStyle(
+                          color: ColorsManager.fontColor,
+                          fontSize: FontSizeManager.s14
+                          ),
+                      )
+                    ]
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Container(
+                  width: 105,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: ColorsManager.whiteColor,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ColorsManager.shadowColor,
+                        blurRadius: 6,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top:  AppPadding.p20
+                        ),
+                        child: Text(
+                          '0',
+                          style: getSemiBoldStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s18,
+                            ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        'conditions'.tr,
+                        style: getRegularStyle(
+                          color: ColorsManager.fontColor,
+                          fontSize: FontSizeManager.s14
+                          ),
+                      )
+                    ]
                   ),
                 ),
               ],

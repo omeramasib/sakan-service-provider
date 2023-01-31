@@ -12,6 +12,8 @@ import '../modules/completeDakliaAccount3/bindings/complete_daklia_account3_bind
 import '../modules/completeDakliaAccount3/views/complete_daklia_account3_view.dart';
 import '../modules/dakliaProfile/bindings/daklia_profile_binding.dart';
 import '../modules/dakliaProfile/views/daklia_profile_view.dart';
+import '../modules/edit_daklia_profile/bindings/edit_daklia_profile_binding.dart';
+import '../modules/edit_daklia_profile/views/edit_daklia_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
@@ -72,6 +74,11 @@ class AppPages {
       name: _Paths.DAKLIA_PROFILE,
       page: () => const DakliaProfileView(),
       binding: DakliaProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_DAKLIA_PROFILE,
+      page: () => const EditDakliaProfileView(),
+      binding: EditDakliaProfileBinding(),
     ),
   ];
 }

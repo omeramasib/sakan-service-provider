@@ -146,6 +146,9 @@ const Map<String, String> enUS = {
   'birth_date': 'Date of Birth',
   'social_status': 'Social Status',
   'gender': 'Gender',
+  'room': 'Room',
+  'services': 'Services',
+  'conditions': 'Conditions',
   // medical_profile screen
   'Q1': 'Have you ever visited a psychiatrist?',
   'Q2': 'Do you have a disability?',

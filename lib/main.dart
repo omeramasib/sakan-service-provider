@@ -12,7 +12,7 @@ void main() async{
   await GetStorage.init();
   runApp(
     GetMaterialApp(
-      title: "Application",
+      title: "Sakan",
       debugShowCheckedModeBanner: false,
       translations: LanguageController.instance,
       locale: Locale(LanguageController.instance.getLocale),
