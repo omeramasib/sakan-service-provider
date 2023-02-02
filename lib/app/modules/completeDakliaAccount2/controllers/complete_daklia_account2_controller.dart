@@ -103,7 +103,6 @@ class CompleteDakliaAccount2Controller extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    streamSubscription.cancel();
   }
 
   void increment() => count.value++;

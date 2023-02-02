@@ -157,6 +157,7 @@ const Map<String, String> enUS = {
   'yes': 'Yes',
   'no': 'No',
   // edit profile screen
+  'Save_changes': 'Save Changes',
   'edit_profile': 'Edit Profile',
   'single': 'Single',
   'married': 'Married',

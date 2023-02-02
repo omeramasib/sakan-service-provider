@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 
 class RegisterController extends GetxController {
 
@@ -23,8 +24,8 @@ class RegisterController extends GetxController {
       return;
     }
     registerFormKey.currentState!.save();
-    Get.offAllNamed('/home');
-    // if (networkController.isConnected.value == true) { 
+    Get.offAllNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
+    // if (networkController.isConnected.value == true) {
     //   EasyLoading.show(status: 'loading'.tr);
     //   register();
     // } else {

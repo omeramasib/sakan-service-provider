@@ -151,7 +151,8 @@ class CompleteDakliaAccount3View
                 text: 'next'.tr,
                 onPressed: (){
                   // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
-                  accountConfirmation(context);
+                  // accountConfirmation(context);
+                  Get.offAllNamed(Routes.DAKLIA_PROFILE);
                 },
                 context: context,
                 maximumSize: Size(174, 50),

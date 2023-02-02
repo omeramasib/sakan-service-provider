@@ -802,39 +802,37 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
 // room count widget
 
 Widget roomCountWidget(BuildContext context, dynamic controller, String hinText) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 20, right: 20),
-    child: SizedBox(
-      width: 315,
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        controller: controller.roomCountController,
-        enabled: true,
-        decoration: InputDecoration(
-          hintText: hinText,
-          hintStyle: getRegularStyle(
-            color: ColorsManager.hintStyleColor,
-            fontSize: FontSizeManager.s13,
-          ),
-          contentPadding: const EdgeInsets.only(
-            left: 25,
-            right: 25,
-            top: 20,
-            bottom: 30,
-          ),
-          isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
-          filled: true,
-          fillColor: ColorsManager.whiteColor,
+  return SizedBox(
+    width: 315,
+    height: 50,
+    child: TextFormField(
+      keyboardType: TextInputType.text,
+      controller: controller.roomCountController,
+      enabled: true,
+      decoration: InputDecoration(
+        hintText: hinText,
+        hintStyle: getRegularStyle(
+          color: ColorsManager.hintStyleColor,
+          fontSize: FontSizeManager.s13,
         ),
-        maxLines: 5,
-        minLines: 1,
+        contentPadding: const EdgeInsets.only(
+          left: 25,
+          right: 25,
+          top: 10,
+          bottom: 20,
+        ),
+        isDense: true,
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: ColorsManager.lightGreyColor
+            ),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
+        filled: true,
+        fillColor: ColorsManager.whiteColor,
       ),
+      maxLines: 5,
+      minLines: 1,
     ),
   );
 }
@@ -983,6 +981,62 @@ Widget dakliaOwnerIdWidget(BuildContext context, dynamic controller, String text
             child: Center(
               child: Image.file(
                 File(controller.ownerIdPath.value),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+  );
+}
+
+// add Daklia Confirmation widget
+Widget dakliaImageWidget(BuildContext context, dynamic controller, String text) {
+    return Obx(
+    () => controller.imagePath.value == ''
+        ? Container(
+            height: 94,
+            width: 105,
+            decoration: BoxDecoration(
+              color: ColorsManager.whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      selectImage(context, controller);
+                    },
+                    child: SvgPicture.asset(
+                      ImagesManager.daklia_image,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    text,
+                    style: getRegularStyle(
+                      color: ColorsManager.blackColor,
+                      fontSize: FontSizeManager.s13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container(
+            height: 94,
+            width: 105,
+            decoration: BoxDecoration(
+              color: ColorsManager.whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Image.file(
+                File(controller.imagePath.value),
                 fit: BoxFit.cover,
               ),
             ),

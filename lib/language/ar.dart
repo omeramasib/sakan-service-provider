@@ -133,6 +133,7 @@ const Map<String, String> arSA = {
   // profile screen
   'confirmed': 'موثق',
   'daklia_description_description': 'وصف عن الداخلية هذا الوصف الذي ادخله المستخدم \nفي خطوة استبداله حسب طول النص الذي ادخله المستخدم',
+  'Save_changes': 'حفظ التغييرات',
   'my_profile': 'الملف الشخصي',
   'medical_profile': 'الملف الطبي',
   'name': 'محمد بن تركي',

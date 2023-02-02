@@ -83,4 +83,5 @@ class ImagesManager {
   static const String camera = 'assets/images/camera.png';
   static const String gallery = 'assets/images/photo.png';
   static const String edit = 'assets/images/Iconly-Light-Edit.svg';
+  static const String delete = 'assets/images/trash-Filled.svg';
 }
