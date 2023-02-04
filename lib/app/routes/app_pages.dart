@@ -18,6 +18,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
+import '../modules/room_management/bindings/room_management_binding.dart';
+import '../modules/room_management/views/room_management_view.dart';
 import '../modules/splashScreen/bindings/splash_screen_binding.dart';
 import '../modules/splashScreen/views/splash_screen_view.dart';
 
@@ -79,6 +81,11 @@ class AppPages {
       name: _Paths.EDIT_DAKLIA_PROFILE,
       page: () => const EditDakliaProfileView(),
       binding: EditDakliaProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.ROOM_MANAGEMENT,
+      page: () => const RoomManagementView(),
+      binding: RoomManagementBinding(),
     ),
   ];
 }
