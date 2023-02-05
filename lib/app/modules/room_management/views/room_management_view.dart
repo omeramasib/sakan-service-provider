@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:sakan/constants/images_manager.dart';
+import 'package:sakan/widgets/room_management/rooms_list.dart';
 
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
@@ -17,7 +18,6 @@ class RoomManagementView extends GetView<RoomManagementController> {
   @override
   Widget build(BuildContext context) {
     var isEnglish = Get.locale!.languageCode == 'en';
-
     return Scaffold(
         backgroundColor: ColorsManager.lightGreyColor,
         appBar: PreferredSize(
@@ -116,7 +116,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
                               height: 10,
                             ),
                             Text(
-                              'room'.tr,
+                              'all_rooms'.tr,
                               style: getRegularStyle(
                                   color: ColorsManager.fontColor,
                                   fontSize: FontSizeManager.s14),
@@ -155,7 +155,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
                               height: 10,
                             ),
                             Text(
-                              'services'.tr,
+                              'occupied_rooms'.tr,
                               style: getRegularStyle(
                                   color: ColorsManager.fontColor,
                                   fontSize: FontSizeManager.s14),
@@ -194,7 +194,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
                               height: 10,
                             ),
                             Text(
-                              'conditions'.tr,
+                              'available_rooms'.tr,
                               style: getRegularStyle(
                                   color: ColorsManager.fontColor,
                                   fontSize: FontSizeManager.s14),
@@ -208,9 +208,10 @@ class RoomManagementView extends GetView<RoomManagementController> {
               ),
             ),
             SizedBox(
-              height: Get.height / 6,
+              height: 20,
             ),
-            emptyRoom(context),
+            roomsList(context),
+            // emptyRoom(context),
           ],
         ),
 

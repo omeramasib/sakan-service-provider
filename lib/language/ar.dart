@@ -190,6 +190,14 @@ const Map<String, String> arSA = {
   'reply': 'رد على تزكرة تأجيل موعد',
   'new_discounts': 'خصومات جديدة',
   'no_notification_yet': 'لايوجد اي إشعارات بعد',
+  // room management screen
+  'no_rooms': 'لايوجد غرف بعد',
+  'no_rooms_des': '       لم تقم بإدخال اي غرف بعد\nقم بإضافة الغرف الخاصة بك من هنا',
+  'add_room': 'إضافة غرفة',
+  'rooms': 'الغرف',
+  'all_rooms': 'كل الغرف',
+  'available_rooms': 'الشاغرة',
+  'occupied_rooms': 'المحجوزة',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',

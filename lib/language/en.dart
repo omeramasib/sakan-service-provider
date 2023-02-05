@@ -183,6 +183,13 @@ const Map<String, String> enUS = {
   // notification screen
   'notifications': 'Notifications',
   'no_notification_yet': 'No Notifications Yet',
+  // room management screen
+  'no_rooms': 'No Rooms Yet',
+  'add_room': 'Add Room',
+  'rooms': 'Rooms',
+  'all_rooms': 'All Rooms',
+  'available_rooms': 'Available Rooms',
+  'occupied_rooms': 'Occupied Rooms',
   // Personal Medicine Clinic screen
   'dr_mohamed': 'Mohamed Ahmed',
   'psychiatry': 'Psychiatry',
