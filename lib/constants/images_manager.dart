@@ -86,4 +86,6 @@ class ImagesManager {
   static const String delete = 'assets/images/trash-Filled.svg';
   static const String search = 'assets/images/Search.svg';
   static const String add = 'assets/images/icon-add.svg';
+  static const String room_example = 'assets/images/room_example.png';
+  static const String room_type = 'assets/images/Mask Group 269.svg';
 }

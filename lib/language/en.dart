@@ -190,6 +190,10 @@ const Map<String, String> enUS = {
   'all_rooms': 'All Rooms',
   'available_rooms': 'Available Rooms',
   'occupied_rooms': 'Occupied Rooms',
+  'room_number': 'Room Number',
+  'room_type': 'Room Type',
+  'multi_room': 'Multi Room',
+  'beds_number': 'Beds Number',
   // Personal Medicine Clinic screen
   'dr_mohamed': 'Mohamed Ahmed',
   'psychiatry': 'Psychiatry',
