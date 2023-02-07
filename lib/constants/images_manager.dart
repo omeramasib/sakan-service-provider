@@ -88,4 +88,5 @@ class ImagesManager {
   static const String add = 'assets/images/icon-add.svg';
   static const String room_example = 'assets/images/room_example.png';
   static const String room_type = 'assets/images/Mask Group 269.svg';
+  static const String more = 'assets/images/Component 55 – 1.svg';
 }

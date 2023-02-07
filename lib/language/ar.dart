@@ -202,6 +202,7 @@ const Map<String, String> arSA = {
   'room_type': 'نوع الغرفة',
   'multi_room': ': غرفة متعددة',
   'beds_number': 'عدد السرائر',
+  '2_beds': '2  شاغر',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',

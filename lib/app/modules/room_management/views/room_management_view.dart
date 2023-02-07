@@ -210,8 +210,8 @@ class RoomManagementView extends GetView<RoomManagementController> {
             SizedBox(
               height: 20,
             ),
-            roomsList(context),
-            // emptyRoom(context),
+            // roomsList(context),
+            emptyRoom(context),
           ],
         ),
 
