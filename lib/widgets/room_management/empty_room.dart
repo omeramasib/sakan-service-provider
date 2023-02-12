@@ -7,6 +7,8 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
+import '../rooms_types/rooms_types.dart';
+
 Widget emptyRoom(BuildContext context) {
   var isEnglish = Get.locale!.languageCode == 'en';
   return Column(
@@ -61,6 +63,7 @@ Widget emptyRoom(BuildContext context) {
       ButtonsManager.primaryButton(
         text: 'add_room'.tr,
         onPressed: (){
+          selectRoomTypes(context);
         },
         context: context,
         minimumSize: Size(188, 50),

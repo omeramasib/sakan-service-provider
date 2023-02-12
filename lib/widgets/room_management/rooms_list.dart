@@ -6,6 +6,9 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
+import '../rooms_types/rooms_types.dart';
+import 'edit_or_delete_room.dart';
+
 Widget roomsList(BuildContext context) {
   var isEnglish = Get.locale!.languageCode == 'en';
   return Expanded(
@@ -37,15 +40,18 @@ Widget roomsList(BuildContext context) {
                   padding: isEnglish
                       ? EdgeInsets.only(
                           right: Get.width * 0.060,
-                          bottom: 10,
                         )
                       : EdgeInsets.only(
                           left: Get.width * 0.060,
-                          bottom: 10,
                         ),
                   child: Row(children: [
-                    SvgPicture.asset(
-                      ImagesManager.add,
+                    GestureDetector(
+                      onTap: () {
+                        selectRoomTypes(context);
+                      },
+                      child: SvgPicture.asset(
+                        ImagesManager.add,
+                      ),
                     ),
                     SizedBox(
                       width: 10,
@@ -223,12 +229,20 @@ Widget roomsList(BuildContext context) {
                     top: 13,
                     right: 320,
                   ),
-                  child: SvgPicture.asset(
-                    ImagesManager.more,
+                  child: GestureDetector(
+                    onTap: () {
+                      editOrDelete(context);
+                    },
+                    child: SvgPicture.asset(
+                      ImagesManager.more,
+                    ),
                   ),
                 ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 15,
           ),
            // Container 2
           Container(

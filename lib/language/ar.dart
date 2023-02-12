@@ -203,6 +203,17 @@ const Map<String, String> arSA = {
   'multi_room': ': غرفة متعددة',
   'beds_number': 'عدد السرائر',
   '2_beds': '2  شاغر',
+  'single_room': 'غرفة فردية',
+  'shared_room': 'غرفة مشتركة',
+  'edit_room_info': 'تعديل بيانات الغرفة',
+  'delete_room': 'حذف الغرفة',
+  'delete_room_finally': 'حذف الغرفة نهائيا',
+  'delete_room_des': '         هل انت متأكد من حذف الغرفة\nسيتم حذف جميع البيانات الخاصة بهذه الغرفة',
+  'remove': 'حذف',
+  // Add Multi Room
+  'add_multi_room': 'إضافة غرفة مشتركة',
+  'room_detailes': 'تفاصيل الغرفة',
+  'room_features': 'مميزات الغرفة',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',

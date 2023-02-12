@@ -194,6 +194,16 @@ const Map<String, String> enUS = {
   'room_type': 'Room Type',
   'multi_room': 'Multi Room',
   'beds_number': 'Beds Number',
+  'edit_room_info': 'Edit Room Info',
+  'delete_room': 'Delete Room',
+  'shared_room': 'Shared Room',
+  'single_room': 'Single Room',
+  'delete_room_finally': 'Delete Room Finally',
+  'remove': 'Remove',
+  // Add Multi Room
+  'add_multi_room': 'Add Multi Room',
+  'room_detailes': 'Room Details',
+  'room_features': 'Room Features',
   // Personal Medicine Clinic screen
   'dr_mohamed': 'Mohamed Ahmed',
   'psychiatry': 'Psychiatry',
