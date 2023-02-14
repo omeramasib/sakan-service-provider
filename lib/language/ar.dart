@@ -214,6 +214,11 @@ const Map<String, String> arSA = {
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',
   'room_features': 'مميزات الغرفة',
+  'all_beds_number': ' عدد السرائر الكلي',
+  'empty_beds_number': 'عدد السرائر الشاغرة',
+  'daily_bed_price': 'سعر السرير بلإستضافة',
+  'monthly_bed_price': 'سعر السرير بلشهر',
+  'bed_price': 'سعر السرير',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',

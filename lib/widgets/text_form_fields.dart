@@ -837,6 +837,63 @@ Widget roomCountWidget(BuildContext context, dynamic controller, String hinText)
   );
 }
 
+// add photo widget
+Widget  addRoomPhotoWidget(BuildContext context, dynamic controller, String text) {
+  return Obx(
+    () => controller.imagePath.value == ''
+        ? Container(
+            height: 94,
+            width: 315,
+            decoration: BoxDecoration(
+              color: ColorsManager.lightGreyColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 20,
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // controller.getImage(ImageSource.camera);
+                      selectImage(context, controller);
+                    },
+                    child: SvgPicture.asset(
+                      ImagesManager.daklia_image,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    text,
+                    style: getRegularStyle(
+                      color: ColorsManager.blackColor,
+                      fontSize: FontSizeManager.s14,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : Container(
+            height: 94,
+            width: 315,
+            decoration: BoxDecoration(
+              color: ColorsManager.whiteColor,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Image.file(
+                File(controller.imagePath.value),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+  );
+}
+
 Widget addressDetailsWidget(BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
@@ -1041,5 +1098,200 @@ Widget dakliaImageWidget(BuildContext context, dynamic controller, String text) 
               ),
             ),
           ),
+  );
+}
+
+Widget roomNumberWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      height: 50,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.roomNumberController,
+        enabled: true,
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget allBedsNumberWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      height: 50,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.allBedsNumberController,
+        enabled: true,
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget emptyBedsNumberWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      height: 50,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.emptyBedsNumberController,
+        enabled: true,
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget dailyBedPriceWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      height: 50,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.dailyBedPriceController,
+        enabled: true,
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget monthlyBedPriceWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      height: 50,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.monthlyBedPriceController,
+        enabled: true,
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
   );
 }

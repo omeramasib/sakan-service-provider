@@ -28,7 +28,7 @@ Widget addRoomStep1(BuildContext context){
             Padding(
               padding: EdgeInsets.only(
                 top: 25,
-                right: 15,
+                right: 10,
               ),
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
