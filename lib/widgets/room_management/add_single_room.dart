@@ -12,7 +12,7 @@ import '../stepper/add_room_step1.dart';
 import '../text_form_fields.dart';
 import 'next_or_previus.dart';
 
-addMultiRoom(BuildContext context) {
+addSingleRoom(BuildContext context) {
   final isEnglish = Get.locale!.languageCode == 'en';
   final controller = Get.put(RoomManagementController());
   return showModalBottomSheet(
@@ -58,10 +58,12 @@ addMultiRoom(BuildContext context) {
               height: 20,
             ),
             Center(
-              child: Text('add_multi_room'.tr,
-                  style: getMediumStyle(
-                      color: ColorsManager.blackColor,
-                      fontSize: FontSizeManager.s15)),
+              child: Text(
+                'add_single_room'.tr,
+                style: getMediumStyle(
+                    color: ColorsManager.blackColor,
+                    fontSize: FontSizeManager.s15),
+              ),
             ),
             SizedBox(
               height: 15,
@@ -113,60 +115,6 @@ addMultiRoom(BuildContext context) {
                               : const EdgeInsets.only(
                                   top: AppPadding.p10, right: AppPadding.p30),
                           child: Text(
-                            'all_beds_number'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.mainColor,
-                              fontSize: FontSizeManager.s14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    allBedsNumberWidget(
-                      context,
-                      controller,
-                      'beds_number'.tr,
-                    ),
-                    // This is row 3
-                    Row(
-                      children: [
-                        Padding(
-                          padding: isEnglish
-                              ? const EdgeInsets.only(
-                                  top: AppPadding.p10, left: AppPadding.p40)
-                              : const EdgeInsets.only(
-                                  top: AppPadding.p10, right: AppPadding.p30),
-                          child: Text(
-                            'empty_beds_number'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.mainColor,
-                              fontSize: FontSizeManager.s14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    emptyBedsNumberWidget(
-                      context,
-                      controller,
-                      'beds_number'.tr,
-                    ),
-                    // This is row 4
-                    Row(
-                      children: [
-                        Padding(
-                          padding: isEnglish
-                              ? const EdgeInsets.only(
-                                  top: AppPadding.p10, left: AppPadding.p40)
-                              : const EdgeInsets.only(
-                                  top: AppPadding.p10, right: AppPadding.p30),
-                          child: Text(
                             'daily_bed_price'.tr,
                             style: getRegularStyle(
                               color: ColorsManager.mainColor,
@@ -184,7 +132,7 @@ addMultiRoom(BuildContext context) {
                       controller,
                       'bed_price'.tr,
                     ),
-                    // This is row 5
+                    // This is row 3
                     Row(
                       children: [
                         Padding(
@@ -211,7 +159,7 @@ addMultiRoom(BuildContext context) {
                       controller,
                       'bed_price'.tr,
                     ),
-                    // This is row 6
+                    // This is row 4
                     Row(
                       children: [
                         Padding(
@@ -240,7 +188,43 @@ addMultiRoom(BuildContext context) {
                       'room_image'.tr,
                     ),
 
-                    // This is row 7
+                    // This is row 5
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: isEnglish
+                                  ? const EdgeInsets.only(
+                                      top: 5, left: AppPadding.p30)
+                                  : const EdgeInsets.only(
+                                      top: 5, right: AppPadding.p30),
+                              child: Obx(
+                                () => Checkbox(
+                                  value: controller.isAvailable.value,
+                                  checkColor: ColorsManager.whiteColor,
+                                  fillColor: MaterialStateProperty.all(
+                                      ColorsManager.mainColor),
+                                  onChanged: (value) {
+                                    controller.chooseIsAvailable(value!);
+                                  },
+                                ),
+                              ),
+                            ),
+                            Text(
+                              'empty_room'.tr,
+                              style: getRegularStyle(
+                                color: ColorsManager.fontColor,
+                                fontSize: FontSizeManager.s14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+
+                    // This is row 6
                     Row(
                       children: [
                         Padding(
@@ -259,10 +243,6 @@ addMultiRoom(BuildContext context) {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-
                     // Row for booking type
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -298,8 +278,10 @@ addMultiRoom(BuildContext context) {
                         ),
                         Padding(
                           padding: isEnglish
-                              ? const EdgeInsets.only(bottom: 5, right: AppPadding.p60)
-                              : const EdgeInsets.only(bottom: 5, left: AppPadding.p60),
+                              ? const EdgeInsets.only(
+                                  bottom: 5, right: AppPadding.p60)
+                              : const EdgeInsets.only(
+                                  bottom: 5, left: AppPadding.p60),
                           child: Row(
                             children: [
                               Padding(

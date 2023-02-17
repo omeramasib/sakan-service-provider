@@ -210,6 +210,8 @@ const Map<String, String> arSA = {
   'delete_room_finally': 'حذف الغرفة نهائيا',
   'delete_room_des': '         هل انت متأكد من حذف الغرفة\nسيتم حذف جميع البيانات الخاصة بهذه الغرفة',
   'remove': 'حذف',
+  'feature1': 'تتميز الغرفة بإطلالة جميلة',
+  'feature2': 'حمام داخلي',
   // Add Multi Room
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',
@@ -217,8 +219,17 @@ const Map<String, String> arSA = {
   'all_beds_number': ' عدد السرائر الكلي',
   'empty_beds_number': 'عدد السرائر الشاغرة',
   'daily_bed_price': 'سعر السرير بلإستضافة',
-  'monthly_bed_price': 'سعر السرير بلشهر',
+  'monthly_bed_price': 'سعر السرير بالشهر',
   'bed_price': 'سعر السرير',
+  'room_image': 'صورة الغرفة',
+  'booking_type_available': 'نوع الحجز المتاح',
+  'daily_booking': 'حجز إستضافة',
+  'monthly_booking': 'حجز شهري',
+  // Add Single Room
+  'add_single_room': 'إضافة غرفة فردية',
+  'empty_room': 'الغرفة شاغرة',
+  'add_feature': 'إضافة ميزة',
+  'no_features': 'لايوجد ميزات بعد',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',

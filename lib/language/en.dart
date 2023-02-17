@@ -208,6 +208,17 @@ const Map<String, String> enUS = {
   'empty_beds_number': 'Empty Beds Number',
   'daily_bed_price': 'Daily Bed Price',
   'monthly_bed_price': 'Monthly Bed Price',
+  'room_image': 'Room Image',
+  'booking_type_available': 'Booking Type Available',
+  'daily_booking': 'Daily Booking',
+  'monthly_booking': 'Monthly Booking',
+  'feature1': 'Feature 1',
+  'feature2': 'Feature 2',
+  // Add Single Room
+  'add_single_room': 'Add Single Room',
+  'empty_room': 'Empty Room',
+  'add_feature': 'Add Feature',
+  'no_features': 'No Features',
   // Personal Medicine Clinic screen
   'dr_mohamed': 'Mohamed Ahmed',
   'psychiatry': 'Psychiatry',

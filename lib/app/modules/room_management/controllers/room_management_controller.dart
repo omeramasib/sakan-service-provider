@@ -16,7 +16,7 @@ class RoomManagementController extends GetxController {
   var monthlyBedPriceController = TextEditingController();
   final count = 0.obs;
 
-      void getImageFromGallery(ImageSource imageSource) async {
+    void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -37,7 +37,23 @@ class RoomManagementController extends GetxController {
     }
     update();
   }
-  
+
+  RxBool dailyBooking = false.obs;
+  RxBool monthlyBooking = false.obs;
+  RxBool isAvailable = false.obs;
+  chooseIsAvailable(bool value) {
+    isAvailable.value = value;
+    update();
+  }
+  chooseDailyBooking(bool value) {
+    dailyBooking.value = value;
+    update();
+  }
+  chooseMonthlyBooking(bool value) {
+    monthlyBooking.value = value;
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();

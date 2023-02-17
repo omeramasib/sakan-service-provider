@@ -7,6 +7,7 @@ import '../../constants/colors_manager.dart';
 import '../../constants/fonts_manager.dart';
 import '../../constants/styles_manager.dart';
 import '../room_management/add_multi_room.dart';
+import '../room_management/add_single_room.dart';
 
 selectRoomTypes(BuildContext context){
   return showModalBottomSheet(
@@ -92,24 +93,29 @@ selectRoomTypes(BuildContext context){
                 right: 40,
                 // top: 10,
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    ImagesManager.room_type,
-                    width: 16,
-                    height: 20,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'single_room'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.blackColor,
-                      fontSize: FontSizeManager.s14,
+              child: GestureDetector(
+                onTap: () {
+                  addSingleRoom(context);
+                },
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      ImagesManager.room_type,
+                      width: 16,
+                      height: 20,
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'single_room'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.blackColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
