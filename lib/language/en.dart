@@ -200,6 +200,13 @@ const Map<String, String> enUS = {
   'single_room': 'Single Room',
   'delete_room_finally': 'Delete Room Finally',
   'remove': 'Remove',
+  'add_room_features': 'Add Room Features',
+  'feature': 'Feature',
+  'feature_des': 'Feature Description',
+  'otherDetails': 'Other Details',
+  'edit_feature': 'Edit Feature',
+  'delete_feature': 'Delete Feature',
+  'edit_information': 'Edit Information',
   // Add Multi Room
   'add_multi_room': 'Add Multi Room',
   'room_detailes': 'Room Details',

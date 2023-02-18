@@ -14,6 +14,8 @@ class RoomManagementController extends GetxController {
   var emptyBedsNumberController = TextEditingController();
   var dailyBedPriceController = TextEditingController();
   var monthlyBedPriceController = TextEditingController();
+  var featureController = TextEditingController();
+  var otherDetailsController = TextEditingController();
   final count = 0.obs;
 
     void getImageFromGallery(ImageSource imageSource) async {
@@ -62,6 +64,8 @@ class RoomManagementController extends GetxController {
     emptyBedsNumberController = TextEditingController();
     dailyBedPriceController = TextEditingController();
     monthlyBedPriceController = TextEditingController();
+    featureController = TextEditingController();
+    otherDetailsController = TextEditingController();
   }
 
   @override
@@ -76,6 +80,8 @@ class RoomManagementController extends GetxController {
     emptyBedsNumberController.dispose();
     dailyBedPriceController.dispose();
     monthlyBedPriceController.dispose();
+    featureController.dispose();
+    otherDetailsController.dispose();
     super.onClose();
   }
 

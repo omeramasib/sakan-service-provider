@@ -5,17 +5,12 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
 import '../../../app/modules/room_management/controllers/room_management_controller.dart';
-import '../../../app/routes/app_pages.dart';
-import '../../../constants/buttons_manager.dart';
 import '../../../constants/colors_manager.dart';
 import '../../../constants/images_manager.dart';
-import '../../../constants/values_manager.dart';
-import '../../rooms_types/rooms_types.dart';
 import '../../stepper/add_room_step2.dart';
-import '../../text_form_fields.dart';
-import '../next_or_previus.dart';
+import '../next_or_previous2.dart';
+import 'add_room_feature.dart';
 import 'features_list.dart';
-import 'no_features.dart';
 
 roomFeatures(BuildContext context) {
   final isEnglish = Get.locale!.languageCode == 'en';
@@ -113,7 +108,7 @@ roomFeatures(BuildContext context) {
                             child: Row(children: [
                               GestureDetector(
                                 onTap: () {
-                                  selectRoomTypes(context);
+                                  addRoomFeatures(context);
                                 },
                                 child: SvgPicture.asset(
                                   ImagesManager.add,
@@ -140,10 +135,7 @@ roomFeatures(BuildContext context) {
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            nextOrPreviousButton(context),
+            nextOrPrevious2Button(context),
           ],
         ),
       );

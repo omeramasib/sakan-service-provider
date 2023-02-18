@@ -7,6 +7,7 @@ import 'package:sakan/constants/styles_manager.dart';
 import '../../../constants/fonts_manager.dart';
 import '../../../constants/images_manager.dart';
 import '../edit_or_delete_room.dart';
+import 'edit_or_delete_feature.dart';
 
 featuresList(BuildContext context) {
   return Container(
@@ -26,37 +27,42 @@ featuresList(BuildContext context) {
           ),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 15,
-                      top: 10,
-                    ),
-                    child: Text(
-                      'feature1'.tr,
-                      style: getRegularStyle(
-                        color: ColorsManager.mainColor,
-                        fontSize: FontSizeManager.s14,
+              GestureDetector(
+                onTap: () {
+                  editOrDeleteFeature(context);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        right: 15,
+                        top: 10,
+                      ),
+                      child: Text(
+                        'feature1'.tr,
+                        style: getRegularStyle(
+                          color: ColorsManager.mainColor,
+                          fontSize: FontSizeManager.s14,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 13,
-                      left: 15,
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        editOrDelete(context);
-                      },
-                      child: SvgPicture.asset(
-                        ImagesManager.more,
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 13,
+                        left: 15,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          editOrDeleteFeature(context);
+                        },
+                        child: SvgPicture.asset(
+                          ImagesManager.more,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               SizedBox(
                 height: 15,
@@ -111,11 +117,11 @@ featuresList(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 13,
-                      left: 15,
+                      left: 15, 
                     ),
                     child: GestureDetector(
                       onTap: () {
-                        editOrDelete(context);
+                        editOrDeleteFeature(context);
                       },
                       child: SvgPicture.asset(
                         ImagesManager.more,
