@@ -225,42 +225,47 @@ class HomeView extends GetView<HomeController> {
                   Padding(
                     padding: isArabic ? EdgeInsets.only(right: 10) :
                      EdgeInsets.only(left: 10),
-                    child: Container(
-                      height: 171,
-                      width: 164,
-                      decoration: BoxDecoration(
-                        color: ColorsManager.whiteColor,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorsManager.shadowColor,
-                            blurRadius: 6,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                            ),
-                            SvgPicture.asset(
-                              ImagesManager.service,
-                              height: 65,
-                              width: 60,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'services_management'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s15,
-                              ),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.SERVICES_MANAGEMENT);
+                      },
+                      child: Container(
+                        height: 171,
+                        width: 164,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
                             ),
                           ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              SvgPicture.asset(
+                                ImagesManager.service,
+                                height: 65,
+                                width: 60,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'services_management'.tr,
+                                style: getRegularStyle(
+                                  color: ColorsManager.fontColor,
+                                  fontSize: FontSizeManager.s15,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

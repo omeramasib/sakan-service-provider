@@ -20,6 +20,8 @@ import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
 import '../modules/room_management/bindings/room_management_binding.dart';
 import '../modules/room_management/views/room_management_view.dart';
+import '../modules/services_management/bindings/services_management_binding.dart';
+import '../modules/services_management/views/services_management_view.dart';
 import '../modules/splashScreen/bindings/splash_screen_binding.dart';
 import '../modules/splashScreen/views/splash_screen_view.dart';
 
@@ -86,6 +88,11 @@ class AppPages {
       name: _Paths.ROOM_MANAGEMENT,
       page: () => const RoomManagementView(),
       binding: RoomManagementBinding(),
+    ),
+    GetPage(
+      name: _Paths.SERVICES_MANAGEMENT,
+      page: () => const ServicesManagementView(),
+      binding: ServicesManagementBinding(),
     ),
   ];
 }

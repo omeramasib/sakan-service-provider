@@ -14,6 +14,7 @@ abstract class Routes {
   static const DAKLIA_PROFILE = _Paths.DAKLIA_PROFILE;
   static const EDIT_DAKLIA_PROFILE = _Paths.EDIT_DAKLIA_PROFILE;
   static const ROOM_MANAGEMENT = _Paths.ROOM_MANAGEMENT;
+  static const SERVICES_MANAGEMENT = _Paths.SERVICES_MANAGEMENT;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const DAKLIA_PROFILE = '/daklia-profile';
   static const EDIT_DAKLIA_PROFILE = '/edit-daklia-profile';
   static const ROOM_MANAGEMENT = '/room-management';
+  static const SERVICES_MANAGEMENT = '/services-management';
 }
