@@ -67,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                      EdgeInsets.only(left: Get.width * 0.07),
                     child: GestureDetector(
                       onTap: () {
-                        // Get.toNamed(Routes.ROOM_MANAGEMENT);
+                        Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1); 
                       },
                       child: Container(
                         height: 171,
@@ -280,108 +280,113 @@ class HomeView extends GetView<HomeController> {
         ),
 
         // 3st Row
-         Container(
-          height: 171,
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (BuildContext, BoxConstraints constraints) {
-              return Row(
-                children: [
-                  Padding(
-                    padding:
-                    isArabic ? EdgeInsets.only(right: Get.width * 0.07):
-                     EdgeInsets.only(left: Get.width * 0.07),
-                    child: Container(
-                      height: 171,
-                      width: 164,
-                      decoration: BoxDecoration(
-                        color: ColorsManager.whiteColor,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorsManager.shadowColor,
-                            blurRadius: 6,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                            ),
-                            SvgPicture.asset(
-                            ImagesManager.terms,
-                              height: 65,
-                              width: 60,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'terms'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s15,
-                              ),
+         GestureDetector(
+          onTap: () {
+            Get.toNamed(Routes.REGULATIONS_MANAGEMENT);
+          },
+           child: Container(
+            height: 171,
+            width: double.infinity,
+            child: LayoutBuilder(
+              builder: (BuildContext, BoxConstraints constraints) {
+                return Row(
+                  children: [
+                    Padding(
+                      padding:
+                      isArabic ? EdgeInsets.only(right: Get.width * 0.07):
+                       EdgeInsets.only(left: Get.width * 0.07),
+                      child: Container(
+                        height: 171,
+                        width: 164,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
                             ),
                           ],
                         ),
-                      ),
-                    ),
-                  ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  Padding(
-                    padding: isArabic ? EdgeInsets.only(right: 10) :
-                     EdgeInsets.only(left: 10),
-                    child: Container(
-                      height: 171,
-                      width: 164,
-                      decoration: BoxDecoration(
-                        color: ColorsManager.whiteColor,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorsManager.shadowColor,
-                            blurRadius: 6,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                            ),
-                            SvgPicture.asset(
-                             ImagesManager.setting,
-                              height: 65,
-                              width: 60,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                               'settings'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s15,
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
                               ),
-                            ),
-                          ],
+                              SvgPicture.asset(
+                              ImagesManager.terms,
+                                height: 65,
+                                width: 60,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'terms'.tr,
+                                style: getRegularStyle(
+                                  color: ColorsManager.fontColor,
+                                  fontSize: FontSizeManager.s15,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
+                    // SizedBox(
+                    //   width: 10,
+                    // ),
+                    Padding(
+                      padding: isArabic ? EdgeInsets.only(right: 10) :
+                       EdgeInsets.only(left: 10),
+                      child: Container(
+                        height: 171,
+                        width: 164,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              SvgPicture.asset(
+                               ImagesManager.setting,
+                                height: 65,
+                                width: 60,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                 'settings'.tr,
+                                style: getRegularStyle(
+                                  color: ColorsManager.fontColor,
+                                  fontSize: FontSizeManager.s15,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+                 ),
+         ),
       ]),
     );
   }

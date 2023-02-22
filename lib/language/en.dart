@@ -239,6 +239,15 @@ const Map<String, String> enUS = {
   'service_name': 'Service Name',
   'service_price': 'Service Price',
   'service_active_right_now': 'Service Active Right Now',
+  // regulation management screen
+  'empty_regulation': 'No Regulations Yet',
+  'empyt_regulation_des': 'You can add regulations from here',
+  'add_regulation': 'Add Regulation',
+  'add_new_regulation': 'Add New Regulation',
+  'regulation_text': 'Regulation Text',
+  'edit_regulation': 'Edit Regulation',
+  'delete_regulation': 'Delete Regulation',
+  'delete_regulation_finally': 'Delete Regulation Finally',
   // Personal Medicine Clinic screen
   'dr_mohamed': 'Mohamed Ahmed',
   'psychiatry': 'Psychiatry',

@@ -18,6 +18,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
+import '../modules/regulations_management/bindings/regulations_management_binding.dart';
+import '../modules/regulations_management/views/regulations_management_view.dart';
 import '../modules/room_management/bindings/room_management_binding.dart';
 import '../modules/room_management/views/room_management_view.dart';
 import '../modules/services_management/bindings/services_management_binding.dart';
@@ -93,6 +95,11 @@ class AppPages {
       name: _Paths.SERVICES_MANAGEMENT,
       page: () => const ServicesManagementView(),
       binding: ServicesManagementBinding(),
+    ),
+    GetPage(
+      name: _Paths.REGULATIONS_MANAGEMENT,
+      page: () => const RegulationsManagementView(),
+      binding: RegulationsManagementBinding(),
     ),
   ];
 }
