@@ -179,42 +179,47 @@ class HomeView extends GetView<HomeController> {
                     padding:
                     isArabic ? EdgeInsets.only(right: Get.width * 0.07):
                      EdgeInsets.only(left: Get.width * 0.07),
-                    child: Container(
-                      height: 171,
-                      width: 164,
-                      decoration: BoxDecoration(
-                        color: ColorsManager.whiteColor,
-                        borderRadius: BorderRadius.circular(15),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorsManager.shadowColor,
-                            blurRadius: 6,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 30,
-                            ),
-                            SvgPicture.asset(
-                             ImagesManager.booking,
-                              height: 65,
-                              width: 60,
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(
-                              'appointments_management'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s15,
-                              ),
+                    child: GestureDetector(
+                      onTap:(){
+                        Get.toNamed(Routes.MY_APPOINTMENTS);
+                      },
+                      child: Container(
+                        height: 171,
+                        width: 164,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(15),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
                             ),
                           ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              SvgPicture.asset(
+                               ImagesManager.booking,
+                                height: 65,
+                                width: 60,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                'appointments_management'.tr,
+                                style: getRegularStyle(
+                                  color: ColorsManager.fontColor,
+                                  fontSize: FontSizeManager.s15,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

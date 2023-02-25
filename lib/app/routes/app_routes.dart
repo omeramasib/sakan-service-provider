@@ -16,6 +16,7 @@ abstract class Routes {
   static const ROOM_MANAGEMENT = _Paths.ROOM_MANAGEMENT;
   static const SERVICES_MANAGEMENT = _Paths.SERVICES_MANAGEMENT;
   static const REGULATIONS_MANAGEMENT = _Paths.REGULATIONS_MANAGEMENT;
+  static const MY_APPOINTMENTS = _Paths.MY_APPOINTMENTS;
 }
 
 abstract class _Paths {
@@ -33,4 +34,5 @@ abstract class _Paths {
   static const ROOM_MANAGEMENT = '/room-management';
   static const SERVICES_MANAGEMENT = '/services-management';
   static const REGULATIONS_MANAGEMENT = '/regulations-management';
+  static const MY_APPOINTMENTS = '/my-appointments';
 }

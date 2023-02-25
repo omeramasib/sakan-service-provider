@@ -4,6 +4,8 @@ import '../modules/Auth/bindings/auth_binding.dart';
 import '../modules/Auth/resetpassword/bindings/resetpassword_binding.dart';
 import '../modules/Auth/resetpassword/views/resetpassword_view.dart';
 import '../modules/Auth/views/auth_view.dart';
+import '../modules/MyAppointments/bindings/my_appointments_binding.dart';
+import '../modules/MyAppointments/views/my_appointments_view.dart';
 import '../modules/completeDakliaAccount1/bindings/complete_daklia_account1_binding.dart';
 import '../modules/completeDakliaAccount1/views/complete_daklia_account1_view.dart';
 import '../modules/completeDakliaAccount2/bindings/complete_daklia_account2_binding.dart';
@@ -100,6 +102,11 @@ class AppPages {
       name: _Paths.REGULATIONS_MANAGEMENT,
       page: () => const RegulationsManagementView(),
       binding: RegulationsManagementBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_APPOINTMENTS,
+      page: () => const MyAppointmentsView(),
+      binding: MyAppointmentsBinding(),
     ),
   ];
 }
