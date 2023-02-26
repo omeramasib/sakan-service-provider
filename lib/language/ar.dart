@@ -136,6 +136,9 @@ const Map<String, String> arSA = {
   'canceld': 'ملغي',
   'completed': 'مكتمل',
   'pending': 'قيد التنفيذ',
+  'booking_details': 'بيانات الحجز',
+  'student_details': 'بيانات الطالبة',
+  'paid': 'مدفوع',
   // profile screen
   'confirmed': 'موثق',
   'daklia_description_description': 'وصف عن الداخلية هذا الوصف الذي ادخله المستخدم \nفي خطوة استبداله حسب طول النص الذي ادخله المستخدم',

@@ -136,6 +136,9 @@ const Map<String, String> enUS = {
   'awaiting_user_approval': 'Awaiting User Approval',
   "booking_number": "Booking Number",
   'booking_type': 'Booking Type',
+  'booking_details': 'Booking Details',
+  'student_details': 'Student Details',
+  'paid': 'Paid',
   // profile screen
   'confirmed': 'Confirmed',
   'my_profile': 'Profile',
