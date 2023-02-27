@@ -132,6 +132,7 @@ const Map<String, String> arSA = {
   'awaiting_daklia_approval': 'بإنتظار موافقتك',
   'awaiting_user_approval': 'بإنتظار موافقة الطالبة',
   "booking_number": "رقم الحجز",
+  'payment_informaton': 'معلومات الدفع',
   'booking_type': 'نوع الحجز',
   'canceld': 'ملغي',
   'completed': 'مكتمل',
@@ -139,6 +140,11 @@ const Map<String, String> arSA = {
   'booking_details': 'بيانات الحجز',
   'student_details': 'بيانات الطالبة',
   'paid': 'مدفوع',
+  'beds_number_in_room': 'عدد السرائر في الغرفة',
+  'room_price': 'سعر الغرفة',
+  'accept': 'قبول',
+  'reject': 'رفض',
+
   // profile screen
   'confirmed': 'موثق',
   'daklia_description_description': 'وصف عن الداخلية هذا الوصف الذي ادخله المستخدم \nفي خطوة استبداله حسب طول النص الذي ادخله المستخدم',
@@ -403,7 +409,8 @@ const Map<String, String> arSA = {
   'add_button': 'اضافة',
   // payment screen
   'payment': 'الدفع',
-  'discount': 'خصم 10%',
+  'deposit': 'العربون',
+  'discount': 'الخصم',
   'payment_details': 'تفاصيل',
   'add_coupon': 'إضافة كوبون',
   'cost': 'التكلفة',

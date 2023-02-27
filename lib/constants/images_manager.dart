@@ -90,4 +90,7 @@ class ImagesManager {
   static const String room_type = 'assets/images/Mask Group 269.svg';
   static const String more = 'assets/images/Component 55 – 1.svg';
   static const String editRoom = 'assets/images/edit.svg';
+  static const String booking_number = 'assets/images/Group 74814.svg';
+  static const String cash = 'assets/images/money-Filled.svg';
+  // static const String number = 'aassets/images/booking_number.svg';
 }

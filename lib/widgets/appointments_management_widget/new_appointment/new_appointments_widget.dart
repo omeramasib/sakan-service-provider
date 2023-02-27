@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/colors_manager.dart';
 
 import '../../../app/modules/MyAppointments/views/appointment_detailes_view.dart';
@@ -63,7 +61,6 @@ Widget nextAppointment(BuildContext context){
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                    // top: 10,
                     right: 140,
                   ),
                   child: Column(
@@ -149,32 +146,6 @@ Widget nextAppointment(BuildContext context){
                     ],
                   ),
                 ),
-                // SizedBox(
-                //   width: 15,
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     top: 10,
-                //     right: 240,
-                //   ),
-                //   child: Container(
-                //     height: 22,
-                //     width: 73,
-                //     decoration: BoxDecoration(
-                //       color: ColorsManager.blueColor.withOpacity(0.2),
-                //       borderRadius: BorderRadius.circular(11),
-                //     ),
-                //     child: Center(
-                //       child: Text(
-                //         '2_beds'.tr,
-                //         style: getRegularStyle(
-                //           color: ColorsManager.blueColor,
-                //           fontSize: FontSizeManager.s11,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -305,32 +276,6 @@ Widget nextAppointment(BuildContext context){
                   ],
                 ),
               ),
-              // SizedBox(
-              //   width: 15,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //     top: 10,
-              //     right: 240,
-              //   ),
-              //   child: Container(
-              //     height: 22,
-              //     width: 73,
-              //     decoration: BoxDecoration(
-              //       color: ColorsManager.blueColor.withOpacity(0.2),
-              //       borderRadius: BorderRadius.circular(11),
-              //     ),
-              //     child: Center(
-              //       child: Text(
-              //         '2_beds'.tr,
-              //         style: getRegularStyle(
-              //           color: ColorsManager.blueColor,
-              //           fontSize: FontSizeManager.s11,
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

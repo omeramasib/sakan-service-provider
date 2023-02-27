@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:sakan/constants/buttons_manager.dart';
 
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
@@ -62,16 +63,47 @@ class AppointmentDetailesView extends GetView {
               height: 20,
             ),
             chooseAppointmentOrStudentInfo(context),
-            Expanded(
-              child: Container(
-                height: Get.height,
-                width: Get.width,
-                child: Obx(
-                  () => controller.tabIndex.value == 0
-                      ? appointmentDetailsWidget(context)
-                      : studentInfoWidget(context),
-                ),
+            Container(
+              height: Get.height * 0.65,
+              width: Get.width,
+              color: ColorsManager.lightGreyColor,
+              child: Obx(
+                () => controller.tabIndex.value == 0
+                    ? appointmentDetailsWidget(context)
+                    : studentInfoWidget(context),
               ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: AppPadding.p30,
+                    // left: AppPadding.p20,
+                  ),
+                  child: ButtonsManager.primaryButton(
+                    text: 'accept'.tr,
+                    onPressed: () {},
+                    context: context,
+                    buttonColor: ColorsManager.greenColor,
+                    minimumSize: Size(157, 50),
+                    maximumSize: Size(157, 50),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                ButtonsManager.primaryButton(
+                  text: 'reject'.tr,
+                  onPressed: () {},
+                  context: context,
+                  buttonColor: ColorsManager.errorColor,
+                  minimumSize: Size(157, 50),
+                  maximumSize: Size(157, 50),
+                ),
+              ],
             )
           ],
         ));

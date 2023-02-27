@@ -139,6 +139,11 @@ const Map<String, String> enUS = {
   'booking_details': 'Booking Details',
   'student_details': 'Student Details',
   'paid': 'Paid',
+  'beds_number_in_room': 'Beds Number In Room',
+  'room_price': 'Room Price',
+  'payment_informaton': 'Payment Information',
+  'accept': 'Accept',
+  'reject': 'Reject',
   // profile screen
   'confirmed': 'Confirmed',
   'my_profile': 'Profile',
@@ -389,7 +394,8 @@ const Map<String, String> enUS = {
   'add_button': 'Add',
   // payment screen
   'payment': 'Pay',
-  'discount': 'Off 10%',
+  'discount': 'Discount',
+  'deposit': 'Deposit',
   'payment_details': 'Details',
   'add_coupon': 'Add Coupon',
   'cost': 'Price',
