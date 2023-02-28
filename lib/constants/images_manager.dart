@@ -92,5 +92,7 @@ class ImagesManager {
   static const String editRoom = 'assets/images/edit.svg';
   static const String booking_number = 'assets/images/Group 74814.svg';
   static const String cash = 'assets/images/money-Filled.svg';
+  static const String id = 'assets/images/Id.svg';
+  static const String omerId = '/Users/pc/Desktop/sakan/assets/images/OmerId.png';
   // static const String number = 'aassets/images/booking_number.svg';
 }

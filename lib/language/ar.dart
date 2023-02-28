@@ -144,6 +144,13 @@ const Map<String, String> arSA = {
   'room_price': 'سعر الغرفة',
   'accept': 'قبول',
   'reject': 'رفض',
+  'main_info': 'البيانات الأساسية',
+  'guardian_id': 'رقم هوية ولي الأمر',
+  'university/workplace': 'اسم الجامعة/ مكان العمل',
+  'ID_photo': 'صورة اثبات الشخصية',
+  'appointment_rejection_reason': 'وضح سبب الرفض',
+  'appointment_reject': 'رفض الحجز',
+  'send': 'ارسال',
 
   // profile screen
   'confirmed': 'موثق',
@@ -154,7 +161,6 @@ const Map<String, String> arSA = {
   'name': 'محمد بن تركي',
   'my_bookings': 'حجوزاتي(16)',
   'next_bookings': 'قادمة',
-  'main_info': 'البيانات الاساسية',
   'birth_date': 'تاريخ الميلاد',
   'social_status': 'الحالة الإجتماعية',
   'gender': 'الجنس',

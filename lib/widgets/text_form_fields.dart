@@ -1671,3 +1671,36 @@ Widget editRegulationDetailsWidget(BuildContext context, dynamic controller , St
     ),
   );
 }
+
+Widget appointmentRejectWidget(BuildContext context, dynamic controller) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controller.appointmentRejectController,
+        enabled: true,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 80,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(
+              color: ColorsManager.lightGreyColor
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}

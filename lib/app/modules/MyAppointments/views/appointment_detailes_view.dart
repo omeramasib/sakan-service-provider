@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:sakan/constants/buttons_manager.dart';
 
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
-import '../../../../constants/images_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/appointments_management_widget/appointment_details/appointment_details_widget.dart';
 import '../../../../widgets/appointments_management_widget/appointment_details/choose_appointment_or_student_info.dart';
 import '../../../../widgets/appointments_management_widget/appointment_details/student_info_widget.dart';
+import '../../../../widgets/appointments_management_widget/appointment_reject_widget.dart';
 import '../controllers/appointment_detailes_controller.dart';
 
 class AppointmentDetailesView extends GetView {
@@ -79,9 +78,8 @@ class AppointmentDetailesView extends GetView {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    right: AppPadding.p30,
-                    // left: AppPadding.p20,
+                  padding: EdgeInsets.only(
+                    right: Get.width * 0.12,
                   ),
                   child: ButtonsManager.primaryButton(
                     text: 'accept'.tr,
@@ -97,7 +95,9 @@ class AppointmentDetailesView extends GetView {
                 ),
                 ButtonsManager.primaryButton(
                   text: 'reject'.tr,
-                  onPressed: () {},
+                  onPressed: () {
+                    appointmentReject(context);
+                  },
                   context: context,
                   buttonColor: ColorsManager.errorColor,
                   minimumSize: Size(157, 50),
