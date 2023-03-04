@@ -209,7 +209,7 @@ const Map<String, String> arSA = {
   'account_settings': 'اعدادات الحساب',
   'favorite_doctors': 'قائمة الأطباء المفضلين',
   'connect_with_support': 'تواصل مع الدعم',
-  'conditions_and_terms': 'الشروط والخصوصية',
+  'conditions_and_terms': 'الشروط والاحكام',
   'privacy_policy': 'سياسة الخصوصية',
   'rate_app': 'تقييم التطبيق',
   'about_sanedny': 'عن ساندني',

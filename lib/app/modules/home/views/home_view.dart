@@ -67,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                      EdgeInsets.only(left: Get.width * 0.07),
                     child: GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1); 
+                        Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
                       },
                       child: Container(
                         height: 171,
@@ -340,48 +340,50 @@ class HomeView extends GetView<HomeController> {
                         ),
                       ),
                     ),
-                    // SizedBox(
-                    //   width: 10,
-                    // ),
                     Padding(
                       padding: isArabic ? EdgeInsets.only(right: 10) :
                        EdgeInsets.only(left: 10),
-                      child: Container(
-                        height: 171,
-                        width: 164,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              SvgPicture.asset(
-                               ImagesManager.setting,
-                                height: 65,
-                                width: 60,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                 'settings'.tr,
-                                style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
-                                  fontSize: FontSizeManager.s15,
-                                ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(Routes.MORE_SCREEN);
+                        },
+                        child: Container(
+                          height: 171,
+                          width: 164,
+                          decoration: BoxDecoration(
+                            color: ColorsManager.whiteColor,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: ColorsManager.shadowColor,
+                                blurRadius: 6,
+                                offset: Offset(0, 3),
                               ),
                             ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                SvgPicture.asset(
+                                 ImagesManager.setting,
+                                  height: 65,
+                                  width: 60,
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                   'settings'.tr,
+                                  style: getRegularStyle(
+                                    color: ColorsManager.fontColor,
+                                    fontSize: FontSizeManager.s15,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),

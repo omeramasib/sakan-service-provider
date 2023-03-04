@@ -4,6 +4,8 @@ import '../modules/Auth/bindings/auth_binding.dart';
 import '../modules/Auth/resetpassword/bindings/resetpassword_binding.dart';
 import '../modules/Auth/resetpassword/views/resetpassword_view.dart';
 import '../modules/Auth/views/auth_view.dart';
+import '../modules/MoreScreen/bindings/more_screen_binding.dart';
+import '../modules/MoreScreen/views/more_screen_view.dart';
 import '../modules/MyAppointments/bindings/my_appointments_binding.dart';
 import '../modules/MyAppointments/views/my_appointments_view.dart';
 import '../modules/completeDakliaAccount1/bindings/complete_daklia_account1_binding.dart';
@@ -107,6 +109,11 @@ class AppPages {
       name: _Paths.MY_APPOINTMENTS,
       page: () => const MyAppointmentsView(),
       binding: MyAppointmentsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MORE_SCREEN,
+      page: () => const MoreScreenView(),
+      binding: MoreScreenBinding(),
     ),
   ];
 }

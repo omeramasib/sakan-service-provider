@@ -26,7 +26,7 @@ class ImagesManager {
   static const String arrowIcon = 'assets/images/arrow-down.svg';
   static const String callcenterIcon = 'assets/images/call-center.svg';
   static const String fileIcon = 'assets/images/file-Filled.svg';
-  static const String starIcon = 'assets/images/Icon awesome-star-1.svg';
+  static const String starIcon = 'assets/images/Icon awesome-star.svg';
   static const String filterIcon = 'assets/images/filter-Filled.svg';
   static const String manDoctor = 'assets/images/man-doctor.png';
   static const String starIcon2 = 'assets/images/Icon awesome-star.svg';
