@@ -15,7 +15,7 @@ class ButtonsManager {
     Color? buttonColor,
     Color? textColor,
   }) {
-    return ElevatedButton( 
+    return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: minimumSize ?? Size(315, 50),
         maximumSize: maximumSize ?? Size(315, 50),

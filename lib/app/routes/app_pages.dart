@@ -20,6 +20,8 @@ import '../modules/edit_daklia_profile/bindings/edit_daklia_profile_binding.dart
 import '../modules/edit_daklia_profile/views/edit_daklia_profile_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/network/bindings/network_binding.dart';
+import '../modules/network/views/network_view.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
 import '../modules/regulations_management/bindings/regulations_management_binding.dart';
@@ -36,7 +38,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.AUTH;
   static final routes = [
     GetPage(
       name: _Paths.HOME,
@@ -114,6 +116,11 @@ class AppPages {
       name: _Paths.MORE_SCREEN,
       page: () => const MoreScreenView(),
       binding: MoreScreenBinding(),
+    ),
+    GetPage(
+      name: _Paths.NETWORK,
+      page: () => const NetworkView(),
+      binding: NetworkBinding(),
     ),
   ];
 }

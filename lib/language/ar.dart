@@ -46,6 +46,7 @@ const Map<String, String> arSA = {
   'connection_error': 'خطأ في الاتصال بلإنترنت',
   'igama_already_exist': 'رقم الهوية موجود مسبقا',
   'phone_already_exist': 'رقم الجوال موجود مسبقا',
+  'user_already_exist': 'المستخدم موجود مسبقا',
   'unknown_error': 'خطأ غير متوقع',
   'no_internet': 'لا يوجد اتصال بالانترنت',
   'server_error': 'خطأ في الخادم',

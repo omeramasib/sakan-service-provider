@@ -29,6 +29,7 @@ Widget phoneNumberFormField(
         controller: controller.phoneNumberController,
         onSaved: (value) {
           controller.phone = '+${controller.key}${value!}';
+          print('this is the daklia phone number: ${controller.phone}');
         },
         validator: (value) {
           return Validations().validatePhoneNumber(value);
@@ -99,6 +100,7 @@ Widget passwordFormField(BuildContext context, dynamic controller, Color color,
               },
               onSaved: (String? value) {
                 controller.password = value!;
+                print('this is the daklia password: ${controller.password}');
               },
               decoration: InputDecoration(
                 hintText: hinText,
@@ -233,7 +235,8 @@ Widget dakliaNameFormField(BuildContext context, dynamic controller,
       keyboardType: TextInputType.name,
       controller: controller.nameController,
       onSaved: (String? value) {
-        controller.name = value!;
+        controller.username = value!;
+        print('this is the daklia name: ${controller.username}');
       },
       validator: (value) {
         return Validations().validateFirstName(value!);
@@ -255,67 +258,6 @@ Widget dakliaNameFormField(BuildContext context, dynamic controller,
   );
 }
 
-// first name form field
-Widget firstNameFormField(BuildContext context, dynamic controller, Color color,
-    String hinText, Color hinTextColor) {
-  return SizedBox(
-    width: 315,
-    child: TextFormField(
-      keyboardType: TextInputType.name,
-      controller: controller.firstNameController,
-      onSaved: (String? value) {
-        controller.fname = value!;
-      },
-      validator: (value) {
-        return Validations().validateFirstName(value!);
-      },
-      decoration: InputDecoration(
-        hintText: hinText,
-        hintStyle: getRegularStyle(
-          color: hinTextColor,
-          fontSize: FontSizeManager.s14,
-        ),
-        fillColor: color,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    ),
-  );
-}
-
-// last name form field
-Widget lastNameFormField(BuildContext context, dynamic controller, Color color,
-    String hinText, Color hinTextColor) {
-  return SizedBox(
-    width: 315,
-    child: TextFormField(
-      keyboardType: TextInputType.name,
-      controller: controller.lastNameController,
-      onSaved: (String? value) {
-        controller.lname = value!;
-      },
-      validator: (value) {
-        return Validations().validateLastName(value!);
-      },
-      decoration: InputDecoration(
-        hintText: hinText,
-        hintStyle: getRegularStyle(
-          color: hinTextColor,
-          fontSize: FontSizeManager.s14,
-        ),
-        fillColor: color,
-        filled: true,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(50),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    ),
-  );
-}
 
 // identity text form field
 Widget identityFormField(BuildContext context, dynamic controller, Color color,
@@ -368,6 +310,7 @@ Widget confirmPasswordFormField(BuildContext context, dynamic controller) {
               },
               onSaved: (String? value) {
                 controller.confirmPassword = value!;
+                print('this is the confirm password: ${controller.confirmPassword}');
               },
               decoration: InputDecoration(
                 hintText: 'confirm_password'.tr,

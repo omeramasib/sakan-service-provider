@@ -18,6 +18,7 @@ abstract class Routes {
   static const REGULATIONS_MANAGEMENT = _Paths.REGULATIONS_MANAGEMENT;
   static const MY_APPOINTMENTS = _Paths.MY_APPOINTMENTS;
   static const MORE_SCREEN = _Paths.MORE_SCREEN;
+  static const NETWORK = _Paths.NETWORK;
 }
 
 abstract class _Paths {
@@ -37,4 +38,5 @@ abstract class _Paths {
   static const REGULATIONS_MANAGEMENT = '/regulations-management';
   static const MY_APPOINTMENTS = '/my-appointments';
   static const MORE_SCREEN = '/more-screen';
+  static const NETWORK = '/network';
 }

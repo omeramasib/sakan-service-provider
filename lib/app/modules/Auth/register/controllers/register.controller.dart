@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/modules/Auth/providers/register_provider.dart';
 import 'package:sakan/app/routes/app_pages.dart';
+
+import '../../../../../constants/dialogs.dart';
+import '../../../network/controllers/network_controller.dart';
+import '../../models/register_model.dart';
 
 class RegisterController extends GetxController {
 
@@ -9,14 +15,27 @@ class RegisterController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  String? name;
-  String? phone;
-  String? password;
-  String? confirmPassword;
+  String username = '';
+  String phone = '';
+  String password = '';
+  String confirmPassword = '';
 
   RxInt key = 966.obs;
   var isObscure = true.obs;
   var isObscureConfirm = true.obs;
+
+  var registerProvider = RegisterProvider();
+
+  var networkController = NetworkController();
+
+  Future<RegisterModel> register() async {
+    return await registerProvider.register(
+      dakliaName: username,
+      phone: phone,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+  }
 
     void checkRegister() {
     var isValid = registerFormKey.currentState!.validate();
@@ -24,13 +43,13 @@ class RegisterController extends GetxController {
       return;
     }
     registerFormKey.currentState!.save();
-    Get.offAllNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
     // if (networkController.isConnected.value == true) {
     //   EasyLoading.show(status: 'loading'.tr);
     //   register();
     // } else {
     //   Dialogs.connectionErrorDialog(Get.context!);
     // }
+    register();
     update();
   }
 

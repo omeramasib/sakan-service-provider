@@ -53,8 +53,8 @@ class RegisterScreen extends GetView<RegisterController> {
                     children: [
                       Padding(
                         padding: isEnglish
-                            ? const EdgeInsets.only(left: AppPadding.p60)
-                            : const EdgeInsets.only(right: AppPadding.p60),
+                            ? const EdgeInsets.only(left: AppPadding.p40)
+                            : const EdgeInsets.only(right: AppPadding.p40),
                         child: dakliaNameFormField(
                             context,
                             controller,

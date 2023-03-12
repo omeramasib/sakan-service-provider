@@ -48,6 +48,7 @@ const Map<String, String> enUS = {
   'connection_error': 'Failed to get Network Connection',
   'igama_already_exist': 'Igama already exist',
   'phone_already_exist': 'Phone already exist',
+  'user_already_exist': 'User already exist',
   'unknown_error': 'Unknown error',
   'no_internet': 'No Internet Connection',
   'server_error': 'Server Error',
