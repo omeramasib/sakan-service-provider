@@ -1,4 +1,4 @@
-class RegisterModel {
+class LoginModel {
   String? message;
   int? id;
   String? username;
@@ -7,10 +7,11 @@ class RegisterModel {
   bool? isActive;
   String? createdAt;
   String? updatedAt;
-  String? token;
   String? otp;
+  String? token;
+  bool? isVerified;
 
-  RegisterModel(
+  LoginModel(
       {this.message,
       this.id,
       this.username,
@@ -19,10 +20,11 @@ class RegisterModel {
       this.isActive,
       this.createdAt,
       this.updatedAt,
+      this.otp,
       this.token,
-      this.otp});
+      this.isVerified});
 
-  RegisterModel.fromJson(Map<String, dynamic> json) {
+  LoginModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     id = json['id'];
     username = json['username'];
@@ -31,8 +33,9 @@ class RegisterModel {
     isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    token = json['token'];
     otp = json['otp'];
+    token = json['token'];
+    isVerified = json['is_verified'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,8 +48,9 @@ class RegisterModel {
     data['is_active'] = this.isActive;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['token'] = this.token;
     data['otp'] = this.otp;
+    data['token'] = this.token;
+    data['is_verified'] = this.isVerified;
     return data;
   }
 }

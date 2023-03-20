@@ -55,6 +55,8 @@ const Map<String, String> enUS = {
   'error': 'Error',
   'success': 'Success',
   'loading': 'Loading',
+  // otp screen
+  'wrong_otp': 'Wrong OTP',
   // account complete screen
   "daklia_information": "Daklia Information",
   "address": "Address",

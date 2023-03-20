@@ -77,7 +77,7 @@ class Validations {
   String? validateOtp(String value) {
     if (value.isEmpty) {
       return 'validate_otp'.tr;
-    } else if (value.length < 4) {
+    } else if (value.length < 6) {
       return 'valid_otp'.tr;
     } else {
       return null;

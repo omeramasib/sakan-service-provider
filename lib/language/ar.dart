@@ -13,7 +13,11 @@ const Map<String, String> arSA = {
   'password': 'كلمة المرور',
   'forget_password': 'نسيت كلمة المرور ؟',
   'login_failed': 'خطأ في رقم الهاتف او كلمة المرور',
+  'user_not_active': 'عفوا هذا الحساب غير مفعل يرجى التواصل مع الإدارة لتفعيل الحساب',
   'login_success': 'تم تسجيل الدخول بنجاح',
+  'user_not_allowed': 'عفوا هذا الحساب غير مسموح له بالدخول لهذا التطبيق',
+  'user_not_exist': 'عفوا هذا الحساب غير موجود يرجى التأكد من البيانات المدخلة',
+  'user_not_verified': 'عفوا هذا الحساب غير مفعل يرجى إدخال كود التفعيل المرسل لك',
   // register screen
   'daklia_name': 'اسم الداخلية',
   'first_name': 'الاسم الاول',
@@ -46,13 +50,15 @@ const Map<String, String> arSA = {
   'connection_error': 'خطأ في الاتصال بلإنترنت',
   'igama_already_exist': 'رقم الهوية موجود مسبقا',
   'phone_already_exist': 'رقم الجوال موجود مسبقا',
-  'user_already_exist': 'المستخدم موجود مسبقا',
+  'user_already_exist': 'اسم الداخلية موجود مسبقا',
   'unknown_error': 'خطأ غير متوقع',
   'no_internet': 'لا يوجد اتصال بالانترنت',
   'server_error': 'خطأ في الخادم',
   'error': 'خطأ',
   'success': 'نجاح',
   'loading': 'جاري التحميل',
+  // otp screen
+  'wrong_otp': 'كود التحقق غير صحيح',
   // account complete screen
   "daklia_information": "بيانات الداخلية",
   "address": "العنوان",
@@ -115,7 +121,7 @@ const Map<String, String> arSA = {
   'not_receive_code': 'لم يصلك كود التحقق ؟',
   'resend': 'اعادة ارسال',
   'validate_otp': 'يرجى ادخال كود التحقق',
-  'valid_otp' : 'رقم التحقق يجب ان يكون 4 ارقام',
+  'valid_otp' : 'رقم التحقق يجب ان يكون 6 ارقام',
   // reset password screen
   'reset_password': 'إعادة تعيين كلمة المرور',
   'save': 'حفظ',

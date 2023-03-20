@@ -4,15 +4,15 @@ import 'dart:developer';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
-import '../models/register_model.dart';
-import '../otp/otp.screen.dart';
+import '../models/login_model.dart';
 
-class RegisterProvider extends GetConnect {
-  static RegisterProvider get instance => Get.put(RegisterProvider());
+class LoginProvider extends GetConnect {
+  static LoginProvider get instance => Get.put(LoginProvider());
   GetStorage storage = GetStorage();
   // var networkController = Get.put(NetworkController());
   Timer? timer;
@@ -23,89 +23,94 @@ class RegisterProvider extends GetConnect {
       if (status == EasyLoadingStatus.dismiss) {
         timer?.cancel();
       }
-    }
-    );
+    });
   }
 
-  Future<RegisterModel> register(
-      {
-        required String dakliaName,
-        required String phone,
-        required String password,
-        required String confirmPassword,
-      }) async {
+  Future<LoginModel> loginUser({
+    required String phone,
+    required String password,
+  }) async {
     final response = await post(
-      HttpHelper.baseUrl + HttpHelper.register,
+      HttpHelper.baseUrl + HttpHelper.login,
       {
-        'username': dakliaName,
         'phone_number': phone,
         'password': password,
-        'confirm_password': confirmPassword,
-        'user_type': '1',
-        'is_active': '1',
       },
     );
     var data = response.body;
     var statusCode = response.statusCode;
     log('this is the status code: $statusCode');
     log('this is the data: $data');
-    if (statusCode == 201) {
+
+    if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('token', data['token']);
       storage.write('otp', data['otp']);
+      storage.write('token', data['token']);
       storage.write('phone', data['phone_number']);
-       Get.offAll(OtpScreen(), arguments: 1);
-      return RegisterModel.fromJson(data);
+
+      if (data['user_type'] == 1 || data['user_type'] == 2) {
+        Get.offAllNamed(Routes.HOME);
+        Dialogs.successDialog(Get.context!, 'login_success'.tr);
+      }
+      if (data['user_type'] == 0) {
+        Dialogs.errorDialog(Get.context!, 'user_not_allowed'.tr);
+      }
+      return LoginModel.fromJson(data);
     }
 
     if (statusCode == 400) {
-      if(data['phone_number'] != null){
+      if (data['message'] == 'Wrong password') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
+        Dialogs.errorDialog(Get.context!, 'login_failed'.tr);
       }
 
-      if(data['message'] == 'Phone Number already exists'){
+      if (data['message'] == 'Account does not verified') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
+        storage.write('otp', data['otp']);
+        Dialogs.errorDialog(Get.context!, 'user_not_verified'.tr);
+        Get.to(OtpScreen(), arguments: 2);
       }
-
-      if(data['message'] == 'Username already exist.'){
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'user_already_exist'.tr);
-      }
-
-
-      if (data['username'] != null) {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'user_already_exist'.tr);
-      }
-
     }
 
-    if(statusCode == 404){
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
-      Dialogs.errorDialog(Get.context!, 'unknown_error'.tr);
+    if (statusCode == 401) {
+      if (data['message'] == 'Account does not active') {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'user_not_active'.tr);
+      }
+    }
+
+    if (statusCode == 404) {
+      if (data['message'] == 'User does not exist') {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+      } else {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'unknown_error'.tr);
+      }
     }
 
     if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
+      timer = Timer(
+        const Duration(seconds: 1),
+        () {
+          EasyLoading.dismiss();
+        },
+      );
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
-  return RegisterModel.fromJson(data);
+    return LoginModel.fromJson(data);
   }
 }

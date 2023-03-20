@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,7 @@ import 'package:get/get.dart';
 import '../../../../constants/dialogs.dart';
 
 class NetworkController extends GetxController {
-   static NetworkController get instance => Get.put(NetworkController());
+  static NetworkController get instance => Get.put(NetworkController());
   var connectionStatus = 0.obs;
   RxBool isConnected = false.obs;
 
@@ -39,14 +40,17 @@ class NetworkController extends GetxController {
       case ConnectivityResult.wifi:
         connectionStatus.value = 1;
         isConnected.value = true;
+        log('this is the connection wifi status: ${connectionStatus.value}');
         break;
       case ConnectivityResult.mobile:
         connectionStatus.value = 2;
         isConnected.value = true;
+        log('this is the connection mobile status: ${connectionStatus.value}');
         break;
       case ConnectivityResult.none:
         connectionStatus.value = 0;
         isConnected.value = false;
+        log('this is the connection none status: ${connectionStatus.value}');
         break;
       default:
         Dialogs.connectionErrorDialog(Get.context!);

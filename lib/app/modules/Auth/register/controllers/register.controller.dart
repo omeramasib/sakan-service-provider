@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -26,6 +28,8 @@ class RegisterController extends GetxController {
 
   var registerProvider = RegisterProvider();
 
+  RxBool isConnected = false.obs;
+
   var networkController = NetworkController();
 
   Future<RegisterModel> register() async {
@@ -44,6 +48,7 @@ class RegisterController extends GetxController {
     }
     registerFormKey.currentState!.save();
     // if (networkController.isConnected.value == true) {
+    //   log('this is the network value : ${networkController.isConnected.value}');
     //   EasyLoading.show(status: 'loading'.tr);
     //   register();
     // } else {
