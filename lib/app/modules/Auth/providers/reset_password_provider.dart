@@ -8,12 +8,13 @@ import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
-import '../models/forget_password_model.dart';
+import '../../../routes/app_pages.dart';
+import '../models/login_model.dart';
 
-class ForgetPasswordProvider extends GetConnect {
-  static ForgetPasswordProvider get instance =>
-      Get.put(ForgetPasswordProvider());
+class ResetPasswordProvider extends GetConnect {
+  static ResetPasswordProvider get instance => Get.put(ResetPasswordProvider());
   GetStorage storage = GetStorage();
+
   Timer? timer;
   @override
   void onInit() {
@@ -24,13 +25,14 @@ class ForgetPasswordProvider extends GetConnect {
     });
   }
 
-  Future<ForgetPasswordModel> forgetPassword({
-    required String phone,
+  Future<void> resetPassword({
+    required String password,
   }) async {
-    final response = await post(
-      HttpHelper.baseUrl + HttpHelper.sendOtp,
+    final response = await put(
+      HttpHelper.baseUrl + HttpHelper.resetPassword,
       {
-        'phone_number': phone,
+        'phone_number': storage.read('phone'),
+        'password': password,
       },
     );
     var data = response.body;
@@ -41,30 +43,39 @@ class ForgetPasswordProvider extends GetConnect {
     if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
+        Dialogs.successDialog(Get.context!, 'password_changed_successfully'.tr);
+        Get.offAllNamed(Routes.AUTH, arguments: 0);
       });
-      storage.write('phone', phone);
-      Get.to(OtpScreen(), arguments: 0);
-      return ForgetPasswordModel.fromJson(data);
+
+      if (data['user_type'] == 1) {
+        Dialogs.successDialog(Get.context!, 'password_changed_successfully'.tr);
+        Get.offAllNamed(Routes.AUTH, arguments: 0);
+      }
+      if (data['user_type'] == 0) {
+        Dialogs.errorDialog(Get.context!, 'user_not_allowed'.tr);
+      }
+
     }
 
     if (statusCode == 400) {
-
-      if (data['message'] == 'User is not active') {
+      if (data['message'] == 'Password is same as old password') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'user_not_active'.tr);
+        Dialogs.errorDialog(Get.context!, 'password_cant_be_as_old_one'.tr);
       }
+
     }
 
+
     if (statusCode == 404) {
+
       if (data['message'] == 'Phone Number does not exist') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'phone_number_does_not_exist'.tr);
-      }
-      else {
+      } else {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
@@ -82,6 +93,6 @@ class ForgetPasswordProvider extends GetConnect {
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
-    return ForgetPasswordModel.fromJson(data);
+
   }
 }

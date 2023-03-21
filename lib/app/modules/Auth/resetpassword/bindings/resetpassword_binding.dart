@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/resetpassword_controller.dart';
+import '../../controllers/reset_password_controller.dart';
 
 class ResetpasswordBinding extends Bindings {
   @override

@@ -13,7 +13,7 @@ import '../../../../constants/styles_manager.dart';
 import '../../../../constants/validations.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../routes/app_pages.dart';
-import '../resetpassword/views/resetpassword_view.dart';
+import '../resetpassword/views/reset_password_view.dart';
 import '../controllers/otp.controller.dart';
 
 class OtpScreen extends GetView<OtpController> {

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../modules/Auth/bindings/auth_binding.dart';
 import '../modules/Auth/resetpassword/bindings/resetpassword_binding.dart';
-import '../modules/Auth/resetpassword/views/resetpassword_view.dart';
+import '../modules/Auth/resetpassword/views/reset_password_view.dart';
 import '../modules/Auth/views/auth_view.dart';
 import '../modules/MoreScreen/bindings/more_screen_binding.dart';
 import '../modules/MoreScreen/views/more_screen_view.dart';

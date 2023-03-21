@@ -7,6 +7,8 @@ class RegisterModel {
   bool? isActive;
   String? createdAt;
   String? updatedAt;
+  bool? isStaff;
+  bool? isSuperuser;
   String? token;
   String? otp;
 
@@ -19,6 +21,8 @@ class RegisterModel {
       this.isActive,
       this.createdAt,
       this.updatedAt,
+      this.isStaff,
+      this.isSuperuser,
       this.token,
       this.otp});
 
@@ -31,6 +35,8 @@ class RegisterModel {
     isActive = json['is_active'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    isStaff = json['is_staff'];
+    isSuperuser = json['is_superuser'];
     token = json['token'];
     otp = json['otp'];
   }
@@ -45,6 +51,8 @@ class RegisterModel {
     data['is_active'] = this.isActive;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['is_staff'] = this.isStaff;
+    data['is_superuser'] = this.isSuperuser;
     data['token'] = this.token;
     data['otp'] = this.otp;
     return data;

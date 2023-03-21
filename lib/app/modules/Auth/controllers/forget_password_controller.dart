@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
+import '../../../../constants/dialogs.dart';
 import '../../network/controllers/network_controller.dart';
 import '../models/forget_password_model.dart';
 import '../providers/forget_password_provider.dart';
@@ -23,6 +24,12 @@ class ForgetPasswordController extends GetxController {
   Future<ForgetPasswordModel> forgetPassword() async {
     return await forgetPasswordP.forgetPassword(
       phone: phone,
+    ).timeout(
+      Duration(seconds: 1),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        return ForgetPasswordModel();
+      },
     );
   }
 

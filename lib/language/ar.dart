@@ -59,6 +59,9 @@ const Map<String, String> arSA = {
   'loading': 'جاري التحميل',
   // otp screen
   'wrong_otp': 'كود التحقق غير صحيح',
+  // reset password
+  'password_cant_be_as_old_one': 'كلمة المرور الجديدة لا يمكن ان تكون نفس كلمة المرور القديمة',
+  'password_changed_successfully': 'تم تغيير كلمة المرور بنجاح',
   // account complete screen
   "daklia_information": "بيانات الداخلية",
   "address": "العنوان",

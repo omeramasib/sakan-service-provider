@@ -190,9 +190,12 @@ Widget newPasswordFormField(BuildContext context, Color color, String hinText,
             width: 315,
             child: TextFormField(
               obscureText: controller.isObscure.value == true ? true : false,
-              controller: controller.newPasswordController,
+              controller: controller.passwordController,
               validator: (value) {
                 return Validations().validatePassword(value!);
+              },
+              onSaved: (value) {
+                controller.newPassword = value!;
               },
               decoration: InputDecoration(
                 hintText: hinText,
@@ -306,7 +309,7 @@ Widget confirmPasswordFormField(BuildContext context, dynamic controller) {
               controller: controller.confirmPasswordController,
               validator: (value) {
                 return Validations().validateConfirmPassword(
-                    value!, controller.confirmPasswordController.text);
+                    value!, controller.passwordController.text);
               },
               onSaved: (String? value) {
                 controller.confirmPassword = value!;

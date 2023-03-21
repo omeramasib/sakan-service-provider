@@ -9,7 +9,7 @@ import '../../../../../constants/styles_manager.dart';
 import '../../../../../constants/values_manager.dart';
 import '../../../../../language_controller/language_controller.dart';
 import '../../../../../widgets/text_form_fields.dart';
-import '../controllers/resetpassword_controller.dart';
+import '../../controllers/reset_password_controller.dart';
 
 class ResetpasswordView extends GetView {
   const ResetpasswordView({Key? key}) : super(key: key);
