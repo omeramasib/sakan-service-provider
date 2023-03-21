@@ -4,11 +4,9 @@ import 'dart:developer';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
-import '../../../routes/app_pages.dart';
 import '../models/forget_password_model.dart';
 
 class ForgetPasswordProvider extends GetConnect {
