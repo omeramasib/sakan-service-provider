@@ -72,7 +72,7 @@ class LoginProvider extends GetConnect {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        storage.write('otp', data['otp']);
+        storage.write('phone', phone);
         Dialogs.errorDialog(Get.context!, 'user_not_verified'.tr);
         Get.to(OtpScreen(), arguments: 2);
       }

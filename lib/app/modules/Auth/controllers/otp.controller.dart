@@ -41,18 +41,14 @@ class OtpController extends GetxController {
         // Get.offAllNamed(Routes.HOME);
       });
 
-      if (value.message == 'OTP is incorrect') {
-        Dialogs.errorDialog(Get.context!, 'wrong_otp'.tr);
-      } else if (value.message == 'OTP verified successfully') {
+      if (value.message == 'OTP verified successfully') {
         if (number != null) {
           if (number == 0) {
             Get.to(ResetpasswordView());
-          }
-          else if (number == 1) {
+          } else if (number == 1) {
             Get.toNamed(Routes.HOME);
             Dialogs.successDialog(Get.context!, 'sucsses_register'.tr);
-          }
-          else if (number == 2) {
+          } else if (number == 2){
             Get.toNamed(Routes.HOME);
           }
         }

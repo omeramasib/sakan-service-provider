@@ -9,6 +9,7 @@ import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/text_form_fields.dart';
+import '../forget_password/forget_password.dart';
 import '../otp/otp.screen.dart';
 import '../controllers/login.controller.dart';
 
@@ -102,7 +103,7 @@ class LoginScreen extends GetView<LoginController> {
                                     top: AppPadding.p20, right: AppPadding.p40),
                             child: GestureDetector(
                               onTap: () {
-                                Get.offAll(OtpScreen(), arguments: 0);
+                                Get.offAll(ForgetPasswordScreen());
                               },
                               child: Text(
                                 'forget_password'.tr,

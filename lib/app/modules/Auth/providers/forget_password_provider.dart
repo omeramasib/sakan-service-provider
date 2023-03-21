@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -41,7 +42,8 @@ class ForgetPasswordProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('otp', data['otp']);
+      storage.write('phone', phone);
+      Get.to(OtpScreen(), arguments: 0);
       return ForgetPasswordModel.fromJson(data);
     }
 
