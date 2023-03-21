@@ -14,7 +14,7 @@ import '../../../../constants/validations.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../routes/app_pages.dart';
 import '../resetpassword/views/resetpassword_view.dart';
-import 'controllers/otp.controller.dart';
+import '../controllers/otp.controller.dart';
 
 class OtpScreen extends GetView<OtpController> {
   const OtpScreen({Key? key}) : super(key: key);
@@ -141,22 +141,24 @@ class OtpScreen extends GetView<OtpController> {
                     ButtonsManager.primaryButton(
                       text: 'confirm'.tr,
                       onPressed: () {
-                        if (number == 0) {
-                          controller.checkOtp();
-                        }
-                        if (number == 1) {
-                          if (storage.read('otp') == controller.code) {
-                            Dialogs.successDialog(
-                                Get.context!, 'sucsses_register'.tr);
-                            Get.offNamed(Routes.HOME);
-                          }
+                        controller.checkOtp(number);
+                        // if (number == 0) {
+                        //   controller.checkOtp();
+                        // }
+                        // if (number == 1) {
+                        //   if (storage.read('otp') == controller.code) {
+                        //     Dialogs.successDialog(
+                        //         Get.context!, 'sucsses_register'.tr);
+                        //     Get.offNamed(Routes.HOME);
+                        //   }
 
-                          if (number == 2) {
-                            if (storage.read('otp') == controller.code) {
-                              Get.offNamed(Routes.HOME);
-                            }
-                          }
-                        }
+                        //   if (number == 2) {
+                        //     controller.checkOtp();
+                        //     // if (storage.read('otp') == controller.code) {
+                        //     //   Get.offNamed(Routes.HOME);
+                        //     // }
+                        //   }
+                        // }
                       },
                       context: context,
                     ),

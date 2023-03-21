@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:sakan/app/modules/Auth/providers/register_provider.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 
-import '../../../../../constants/dialogs.dart';
-import '../../../network/controllers/network_controller.dart';
-import '../../models/register_model.dart';
+import '../../../../constants/dialogs.dart';
+import '../../network/controllers/network_controller.dart';
+import '../models/register_model.dart';
 
 class RegisterController extends GetxController {
 
@@ -54,6 +54,7 @@ class RegisterController extends GetxController {
     // } else {
     //   Dialogs.connectionErrorDialog(Get.context!);
     // }
+    EasyLoading.show(status: 'loading'.tr);
     register();
     update();
   }

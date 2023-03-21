@@ -8,7 +8,7 @@ import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/text_form_fields.dart';
-import 'controllers/register.controller.dart';
+import '../controllers/register.controller.dart';
 
 class RegisterScreen extends GetView<RegisterController> {
   const RegisterScreen({Key? key}) : super(key: key);

@@ -122,6 +122,8 @@ const Map<String, String> arSA = {
   'resend': 'اعادة ارسال',
   'validate_otp': 'يرجى ادخال كود التحقق',
   'valid_otp' : 'رقم التحقق يجب ان يكون 6 ارقام',
+  // forget password screen
+  'phone_number_does_not_exist': ' عفوا رقم الجوال غير موجود',
   // reset password screen
   'reset_password': 'إعادة تعيين كلمة المرور',
   'save': 'حفظ',

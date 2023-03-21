@@ -10,7 +10,7 @@ import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/text_form_fields.dart';
 import '../otp/otp.screen.dart';
-import 'controllers/login.controller.dart';
+import '../controllers/login.controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
   const LoginScreen({Key? key}) : super(key: key);
