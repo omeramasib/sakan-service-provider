@@ -148,6 +148,9 @@ Widget oldPasswordFormField(BuildContext context, Color color, String hinText,
               validator: (value) {
                 return Validations().validatePassword(value!);
               },
+              onSaved: (value) {
+                controller.oldPassword = value!;
+              },
               decoration: InputDecoration(
                 hintText: hinText,
                 hintStyle: getRegularStyle(
@@ -169,7 +172,7 @@ Widget oldPasswordFormField(BuildContext context, Color color, String hinText,
                       controller.isObscure.value
                           ? Icons.visibility_off
                           : Icons.visibility,
-                      color: ColorsManager.primaryColor,
+                      color: ColorsManager.mainColor,
                     ),
                   ),
                 ),
@@ -212,10 +215,11 @@ Widget newPasswordFormField(BuildContext context, Color color, String hinText,
                 suffixIcon: Obx(
                   () => GestureDetector(
                     onTap: () {
-                      controller.isObscure.value = !controller.isObscure.value;
+                      controller.isObscureNew.value =
+                          !controller.isObscureNew.value;
                     },
                     child: Icon(
-                      controller.isObscure.value
+                      controller.isObscureNew.value
                           ? Icons.visibility_off
                           : Icons.visibility,
                       color: ColorsManager.mainColor,
@@ -260,7 +264,6 @@ Widget dakliaNameFormField(BuildContext context, dynamic controller,
     ),
   );
 }
-
 
 // identity text form field
 Widget identityFormField(BuildContext context, dynamic controller, Color color,
@@ -313,7 +316,56 @@ Widget confirmPasswordFormField(BuildContext context, dynamic controller) {
               },
               onSaved: (String? value) {
                 controller.confirmPassword = value!;
-                print('this is the confirm password: ${controller.confirmPassword}');
+                print(
+                    'this is the confirm password: ${controller.confirmPassword}');
+              },
+              decoration: InputDecoration(
+                hintText: 'confirm_password'.tr,
+                fillColor: ColorsManager.greyColor,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50),
+                  borderSide: BorderSide.none,
+                ),
+                suffixIcon: Obx(
+                  () => GestureDetector(
+                    onTap: () {
+                      controller.isObscureConfirm.value =
+                          !controller.isObscureConfirm.value;
+                    },
+                    child: Icon(
+                      controller.isObscureConfirm.value
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      color: ColorsManager.mainColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )),
+    ),
+  );
+}
+
+Widget confirmNewPassword(BuildContext context, dynamic controller) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: Obx(
+      (() => SizedBox(
+            width: 315,
+            child: TextFormField(
+              obscureText:
+                  controller.isObscureConfirm.value == true ? true : false,
+              controller: controller.confirmPasswordController,
+              validator: (value) {
+                return Validations().validateConfirmPassword(
+                    value!, controller.passwordController.text);
+              },
+              onSaved: (String? value) {
+                controller.confirmPassword = value!;
+                print(
+                    'this is the confirm password: ${controller.confirmPassword}');
               },
               decoration: InputDecoration(
                 hintText: 'confirm_password'.tr,
@@ -730,10 +782,8 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.whiteColor,
@@ -747,7 +797,8 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
 
 // room count widget
 
-Widget roomCountWidget(BuildContext context, dynamic controller, String hinText) {
+Widget roomCountWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return SizedBox(
     width: 315,
     height: 50,
@@ -769,10 +820,8 @@ Widget roomCountWidget(BuildContext context, dynamic controller, String hinText)
         ),
         isDense: true,
         enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: ColorsManager.lightGreyColor
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
+          borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          borderRadius: BorderRadius.all(Radius.circular(50)),
         ),
         filled: true,
         fillColor: ColorsManager.whiteColor,
@@ -784,7 +833,8 @@ Widget roomCountWidget(BuildContext context, dynamic controller, String hinText)
 }
 
 // add photo widget
-Widget  addRoomPhotoWidget(BuildContext context, dynamic controller, String text) {
+Widget addRoomPhotoWidget(
+    BuildContext context, dynamic controller, String text) {
   return Obx(
     () => controller.imagePath.value == ''
         ? Container(
@@ -840,7 +890,8 @@ Widget  addRoomPhotoWidget(BuildContext context, dynamic controller, String text
   );
 }
 
-Widget addressDetailsWidget(BuildContext context, dynamic controller, String hinText) {
+Widget addressDetailsWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -864,10 +915,8 @@ Widget addressDetailsWidget(BuildContext context, dynamic controller, String hin
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.greyColor,
@@ -880,7 +929,8 @@ Widget addressDetailsWidget(BuildContext context, dynamic controller, String hin
 }
 
 // add Daklia Confirmation widget
-Widget dakliaConfirmationWidget(BuildContext context, dynamic controller, String text) {
+Widget dakliaConfirmationWidget(
+    BuildContext context, dynamic controller, String text) {
   return Obx(
     () => controller.confirmationPath.value == ''
         ? Container(
@@ -936,7 +986,8 @@ Widget dakliaConfirmationWidget(BuildContext context, dynamic controller, String
 }
 
 // add daklia owner id photo widget
-Widget dakliaOwnerIdWidget(BuildContext context, dynamic controller, String text) {
+Widget dakliaOwnerIdWidget(
+    BuildContext context, dynamic controller, String text) {
   return Obx(
     () => controller.ownerIdPath.value == ''
         ? Container(
@@ -992,8 +1043,9 @@ Widget dakliaOwnerIdWidget(BuildContext context, dynamic controller, String text
 }
 
 // add Daklia Confirmation widget
-Widget dakliaImageWidget(BuildContext context, dynamic controller, String text) {
-    return Obx(
+Widget dakliaImageWidget(
+    BuildContext context, dynamic controller, String text) {
+  return Obx(
     () => controller.imagePath.value == ''
         ? Container(
             height: 94,
@@ -1047,7 +1099,8 @@ Widget dakliaImageWidget(BuildContext context, dynamic controller, String text) 
   );
 }
 
-Widget roomNumberWidget(BuildContext context, dynamic controller, String hinText) {
+Widget roomNumberWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1071,10 +1124,8 @@ Widget roomNumberWidget(BuildContext context, dynamic controller, String hinText
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1086,7 +1137,8 @@ Widget roomNumberWidget(BuildContext context, dynamic controller, String hinText
   );
 }
 
-Widget allBedsNumberWidget(BuildContext context, dynamic controller, String hinText) {
+Widget allBedsNumberWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1110,10 +1162,8 @@ Widget allBedsNumberWidget(BuildContext context, dynamic controller, String hinT
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1125,7 +1175,8 @@ Widget allBedsNumberWidget(BuildContext context, dynamic controller, String hinT
   );
 }
 
-Widget emptyBedsNumberWidget(BuildContext context, dynamic controller, String hinText) {
+Widget emptyBedsNumberWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1149,10 +1200,8 @@ Widget emptyBedsNumberWidget(BuildContext context, dynamic controller, String hi
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1164,7 +1213,8 @@ Widget emptyBedsNumberWidget(BuildContext context, dynamic controller, String hi
   );
 }
 
-Widget dailyBedPriceWidget(BuildContext context, dynamic controller, String hinText) {
+Widget dailyBedPriceWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1188,10 +1238,8 @@ Widget dailyBedPriceWidget(BuildContext context, dynamic controller, String hinT
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1203,7 +1251,8 @@ Widget dailyBedPriceWidget(BuildContext context, dynamic controller, String hinT
   );
 }
 
-Widget monthlyBedPriceWidget(BuildContext context, dynamic controller, String hinText) {
+Widget monthlyBedPriceWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1227,10 +1276,8 @@ Widget monthlyBedPriceWidget(BuildContext context, dynamic controller, String hi
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1266,10 +1313,8 @@ Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.greyColor,
@@ -1299,10 +1344,8 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1314,7 +1357,8 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
   );
 }
 
-Widget editFeatureWidget(BuildContext context, dynamic controller, String hinText) {
+Widget editFeatureWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1338,10 +1382,8 @@ Widget editFeatureWidget(BuildContext context, dynamic controller, String hinTex
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.greyColor,
@@ -1353,7 +1395,8 @@ Widget editFeatureWidget(BuildContext context, dynamic controller, String hinTex
   );
 }
 
-Widget editOtherDetailsWidget(BuildContext context, dynamic controller , String hinText) {
+Widget editOtherDetailsWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1376,10 +1419,8 @@ Widget editOtherDetailsWidget(BuildContext context, dynamic controller , String 
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1391,7 +1432,8 @@ Widget editOtherDetailsWidget(BuildContext context, dynamic controller , String 
   );
 }
 
-Widget serviceNameWidget(BuildContext context, dynamic controller, String hinText) {
+Widget serviceNameWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1415,10 +1457,8 @@ Widget serviceNameWidget(BuildContext context, dynamic controller, String hinTex
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1430,7 +1470,8 @@ Widget serviceNameWidget(BuildContext context, dynamic controller, String hinTex
   );
 }
 
-Widget servicePriceWidget(BuildContext context, dynamic controller, String hinText) {
+Widget servicePriceWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1454,10 +1495,8 @@ Widget servicePriceWidget(BuildContext context, dynamic controller, String hinTe
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1469,7 +1508,8 @@ Widget servicePriceWidget(BuildContext context, dynamic controller, String hinTe
   );
 }
 
-Widget regulationTextWidget(BuildContext context, dynamic controller, String hinText) {
+Widget regulationTextWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1493,10 +1533,8 @@ Widget regulationTextWidget(BuildContext context, dynamic controller, String hin
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.greyColor,
@@ -1526,10 +1564,8 @@ Widget regulationDescriptionWidget(BuildContext context, dynamic controller) {
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1541,7 +1577,8 @@ Widget regulationDescriptionWidget(BuildContext context, dynamic controller) {
   );
 }
 
-Widget editRegulationWidget(BuildContext context, dynamic controller, String hinText) {
+Widget editRegulationWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1565,10 +1602,8 @@ Widget editRegulationWidget(BuildContext context, dynamic controller, String hin
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
           ),
           filled: true,
           fillColor: ColorsManager.greyColor,
@@ -1580,7 +1615,8 @@ Widget editRegulationWidget(BuildContext context, dynamic controller, String hin
   );
 }
 
-Widget editRegulationDetailsWidget(BuildContext context, dynamic controller , String hinText) {
+Widget editRegulationDetailsWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
@@ -1603,10 +1639,8 @@ Widget editRegulationDetailsWidget(BuildContext context, dynamic controller , St
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1636,10 +1670,8 @@ Widget appointmentRejectWidget(BuildContext context, dynamic controller) {
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: ColorsManager.lightGreyColor
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,

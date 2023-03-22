@@ -9,6 +9,7 @@ import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
+import '../../Auth/change_password/change_password.dart';
 import '../controllers/more_screen_controller.dart';
 
 class MoreScreenView extends GetView<MoreScreenController> {
@@ -71,6 +72,7 @@ class MoreScreenView extends GetView<MoreScreenController> {
                         GestureDetector(
                           onTap: () {
                             // Get.toNamed(Routes.CHANGE_PASSWORD);
+                            Get.to(ChangePasswordView());
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -449,7 +451,7 @@ class MoreScreenView extends GetView<MoreScreenController> {
                         // Logout Field
                         GestureDetector(
                           onTap: () async {
-                            // await controller.submitLogot();
+                            await controller.submitLogot();
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

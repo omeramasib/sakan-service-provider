@@ -1,4 +1,9 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
+import '../../../routes/app_pages.dart';
+import '../providers/logout_provider.dart';
 
 class MoreScreenController extends GetxController {
   //TODO: Implement MoreScreenController
@@ -10,6 +15,15 @@ class MoreScreenController extends GetxController {
     toogleStatus.value = value;
     update();
   }
+
+  RxBool isLoading = false.obs;
+  var provider = LogoutProvider();
+  var storage = GetStorage();
+    Future<void> submitLogot() async {
+    await provider.logout();
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();
