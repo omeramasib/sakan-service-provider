@@ -43,6 +43,8 @@ class RegisterProvider extends GetConnect {
         'confirm_password': confirmPassword,
         'user_type': '1',
         'is_active': '1',
+        'is_staff': '0',
+        'is_superuser': '0',
       },
     );
     var data = response.body;
