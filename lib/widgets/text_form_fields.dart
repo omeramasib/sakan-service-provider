@@ -773,6 +773,9 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
         keyboardType: TextInputType.text,
         controller: controller.descriptionController,
         enabled: true,
+        onSaved: (value) {
+          controller.dakliaDescription = value;
+        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,
@@ -806,6 +809,9 @@ Widget roomCountWidget(
       keyboardType: TextInputType.text,
       controller: controller.roomCountController,
       enabled: true,
+      onSaved: (value) {
+        controller.roomCount = int.parse(value!);
+      },
       decoration: InputDecoration(
         hintText: hinText,
         hintStyle: getRegularStyle(

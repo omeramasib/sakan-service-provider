@@ -49,6 +49,7 @@ class LoginProvider extends GetConnect {
       storage.write('otp', data['otp']);
       storage.write('token', data['token']);
       storage.write('phone', data['phone_number']);
+      storage.write('userId', data['id']);
 
       if (data['user_type'] == 1 || data['user_type'] == 2) {
         Get.offAllNamed(Routes.HOME);

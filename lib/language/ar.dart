@@ -111,6 +111,11 @@ const Map<String, String> arSA = {
   'daklia_image': 'صورة الداخلية',
   'daklia_description': 'وصف عن الداخلية',
   'room_count': 'عدد الغرف',
+  'user_id_already_exist': 'عفوا لقد قمت بملئ هذه البيانات من قبل',
+  'daklia_image_required': 'صورة الداخلية مطلوبة',
+  'daklia_description_required': 'وصف عن الداخلية مطلوب',
+  'token_is_invalid': 'الرجاء تسجيل الدخول مرة اخرى',
+  'please_select_image': 'الرجاء اختيار صورة للداخلية من المعرض او الكاميرا',
   // otp screen
   'enter_otp': 'ادخل كود التحقق',
   'description1_otp': 'ارسلنا كود التحقق في رسالة على رقم جوالك',

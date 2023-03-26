@@ -29,9 +29,17 @@ class LoginController extends GetxController {
   var networkController = NetworkController();
 
   Future<LoginModel> login() async {
-    return await loginProvider.loginUser(
+    return await loginProvider
+        .loginUser(
       phone: phone,
       password: password,
+    )
+        .timeout(
+      Duration(seconds: 2),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        return LoginModel();
+      },
     );
   }
 

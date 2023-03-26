@@ -7,7 +7,6 @@ import 'package:get_storage/get_storage.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
-import '../../../routes/app_pages.dart';
 import '../models/register_model.dart';
 import '../otp/otp.screen.dart';
 
@@ -58,6 +57,7 @@ class RegisterProvider extends GetConnect {
       storage.write('token', data['token']);
       storage.write('otp', data['otp']);
       storage.write('phone', data['phone_number']);
+      storage.write('userId', data['id']);
        Get.offAll(OtpScreen(), arguments: 1);
       return RegisterModel.fromJson(data);
     }

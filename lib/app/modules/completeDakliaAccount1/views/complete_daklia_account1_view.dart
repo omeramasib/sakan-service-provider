@@ -61,8 +61,9 @@ class CompleteDakliaAccount1View
               ButtonsManager.primaryButton(
                 text: 'next'.tr,
                 onPressed: (){
-                  Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
-                  print('clicked');
+                  // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
+                  // print('clicked');
+                  controller.checkSendDakliaInfo();
                 },
                 context: context,
                 maximumSize: Size(174, 50),
@@ -87,114 +88,117 @@ class CompleteDakliaAccount1View
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 30,
-                left: 40,
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-              child: step1(context, "daklia_information".tr, "address".tr,
-                  "daklia_documentation".tr),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              'warning'.tr,
-              style: getRegularStyle(
-                fontSize: FontSizeManager.s14,
-                color: ColorsManager.blackColor,
-                height: 2.5,
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 30,
+                  left: 40,
+                ),
+                child: step1(context, "daklia_information".tr, "address".tr,
+                    "daklia_documentation".tr),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p65)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p50),
-                  child: Text(
-                    'daklia_image'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'warning'.tr,
+                style: getRegularStyle(
+                  fontSize: FontSizeManager.s14,
+                  color: ColorsManager.blackColor,
+                  height: 2.5,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p65)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p20, right: AppPadding.p50),
+                    child: Text(
+                      'daklia_image'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            // widget for add image
-            addPhotoWidget(
-              context,
-              controller,
-              'daklia_image'.tr,
-            ),
-
-            SizedBox(
-              height: 10,
-            ),
-
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p65)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p50),
-                  child: Text(
-                    'daklia_description'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              // widget for add image
+              addPhotoWidget(
+                context,
+                controller,
+                'daklia_image'.tr,
+              ),
+        
+              SizedBox(
+                height: 10,
+              ),
+        
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p65)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p20, right: AppPadding.p50),
+                    child: Text(
+                      'daklia_description'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            addDescriptionWidget(context, controller),
-
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p65)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p50),
-                  child: Text(
-                    'room_count'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              addDescriptionWidget(context, controller),
+        
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p65)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p20, right: AppPadding.p50),
+                    child: Text(
+                      'room_count'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            roomCountWidget(context, controller, 'room_count'.tr,)
-          ],
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              roomCountWidget(context, controller, 'room_count'.tr,)
+            ],
+          ),
         ),
 
       ),
