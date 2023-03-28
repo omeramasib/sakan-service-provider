@@ -35,7 +35,7 @@ class Validations {
     }
   }
 
-  String? textValidation(String value, controller) {
+  String? textValidation(String value) {
     if (value.isEmpty) {
       return "required_field".tr;
     } else {

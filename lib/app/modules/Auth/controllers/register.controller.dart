@@ -38,6 +38,12 @@ class RegisterController extends GetxController {
       phone: phone,
       password: password,
       confirmPassword: confirmPassword,
+    ).timeout(
+      Duration(seconds: 1),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        return RegisterModel();
+      },
     );
   }
 

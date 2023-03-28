@@ -48,94 +48,96 @@ class CompleteDakliaAccount3View
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 30,
-                left: 40,
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
               ),
-              child: step3(context, "daklia_information".tr, "address".tr,
-                  "daklia_documentation".tr),
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            Text(
-              'daklia_documentation_des'.tr,
-              style: getRegularStyle(
-                fontSize: FontSizeManager.s14,
-                color: ColorsManager.blackColor,
-                height: 2.5,
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 30,
+                  left: 40,
+                ),
+                child: step3(context, "daklia_information".tr, "address".tr,
+                    "daklia_documentation".tr),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p65)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p50),
-                  child: Text(
-                    'daklia_doc'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
+              SizedBox(
+                height: 30,
+              ),
+              Text(
+                'daklia_documentation_des'.tr,
+                style: getRegularStyle(
+                  fontSize: FontSizeManager.s14,
+                  color: ColorsManager.blackColor,
+                  height: 2.5,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p65)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p20, right: AppPadding.p50),
+                    child: Text(
+                      'daklia_doc'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            // widget for add image
-            dakliaConfirmationWidget(
-              context,
-              controller,
-              "add_photo".tr,
-            ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              // widget for add image
+              dakliaConfirmationWidget(
+                context,
+                controller,
+                "add_photo".tr,
+              ),
 
-            SizedBox(
-              height: 10,
-            ),
+              SizedBox(
+                height: 10,
+              ),
 
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p65)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p50),
-                  child: Text(
-                    'daklia_owner_doc'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p65)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p20, right: AppPadding.p50),
+                    child: Text(
+                      'daklia_owner_doc'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
 
-            // widget to get daklia owner id photo
-            dakliaOwnerIdWidget(context, controller, "add_photo".tr),
-          ],
+              // widget to get daklia owner id photo
+              dakliaOwnerIdWidget(context, controller, "add_photo".tr),
+            ],
+          ),
         ),
-
       ),
-        bottomNavigationBar: Container(
+      bottomNavigationBar: Container(
         width: Get.width,
         height: 78,
         decoration: BoxDecoration(
@@ -149,21 +151,22 @@ class CompleteDakliaAccount3View
             children: [
               ButtonsManager.primaryButton(
                 text: 'next'.tr,
-                onPressed: (){
+                onPressed: () {
                   // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
                   // accountConfirmation(context);
-                  Get.offAllNamed(Routes.DAKLIA_PROFILE);
+                  // Get.offAllNamed(Routes.DAKLIA_PROFILE);
+                  controller.checkSendDakliaVA();
                 },
                 context: context,
                 maximumSize: Size(174, 50),
                 minimumSize: Size(174, 50),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
               ButtonsManager.primaryButton(
                 text: 'previous'.tr,
-                onPressed: (){
+                onPressed: () {
                   Get.back();
                 },
                 context: context,
@@ -171,7 +174,7 @@ class CompleteDakliaAccount3View
                 minimumSize: Size(134, 50),
                 buttonColor: ColorsManager.greyColor,
                 textColor: ColorsManager.blackColor,
-                )
+              )
             ],
           ),
         ),

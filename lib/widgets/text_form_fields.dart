@@ -11,6 +11,8 @@ import '../constants/fonts_manager.dart';
 import '../constants/styles_manager.dart';
 import '../constants/validations.dart';
 import '../constants/values_manager.dart';
+import 'choose_image/choose_confirmation_image.dart';
+import 'choose_image/choose_owner_id_image.dart';
 
 // phone number text form field
 Widget phoneNumberFormField(
@@ -426,8 +428,7 @@ Widget birthDateWidget(BuildContext context, dynamic controller, Color color,
               date.toString().substring(0, 10);
         },
         validator: (value) {
-          return Validations()
-              .textValidation(value!, controller.birthDateController.text);
+          return Validations().textValidation(value!);
         },
         controller: controller.birthDateController,
         readOnly: true,
@@ -776,6 +777,9 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
         onSaved: (value) {
           controller.dakliaDescription = value;
         },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,
@@ -811,6 +815,9 @@ Widget roomCountWidget(
       enabled: true,
       onSaved: (value) {
         controller.roomCount = int.parse(value!);
+      },
+      validator: (value) {
+        return Validations().textValidation(value!);
       },
       decoration: InputDecoration(
         hintText: hinText,
@@ -907,6 +914,12 @@ Widget addressDetailsWidget(
         keyboardType: TextInputType.text,
         controller: controller.addressDetailsController,
         enabled: true,
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
+        onSaved: (value) {
+          controller.address = value;
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -954,7 +967,8 @@ Widget dakliaConfirmationWidget(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      controller.getConfirmationImage(ImageSource.camera);
+                      // controller.getConfirmationImage(ImageSource.camera);
+                      selectConfirmationImage(context, controller);
                     },
                     child: SvgPicture.asset(
                       ImagesManager.daklia_image,
@@ -1011,7 +1025,8 @@ Widget dakliaOwnerIdWidget(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      controller.getOwnerIdImage(ImageSource.camera);
+                      // controller.getOwnerIdImage(ImageSource.camera);
+                      selectOwnerIdImage(context, controller);
                     },
                     child: SvgPicture.asset(
                       ImagesManager.daklia_image,

@@ -75,7 +75,7 @@ const Map<String, String> arSA = {
   'complete_information': 'اكمال البيانات',
   'complete_information_des':
       'دعنا نتعرف عليك وعلى حالتك الصحية ستساعد\n هذه المعلومات الأطباء في تشخيص حالتك',
-  'mylocation': 'موقعي',
+  'select_location': 'اختر الموقع',
   'other_detailes': 'تفاصيل اخرى',
   'address_details': 'العنوان',
   'address_details_des':
@@ -83,7 +83,7 @@ const Map<String, String> arSA = {
   'daklia_documentation_des':
       'ادخل البيانات التي سيتم من خلالها توثيق حساب الداخلية،\nرجاء تأكد من ادخال بيانات صحيحة',
   'daklia_doc': 'صورة من تصديق الداخلية ساري الصلاحية',
-  'daklia_owner_doc': 'صورة من تصديق إثبات شخصية مالك الداخلية',
+  'daklia_owner_doc': 'صورة من إثبات شخصية مالك الداخلية',
   "add_photo": "اضف صورة",
   'confirm_account': 'توثيق الحساب',
   'confirm_account_des':
@@ -116,6 +116,9 @@ const Map<String, String> arSA = {
   'daklia_description_required': 'وصف عن الداخلية مطلوب',
   'token_is_invalid': 'الرجاء تسجيل الدخول مرة اخرى',
   'please_select_image': 'الرجاء اختيار صورة للداخلية من المعرض او الكاميرا',
+  'please_select_daklia_doc': 'الرجاء اختيار صورة من تصديق الداخلية ساري الصلاحية',
+  'please_select_daklia_owner_doc': 'الرجاء اختيار صورة من إثبات شخصية مالك الداخلية',
+  'daklia_dosent_exist': 'الداخلية غير موجودة',
   // otp screen
   'enter_otp': 'ادخل كود التحقق',
   'description1_otp': 'ارسلنا كود التحقق في رسالة على رقم جوالك',

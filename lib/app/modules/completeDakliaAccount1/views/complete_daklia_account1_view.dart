@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/buttons_manager.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/widgets/text_form_fields.dart';
@@ -60,7 +59,7 @@ class CompleteDakliaAccount1View
             children: [
               ButtonsManager.primaryButton(
                 text: 'next'.tr,
-                onPressed: (){
+                onPressed: () {
                   // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
                   // print('clicked');
                   controller.checkSendDakliaInfo();
@@ -68,13 +67,13 @@ class CompleteDakliaAccount1View
                 context: context,
                 maximumSize: Size(174, 50),
                 minimumSize: Size(174, 50),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
+              ),
+              SizedBox(
+                width: 15,
+              ),
               ButtonsManager.primaryButton(
                 text: 'previous'.tr,
-                onPressed: (){
+                onPressed: () {
                   Get.back();
                 },
                 context: context,
@@ -82,7 +81,7 @@ class CompleteDakliaAccount1View
                 minimumSize: Size(134, 50),
                 buttonColor: ColorsManager.greyColor,
                 textColor: ColorsManager.blackColor,
-                )
+              )
             ],
           ),
         ),
@@ -144,11 +143,11 @@ class CompleteDakliaAccount1View
                 controller,
                 'daklia_image'.tr,
               ),
-        
+
               SizedBox(
                 height: 10,
               ),
-        
+
               Row(
                 children: [
                   Padding(
@@ -171,7 +170,7 @@ class CompleteDakliaAccount1View
                 height: 10,
               ),
               addDescriptionWidget(context, controller),
-        
+
               SizedBox(
                 height: 10,
               ),
@@ -196,11 +195,14 @@ class CompleteDakliaAccount1View
               SizedBox(
                 height: 10,
               ),
-              roomCountWidget(context, controller, 'room_count'.tr,)
+              roomCountWidget(
+                context,
+                controller,
+                'room_count'.tr,
+              )
             ],
           ),
         ),
-
       ),
     );
   }
