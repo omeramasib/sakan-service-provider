@@ -66,10 +66,12 @@ class CompleteDakliaAccount3Controller extends GetxController {
   }
 
   Future<DakliaVerifyAccountModel> sendDakliaVA() async {
+    print("dakliaLicense: $dakliaLicense");
+    print("ownerId: $ownerId");
     return await provider
         .sendVA(
-      daklia_license: dakliaLicense,
-      owner_license: ownerId,
+      daklia_license: dakliaLicense!,
+      owner_license: ownerId!,
     )
         .timeout(
       Duration(seconds: 2),
@@ -113,6 +115,11 @@ class CompleteDakliaAccount3Controller extends GetxController {
     // } else {
     //   Dialogs.connectionErrorDialog(Get.context!);
     // }
+    var isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formKey.currentState!.save();
     EasyLoading.show(status: 'loading'.tr);
     sendDakliaVA();
     update();

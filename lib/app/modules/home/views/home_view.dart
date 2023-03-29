@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/constants/fonts_manager.dart';
@@ -15,6 +16,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     var isArabic = Get.locale?.languageCode == 'ar';
+    var storage = GetStorage();
     return Scaffold(
       backgroundColor: ColorsManager.lightGreyColor,
       body: Column(children: [
@@ -67,7 +69,12 @@ class HomeView extends GetView<HomeController> {
                      EdgeInsets.only(left: Get.width * 0.07),
                     child: GestureDetector(
                       onTap: () {
-                        Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
+                        // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
+                        if (storage.read('dakliaId') == null) {
+                          Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
+                        } else {
+                          Get.toNamed(Routes.DAKLIA_PROFILE);
+                        }
                       },
                       child: Container(
                         height: 171,

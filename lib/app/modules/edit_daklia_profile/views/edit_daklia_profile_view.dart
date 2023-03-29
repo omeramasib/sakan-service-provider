@@ -49,18 +49,22 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
         children: [
           Row(
             children: [
-              Padding(
-                padding: isEnglish
-                    ? const EdgeInsets.only(
-                        top: AppPadding.p20, left: AppPadding.p20)
-                    : EdgeInsets.only(
-                        top: AppPadding.p20, right: AppPadding.p20),
-                child: Text(
-                  'warning_edit_profile'.tr,
-                  style: getRegularStyle(
-                    fontSize: FontSizeManager.s14,
-                    color: ColorsManager.blackColor,
-                    height: 2,
+              Expanded(
+                child: Padding(
+                  padding: isEnglish
+                      ? const EdgeInsets.only(
+                          top: AppPadding.p20,
+                          left: AppPadding.p20,
+                        )
+                      : EdgeInsets.only(
+                          top: AppPadding.p20, right: AppPadding.p20),
+                  child: Text(
+                    'warning_edit_profile'.tr,
+                    style: getRegularStyle(
+                      fontSize: FontSizeManager.s14,
+                      color: ColorsManager.blackColor,
+                      height: 2,
+                    ),
                   ),
                 ),
               ),

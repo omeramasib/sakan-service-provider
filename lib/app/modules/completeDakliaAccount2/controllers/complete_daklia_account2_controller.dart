@@ -64,20 +64,6 @@ class CompleteDakliaAccount2Controller extends GetxController {
   void onInit() async {
     super.onInit();
     getCurrentLocationFuture = _getCurrentLocation();
-    // getCurrentLocation();
-    // getCurrentLocationFuture = getCurrentLocation();
-    // Geolocator.getPositionStream().listen(
-    //   (Position position) async {
-    //     log(position.toString(), name: "########################");
-
-    //     // print(position == null ? 'Unknown' : position.latitude.toString() + ', ' + position.longitude.toString());
-    //     lat.value = position.latitude;
-    //     lon.value = position.longitude;
-    //     log('this is the lon and lat: ${lat.value} , ${lon.value}');
-    //     getAddresFromLatLon(position);
-    //   },
-    // );
-    // await getCurrentLocation();
   }
 
   TextEditingController addressDetailsController = TextEditingController();

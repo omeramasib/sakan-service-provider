@@ -46,17 +46,16 @@ class LoginProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('otp', data['otp']);
+      // storage.write('otp', data['otp']);
       storage.write('token', data['token']);
-      storage.write('phone', data['phone_number']);
+      // storage.write('phone', data['phone_number']);
       storage.write('userId', data['id']);
 
-      if (data['user_type'] == 1 || data['user_type'] == 2) {
-        // Get.offAllNamed(Routes.HOME);
-        Get.offAllNamed(Routes.COMPLETE_DAKLIA_ACCOUNT3);
+      if (data['user_type'] == 1) {
+        Get.offAllNamed(Routes.HOME);
         Dialogs.successDialog(Get.context!, 'login_success'.tr);
       }
-      if (data['user_type'] == 0) {
+      if (data['user_type'] == 0 || data['user_type'] == 2) {
         Dialogs.errorDialog(Get.context!, 'user_not_allowed'.tr);
       }
       return LoginModel.fromJson(data);

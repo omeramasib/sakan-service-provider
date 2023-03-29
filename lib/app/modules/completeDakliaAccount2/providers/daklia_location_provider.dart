@@ -51,6 +51,7 @@ class DakliaLocationProvider extends GetConnect {
         EasyLoading.dismiss();
       });
       Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT3);
+      Dialogs.successDialog(Get.context!, 'sucsses_add_daklia_location'.tr);
       return DakliaLocationModel.fromJson(data);
     }
 

@@ -19,6 +19,7 @@ class DakliaVAProvider extends GetConnect {
   Timer? timer;
   @override
   void onInit() {
+    httpClient.baseUrl = HttpHelper.baseUrl;
     EasyLoading.addStatusCallback((status) {
       if (status == EasyLoadingStatus.dismiss) {
         timer?.cancel();
@@ -30,7 +31,6 @@ class DakliaVAProvider extends GetConnect {
     required File? daklia_license,
     required File? owner_license,
   }) async {
-    await Future.delayed(const Duration(seconds: 1));
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
@@ -38,17 +38,22 @@ class DakliaVAProvider extends GetConnect {
       ),
     );
     request.headers["authorization"] = "Token ${storage.read('token')}";
-    // request.fields['Daklia_id'] = storage.read('dakliaId').toString();
-    request.fields['Daklia_id'] = '15';
-    request.files.add(await http.MultipartFile.fromPath(
+    request.fields['Daklia_id'] = storage.read('dakliaId').toString();
+    final file1 = await http.MultipartFile.fromBytes(
       'daklia_license',
-      daklia_license!.path,
-    ));
-    request.files.add(await http.MultipartFile.fromPath(
+      daklia_license!.readAsBytesSync(),
+      filename: daklia_license.path.split('/').last,
+    );
+    final file2 = await http.MultipartFile.fromBytes(
       'owner_idenfication_card',
-      owner_license!.path,
-    ));
+      owner_license!.readAsBytesSync(),
+      filename: owner_license.path.split('/').last,
+    );
+    request.files.add(file1);
+    request.files.add(file2);
+
     var response = await request.send();
+
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
     var data = json.decode(responseString);
@@ -56,12 +61,13 @@ class DakliaVAProvider extends GetConnect {
     log('this is the status code: $statusCode');
     log('this is the data: $data');
 
-    if (statusCode == 201) {
+    if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('dakliaId', data['Daklia_id']);
-      Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
+
+      Dialogs.successDialog(Get.context!, 'sucsses_submit_confirm_account'.tr);
+      Get.toNamed(Routes.DAKLIA_PROFILE);
       return DakliaVerifyAccountModel.fromJson(data);
     }
 
