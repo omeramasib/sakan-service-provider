@@ -23,8 +23,7 @@ class HomeView extends GetView<HomeController> {
         SizedBox(height: 80),
         Padding(
           padding:
-              isArabic ? EdgeInsets.only(right: 20) :
-               EdgeInsets.only(left: 20),
+              isArabic ? EdgeInsets.only(right: 20) : EdgeInsets.only(left: 20),
           child: Row(
             children: [
               SizedBox(
@@ -64,12 +63,11 @@ class HomeView extends GetView<HomeController> {
               return Row(
                 children: [
                   Padding(
-                    padding:
-                    isArabic ? EdgeInsets.only(right: Get.width * 0.07):
-                     EdgeInsets.only(left: Get.width * 0.07),
+                    padding: isArabic
+                        ? EdgeInsets.only(right: Get.width * 0.07)
+                        : EdgeInsets.only(left: Get.width * 0.07),
                     child: GestureDetector(
                       onTap: () {
-                        // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
                         if (storage.read('dakliaId') == null) {
                           Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
                         } else {
@@ -118,8 +116,9 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   Padding(
-                    padding: isArabic ? EdgeInsets.only(right: 10):
-                     EdgeInsets.only(left: 10),
+                    padding: isArabic
+                        ? EdgeInsets.only(right: 10)
+                        : EdgeInsets.only(left: 10),
                     child: GestureDetector(
                       onTap: () {
                         Get.toNamed(Routes.ROOM_MANAGEMENT);
@@ -175,7 +174,7 @@ class HomeView extends GetView<HomeController> {
         ),
 
         // 2st Row
-          Container(
+        Container(
           height: 171,
           width: double.infinity,
           child: LayoutBuilder(
@@ -183,11 +182,11 @@ class HomeView extends GetView<HomeController> {
               return Row(
                 children: [
                   Padding(
-                    padding:
-                    isArabic ? EdgeInsets.only(right: Get.width * 0.07):
-                     EdgeInsets.only(left: Get.width * 0.07),
+                    padding: isArabic
+                        ? EdgeInsets.only(right: Get.width * 0.07)
+                        : EdgeInsets.only(left: Get.width * 0.07),
                     child: GestureDetector(
-                      onTap:(){
+                      onTap: () {
                         Get.toNamed(Routes.MY_APPOINTMENTS);
                       },
                       child: Container(
@@ -211,7 +210,7 @@ class HomeView extends GetView<HomeController> {
                                 height: 30,
                               ),
                               SvgPicture.asset(
-                               ImagesManager.booking,
+                                ImagesManager.booking,
                                 height: 65,
                                 width: 60,
                               ),
@@ -235,8 +234,9 @@ class HomeView extends GetView<HomeController> {
                   //   width: 10,
                   // ),
                   Padding(
-                    padding: isArabic ? EdgeInsets.only(right: 10) :
-                     EdgeInsets.only(left: 10),
+                    padding: isArabic
+                        ? EdgeInsets.only(right: 10)
+                        : EdgeInsets.only(left: 10),
                     child: GestureDetector(
                       onTap: () {
                         Get.toNamed(Routes.SERVICES_MANAGEMENT);
@@ -292,11 +292,11 @@ class HomeView extends GetView<HomeController> {
         ),
 
         // 3st Row
-         GestureDetector(
+        GestureDetector(
           onTap: () {
             Get.toNamed(Routes.REGULATIONS_MANAGEMENT);
           },
-           child: Container(
+          child: Container(
             height: 171,
             width: double.infinity,
             child: LayoutBuilder(
@@ -304,9 +304,9 @@ class HomeView extends GetView<HomeController> {
                 return Row(
                   children: [
                     Padding(
-                      padding:
-                      isArabic ? EdgeInsets.only(right: Get.width * 0.07):
-                       EdgeInsets.only(left: Get.width * 0.07),
+                      padding: isArabic
+                          ? EdgeInsets.only(right: Get.width * 0.07)
+                          : EdgeInsets.only(left: Get.width * 0.07),
                       child: Container(
                         height: 171,
                         width: 164,
@@ -328,7 +328,7 @@ class HomeView extends GetView<HomeController> {
                                 height: 30,
                               ),
                               SvgPicture.asset(
-                              ImagesManager.terms,
+                                ImagesManager.terms,
                                 height: 65,
                                 width: 60,
                               ),
@@ -348,8 +348,9 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     Padding(
-                      padding: isArabic ? EdgeInsets.only(right: 10) :
-                       EdgeInsets.only(left: 10),
+                      padding: isArabic
+                          ? EdgeInsets.only(right: 10)
+                          : EdgeInsets.only(left: 10),
                       child: GestureDetector(
                         onTap: () {
                           Get.toNamed(Routes.MORE_SCREEN);
@@ -375,7 +376,7 @@ class HomeView extends GetView<HomeController> {
                                   height: 30,
                                 ),
                                 SvgPicture.asset(
-                                 ImagesManager.setting,
+                                  ImagesManager.setting,
                                   height: 65,
                                   width: 60,
                                 ),
@@ -383,7 +384,7 @@ class HomeView extends GetView<HomeController> {
                                   height: 20,
                                 ),
                                 Text(
-                                   'settings'.tr,
+                                  'settings'.tr,
                                   style: getRegularStyle(
                                     color: ColorsManager.fontColor,
                                     fontSize: FontSizeManager.s15,
@@ -399,8 +400,8 @@ class HomeView extends GetView<HomeController> {
                 );
               },
             ),
-                 ),
-         ),
+          ),
+        ),
       ]),
     );
   }
