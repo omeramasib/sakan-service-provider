@@ -203,6 +203,10 @@ const Map<String, String> arSA = {
   'room': 'الغرف',
   'services': 'الخدمات',
   'conditions': 'اللوائح',
+  'under_documentation': 'قيد التوثيق',
+  'un_verified': 'غير موثق',
+  "error_occured": "حدث خطأ ما",
+  'try_again': 'حاول مرة أخرى',
   // regulation management screen
   'empty_regulation': 'لم تضف أي لوائح بعد',
   'empyt_regulation_des': 'قم بإضافة قائمة اللوائح الخاصة بالداخلية هنا حتى\n                       تظهر للمستخدمين',

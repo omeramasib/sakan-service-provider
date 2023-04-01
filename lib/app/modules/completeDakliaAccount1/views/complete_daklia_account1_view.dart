@@ -89,6 +89,7 @@ class CompleteDakliaAccount1View
       body: SingleChildScrollView(
         child: Form(
           key: controller.formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
               SizedBox(

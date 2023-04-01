@@ -9,6 +9,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
+import '../../../../widgets/account_confirmation_widget/account_confirmation.dart';
 import '../../../routes/app_pages.dart';
 import '../model/daklia_verify_account_model.dart';
 
@@ -65,9 +66,8 @@ class DakliaVAProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-
       Dialogs.successDialog(Get.context!, 'sucsses_submit_confirm_account'.tr);
-      Get.toNamed(Routes.DAKLIA_PROFILE);
+      accountConfirmation(Get.context!);
       return DakliaVerifyAccountModel.fromJson(data);
     }
 

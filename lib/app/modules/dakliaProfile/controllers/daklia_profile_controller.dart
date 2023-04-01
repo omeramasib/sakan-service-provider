@@ -17,8 +17,6 @@ class DakliaProfileController extends GetxController {
   var provider = DakliaProfileProvider();
   getDakliaProfile() async {
     isLoading.value = true;
-    print('#############');
-    // EasyLoading.show(status: 'loading'.tr);
     var data = await provider
         .getProfileInfo(
       storage.read('dakliaId').toString(),
@@ -35,7 +33,7 @@ class DakliaProfileController extends GetxController {
     );
     if (data != null && data is DakliaProfileModel) {
       profileList.add(data);
-      
+
     }
     isLoading.value = false;
     EasyLoading.dismiss();

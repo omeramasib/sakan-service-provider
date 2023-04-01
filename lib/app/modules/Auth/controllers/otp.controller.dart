@@ -46,7 +46,7 @@ class OtpController extends GetxController {
           if (number == 0) {
             Get.to(ResetpasswordView());
           } else if (number == 1) {
-            Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
+            Get.offAllNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
             Dialogs.successDialog(Get.context!, 'sucsses_register'.tr);
           } else if (number == 2){
             Get.toNamed(Routes.HOME);

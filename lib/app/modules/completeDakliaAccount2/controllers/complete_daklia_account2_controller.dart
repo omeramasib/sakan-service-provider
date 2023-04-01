@@ -21,12 +21,6 @@ class CompleteDakliaAccount2Controller extends GetxController {
 //kGooglePlex
   Completer<GoogleMapController> _controller = Completer();
 
-  //Get CameraPosition
-  // CameraPosition kGooglePlex = CameraPosition(
-  //   target: LatLng(lat.value, lon.value),
-  //   zoom: 14.4746,
-  // );
-
   // update camera position
   void onCameraMove(CameraPosition position) {
     log(position.toString(), name: "########################");
@@ -75,6 +69,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
   RxDouble lon = 0.0.obs;
   double get getLon => lon.value;
   String address = '';
+  String additonalAddress= '';
   late StreamSubscription<Position> streamSubscription;
 
   Future<Position> getCurrentLocation() async {
@@ -106,7 +101,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
       return await Geolocator.getCurrentPosition();
     }
 
-    
+
 
     // streamSubscription = Geolocator.getPositionStream().listen(
     //   (Position position) {
@@ -154,6 +149,8 @@ class CompleteDakliaAccount2Controller extends GetxController {
       ),
     );
 
+    getAddresFromLatLon(position);
+
     update();
 
     return true;
@@ -164,7 +161,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       Placemark place = placemarks[0];
-      address = "${place.locality}, ${place.postalCode}, ${place.country}";
+      address = "${place.country} , ${place.locality}, ${place.name}, ${place.street},";
     } catch (e) {
       print(e);
     }
@@ -179,7 +176,8 @@ class CompleteDakliaAccount2Controller extends GetxController {
         .sendAddress(
       longitude: lon.value.toString(),
       latitude: lat.value.toString(),
-      additonal_address: address,
+      address: address,
+      additonal_address: additonalAddress,
     )
         .timeout(
       Duration(seconds: 2),

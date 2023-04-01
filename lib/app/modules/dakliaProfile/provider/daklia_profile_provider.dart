@@ -27,7 +27,6 @@ class DakliaProfileProvider extends GetConnect {
   }
 
   Future getProfileInfo(String? id) async {
-    log('this is the id: $id');
     final response = await get(
         HttpHelper.baseUrl2 + HttpHelper.dakliaProfile + '$id',
         headers: {

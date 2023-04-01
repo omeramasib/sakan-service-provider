@@ -787,6 +787,10 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
             top: 10,
             bottom: 80,
           ),
+          errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: ColorsManager.lightGreyColor),
@@ -821,6 +825,10 @@ Widget roomCountWidget(
       },
       decoration: InputDecoration(
         hintText: hinText,
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
         hintStyle: getRegularStyle(
           color: ColorsManager.hintStyleColor,
           fontSize: FontSizeManager.s13,
@@ -914,11 +922,8 @@ Widget addressDetailsWidget(
         keyboardType: TextInputType.text,
         controller: controller.addressDetailsController,
         enabled: true,
-        validator: (value) {
-          return Validations().textValidation(value!);
-        },
         onSaved: (value) {
-          controller.address = value;
+          controller.additionalAddress = value;
         },
         decoration: InputDecoration(
           hintText: hinText,

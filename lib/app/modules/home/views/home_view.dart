@@ -68,11 +68,7 @@ class HomeView extends GetView<HomeController> {
                         : EdgeInsets.only(left: Get.width * 0.07),
                     child: GestureDetector(
                       onTap: () {
-                        if (storage.read('dakliaId') == null) {
-                          Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
-                        } else {
-                          Get.toNamed(Routes.DAKLIA_PROFILE);
-                        }
+                        Get.toNamed(Routes.DAKLIA_PROFILE);
                       },
                       child: Container(
                         height: 171,

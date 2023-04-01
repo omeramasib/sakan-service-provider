@@ -57,6 +57,7 @@ class DakliaInfoProvider extends GetConnect {
     log('this is the data: $data');
 
     if (statusCode == 201) {
+      log('this is the statusCode : $statusCode' );
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });

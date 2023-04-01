@@ -50,17 +50,18 @@ class CompleteDakliaAccount1Controller extends GetxController {
       dakliaDescription: dakliaDescription!,
       numberOfRooms: roomCount!,
       image: image,
-    )
-        .timeout(
-      Duration(seconds: 2),
-      onTimeout: () {
-        EasyLoading.dismiss();
-        return DakliaInfoModel();
-      },
     );
+    //     .timeout(
+    //   Duration(seconds: 2),
+    //   onTimeout: () {
+    //     EasyLoading.dismiss();
+    //     return DakliaInfoModel();
+    //   },
+    // );
   }
 
   void checkSendDakliaInfo() {
+    var isValid = formKey.currentState!.validate();
     if (imagePath.value == '') {
       Get.showSnackbar(
         GetSnackBar(
@@ -71,11 +72,11 @@ class CompleteDakliaAccount1Controller extends GetxController {
       );
       return;
     }
-    
-    var isValid = formKey.currentState!.validate();
+
     if (!isValid) {
       return;
     }
+
     formKey.currentState!.save();
     // if (networkController.isConnected.value == true) {
     //   EasyLoading.show(status: 'loading'.tr);

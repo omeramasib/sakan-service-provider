@@ -18,7 +18,7 @@ class CompleteDakliaAccount2View
     extends GetView<CompleteDakliaAccount2Controller> {
   const CompleteDakliaAccount2View({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) { 
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80),
@@ -51,6 +51,16 @@ class CompleteDakliaAccount2View
           GetBuilder(
             init: controller,
             builder: (_) {
+              // return GoogleMap(
+              //         onMapCreated: controller.onMapCreated,
+              //         zoomControlsEnabled: false,
+              //         initialCameraPosition: CameraPosition(
+              //           target: controller.currentPosition ??
+              //               LatLng(56.324293441187315, 38.13961947281509),
+              //           zoom: 14.0,
+              //         ),
+              //         markers: controller.markers,
+              //       );
               return FutureBuilder(
                 future: controller.getCurrentLocationFuture,
                 builder: (context, snapshot) {
@@ -67,7 +77,9 @@ class CompleteDakliaAccount2View
                       markers: controller.markers,
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator(
+                      color: ColorsManager.mainColor,
+                    ));
                   }
                 },
               );

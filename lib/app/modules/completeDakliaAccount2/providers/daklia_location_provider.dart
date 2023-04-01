@@ -28,6 +28,7 @@ class DakliaLocationProvider extends GetConnect {
   Future<DakliaLocationModel> sendAddress({
     required String longitude,
     required String latitude,
+    required String address,
     required String additonal_address,
   }) async {
     final response = await post(
@@ -36,6 +37,7 @@ class DakliaLocationProvider extends GetConnect {
         'user_id': storage.read('userId'),
         'longitude': longitude,
         'latitude': latitude,
+        'address': address,
         'additional_address': additonal_address,
       },
       headers: {
@@ -56,32 +58,11 @@ class DakliaLocationProvider extends GetConnect {
     }
 
     if (statusCode == 400) {
-      if (data['phone_number'] != null) {
+      if (data['user_id'] != null) {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
-      }
-
-      if (data['message'] == 'Phone Number already exists') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
-      }
-
-      if (data['message'] == 'Username already exist.') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'user_already_exist'.tr);
-      }
-
-      if (data['username'] != null) {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'user_already_exist'.tr);
+        Dialogs.errorDialog(Get.context!, 'user_id_already_exist'.tr);
       }
     }
 
