@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -31,9 +28,8 @@ class DakliaProfileController extends GetxController {
         // return DakliaProfileModel();
       },
     );
-    if (data != null && data is DakliaProfileModel) {
+    if (data != null) {
       profileList.add(data);
-
     }
     isLoading.value = false;
     EasyLoading.dismiss();
@@ -41,9 +37,9 @@ class DakliaProfileController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    getDakliaProfile();
+    await getDakliaProfile();
   }
 
   @override

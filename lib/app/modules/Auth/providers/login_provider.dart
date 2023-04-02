@@ -52,8 +52,7 @@ class LoginProvider extends GetConnect {
       if (data['user_type'] == 1) {
         if (data['Daklia_id'] != null) {
           storage.write('dakliaId', data['Daklia_id']);
-          // Get.offAllNamed(Routes.HOME);
-          Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
+          Get.offAllNamed(Routes.HOME);
           Dialogs.successDialog(Get.context!, 'login_success'.tr);
         }
         if (data['Daklia_id'] == null) {

@@ -51,35 +51,30 @@ class CompleteDakliaAccount2View
           GetBuilder(
             init: controller,
             builder: (_) {
-              // return GoogleMap(
-              //         onMapCreated: controller.onMapCreated,
-              //         zoomControlsEnabled: false,
-              //         initialCameraPosition: CameraPosition(
-              //           target: controller.currentPosition ??
-              //               LatLng(56.324293441187315, 38.13961947281509),
-              //           zoom: 14.0,
-              //         ),
-              //         markers: controller.markers,
-              //       );
               return FutureBuilder(
                 future: controller.getCurrentLocationFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    print(controller.currentPosition);
                     return GoogleMap(
                       onMapCreated: controller.onMapCreated,
                       zoomControlsEnabled: false,
                       initialCameraPosition: CameraPosition(
-                        target: controller.currentPosition ??
-                            LatLng(56.324293441187315, 38.13961947281509),
-                        zoom: 14.0,
+                        target: controller.currentPosition!,
+                        zoom: controller.initZoom,
                       ),
+                      // initialCameraPosition: CameraPosition(
+                      //   target: controller.currentPosition ??
+                      //       LatLng(56.324293441187315, 38.13961947281509),
+                      //   zoom: 14.0,
+                      // ),
                       markers: controller.markers,
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator(
-                      color: ColorsManager.mainColor,
-                    ));
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: ColorsManager.mainColor,
+                      ),
+                    );
                   }
                 },
               );

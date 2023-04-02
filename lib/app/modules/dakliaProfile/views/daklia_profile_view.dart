@@ -18,7 +18,7 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
   @override
   Widget build(BuildContext context) {
     var isEnglish = Get.locale!.languageCode == 'en';
-    Get.put(DakliaProfileController());
+    var controller = Get.put(DakliaProfileController());
     return Scaffold(
       backgroundColor: ColorsManager.greyColor,
       body: GetBuilder(

@@ -18,8 +18,8 @@ class CompleteDakliaAccount2Controller extends GetxController {
   LatLng? currentPosition;
   late GoogleMapController mapController;
   final Set<Marker> markers = {};
-//kGooglePlex
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> gMC = Completer();
+  var initZoom = 14.4746;
 
   // update camera position
   void onCameraMove(CameraPosition position) {
@@ -45,19 +45,13 @@ class CompleteDakliaAccount2Controller extends GetxController {
   // CameraPosition get getCameraPosition => kGooglePlex;
 
   // get controller
-  Completer<GoogleMapController> get getController => _controller;
+  Completer<GoogleMapController> get getController => gMC;
 
   // get on camera move
   void Function(CameraPosition) get getOnCameraMove => onCameraMove;
 
   void onMapCreated(GoogleMapController controller) {
     mapController = controller;
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
-    getCurrentLocationFuture = _getCurrentLocation();
   }
 
   TextEditingController addressDetailsController = TextEditingController();
@@ -69,7 +63,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
   RxDouble lon = 0.0.obs;
   double get getLon => lon.value;
   String address = '';
-  String additonalAddress= '';
+  String additionalAddress = '';
   late StreamSubscription<Position> streamSubscription;
 
   Future<Position> getCurrentLocation() async {
@@ -101,41 +95,29 @@ class CompleteDakliaAccount2Controller extends GetxController {
       return await Geolocator.getCurrentPosition();
     }
 
-
-
-    // streamSubscription = Geolocator.getPositionStream().listen(
-    //   (Position position) {
-    //     log(position.toString(), name: "########################");
-
-    //     lat.value = position.latitude;
-    //     lon.value = position.longitude;
-    //     log('this is the lon and lat: ${lat.value} , ${lon.value}');
-    //     getAddresFromLatLon(position);
-    //   },
-    // );
-
-    // Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
     update();
 
     return await Geolocator.getCurrentPosition();
   }
 
   _getCurrentLocation() async {
-    Position position;
+    var position = await getCurrentLocation();
     try {
       position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-          forceAndroidLocationManager: true,
-          timeLimit: Duration(seconds: 15));
+        forceAndroidLocationManager: true,
+        desiredAccuracy: LocationAccuracy.high,
+        timeLimit: Duration(seconds: 15),
+      );
     } catch (e) {
       position = null as Position;
-      debugPrint(e as String?);
+      debugPrint(e.toString());
     }
 
     if (position != null) {
       lat.value = position.latitude;
       lon.value = position.longitude;
       LatLng location = LatLng(position.latitude, position.longitude);
+      log('this is the lon and lat: ${lat.value} , ${lon.value}');
       currentPosition = location;
     }
 
@@ -151,6 +133,19 @@ class CompleteDakliaAccount2Controller extends GetxController {
 
     getAddresFromLatLon(position);
 
+    // final GoogleMapController controller = await gMC.future;
+    // controller.animateCamera(
+    //   CameraUpdate.newCameraPosition(
+    //     CameraPosition(
+    //       target: LatLng(
+    //         position.latitude,
+    //         position.longitude,
+    //       ),
+    //       zoom: initZoom,
+    //     ),
+    //   ),
+    // );
+
     update();
 
     return true;
@@ -161,7 +156,8 @@ class CompleteDakliaAccount2Controller extends GetxController {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       Placemark place = placemarks[0];
-      address = "${place.country} , ${place.locality}, ${place.name}, ${place.street},";
+      address =
+          "${place.country} , ${place.locality}, ${place.name}, ${place.street}";
     } catch (e) {
       print(e);
     }
@@ -177,7 +173,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
       longitude: lon.value.toString(),
       latitude: lat.value.toString(),
       address: address,
-      additonal_address: additonalAddress,
+      additonal_address: additionalAddress,
     )
         .timeout(
       Duration(seconds: 2),
@@ -225,6 +221,12 @@ class CompleteDakliaAccount2Controller extends GetxController {
   //     ),
   //   ));
   // }
+
+  @override
+  void onInit() async {
+    super.onInit();
+    getCurrentLocationFuture = _getCurrentLocation();
+  }
 
   @override
   void onReady() {
