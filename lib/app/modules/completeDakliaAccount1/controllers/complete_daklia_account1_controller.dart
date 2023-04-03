@@ -50,14 +50,14 @@ class CompleteDakliaAccount1Controller extends GetxController {
       dakliaDescription: dakliaDescription!,
       numberOfRooms: roomCount!,
       image: image,
+    
+        ).timeout(
+      Duration(seconds: 2),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        return DakliaInfoModel();
+      },
     );
-    //     .timeout(
-    //   Duration(seconds: 2),
-    //   onTimeout: () {
-    //     EasyLoading.dismiss();
-    //     return DakliaInfoModel();
-    //   },
-    // );
   }
 
   void checkSendDakliaInfo() {

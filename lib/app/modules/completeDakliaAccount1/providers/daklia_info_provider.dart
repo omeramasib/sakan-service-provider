@@ -67,6 +67,13 @@ class DakliaInfoProvider extends GetConnect {
     }
 
     if (statusCode == 400) {
+      if (data['message'] != 'Daklia is already exist') {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'user_id_already_exist'.tr);
+      }
+
       if (data['user_id'] != null) {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
