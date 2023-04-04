@@ -3,6 +3,7 @@ class DakliaProfileModel {
   String? dakliaName;
   String? dakliaImage;
   String? dakliaDescription;
+  int? numberOfRooms;
   int? accountStatus;
   int? roomCount;
   int? serviceCount;
@@ -15,6 +16,7 @@ class DakliaProfileModel {
       this.dakliaName,
       this.dakliaImage,
       this.dakliaDescription,
+      this.numberOfRooms,
       this.accountStatus,
       this.roomCount,
       this.serviceCount,
@@ -27,6 +29,7 @@ class DakliaProfileModel {
     dakliaName = json['daklia_name'];
     dakliaImage = json['daklia_image'];
     dakliaDescription = json['daklia_description'];
+    numberOfRooms = json['numberOfRooms'];
     accountStatus = json['account_status'];
     roomCount = json['room_count'];
     serviceCount = json['service_count'];
@@ -41,6 +44,7 @@ class DakliaProfileModel {
     data['daklia_name'] = this.dakliaName;
     data['daklia_image'] = this.dakliaImage;
     data['daklia_description'] = this.dakliaDescription;
+    data['numberOfRooms'] = this.numberOfRooms;
     data['account_status'] = this.accountStatus;
     data['room_count'] = this.roomCount;
     data['service_count'] = this.serviceCount;

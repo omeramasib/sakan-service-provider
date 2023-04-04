@@ -19,7 +19,7 @@ class DakliaProfileController extends GetxController {
       storage.read('dakliaId').toString(),
     )
         .timeout(
-      const Duration(seconds: 1),
+      const Duration(seconds: 3),
       onTimeout: () {
         EasyLoading.dismiss();
         // Dialogs.connectionErrorDialog(Get.context!);

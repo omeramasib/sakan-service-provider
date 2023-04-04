@@ -95,5 +95,6 @@ class ImagesManager {
   static const String cash = 'assets/images/money-Filled.svg';
   static const String id = 'assets/images/Id.svg';
   static const String omerId = '/Users/pc/Desktop/sakan/assets/images/OmerId.png';
+  static const String edit_profile_icon = 'assets/images/edit-profile-Filled.svg';
   // static const String number = 'aassets/images/booking_number.svg';
 }

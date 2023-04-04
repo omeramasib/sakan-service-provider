@@ -176,7 +176,7 @@ class CompleteDakliaAccount2Controller extends GetxController {
       additonal_address: additionalAddress,
     )
         .timeout(
-      Duration(seconds: 2),
+      Duration(seconds: 3),
       onTimeout: () {
         EasyLoading.dismiss();
         return DakliaLocationModel();
