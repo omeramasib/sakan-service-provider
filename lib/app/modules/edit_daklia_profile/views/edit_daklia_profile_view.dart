@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sakan/app/modules/dakliaProfile/controllers/daklia_profile_controller.dart';
 import '../../../../constants/buttons_manager.dart';
 import '../../../../constants/colors_manager.dart';
@@ -95,10 +96,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
             ),
             Padding(
               padding: isEnglish
-                      ? const EdgeInsets.only(
-                       left: AppPadding.p30)
-                      : const EdgeInsets.only(
-                       right: AppPadding.p20),
+                  ? const EdgeInsets.only(left: AppPadding.p30)
+                  : const EdgeInsets.only(right: AppPadding.p20),
               child: Row(
                 children: [
                   Container(
@@ -107,7 +106,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        image: NetworkImage(profileController.profileList[0].dakliaImage!),
+                        image: NetworkImage(
+                            profileController.profileList[0].dakliaImage!),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
                           ColorsManager.blackColor.withOpacity(0.4),
@@ -240,7 +240,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  profileController.profileList[0].dakliaDescription!,
+                                  profileController
+                                      .profileList[0].dakliaDescription!,
                                   style: getRegularStyle(
                                     color: ColorsManager.blackColor,
                                     fontSize: FontSizeManager.s13,
@@ -297,7 +298,56 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                   ),
                 ],
               ),
-            )
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: isEnglish
+                      ? const EdgeInsets.only(
+                          top: AppPadding.p20, left: AppPadding.p20)
+                      : const EdgeInsets.only(
+                          top: AppPadding.p20, right: AppPadding.p20),
+                  child: Text(
+                    "address".tr,
+                    style: getRegularStyle(
+                      color: ColorsManager.mainColor,
+                      fontSize: FontSizeManager.s14,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 150,
+              width: 330,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: GoogleMap(
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(
+                      double.parse(profileController.profileList[0].latitude!),
+                      double.parse(profileController.profileList[0].longitude!),
+                    ),
+                    zoom: 14
+                    ),
+                markers: {
+                  Marker(
+                    markerId: MarkerId("1"),
+                    position: LatLng(
+                      double.parse(profileController.profileList[0].latitude!),
+                      double.parse(profileController.profileList[0].longitude!),
+                    ),
+                  ),
+                },
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),

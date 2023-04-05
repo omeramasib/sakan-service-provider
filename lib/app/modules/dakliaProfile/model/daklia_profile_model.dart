@@ -27,15 +27,15 @@ class DakliaProfileModel {
   DakliaProfileModel.fromJson(Map<String, dynamic> json) {
     dakliaId = json['Daklia_id'];
     dakliaName = json['daklia_name'];
-    dakliaImage = json['daklia_image'];
-    dakliaDescription = json['daklia_description'];
-    numberOfRooms = json['numberOfRooms'];
-    accountStatus = json['account_status'];
-    roomCount = json['room_count'];
-    serviceCount = json['service_count'];
-    lawCount = json['law_count'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+    dakliaImage = json['daklia_image'] ?? '';
+    dakliaDescription = json['daklia_description'] ?? '';
+    numberOfRooms = json['numberOfRooms'] ?? 0;
+    accountStatus = json['account_status'] ?? 0;
+    roomCount = json['room_count'] ?? 0;
+    serviceCount = json['service_count'] ?? 0;
+    lawCount = json['law_count'] ?? 0;
+    longitude = json['longitude'] ?? '';
+    latitude = json['latitude'] ?? '';
   }
 
   Map<String, dynamic> toJson() {

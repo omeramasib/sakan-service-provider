@@ -830,7 +830,7 @@ Widget roomCountWidget(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
         hintStyle: getRegularStyle(
-          color: ColorsManager.hintStyleColor,
+          color: ColorsManager.fontColor,
           fontSize: FontSizeManager.s13,
         ),
         contentPadding: const EdgeInsets.only(
