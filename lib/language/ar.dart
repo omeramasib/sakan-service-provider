@@ -207,6 +207,8 @@ const Map<String, String> arSA = {
   'un_verified': 'غير موثق',
   "error_occured": "حدث خطأ ما",
   'try_again': 'حاول مرة أخرى',
+  // update profile screen
+  "success_update_profile": "تم تحديث الملف الشخصي بنجاح",
   // regulation management screen
   'empty_regulation': 'لم تضف أي لوائح بعد',
   'empyt_regulation_des': 'قم بإضافة قائمة اللوائح الخاصة بالداخلية هنا حتى\n                       تظهر للمستخدمين',

@@ -54,7 +54,16 @@ class HomeView extends GetView<HomeController> {
           height: 50,
         ),
 
-        // 1st Row
+       Container(
+        width:
+            Get.width < 360
+                ? Get.width * 0.8
+                : Get.width < 400
+                    ? Get.width * 1
+                    : Get.width * 0.95,
+        child: Column(
+          children: [
+         // 1st Row
         Container(
           height: 171,
           width: double.infinity,
@@ -398,6 +407,9 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
         ),
+          ],
+        ),
+       )
       ]),
     );
   }

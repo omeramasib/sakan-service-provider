@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -818,7 +819,7 @@ Widget roomCountWidget(
       controller: controller.roomCountController,
       enabled: true,
       onSaved: (value) {
-        controller.roomCount = int.parse(value!);
+        controller.roomCount.value = int.parse(value!);
       },
       validator: (value) {
         return Validations().textValidation(value!);
@@ -1069,61 +1070,61 @@ Widget dakliaOwnerIdWidget(
 }
 
 // add Daklia Confirmation widget
-Widget dakliaImageWidget(
-    BuildContext context, dynamic controller, String text) {
-  return Obx(
-    () => controller.imagePath.value == ''
-        ? Container(
-            height: 94,
-            width: 105,
-            decoration: BoxDecoration(
-              color: ColorsManager.whiteColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-              ),
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      selectImage(context, controller);
-                    },
-                    child: SvgPicture.asset(
-                      ImagesManager.daklia_image,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    text,
-                    style: getRegularStyle(
-                      color: ColorsManager.blackColor,
-                      fontSize: FontSizeManager.s13,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          )
-        : Container(
-            height: 94,
-            width: 105,
-            decoration: BoxDecoration(
-              color: ColorsManager.whiteColor,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-              child: Image.file(
-                File(controller.imagePath.value),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-  );
-}
+// Widget dakliaImageWidget(
+//     BuildContext context, dynamic controller, String text) {
+//   return Obx(
+//     () => controller.imagePath.value == ''
+//         ? Container(
+//             height: 94,
+//             width: 105,
+//             decoration: BoxDecoration(
+//               color: ColorsManager.whiteColor,
+//               borderRadius: BorderRadius.circular(10),
+//             ),
+//             child: Padding(
+//               padding: const EdgeInsets.only(
+//                 top: 20,
+//               ),
+//               child: Column(
+//                 children: [
+//                   GestureDetector(
+//                     onTap: () {
+//                       selectImage(context, controller);
+//                     },
+//                     child: SvgPicture.asset(
+//                       ImagesManager.daklia_image,
+//                     ),
+//                   ),
+//                   SizedBox(
+//                     height: 10,
+//                   ),
+//                   Text(
+//                     text,
+//                     style: getRegularStyle(
+//                       color: ColorsManager.blackColor,
+//                       fontSize: FontSizeManager.s13,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           )
+//         : Container(
+//             height: 94,
+//             width: 105,
+//             decoration: BoxDecoration(
+//               color: ColorsManager.whiteColor,
+//               borderRadius: BorderRadius.circular(10),
+//             ),
+//             child: Center(
+//               child: Image.file(
+//                 File(controller.imagePath.value),
+//                 fit: BoxFit.cover,
+//               ),
+//             ),
+//           ),
+//   );
+// }
 
 Widget roomNumberWidget(
     BuildContext context, dynamic controller, String hinText) {
@@ -1701,6 +1702,46 @@ Widget appointmentRejectWidget(BuildContext context, dynamic controller) {
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget dakliaDescriptionWidget(BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        controller: controller.descriptionController,
+        enabled: true,
+        onSaved: (value) {
+          controller.dakliaDescription.value = value;
+          log('dakliaDescription: ${controller.dakliaDescription.value}');
+        },
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 80,
+          ),
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.blackColor,
+            fontSize: FontSizeManager.s12,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: ColorsManager.whiteColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.whiteColor,
         ),
         maxLines: 5,
         minLines: 1,
