@@ -7,8 +7,6 @@ import '../../../../constants/buttons_manager.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
-import '../../../../widgets/account_confirmation_widget/additonal_daklia_address.dart';
-import '../../../../widgets/stepper/step2.dart';
 import '../controllers/change_location_on_map_controller.dart';
 
 class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
@@ -107,21 +105,33 @@ class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
           //   child: step2(context, "daklia_information".tr, "address".tr,
           //       "daklia_documentation".tr),
           // ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: Get.height * 0.75,
-              right: 50,
-              left: 50,
-            ),
-            child: ButtonsManager.primaryButton(
-                onPressed: () async {
-                  additionalAddress(context);
-                },
-                buttonColor: ColorsManager.mainColor,
-                context: context,
-                text: 'select_location'.tr),
-          ),
+
         ],
+      ),
+       bottomNavigationBar: Container(
+        width: Get.width,
+        height: 78,
+        decoration: BoxDecoration(
+          color: ColorsManager.whiteColor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            right: 50,
+          ),
+          child: Row(
+            children: [
+              ButtonsManager.primaryButton(
+                text: 'save_changes'.tr,
+                onPressed: () async {
+                  // await controller.sendUpdateProfile();
+                },
+                context: context,
+                maximumSize: Size(287, 50),
+                minimumSize: Size(287, 50),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -42,13 +42,19 @@ class UpdateProfileProvider extends GetConnect {
           //  '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.updateProfile}}'
           'https://sakanapp.onrender.com/api/v1/daklia/${storage.read('dakliaId')}/update-profile/'),
     );
-    // print the request
     log('this is the request: $request');
     request.headers["authorization"] = "Token ${storage.read('token')}";
-    request.files.add(await http.MultipartFile.fromPath(
-      'daklia_image',
-      image.path,
-    ));
+     if (image.path != '') {
+      request.files.add(
+        await http.MultipartFile.fromPath(
+          'daklia_image',
+          image.path,
+        ),
+      );
+    }
+    else {
+      request.fields['daklia_image'] = '';
+    }
     request.fields['daklia_description'] = dakliaDescription;
     request.fields['numberOfRooms'] = numberOfRooms.toString();
 
@@ -59,6 +65,7 @@ class UpdateProfileProvider extends GetConnect {
     var statusCode = response.statusCode;
     log('this is the status code: $statusCode');
     log('this is the data: $data');
+    EasyLoading.show(status: 'loading'.tr);
 
     if (statusCode == 200) {
       log('this is the statusCode : $statusCode');
@@ -66,7 +73,7 @@ class UpdateProfileProvider extends GetConnect {
         EasyLoading.dismiss();
       });
       Dialogs.successDialog(Get.context!, "success_update_profile".tr);
-      Get.offAllNamed(Routes.DAKLIA_PROFILE);
+      Get.offAllNamed(Routes.HOME);
     }
 
     if (statusCode == 400) {

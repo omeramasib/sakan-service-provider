@@ -209,6 +209,7 @@ const Map<String, String> arSA = {
   'try_again': 'حاول مرة أخرى',
   // update profile screen
   "success_update_profile": "تم تحديث الملف الشخصي بنجاح",
+  'please_select_at_least_one_field': 'يرجى اختيار حقل واحد على الأقل لتعديل الملف الشخصي',
   // regulation management screen
   'empty_regulation': 'لم تضف أي لوائح بعد',
   'empyt_regulation_des': 'قم بإضافة قائمة اللوائح الخاصة بالداخلية هنا حتى\n                       تظهر للمستخدمين',

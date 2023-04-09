@@ -632,53 +632,6 @@ Widget ticketTitleFormField(BuildContext context, dynamic controller,
   );
 }
 
-// // Attach File
-// Widget attachFileWidget(BuildContext context) {
-//   var isArabic = Get.locale!.languageCode == 'ar';
-//   return Padding(
-//     padding: isArabic
-//         ? const EdgeInsets.only(top: 15, right: 40, left: 40)
-//         : const EdgeInsets.only(
-//             top: 15,
-//             right: 10,
-//           ),
-//     child: Container(
-//       height: 103,
-//       width: 315,
-//       decoration: BoxDecoration(
-//         color: ColorsManager.greyColor,
-//         borderRadius: BorderRadius.circular(8),
-//       ),
-//       child: Column(
-//         children: [
-//           Padding(
-//             padding: isArabic
-//                 ? const EdgeInsets.only(
-//                     top: 30,
-//                   )
-//                 : const EdgeInsets.only(
-//                     top: 30,
-//                   ),
-//             child: SvgPicture.asset(
-//               Images.attachFileIcon,
-//             ),
-//           ),
-//           const SizedBox(
-//             height: 10,
-//           ),
-//           Text(
-//             'attach'.tr,
-//             style: getRegularStyle(
-//               color: ColorsManager.blackColor,
-//               fontSize: FontSizeManager.s13,
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//   );
-// }
-
 // Details Widget
 Widget detailsWidget(BuildContext context, dynamic controller, Color color,
     String hinText, Color hinTextColor) {
@@ -776,7 +729,7 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
         controller: controller.descriptionController,
         enabled: true,
         onSaved: (value) {
-          controller.dakliaDescription = value;
+          controller.dakliaDescription = value!;
         },
         validator: (value) {
           return Validations().textValidation(value!);
@@ -819,10 +772,53 @@ Widget roomCountWidget(
       controller: controller.roomCountController,
       enabled: true,
       onSaved: (value) {
-        controller.roomCount.value = int.parse(value!);
+        controller.roomCount = int.parse(value!);
       },
       validator: (value) {
         return Validations().textValidation(value!);
+      },
+      decoration: InputDecoration(
+        hintText: hinText,
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        hintStyle: getRegularStyle(
+          color: ColorsManager.fontColor,
+          fontSize: FontSizeManager.s13,
+        ),
+        contentPadding: const EdgeInsets.only(
+          left: 25,
+          right: 25,
+          top: 10,
+          bottom: 20,
+        ),
+        isDense: true,
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          borderRadius: BorderRadius.all(Radius.circular(50)),
+        ),
+        filled: true,
+        fillColor: ColorsManager.whiteColor,
+      ),
+      maxLines: 5,
+      minLines: 1,
+    ),
+  );
+}
+
+// edit profile room count
+Widget editProfileRoomCountWidget(
+    BuildContext context, dynamic controller, String hinText) {
+  return SizedBox(
+    width: 315,
+    height: 50,
+    child: TextFormField(
+      keyboardType: TextInputType.text,
+      controller: controller.roomCountController,
+      enabled: true,
+      onChanged: (value) {
+        controller.roomCount = int.parse(value);
       },
       decoration: InputDecoration(
         hintText: hinText,
@@ -1069,62 +1065,6 @@ Widget dakliaOwnerIdWidget(
   );
 }
 
-// add Daklia Confirmation widget
-// Widget dakliaImageWidget(
-//     BuildContext context, dynamic controller, String text) {
-//   return Obx(
-//     () => controller.imagePath.value == ''
-//         ? Container(
-//             height: 94,
-//             width: 105,
-//             decoration: BoxDecoration(
-//               color: ColorsManager.whiteColor,
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//             child: Padding(
-//               padding: const EdgeInsets.only(
-//                 top: 20,
-//               ),
-//               child: Column(
-//                 children: [
-//                   GestureDetector(
-//                     onTap: () {
-//                       selectImage(context, controller);
-//                     },
-//                     child: SvgPicture.asset(
-//                       ImagesManager.daklia_image,
-//                     ),
-//                   ),
-//                   SizedBox(
-//                     height: 10,
-//                   ),
-//                   Text(
-//                     text,
-//                     style: getRegularStyle(
-//                       color: ColorsManager.blackColor,
-//                       fontSize: FontSizeManager.s13,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           )
-//         : Container(
-//             height: 94,
-//             width: 105,
-//             decoration: BoxDecoration(
-//               color: ColorsManager.whiteColor,
-//               borderRadius: BorderRadius.circular(10),
-//             ),
-//             child: Center(
-//               child: Image.file(
-//                 File(controller.imagePath.value),
-//                 fit: BoxFit.cover,
-//               ),
-//             ),
-//           ),
-//   );
-// }
 
 Widget roomNumberWidget(
     BuildContext context, dynamic controller, String hinText) {
@@ -1719,10 +1659,16 @@ Widget dakliaDescriptionWidget(BuildContext context, dynamic controller, String 
         keyboardType: TextInputType.text,
         controller: controller.descriptionController,
         enabled: true,
-        onSaved: (value) {
-          controller.dakliaDescription.value = value;
-          log('dakliaDescription: ${controller.dakliaDescription.value}');
+        onChanged: (value) {
+          log('this the value of daklia Description ********: $value');
+          controller.dakliaDescription = value;
+          log('daklia Description ********: ${controller.dakliaDescription}');
         },
+        // onSaved: (value) {
+        //   log('this the value of daklia Description ********: $value');
+        //   controller.dakliaDescription = value;
+        //   log('daklia Description ********: ${controller.dakliaDescription}');
+        // },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,

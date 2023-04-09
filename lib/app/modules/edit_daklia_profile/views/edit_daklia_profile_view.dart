@@ -52,285 +52,288 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Padding(
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: isEnglish
+                          ? const EdgeInsets.only(
+                              top: AppPadding.p20,
+                              left: AppPadding.p20,
+                            )
+                          : EdgeInsets.only(
+                              top: AppPadding.p20, right: AppPadding.p20),
+                      child: Text(
+                        'warning_edit_profile'.tr,
+                        style: getRegularStyle(
+                          fontSize: FontSizeManager.s14,
+                          color: ColorsManager.blackColor,
+                          height: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Padding(
                     padding: isEnglish
                         ? const EdgeInsets.only(
-                            top: AppPadding.p20,
-                            left: AppPadding.p20,
-                          )
-                        : EdgeInsets.only(
+                            top: AppPadding.p30, left: AppPadding.p20)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p30, right: AppPadding.p20),
+                    child: Text(
+                      'daklia_image'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Obx(
+                (() => Padding(
+                      padding: isEnglish
+                          ? const EdgeInsets.only(left: AppPadding.p30)
+                          : const EdgeInsets.only(right: AppPadding.p20),
+                      child: Row(
+                        children: [
+                          controller.imagePath.value == ''
+                              ? Container(
+                                  height: 138,
+                                  width: 334,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: NetworkImage(profileController
+                                          .profileList[0].dakliaImage!),
+                                      fit: BoxFit.cover,
+                                      colorFilter: ColorFilter.mode(
+                                        ColorsManager.blackColor.withOpacity(0.4),
+                                        BlendMode.darken,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(
+                                          AppPadding.p10,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                selectImage(context, controller);
+                                              },
+                                              child: SvgPicture.asset(
+                                                ImagesManager.edit_profile_icon,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Padding(
+                                  padding: isEnglish
+                                      ? const EdgeInsets.only(
+                                          left: AppPadding.p10)
+                                      : const EdgeInsets.only(
+                                          right: AppPadding.p10),
+                                  child: Container(
+                                    height: 94,
+                                    width: 315,
+                                    decoration: BoxDecoration(
+                                      color: ColorsManager.whiteColor,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                      child: Image.file(
+                                        File(controller.imagePath.value),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
+                    )),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p30, left: AppPadding.p20)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p30, right: AppPadding.p20),
+                    child: Text(
+                      'daklia_description'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Padding(
+                padding: isEnglish
+                    ? const EdgeInsets.only(left: AppPadding.p10)
+                    : const EdgeInsets.only(right: AppPadding.p10),
+                child: Row(
+                  children: [
+                    dakliaDescriptionWidget(
+                      context,
+                      controller,
+                      profileController.profileList[0].dakliaDescription!,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Padding(
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p20)
+                        : const EdgeInsets.only(
                             top: AppPadding.p20, right: AppPadding.p20),
                     child: Text(
-                      'warning_edit_profile'.tr,
+                      'room_count'.tr,
                       style: getRegularStyle(
+                        color: ColorsManager.mainColor,
                         fontSize: FontSizeManager.s14,
-                        color: ColorsManager.blackColor,
-                        height: 2,
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p30, left: AppPadding.p20)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p30, right: AppPadding.p20),
-                  child: Text(
-                    'daklia_image'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15,
-            ),
-            Obx(
-              (() => Padding(
-                    padding: isEnglish
-                        ? const EdgeInsets.only(left: AppPadding.p30)
-                        : const EdgeInsets.only(right: AppPadding.p20),
-                    child: Row(
-                      children: [
-                        controller.imagePath.value == ''
-                            ? Container(
-                                height: 138,
-                                width: 334,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                    image: NetworkImage(profileController
-                                        .profileList[0].dakliaImage!),
-                                    fit: BoxFit.cover,
-                                    colorFilter: ColorFilter.mode(
-                                      ColorsManager.blackColor.withOpacity(0.4),
-                                      BlendMode.darken,
-                                    ),
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(
-                                        AppPadding.p10,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              selectImage(context, controller);
-                                            },
-                                            child: SvgPicture.asset(
-                                              ImagesManager.edit_profile_icon,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding: isEnglish
-                                    ? const EdgeInsets.only(
-                                        left: AppPadding.p10)
-                                    : const EdgeInsets.only(
-                                        right: AppPadding.p10),
-                                child: Container(
-                                  height: 94,
-                                  width: 315,
-                                  decoration: BoxDecoration(
-                                    color: ColorsManager.whiteColor,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Center(
-                                    child: Image.file(
-                                      File(controller.imagePath.value),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
-                  )),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p30, left: AppPadding.p20)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p30, right: AppPadding.p20),
-                  child: Text(
-                    'daklia_description'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: isEnglish
-                  ? const EdgeInsets.only(left: AppPadding.p10)
-                  : const EdgeInsets.only(right: AppPadding.p10),
-              child: Row(
-                children: [
-                  dakliaDescriptionWidget(
-                    context,
-                    controller,
-                    profileController.profileList[0].dakliaDescription!,
-                  ),
                 ],
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p20)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p20),
-                  child: Text(
-                    'room_count'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: isEnglish
-                  ? const EdgeInsets.only(left: AppPadding.p30)
-                  : const EdgeInsets.only(right: AppPadding.p30),
-              child: Row(
-                children: [
-                  roomCountWidget(
-                    context,
-                    controller,
-                    profileController.profileList[0].numberOfRooms!.toString(),
-                  ),
-                ],
+              SizedBox(
+                height: 10,
               ),
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: isEnglish
-                      ? const EdgeInsets.only(
-                          top: AppPadding.p20, left: AppPadding.p20)
-                      : const EdgeInsets.only(
-                          top: AppPadding.p20, right: AppPadding.p20),
-                  child: Text(
-                    "address".tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.mainColor,
-                      fontSize: FontSizeManager.s14,
+              Padding(
+                padding: isEnglish
+                    ? const EdgeInsets.only(left: AppPadding.p30)
+                    : const EdgeInsets.only(right: AppPadding.p30),
+                child: Row(
+                  children: [
+                    editProfileRoomCountWidget(
+                      context,
+                      controller,
+                      profileController.profileList[0].numberOfRooms!.toString(),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              height: 150,
-              width: 330,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
               ),
-              child: Stack(
+              Row(
                 children: [
-                  // make button to change location on map as a container with icon
-
-                  GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(
-                          double.parse(
-                              profileController.profileList[0].latitude!),
-                          double.parse(
-                              profileController.profileList[0].longitude!),
-                        ),
-                        zoom: 14),
-                    markers: {
-                      Marker(
-                        markerId: MarkerId("1"),
-                        position: LatLng(
-                          double.parse(
-                              profileController.profileList[0].latitude!),
-                          double.parse(
-                              profileController.profileList[0].longitude!),
-                        ),
-                      ),
-                    },
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                      top: AppPadding.p20,
-                      right: 290,
+                    padding: isEnglish
+                        ? const EdgeInsets.only(
+                            top: AppPadding.p20, left: AppPadding.p20)
+                        : const EdgeInsets.only(
+                            top: AppPadding.p20, right: AppPadding.p20),
+                    child: Text(
+                      "address".tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.mainColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
                     ),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.to(() => ChangeLocationOnMapView());
-                      },
-                      child: Container(
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.mainColor,
-                          borderRadius: BorderRadius.circular(50),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 150,
+                width: 330,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Stack(
+                  children: [
+                    // make button to change location on map as a container with icon
+
+                    GoogleMap(
+                      initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            double.parse(
+                                profileController.profileList[0].latitude!),
+                            double.parse(
+                                profileController.profileList[0].longitude!),
+                          ),
+                          zoom: 14),
+                      markers: {
+                        Marker(
+                          markerId: MarkerId("1"),
+                          position: LatLng(
+                            double.parse(
+                                profileController.profileList[0].latitude!),
+                            double.parse(
+                                profileController.profileList[0].longitude!),
+                          ),
                         ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            ImagesManager.edit,
-                            width: 15,
-                            height: 15,
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: AppPadding.p20,
+                        right: 290,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => ChangeLocationOnMapView());
+                        },
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            color: ColorsManager.mainColor,
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              ImagesManager.edit,
+                              width: 15,
+                              height: 15,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Container(
@@ -346,7 +349,7 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
           child: Row(
             children: [
               ButtonsManager.primaryButton(
-                text: 'Save_changes'.tr,
+                text: 'save_changes'.tr,
                 onPressed: () async {
                   await controller.sendUpdateProfile();
                 },
