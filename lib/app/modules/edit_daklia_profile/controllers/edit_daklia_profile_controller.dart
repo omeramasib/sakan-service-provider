@@ -55,8 +55,10 @@ class EditDakliaProfileController extends GetxController {
           ? roomCount.value = profileController.profileList[0].numberOfRooms!
           : roomCount.value,
       image: imagePath.value == ''
-          ? image = File(
-              profileController.profileList[0].dakliaImage!.split('/').last)
+          ? image = File(profileController.profileList[0].dakliaImage!
+              .split('/')
+              .last
+              .toString())
           : image = image!,
     )
         .timeout(

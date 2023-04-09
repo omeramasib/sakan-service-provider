@@ -4,6 +4,8 @@ import '../modules/Auth/bindings/auth_binding.dart';
 import '../modules/Auth/resetpassword/bindings/resetpassword_binding.dart';
 import '../modules/Auth/resetpassword/views/reset_password_view.dart';
 import '../modules/Auth/views/auth_view.dart';
+import '../modules/ChangeLocationOnMap/bindings/change_location_on_map_binding.dart';
+import '../modules/ChangeLocationOnMap/views/change_location_on_map_view.dart';
 import '../modules/MoreScreen/bindings/more_screen_binding.dart';
 import '../modules/MoreScreen/views/more_screen_view.dart';
 import '../modules/MyAppointments/bindings/my_appointments_binding.dart';
@@ -121,6 +123,11 @@ class AppPages {
       name: _Paths.NETWORK,
       page: () => const NetworkView(),
       binding: NetworkBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_LOCATION_ON_MAP,
+      page: () => const ChangeLocationOnMapView(),
+      binding: ChangeLocationOnMapBinding(),
     ),
   ];
 }

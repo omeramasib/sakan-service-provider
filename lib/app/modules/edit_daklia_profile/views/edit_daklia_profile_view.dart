@@ -14,6 +14,7 @@ import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/choose_image/choose_image.dart';
 import '../../../../widgets/text_form_fields.dart';
+import '../../ChangeLocationOnMap/views/change_location_on_map_view.dart';
 import '../controllers/edit_daklia_profile_controller.dart';
 
 class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
@@ -272,22 +273,58 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: GoogleMap(
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                      double.parse(profileController.profileList[0].latitude!),
-                      double.parse(profileController.profileList[0].longitude!),
+              child: Stack(
+                children: [
+                  // make button to change location on map as a container with icon
+
+                  GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                          double.parse(
+                              profileController.profileList[0].latitude!),
+                          double.parse(
+                              profileController.profileList[0].longitude!),
+                        ),
+                        zoom: 14),
+                    markers: {
+                      Marker(
+                        markerId: MarkerId("1"),
+                        position: LatLng(
+                          double.parse(
+                              profileController.profileList[0].latitude!),
+                          double.parse(
+                              profileController.profileList[0].longitude!),
+                        ),
+                      ),
+                    },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: AppPadding.p20,
+                      right: 290,
                     ),
-                    zoom: 14),
-                markers: {
-                  Marker(
-                    markerId: MarkerId("1"),
-                    position: LatLng(
-                      double.parse(profileController.profileList[0].latitude!),
-                      double.parse(profileController.profileList[0].longitude!),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => ChangeLocationOnMapView());
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.mainColor,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            ImagesManager.edit,
+                            width: 15,
+                            height: 15,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                },
+                ],
               ),
             ),
             SizedBox(
@@ -310,9 +347,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
             children: [
               ButtonsManager.primaryButton(
                 text: 'Save_changes'.tr,
-                onPressed: () async{
-                 await controller.sendUpdateProfile(
-                 );
+                onPressed: () async {
+                  await controller.sendUpdateProfile();
                 },
                 context: context,
                 maximumSize: Size(287, 50),

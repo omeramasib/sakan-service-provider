@@ -27,24 +27,27 @@ class UpdateProfileProvider extends GetConnect {
   }
 
   Future<void> updateProfile({
-    required File? image,
+    required File image,
     required String dakliaDescription,
     required int numberOfRooms,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
+    EasyLoading.show(status: 'loading'.tr);
+    log('this is the image: $image');
+    log('this is the daklia description: $dakliaDescription');
+    log('this is the number of rooms: $numberOfRooms');
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse(
-    //  '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.updateProfile}}'
-    'https://sakanapp.onrender.com/api/v1/daklia/${storage.read('dakliaId')}/update-profile/'
-      ),
+          //  '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.updateProfile}}'
+          'https://sakanapp.onrender.com/api/v1/daklia/${storage.read('dakliaId')}/update-profile/'),
     );
     // print the request
     log('this is the request: $request');
     request.headers["authorization"] = "Token ${storage.read('token')}";
     request.files.add(await http.MultipartFile.fromPath(
       'daklia_image',
-      image!.path,
+      image.path,
     ));
     request.fields['daklia_description'] = dakliaDescription;
     request.fields['numberOfRooms'] = numberOfRooms.toString();
@@ -58,7 +61,7 @@ class UpdateProfileProvider extends GetConnect {
     log('this is the data: $data');
 
     if (statusCode == 200) {
-      log('this is the statusCode : $statusCode' );
+      log('this is the statusCode : $statusCode');
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });

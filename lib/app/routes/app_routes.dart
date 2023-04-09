@@ -19,6 +19,7 @@ abstract class Routes {
   static const MY_APPOINTMENTS = _Paths.MY_APPOINTMENTS;
   static const MORE_SCREEN = _Paths.MORE_SCREEN;
   static const NETWORK = _Paths.NETWORK;
+  static const CHANGE_LOCATION_ON_MAP = _Paths.CHANGE_LOCATION_ON_MAP;
 }
 
 abstract class _Paths {
@@ -39,4 +40,5 @@ abstract class _Paths {
   static const MY_APPOINTMENTS = '/my-appointments';
   static const MORE_SCREEN = '/more-screen';
   static const NETWORK = '/network';
+  static const CHANGE_LOCATION_ON_MAP = '/change-location-on-map';
 }
