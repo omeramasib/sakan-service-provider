@@ -1,8 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../models/daklia_rooms_models.dart';
+import '../providers/daklia_room_provider.dart';
 
 class RoomManagementController extends GetxController {
 
@@ -16,7 +21,6 @@ class RoomManagementController extends GetxController {
   var monthlyBedPriceController = TextEditingController();
   var featureController = TextEditingController();
   var otherDetailsController = TextEditingController();
-  final count = 0.obs;
 
     void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -56,8 +60,39 @@ class RoomManagementController extends GetxController {
     update();
   }
 
+  static RoomManagementController get instance =>
+      Get.put(RoomManagementController());
+
+  RxList roomsList = <DakliaRoomModel>[].obs;
+  RxBool isLoading = false.obs;
+  var storage = GetStorage();
+  var provider = DakliaRoomProvider();
+  getRoomsList() async {
+    isLoading.value = true;
+    var data = await provider
+        .getRoomsList(
+      storage.read('dakliaId').toString(),
+    )
+        .timeout(
+      const Duration(seconds: 3),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        isLoading.value = false;
+        update();
+        return DakliaRoomModel();
+      },
+    );
+    if (data != null) {
+      roomsList.clear();
+      roomsList.add(data);
+    }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
+  }
+
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
     roomNumberController = TextEditingController();
     allBedsNumberController = TextEditingController();
@@ -66,6 +101,7 @@ class RoomManagementController extends GetxController {
     monthlyBedPriceController = TextEditingController();
     featureController = TextEditingController();
     otherDetailsController = TextEditingController();
+   await getRoomsList();
   }
 
   @override
@@ -84,6 +120,4 @@ class RoomManagementController extends GetxController {
     otherDetailsController.dispose();
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

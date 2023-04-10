@@ -10,7 +10,6 @@ import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/room_management/empty_room.dart';
-import '../../../routes/app_pages.dart';
 import '../controllers/room_management_controller.dart';
 
 class RoomManagementView extends GetView<RoomManagementController> {
@@ -18,6 +17,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
   @override
   Widget build(BuildContext context) {
     var isEnglish = Get.locale!.languageCode == 'en';
+    var controller = Get.put(RoomManagementController());
     return Scaffold(
         backgroundColor: ColorsManager.lightGreyColor,
         appBar: PreferredSize(
@@ -210,8 +210,11 @@ class RoomManagementView extends GetView<RoomManagementController> {
             SizedBox(
               height: 20,
             ),
-            roomsList(context),
-            // emptyRoom(context),
+            Obx(
+              ()=> controller.roomsList.isEmpty ?
+              emptyRoom(context) :
+              roomsList(context),
+            )
           ],
         ),
 

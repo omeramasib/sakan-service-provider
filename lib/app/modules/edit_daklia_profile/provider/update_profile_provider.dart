@@ -39,7 +39,6 @@ class UpdateProfileProvider extends GetConnect {
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse(
-          //  '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.updateProfile}}'
           'https://sakanapp.onrender.com/api/v1/daklia/${storage.read('dakliaId')}/update-profile/'),
     );
     log('this is the request: $request');

@@ -27,8 +27,7 @@ class DakliaRoomProvider extends GetConnect {
 
   Future getRoomsList(String? id) async {
     final response = await get(
-      // HttpHelper.baseUrl2 + HttpHelper.rooms + '$id',
-      '${HttpHelper.baseUrl2}/$id${HttpHelper.rooms}}',
+      '${HttpHelper.baseUrl2}/$id${HttpHelper.rooms}',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -38,14 +37,15 @@ class DakliaRoomProvider extends GetConnect {
 
     var data = response.body;
     var statusCode = response.statusCode;
+    log('this is the request url: ${response.request?.url}');
     log('this is the status code: $statusCode');
     log(data.toString());
+
     if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
-        storage.write('locationId', data['location_id']);
       });
-      return DakliaRoomModel.fromJson(data);
+      return DakliaRoomModel.fromJson(data as Map<String, dynamic>);
     }
 
     if (statusCode == 401) {
