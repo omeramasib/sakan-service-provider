@@ -10,7 +10,8 @@ static const resetPassword = '/reset-password';
 static const logout = '/logout';
 static const dakliaInfo = '/daklia-info/';
 static const dakliaLocation = '/daklia-location/';
-static const verifyAccount = '/verify-account';
+static const verifyAccount = '/verify-account/';
 static const dakliaProfile = '/daklia-profile/';
 static const updateProfile = '/update-profile/';
+static const rooms = '/rooms/';
 }

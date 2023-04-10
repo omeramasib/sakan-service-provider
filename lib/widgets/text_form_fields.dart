@@ -742,9 +742,9 @@ Widget addDescriptionWidget(BuildContext context, dynamic controller) {
             bottom: 80,
           ),
           errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-        ),
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: ColorsManager.lightGreyColor),
@@ -920,6 +920,7 @@ Widget addressDetailsWidget(
         controller: controller.addressDetailsController,
         enabled: true,
         onSaved: (value) {
+          log('this is the value $value');
           controller.additionalAddress = value;
         },
         decoration: InputDecoration(
@@ -1064,7 +1065,6 @@ Widget dakliaOwnerIdWidget(
           ),
   );
 }
-
 
 Widget roomNumberWidget(
     BuildContext context, dynamic controller, String hinText) {
@@ -1650,7 +1650,8 @@ Widget appointmentRejectWidget(BuildContext context, dynamic controller) {
   );
 }
 
-Widget dakliaDescriptionWidget(BuildContext context, dynamic controller, String hinText) {
+Widget dakliaDescriptionWidget(
+    BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(

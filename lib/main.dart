@@ -17,9 +17,9 @@ void main() async{
     GetMaterialApp(
       title: "Sakan",
       debugShowCheckedModeBanner: false,
-      translations: LanguageController.instance,
-      locale: Locale(LanguageController.instance.getLocale),
-      fallbackLocale: LanguageController.instance.fallbackLocale,
+      translations:  LanguageController.instance,
+      locale: Locale('ar', 'SA'),
+      // fallbackLocale: LanguageController.instance.fallbackLocale,
       initialRoute: AppPages.INITIAL,
       initialBinding: NetworkBinding(),
       getPages: AppPages.routes,

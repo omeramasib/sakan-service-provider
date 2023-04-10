@@ -7,9 +7,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../../completeDakliaAccount2/providers/daklia_location_provider.dart';
 import '../../network/controllers/network_controller.dart';
+import '../model/change_location_model.dart';
+import '../provider/change_location_provider.dart';
 
 class ChangeLocationOnMapController extends GetxController {
   late Future getCurrentLocationFuture;
@@ -113,19 +113,6 @@ class ChangeLocationOnMapController extends GetxController {
 
     getAddresFromLatLon(position);
 
-    // final GoogleMapController controller = await gMC.future;
-    // controller.animateCamera(
-    //   CameraUpdate.newCameraPosition(
-    //     CameraPosition(
-    //       target: LatLng(
-    //         position.latitude,
-    //         position.longitude,
-    //       ),
-    //       zoom: initZoom,
-    //     ),
-    //   ),
-    // );
-
     update();
 
     return true;
@@ -143,44 +130,43 @@ class ChangeLocationOnMapController extends GetxController {
     }
   }
 
-  var addressProvider = DakliaLocationProvider();
+  var addressProvider = ChangeLocationProvider();
 
   var networkController = NetworkController();
 
-  // Future<DakliaLocationModel> sendAdress() async {
-  //   return await addressProvider
-  //       .sendAddress(
-  //     longitude: lon.value.toString(),
-  //     latitude: lat.value.toString(),
-  //     address: address,
-  //     additonal_address: additionalAddress,
-  //   )
-  //       .timeout(
-  //     Duration(seconds: 3),
-  //     onTimeout: () {
-  //       EasyLoading.dismiss();
-  //       return DakliaLocationModel();
-  //     },
-  //   );
-  // }
+  Future<ChangeLocationModel> changeAdress() async {
+    return await addressProvider
+        .changeAddress(
+      longitude: lon.value.toString(),
+      latitude: lat.value.toString(),
+      address: address,
+      additonal_address: additionalAddress,
+    )
+        .timeout(
+      Duration(seconds: 3),
+      onTimeout: () {
+        EasyLoading.dismiss();
+        return ChangeLocationModel();
+      },
+    );
+  }
 
-  // void checkSendAddress() {
-  //   var isValid = formKey.currentState!.validate();
-  //   if (!isValid) {
-  //     return;
-  //   }
-  //   formKey.currentState!.save();
-  //   // if (networkController.isConnected.value == true) {
-  //   //   EasyLoading.show(status: 'loading'.tr);
-  //   //   login();
-  //   // } else {
-  //   //   Dialogs.connectionErrorDialog(Get.context!);
-  //   // }
-  //   EasyLoading.show(status: 'loading'.tr);
-  //   sendAdress();
-  //   update();
-  // }
-
+  void checkChangeAddress() async{
+    var isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+    formKey.currentState!.save();
+    // if (networkController.isConnected.value == true) {
+    //   EasyLoading.show(status: 'loading'.tr);
+    //   login();
+    // } else {
+    //   Dialogs.connectionErrorDialog(Get.context!);
+    // }
+    EasyLoading.show(status: 'loading'.tr);
+    await changeAdress();
+    update();
+  }
 
   @override
   void onInit() async {
@@ -197,4 +183,5 @@ class ChangeLocationOnMapController extends GetxController {
   void onClose() {
     super.onClose();
   }
+
 }

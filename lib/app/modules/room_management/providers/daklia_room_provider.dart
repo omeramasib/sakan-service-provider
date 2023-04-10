@@ -4,16 +4,15 @@ import 'dart:developer';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 import '../../network/controllers/network_controller.dart';
-import '../model/daklia_profile_model.dart';
+import '../models/daklia_rooms_models.dart';
 
-class DakliaProfileProvider extends GetConnect {
+class DakliaRoomProvider extends GetConnect {
   var networkController = NetworkController.instance;
-  static DakliaProfileProvider get instance => Get.put(DakliaProfileProvider());
+  static DakliaRoomProvider get instance => Get.put(DakliaRoomProvider());
   GetStorage storage = GetStorage();
   Timer? timer;
   @override
@@ -26,14 +25,16 @@ class DakliaProfileProvider extends GetConnect {
     });
   }
 
-  Future getProfileInfo(String? id) async {
+  Future getRoomsList(String? id) async {
     final response = await get(
-        HttpHelper.baseUrl2 + HttpHelper.dakliaProfile + '$id',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
-        });
+      // HttpHelper.baseUrl2 + HttpHelper.rooms + '$id',
+      '${HttpHelper.baseUrl2}/$id${HttpHelper.rooms}}',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ${storage.read('token')}',
+      },
+    );
 
     var data = response.body;
     var statusCode = response.statusCode;
@@ -44,7 +45,7 @@ class DakliaProfileProvider extends GetConnect {
         EasyLoading.dismiss();
         storage.write('locationId', data['location_id']);
       });
-      return DakliaProfileModel.fromJson(data);
+      return DakliaRoomModel.fromJson(data);
     }
 
     if (statusCode == 401) {

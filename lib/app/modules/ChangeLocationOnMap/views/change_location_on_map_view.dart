@@ -7,6 +7,7 @@ import '../../../../constants/buttons_manager.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
+import '../../../../widgets/change_location_widgets/change_additonal_address.dart';
 import '../controllers/change_location_on_map_controller.dart';
 
 class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
@@ -105,10 +106,9 @@ class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
           //   child: step2(context, "daklia_information".tr, "address".tr,
           //       "daklia_documentation".tr),
           // ),
-
         ],
       ),
-       bottomNavigationBar: Container(
+      bottomNavigationBar: Container(
         width: Get.width,
         height: 78,
         decoration: BoxDecoration(
@@ -122,8 +122,9 @@ class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
             children: [
               ButtonsManager.primaryButton(
                 text: 'save_changes'.tr,
-                onPressed: () async {
+                onPressed: (){
                   // await controller.sendUpdateProfile();
+                changeAdditionalAddress(context);
                 },
                 context: context,
                 maximumSize: Size(287, 50),

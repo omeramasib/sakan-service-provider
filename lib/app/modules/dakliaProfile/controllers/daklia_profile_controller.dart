@@ -25,7 +25,7 @@ class DakliaProfileController extends GetxController {
         // Dialogs.connectionErrorDialog(Get.context!);
         isLoading.value = false;
         update();
-        // return DakliaProfileModel();
+        return DakliaProfileModel();
       },
     );
     if (data != null) {

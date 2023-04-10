@@ -121,6 +121,9 @@ const Map<String, String> arSA = {
   'please_select_daklia_doc': 'الرجاء اختيار صورة من تصديق الداخلية ساري الصلاحية',
   'please_select_daklia_owner_doc': 'الرجاء اختيار صورة من إثبات شخصية مالك الداخلية',
   'daklia_dosent_exist': 'الداخلية غير موجودة',
+  // Change Location Screen
+  'success_change_location': 'تم تغيير عنوان الداخلية بنجاح',
+  'invalid_data': 'الرجاء ادخال بيانات صحيحة',
   // otp screen
   'enter_otp': 'ادخل كود التحقق',
   'description1_otp': 'ارسلنا كود التحقق في رسالة على رقم جوالك',

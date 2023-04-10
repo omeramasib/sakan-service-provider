@@ -8,6 +8,8 @@ class DakliaProfileModel {
   int? roomCount;
   int? serviceCount;
   int? lawCount;
+  int? userId;
+  int? locationId;
   String? longitude;
   String? latitude;
 
@@ -21,21 +23,25 @@ class DakliaProfileModel {
       this.roomCount,
       this.serviceCount,
       this.lawCount,
+      this.userId,
+      this.locationId,
       this.longitude,
       this.latitude});
 
   DakliaProfileModel.fromJson(Map<String, dynamic> json) {
     dakliaId = json['Daklia_id'];
     dakliaName = json['daklia_name'];
-    dakliaImage = json['daklia_image'] ?? '';
-    dakliaDescription = json['daklia_description'] ?? '';
-    numberOfRooms = json['numberOfRooms'] ?? 0;
-    accountStatus = json['account_status'] ?? 0;
-    roomCount = json['room_count'] ?? 0;
-    serviceCount = json['service_count'] ?? 0;
-    lawCount = json['law_count'] ?? 0;
-    longitude = json['longitude'] ?? '';
-    latitude = json['latitude'] ?? '';
+    dakliaImage = json['daklia_image'];
+    dakliaDescription = json['daklia_description'];
+    numberOfRooms = json['numberOfRooms'];
+    accountStatus = json['account_status'];
+    roomCount = json['room_count'];
+    serviceCount = json['service_count'];
+    lawCount = json['law_count'];
+    userId = json['user_id'];
+    locationId = json['location_id'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
   }
 
   Map<String, dynamic> toJson() {
@@ -49,6 +55,8 @@ class DakliaProfileModel {
     data['room_count'] = this.roomCount;
     data['service_count'] = this.serviceCount;
     data['law_count'] = this.lawCount;
+    data['user_id'] = this.userId;
+    data['location_id'] = this.locationId;
     data['longitude'] = this.longitude;
     data['latitude'] = this.latitude;
     return data;
