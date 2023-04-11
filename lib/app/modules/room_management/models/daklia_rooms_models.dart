@@ -1,12 +1,94 @@
+// // To parse this JSON data, do
+// //
+// //     final dakliaRoomModel = dakliaRoomModelFromJson(jsonString);
+
+// import 'dart:convert';
+
+// List<DakliaRoomModel> dakliaRoomModelFromJson(String str) =>
+//     List<DakliaRoomModel>.from(
+//         json.decode(str).map((x) => DakliaRoomModel.fromJson(x)));
+
+// String dakliaRoomModelToJson(List<DakliaRoomModel> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+// class DakliaRoomModel {
+//   DakliaRoomModel({
+//     required this.roomId,
+//     required this.roomNumber,
+//     required this.roomImage,
+//     required this.roomType,
+//     required this.roomPrice,
+//     required this.bookingType,
+//     required this.pricePerMonth,
+//     required this.pricePerDay,
+//     required this.numberOfBeds,
+//     required this.numAvailableBeds,
+//     required this.dakliaId,
+//   });
+
+//   int roomId;
+//   int roomNumber;
+//   String roomImage;
+//   String roomType;
+//   int roomPrice;
+//   String bookingType;
+//   int pricePerMonth;
+//   int pricePerDay;
+//   int numberOfBeds;
+//   int numAvailableBeds;
+//   int dakliaId;
+
+//   factory DakliaRoomModel.fromJson(Map<String, dynamic> json) =>
+//       DakliaRoomModel(
+//         roomId: json["room_id"],
+//         roomNumber: json["room_number"],
+//         roomImage: json["room_image"],
+//         roomType: json["room_type"],
+//         roomPrice: json["room_price"].toInt(),
+//         bookingType: json["booking_type"],
+//         pricePerMonth: json["price_per_month"].toInt(),
+//         pricePerDay: json["price_per_day"].toInt(),
+//         numberOfBeds: json["numberOfBeds"],
+//         numAvailableBeds: json["num_Available_Beds"],
+//         dakliaId: json["daklia_id"],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "room_id": roomId,
+//         "room_number": roomNumber,
+//         "room_image": roomImage,
+//         "room_type": roomType,
+//         "room_price": roomPrice,
+//         "booking_type": bookingType,
+//         "price_per_month": pricePerMonth,
+//         "price_per_day": pricePerDay,
+//         "numberOfBeds": numberOfBeds,
+//         "num_Available_Beds": numAvailableBeds,
+//         "daklia_id": dakliaId,
+//       };
+// }
+
+// import 'dart:convert';
+
+// List<DakliaRoomModel> dakliaRoomModelFromJson(String str) =>
+//     List<DakliaRoomModel>.from(
+//       json.decode(str).map(
+//             (x) => DakliaRoomModel.fromJson(x),
+//           ),
+//     );
+
+// String dakliaRoomModelToJson(List<DakliaRoomModel> data) =>
+//     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class DakliaRoomModel {
   int? roomId;
   int? roomNumber;
   String? roomImage;
   String? roomType;
-  int? roomPrice;
+  double? roomPrice;
   String? bookingType;
-  int? pricePerMonth;
-  int? pricePerDay;
+  double? pricePerMonth;
+  double? pricePerDay;
   int? numberOfBeds;
   int? numAvailableBeds;
   int? dakliaId;
@@ -25,17 +107,17 @@ class DakliaRoomModel {
       this.dakliaId});
 
   DakliaRoomModel.fromJson(Map<String, dynamic> json) {
-    roomId = json['room_id'] ?? 0;
-    roomNumber = json['room_number'] ?? 0;
-    roomImage = json['room_image'] ?? '';
-    roomType = json['room_type'] ?? '';
-    roomPrice = json['room_price'] ?? 0;
-    bookingType = json['booking_type'] ?? '';
-    pricePerMonth = json['price_per_month'] ?? 0;
-    pricePerDay = json['price_per_day'] ?? 0;
-    numberOfBeds = json['numberOfBeds'] ?? 0;
-    numAvailableBeds = json['num_Available_Beds'] ?? 0;
-    dakliaId = json['daklia_id'] ?? 0;
+    roomId = json['room_id'];
+    roomNumber = json['room_number'];
+    roomImage = json['room_image'];
+    roomType = json['room_type'];
+    roomPrice = json['room_price'];
+    bookingType = json['booking_type'];
+    pricePerMonth = json['price_per_month'];
+    pricePerDay = json['price_per_day'];
+    numberOfBeds = json['numberOfBeds'];
+    numAvailableBeds = json['num_Available_Beds'];
+    dakliaId = json['daklia_id'];
   }
 
   Map<String, dynamic> toJson() {

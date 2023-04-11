@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -45,7 +46,8 @@ class DakliaRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      return DakliaRoomModel.fromJson(data as Map<String, dynamic>);
+  
+      return DakliaRoomModel.fromJson(json.decode(data));
     }
 
     if (statusCode == 401) {

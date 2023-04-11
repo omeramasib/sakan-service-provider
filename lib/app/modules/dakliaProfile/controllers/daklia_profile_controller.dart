@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -29,6 +31,7 @@ class DakliaProfileController extends GetxController {
       },
     );
     if (data != null) {
+      profileList.clear();
       profileList.add(data);
     }
     isLoading.value = false;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sakan/constants/colors_manager.dart';
@@ -6,411 +7,433 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
+import '../../app/modules/room_management/controllers/room_management_controller.dart';
 import '../rooms_types/rooms_types.dart';
 import 'edit_or_delete_room.dart';
 
-Widget roomsList(BuildContext context) {
+Widget roomsList(BuildContext context, List roomsList) {
   var isEnglish = Get.locale!.languageCode == 'en';
+  var controller = Get.put(RoomManagementController());
   return Expanded(
-    child: Container(
-      height: Get.height,
-      width: Get.width,
-      child: Column(
-        children: [
-          Padding(
-            padding: isEnglish
-                ? EdgeInsets.only(
-                    left: Get.width * 0.080,
-                  )
-                : EdgeInsets.only(
-                    right: Get.width * 0.080,
-                  ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'rooms'.tr,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Padding(
-                  padding: isEnglish
-                      ? EdgeInsets.only(
-                          right: Get.width * 0.060,
-                        )
-                      : EdgeInsets.only(
-                          left: Get.width * 0.060,
-                        ),
-                  child: Row(children: [
-                    GestureDetector(
-                      onTap: () {
-                        selectRoomTypes(context);
-                      },
-                      child: SvgPicture.asset(
-                        ImagesManager.add,
+    child: Obx(
+      () {
+        if (controller.isLoading.value == true) {
+          EasyLoading.show(status: 'loading'.tr);
+        }
+        return Container(
+          height: Get.height,
+          width: Get.width,
+          child: ListView.separated(
+              itemCount: roomsList.length,
+              separatorBuilder: (context, index) {
+                return SizedBox(
+                  height: 15,
+                );
+              },
+              itemBuilder: (context, index) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: isEnglish
+                          ? EdgeInsets.only(
+                              left: Get.width * 0.080,
+                            )
+                          : EdgeInsets.only(
+                              right: Get.width * 0.080,
+                            ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'rooms'.tr,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Padding(
+                            padding: isEnglish
+                                ? EdgeInsets.only(
+                                    right: Get.width * 0.060,
+                                  )
+                                : EdgeInsets.only(
+                                    left: Get.width * 0.060,
+                                  ),
+                            child: Row(children: [
+                              GestureDetector(
+                                onTap: () {
+                                  selectRoomTypes(context);
+                                },
+                                child: SvgPicture.asset(
+                                  ImagesManager.add,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'add_room'.tr,
+                                style: getRegularStyle(
+                                  color: ColorsManager.mainColor,
+                                  fontSize: FontSizeManager.s12,
+                                ),
+                              )
+                            ]),
+                          )
+                        ],
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      height: 20,
                     ),
-                    Text(
-                      'add_room'.tr,
-                      style: getRegularStyle(
-                        color: ColorsManager.mainColor,
-                        fontSize: FontSizeManager.s12,
+                    // Container 1
+                    Container(
+                      width: 341,
+                      height: 115,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                          color: ColorsManager.borderColor,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: ColorsManager.shadowColor,
+                            // spreadRadius: 5,
+                            blurRadius: 7,
+                            offset: Offset(0, 0), // changes position of shadow
+                          ),
+                        ],
                       ),
-                    )
-                  ]),
-                )
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          // Container 1
-          Container(
-            width: 341,
-            height: 115,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: ColorsManager.borderColor,
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 119,
+                            height: 115,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              image: DecorationImage(
+                                image: AssetImage(ImagesManager.room_example),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          // child: Image.asset(
+                          //   ImagesManager.room_example,
+                          //   fit: BoxFit.cover,
+                          // ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              // top: 10,
+                              right: 140,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 10,
+                                  ),
+                                  child: Text(
+                                    'room_number'.tr,
+                                    style: getRegularStyle(
+                                      color: ColorsManager.mainColor,
+                                      fontSize: FontSizeManager.s14,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      ImagesManager.room_type,
+                                      height: 25,
+                                      width: 25,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'room_type'.tr,
+                                      style: getRegularStyle(
+                                        color: ColorsManager.defaultGreyColor,
+                                        fontSize: FontSizeManager.s12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'multi_room'.tr,
+                                      style: getRegularStyle(
+                                        color: ColorsManager.blackColor,
+                                        fontSize: FontSizeManager.s12,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      ImagesManager.rooms,
+                                      height: 15,
+                                      width: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'beds_number'.tr,
+                                      style: getRegularStyle(
+                                        color: ColorsManager.defaultGreyColor,
+                                        fontSize: FontSizeManager.s12,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      ': 4',
+                                      style: getRegularStyle(
+                                        color: ColorsManager.blackColor,
+                                        fontSize: FontSizeManager.s12,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              right: 240,
+                            ),
+                            child: Container(
+                              height: 22,
+                              width: 73,
+                              decoration: BoxDecoration(
+                                color: ColorsManager.blueColor.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(11),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  '2_beds'.tr,
+                                  style: getRegularStyle(
+                                    color: ColorsManager.blueColor,
+                                    fontSize: FontSizeManager.s11,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 13,
+                              right: 320,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                editOrDelete(context);
+                              },
+                              child: SvgPicture.asset(
+                                ImagesManager.more,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              }
+              // children: [
+
+              //   SizedBox(
+              //     height: 15,
+              //   ),
+              //    // Container 2
+              //   Container(
+              //     width: 341,
+              //     height: 115,
+              //     decoration: BoxDecoration(
+              //       color: Colors.white,
+              //       borderRadius: BorderRadius.circular(10),
+              //       border: Border.all(
+              //         color: ColorsManager.borderColor,
+              //       ),
+              //       boxShadow: [
+              //         BoxShadow(
+              //           color: ColorsManager.shadowColor,
+              //           // spreadRadius: 5,
+              //           blurRadius: 7,
+              //           offset: Offset(0, 0), // changes position of shadow
+              //         ),
+              //       ],
+              //     ),
+              //     child: Stack(
+              //       children: [
+              //         Container(
+              //           width: 119,
+              //           height: 115,
+              //           decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(6),
+              //             image: DecorationImage(
+              //               image: AssetImage(ImagesManager.room_example),
+              //               fit: BoxFit.cover,
+              //             ),
+              //           ),
+              //         ),
+              //         // child: Image.asset(
+              //         //   ImagesManager.room_example,
+              //         //   fit: BoxFit.cover,
+              //         // ),
+              //         SizedBox(
+              //           width: 15,
+              //         ),
+              //         Padding(
+              //           padding: const EdgeInsets.only(
+              //             // top: 10,
+              //             right: 140,
+              //           ),
+              //           child: Column(
+              //             mainAxisAlignment: MainAxisAlignment.start,
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             children: [
+              //               Padding(
+              //                 padding: const EdgeInsets.only(
+              //                   top: 10,
+              //                 ),
+              //                 child: Text(
+              //                   'room_number'.tr,
+              //                   style: getRegularStyle(
+              //                     color: ColorsManager.mainColor,
+              //                     fontSize: FontSizeManager.s14,
+              //                   ),
+              //                 ),
+              //               ),
+              //               SizedBox(
+              //                 height: 15,
+              //               ),
+              //               Row(
+              //                 children: [
+              //                   SvgPicture.asset(
+              //                     ImagesManager.room_type,
+              //                     height: 25,
+              //                     width: 25,
+              //                   ),
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   Text(
+              //                     'room_type'.tr,
+              //                     style: getRegularStyle(
+              //                       color: ColorsManager.defaultGreyColor,
+              //                       fontSize: FontSizeManager.s12,
+              //                     ),
+              //                   ),
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   Text(
+              //                     'multi_room'.tr,
+              //                     style: getRegularStyle(
+              //                       color: ColorsManager.blackColor,
+              //                       fontSize: FontSizeManager.s12,
+              //                     ),
+              //                   )
+              //                 ],
+              //               ),
+              //               SizedBox(
+              //                 height: 15,
+              //               ),
+              //               Row(
+              //                 children: [
+              //                   SvgPicture.asset(
+              //                     ImagesManager.rooms,
+              //                     height: 15,
+              //                     width: 10,
+              //                   ),
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   Text(
+              //                     'beds_number'.tr,
+              //                     style: getRegularStyle(
+              //                       color: ColorsManager.defaultGreyColor,
+              //                       fontSize: FontSizeManager.s12,
+              //                     ),
+              //                   ),
+              //                   SizedBox(
+              //                     width: 10,
+              //                   ),
+              //                   Text(
+              //                     ': 4',
+              //                     style: getRegularStyle(
+              //                       color: ColorsManager.blackColor,
+              //                       fontSize: FontSizeManager.s12,
+              //                     ),
+              //                   )
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: 15,
+              //         ),
+              //         Padding(
+              //           padding: const EdgeInsets.only(
+              //             top: 10,
+              //             right: 240,
+              //           ),
+              //           child: Container(
+              //             height: 22,
+              //             width: 73,
+              //             decoration: BoxDecoration(
+              //               color: ColorsManager.blueColor.withOpacity(0.2),
+              //               borderRadius: BorderRadius.circular(11),
+              //             ),
+              //             child: Center(
+              //               child: Text(
+              //                 '2_beds'.tr,
+              //                 style: getRegularStyle(
+              //                   color: ColorsManager.blueColor,
+              //                   fontSize: FontSizeManager.s11,
+              //                 ),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //         Padding(
+              //           padding: const EdgeInsets.only(
+              //             top: 13,
+              //             right: 320,
+              //           ),
+              //           child: SvgPicture.asset(
+              //             ImagesManager.more,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorsManager.shadowColor,
-                  // spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  width: 119,
-                  height: 115,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    image: DecorationImage(
-                      image: AssetImage(ImagesManager.room_example),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // child: Image.asset(
-                //   ImagesManager.room_example,
-                //   fit: BoxFit.cover,
-                // ),
-                SizedBox(
-                  width: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    // top: 10,
-                    right: 140,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Text(
-                          'room_number'.tr,
-                          style: getRegularStyle(
-                            color: ColorsManager.mainColor,
-                            fontSize: FontSizeManager.s14,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            ImagesManager.room_type,
-                            height: 25,
-                            width: 25,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'room_type'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.defaultGreyColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'multi_room'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.blackColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            ImagesManager.rooms,
-                            height: 15,
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'beds_number'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.defaultGreyColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            ': 4',
-                            style: getRegularStyle(
-                              color: ColorsManager.blackColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    right: 240,
-                  ),
-                  child: Container(
-                    height: 22,
-                    width: 73,
-                    decoration: BoxDecoration(
-                      color: ColorsManager.blueColor.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(11),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '2_beds'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.blueColor,
-                          fontSize: FontSizeManager.s11,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 13,
-                    right: 320,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      editOrDelete(context);
-                    },
-                    child: SvgPicture.asset(
-                      ImagesManager.more,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 15,
-          ),
-           // Container 2
-          Container(
-            width: 341,
-            height: 115,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(
-                color: ColorsManager.borderColor,
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorsManager.shadowColor,
-                  // spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  width: 119,
-                  height: 115,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    image: DecorationImage(
-                      image: AssetImage(ImagesManager.room_example),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // child: Image.asset(
-                //   ImagesManager.room_example,
-                //   fit: BoxFit.cover,
-                // ),
-                SizedBox(
-                  width: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    // top: 10,
-                    right: 140,
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Text(
-                          'room_number'.tr,
-                          style: getRegularStyle(
-                            color: ColorsManager.mainColor,
-                            fontSize: FontSizeManager.s14,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            ImagesManager.room_type,
-                            height: 25,
-                            width: 25,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'room_type'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.defaultGreyColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'multi_room'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.blackColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            ImagesManager.rooms,
-                            height: 15,
-                            width: 10,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            'beds_number'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.defaultGreyColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            ': 4',
-                            style: getRegularStyle(
-                              color: ColorsManager.blackColor,
-                              fontSize: FontSizeManager.s12,
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10,
-                    right: 240,
-                  ),
-                  child: Container(
-                    height: 22,
-                    width: 73,
-                    decoration: BoxDecoration(
-                      color: ColorsManager.blueColor.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(11),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '2_beds'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.blueColor,
-                          fontSize: FontSizeManager.s11,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 13,
-                    right: 320,
-                  ),
-                  child: SvgPicture.asset(
-                    ImagesManager.more,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        );
+      },
     ),
   );
 }

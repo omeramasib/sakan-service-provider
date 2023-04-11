@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,7 +11,6 @@ import '../models/daklia_rooms_models.dart';
 import '../providers/daklia_room_provider.dart';
 
 class RoomManagementController extends GetxController {
-
   RxString imagePath = ''.obs;
   File? image;
 
@@ -22,7 +22,7 @@ class RoomManagementController extends GetxController {
   var featureController = TextEditingController();
   var otherDetailsController = TextEditingController();
 
-    void getImageFromGallery(ImageSource imageSource) async {
+  void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
       image = File(pickedFile.path);
@@ -51,10 +51,12 @@ class RoomManagementController extends GetxController {
     isAvailable.value = value;
     update();
   }
+
   chooseDailyBooking(bool value) {
     dailyBooking.value = value;
     update();
   }
+
   chooseMonthlyBooking(bool value) {
     monthlyBooking.value = value;
     update();
@@ -62,8 +64,9 @@ class RoomManagementController extends GetxController {
 
   static RoomManagementController get instance =>
       Get.put(RoomManagementController());
-
-  RxList roomsList = <DakliaRoomModel>[].obs;
+  // define instance of DakliaRoomsModel()
+  // var roomModelList = dakliaRoomModelFromJson;
+  RxList roomsList = [DakliaRoomModel].obs;
   RxBool isLoading = false.obs;
   var storage = GetStorage();
   var provider = DakliaRoomProvider();
@@ -79,12 +82,12 @@ class RoomManagementController extends GetxController {
         EasyLoading.dismiss();
         isLoading.value = false;
         update();
-        return DakliaRoomModel();
       },
     );
     if (data != null) {
       roomsList.clear();
       roomsList.add(data);
+      print("this is the list length: ${roomsList.length}");
     }
     isLoading.value = false;
     EasyLoading.dismiss();
@@ -92,7 +95,7 @@ class RoomManagementController extends GetxController {
   }
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
     roomNumberController = TextEditingController();
     allBedsNumberController = TextEditingController();
@@ -101,7 +104,7 @@ class RoomManagementController extends GetxController {
     monthlyBedPriceController = TextEditingController();
     featureController = TextEditingController();
     otherDetailsController = TextEditingController();
-   await getRoomsList();
+    await getRoomsList();
   }
 
   @override
