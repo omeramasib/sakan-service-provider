@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../constants/dialogs.dart';
 import '../models/daklia_rooms_models.dart';
 import '../providers/daklia_room_provider.dart';
 
@@ -66,36 +67,59 @@ class RoomManagementController extends GetxController {
       Get.put(RoomManagementController());
   // define instance of DakliaRoomsModel()
   // var roomModelList = dakliaRoomModelFromJson;
-  RxList roomsList = [DakliaRoomModel].obs;
-  RxBool isLoading = false.obs;
-  var storage = GetStorage();
-  var provider = DakliaRoomProvider();
-  getRoomsList() async {
+  final provider = DakliaRoomProvider();
+  final storage = GetStorage();
+  final roomsList = <DakliaRoomModel>[].obs;
+  final isLoading = false.obs;
+
+  Future<void> getRoomsList() async {
     isLoading.value = true;
-    var data = await provider
-        .getRoomsList(
-      storage.read('dakliaId').toString(),
-    )
-        .timeout(
-      const Duration(seconds: 3),
-      onTimeout: () {
-        EasyLoading.dismiss();
-        isLoading.value = false;
-        update();
-      },
-    );
-    if (data != null) {
-      roomsList.clear();
-      roomsList.add(data);
-      print("this is the list length: ${roomsList.length}");
+    final dakliaId = storage.read('dakliaId').toString();
+    try {
+      final data = await provider.getRoomsList(dakliaId);
+      final roomsData = List<Map<String, dynamic>>.from(data);
+      final rooms = roomsData
+          .map((roomData) => DakliaRoomModel.fromJson(roomData))
+          .toList();
+      roomsList.value = rooms;
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed to load rooms');
     }
     isLoading.value = false;
     EasyLoading.dismiss();
     update();
   }
+  // RxList roomsList = [DakliaRoomModel].obs;
+  // RxBool isLoading = false.obs;
+  // var storage = GetStorage();
+  // var provider = DakliaRoomProvider();
+  // getRoomsList() async {
+  //   isLoading.value = true;
+  //   var data = await provider
+  //       .getRoomsList(
+  //     storage.read('dakliaId').toString(),
+  //   )
+  //       .timeout(
+  //     const Duration(seconds: 3),
+  //     onTimeout: () {
+  //       EasyLoading.dismiss();
+  //       isLoading.value = false;
+  //       update();
+  //     },
+  //   );
+  //   if (data != null) {
+  //     roomsList.clear();
+  //     roomsList.add(data);
+  //     print("this is the list length: ${roomsList.length}");
+  //   }
+  //   isLoading.value = false;
+  //   EasyLoading.dismiss();
+  //   update();
+  // }
 
   @override
-  void onInit() async {
+  void onInit(){
     super.onInit();
     roomNumberController = TextEditingController();
     allBedsNumberController = TextEditingController();
@@ -104,7 +128,7 @@ class RoomManagementController extends GetxController {
     monthlyBedPriceController = TextEditingController();
     featureController = TextEditingController();
     otherDetailsController = TextEditingController();
-    await getRoomsList();
+     getRoomsList();
   }
 
   @override
