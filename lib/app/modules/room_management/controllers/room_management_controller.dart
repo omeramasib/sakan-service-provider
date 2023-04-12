@@ -9,11 +9,20 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../models/daklia_rooms_models.dart';
+import '../providers/add_room_provider.dart';
 import '../providers/daklia_room_provider.dart';
 
 class RoomManagementController extends GetxController {
   RxString imagePath = ''.obs;
   File? image;
+  int? roomNumber;
+  String? roomType;
+  int? roomPrice;
+  String? bookingType;
+  int? pricePerMonth;
+  int? pricePerDay;
+  int? numberOfBeds;
+  int? numAvailableBeds;
 
   var roomNumberController = TextEditingController();
   var allBedsNumberController = TextEditingController();
@@ -67,10 +76,11 @@ class RoomManagementController extends GetxController {
       Get.put(RoomManagementController());
 
   final provider = DakliaRoomProvider();
+  final addRoomProvider = AddRoomProvider();
   final storage = GetStorage();
   final roomsList = <DakliaRoomModel>[].obs;
   final isLoading = false.obs;
-  
+
   // method to get rooms list from api
   Future<void> getRoomsList() async {
     final dakliaId = storage.read('dakliaId').toString();
@@ -83,6 +93,29 @@ class RoomManagementController extends GetxController {
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_load_rooms'.tr);
+    }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
+  }
+  // method to add new room
+  Future<void> addNewRoom() async {
+    try {
+      final data = await addRoomProvider.addNewRoom(
+        roomImage: image!,
+        roomNumber: roomNumber!,
+        roomType: roomType!,
+        roomPrice: roomPrice!,
+        bookingType: bookingType!,
+        pricePerMonth: pricePerMonth!,
+        pricePerDay: pricePerDay!,
+        numberOfBeds: numberOfBeds!,
+        numAvailableBeds: numAvailableBeds!,
+      );
+      print('this is the data: $data');
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
     }
     isLoading.value = false;
     EasyLoading.dismiss();

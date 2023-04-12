@@ -27,16 +27,16 @@ class DakliaRoomModel {
 
 factory DakliaRoomModel.fromJson(Map<String, dynamic> json) {
   return DakliaRoomModel(
-    roomId: json['room_id'],
-    roomNumber: json['room_number'],
-    roomImage: json['room_image'],
-    roomType: json['room_type'],
-    roomPrice: json['room_price'].toDouble(),
-    bookingType: json['booking_type'],
-    pricePerMonth: json['price_per_month'].toDouble(),
-    pricePerDay: json['price_per_day'].toDouble(),
-    numberOfBeds: json['numberOfBeds'] as int,
-    numAvailableBeds: json['num_Available_Beds'] as int,
+    roomId: json['room_id'] ?? 0,
+    roomNumber: json['room_number'] ?? 0,
+    roomImage: json['room_image'] ?? '',
+    roomType: json['room_type'] ?? '',
+    roomPrice: json['room_price'].toDouble() ?? 0.0,
+    bookingType: json['booking_type'] ?? '',
+    pricePerMonth: json['price_per_month'].toDouble() ?? 0.0,
+    pricePerDay: json['price_per_day'].toDouble() ?? 0.0,
+    numberOfBeds: json['numberOfBeds'] as int ?? 0,
+    numAvailableBeds: json['num_Available_Beds'] as int ?? 0,
     dakliaId: json['daklia_id'],
   );
 }

@@ -27,7 +27,7 @@ class AddRoomProvider extends GetConnect {
     });
   }
 
-  Future<AddRoomModel> addRomm({
+  Future<AddRoomModel> addNewRoom({
     required File? roomImage,
     required int? roomNumber,
     required String? roomType,

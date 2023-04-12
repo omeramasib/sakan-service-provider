@@ -46,10 +46,10 @@ class DakliaRoomProvider extends GetConnect {
       log('this is the rooms data: $roomsData');
       final List<DakliaRoomModel> rooms = [];
 
-      roomsData.forEach((roomData) {
+      for (final roomData in roomsData) {
         final room = DakliaRoomModel.fromJson(roomData);
         rooms.add(room);
-      });
+      }
 
       return rooms;
     }

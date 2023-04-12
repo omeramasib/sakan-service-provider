@@ -131,32 +131,32 @@ addMultiRoom(BuildContext context) {
                       'beds_number'.tr,
                     ),
                     // This is row 3
-                    Row(
-                      children: [
-                        Padding(
-                          padding: isEnglish
-                              ? const EdgeInsets.only(
-                                  top: AppPadding.p10, left: AppPadding.p40)
-                              : const EdgeInsets.only(
-                                  top: AppPadding.p10, right: AppPadding.p30),
-                          child: Text(
-                            'empty_beds_number'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.mainColor,
-                              fontSize: FontSizeManager.s14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    emptyBedsNumberWidget(
-                      context,
-                      controller,
-                      'beds_number'.tr,
-                    ),
+                    // Row(
+                    //   children: [
+                    //     Padding(
+                    //       padding: isEnglish
+                    //           ? const EdgeInsets.only(
+                    //               top: AppPadding.p10, left: AppPadding.p40)
+                    //           : const EdgeInsets.only(
+                    //               top: AppPadding.p10, right: AppPadding.p30),
+                    //       child: Text(
+                    //         'empty_beds_number'.tr,
+                    //         style: getRegularStyle(
+                    //           color: ColorsManager.mainColor,
+                    //           fontSize: FontSizeManager.s14,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    // SizedBox(
+                    //   height: 15,
+                    // ),
+                    // emptyBedsNumberWidget(
+                    //   context,
+                    //   controller,
+                    //   'beds_number'.tr,
+                    // ),
                     // This is row 4
                     Row(
                       children: [

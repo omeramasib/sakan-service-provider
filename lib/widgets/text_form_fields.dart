@@ -1077,6 +1077,10 @@ Widget roomNumberWidget(
         keyboardType: TextInputType.number,
         controller: controller.roomNumberController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the roomNumber value $value');
+          controller.roomNumber = value;
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1115,6 +1119,10 @@ Widget allBedsNumberWidget(
         keyboardType: TextInputType.number,
         controller: controller.allBedsNumberController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the numberOfBeds value $value');
+          controller.numberOfBeds = value;
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1191,6 +1199,10 @@ Widget dailyBedPriceWidget(
         keyboardType: TextInputType.number,
         controller: controller.dailyBedPriceController,
         enabled: true,
+        onSaved: (newValue) {
+          log('this is the price Per Day value $newValue');
+          controller.pricePerDay = newValue;
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1229,6 +1241,10 @@ Widget monthlyBedPriceWidget(
         keyboardType: TextInputType.number,
         controller: controller.monthlyBedPriceController,
         enabled: true,
+        onSaved: (newValue) {
+          log('this is the price Per Month value $newValue');
+          controller.pricePerMonth = newValue;
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
