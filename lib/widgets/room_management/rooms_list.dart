@@ -114,22 +114,19 @@ Widget roomsList(BuildContext context, List roomsList) {
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               image: DecorationImage(
-                                image: AssetImage(ImagesManager.room_example),
+                                image: NetworkImage(
+                                  roomsList[index].roomImage,
+                                ),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          // child: Image.asset(
-                          //   ImagesManager.room_example,
-                          //   fit: BoxFit.cover,
-                          // ),
                           SizedBox(
                             width: 15,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
-                              // top: 10,
-                              right: 140,
+                              right: 130,
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -140,7 +137,7 @@ Widget roomsList(BuildContext context, List roomsList) {
                                     top: 10,
                                   ),
                                   child: Text(
-                                    'room_number'.tr,
+                                    '${'room_number'.tr} : (${roomsList[index].roomNumber})',
                                     style: getRegularStyle(
                                       color: ColorsManager.mainColor,
                                       fontSize: FontSizeManager.s14,
@@ -170,13 +167,21 @@ Widget roomsList(BuildContext context, List roomsList) {
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    Text(
-                                      'multi_room'.tr,
-                                      style: getRegularStyle(
-                                        color: ColorsManager.blackColor,
-                                        fontSize: FontSizeManager.s12,
-                                      ),
-                                    )
+                                    roomsList[index].roomType == 'multiple'
+                                        ? Text(
+                                            ': ${'shared_room'.tr}',
+                                            style: getRegularStyle(
+                                              color: ColorsManager.blackColor,
+                                              fontSize: FontSizeManager.s12,
+                                            ),
+                                          )
+                                        : Text(
+                                            ': ${'single_room'.tr}',
+                                            style: getRegularStyle(
+                                              color: ColorsManager.blackColor,
+                                              fontSize: FontSizeManager.s12,
+                                            ),
+                                          )
                                   ],
                                 ),
                                 SizedBox(
@@ -203,7 +208,7 @@ Widget roomsList(BuildContext context, List roomsList) {
                                       width: 10,
                                     ),
                                     Text(
-                                      ': 4',
+                                      ': ${roomsList[index].numberOfBeds}',
                                       style: getRegularStyle(
                                         color: ColorsManager.blackColor,
                                         fontSize: FontSizeManager.s12,
@@ -231,7 +236,7 @@ Widget roomsList(BuildContext context, List roomsList) {
                               ),
                               child: Center(
                                 child: Text(
-                                  '2_beds'.tr,
+                                  '${roomsList[index].numAvailableBeds} ${'empty'.tr} ',
                                   style: getRegularStyle(
                                     color: ColorsManager.blueColor,
                                     fontSize: FontSizeManager.s11,
@@ -260,177 +265,6 @@ Widget roomsList(BuildContext context, List roomsList) {
                   ],
                 );
               }
-              // children: [
-
-              //   SizedBox(
-              //     height: 15,
-              //   ),
-              //    // Container 2
-              //   Container(
-              //     width: 341,
-              //     height: 115,
-              //     decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       borderRadius: BorderRadius.circular(10),
-              //       border: Border.all(
-              //         color: ColorsManager.borderColor,
-              //       ),
-              //       boxShadow: [
-              //         BoxShadow(
-              //           color: ColorsManager.shadowColor,
-              //           // spreadRadius: 5,
-              //           blurRadius: 7,
-              //           offset: Offset(0, 0), // changes position of shadow
-              //         ),
-              //       ],
-              //     ),
-              //     child: Stack(
-              //       children: [
-              //         Container(
-              //           width: 119,
-              //           height: 115,
-              //           decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(6),
-              //             image: DecorationImage(
-              //               image: AssetImage(ImagesManager.room_example),
-              //               fit: BoxFit.cover,
-              //             ),
-              //           ),
-              //         ),
-              //         // child: Image.asset(
-              //         //   ImagesManager.room_example,
-              //         //   fit: BoxFit.cover,
-              //         // ),
-              //         SizedBox(
-              //           width: 15,
-              //         ),
-              //         Padding(
-              //           padding: const EdgeInsets.only(
-              //             // top: 10,
-              //             right: 140,
-              //           ),
-              //           child: Column(
-              //             mainAxisAlignment: MainAxisAlignment.start,
-              //             crossAxisAlignment: CrossAxisAlignment.start,
-              //             children: [
-              //               Padding(
-              //                 padding: const EdgeInsets.only(
-              //                   top: 10,
-              //                 ),
-              //                 child: Text(
-              //                   'room_number'.tr,
-              //                   style: getRegularStyle(
-              //                     color: ColorsManager.mainColor,
-              //                     fontSize: FontSizeManager.s14,
-              //                   ),
-              //                 ),
-              //               ),
-              //               SizedBox(
-              //                 height: 15,
-              //               ),
-              //               Row(
-              //                 children: [
-              //                   SvgPicture.asset(
-              //                     ImagesManager.room_type,
-              //                     height: 25,
-              //                     width: 25,
-              //                   ),
-              //                   SizedBox(
-              //                     width: 10,
-              //                   ),
-              //                   Text(
-              //                     'room_type'.tr,
-              //                     style: getRegularStyle(
-              //                       color: ColorsManager.defaultGreyColor,
-              //                       fontSize: FontSizeManager.s12,
-              //                     ),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 10,
-              //                   ),
-              //                   Text(
-              //                     'multi_room'.tr,
-              //                     style: getRegularStyle(
-              //                       color: ColorsManager.blackColor,
-              //                       fontSize: FontSizeManager.s12,
-              //                     ),
-              //                   )
-              //                 ],
-              //               ),
-              //               SizedBox(
-              //                 height: 15,
-              //               ),
-              //               Row(
-              //                 children: [
-              //                   SvgPicture.asset(
-              //                     ImagesManager.rooms,
-              //                     height: 15,
-              //                     width: 10,
-              //                   ),
-              //                   SizedBox(
-              //                     width: 10,
-              //                   ),
-              //                   Text(
-              //                     'beds_number'.tr,
-              //                     style: getRegularStyle(
-              //                       color: ColorsManager.defaultGreyColor,
-              //                       fontSize: FontSizeManager.s12,
-              //                     ),
-              //                   ),
-              //                   SizedBox(
-              //                     width: 10,
-              //                   ),
-              //                   Text(
-              //                     ': 4',
-              //                     style: getRegularStyle(
-              //                       color: ColorsManager.blackColor,
-              //                       fontSize: FontSizeManager.s12,
-              //                     ),
-              //                   )
-              //                 ],
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //         SizedBox(
-              //           width: 15,
-              //         ),
-              //         Padding(
-              //           padding: const EdgeInsets.only(
-              //             top: 10,
-              //             right: 240,
-              //           ),
-              //           child: Container(
-              //             height: 22,
-              //             width: 73,
-              //             decoration: BoxDecoration(
-              //               color: ColorsManager.blueColor.withOpacity(0.2),
-              //               borderRadius: BorderRadius.circular(11),
-              //             ),
-              //             child: Center(
-              //               child: Text(
-              //                 '2_beds'.tr,
-              //                 style: getRegularStyle(
-              //                   color: ColorsManager.blueColor,
-              //                   fontSize: FontSizeManager.s11,
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //         Padding(
-              //           padding: const EdgeInsets.only(
-              //             top: 13,
-              //             right: 320,
-              //           ),
-              //           child: SvgPicture.asset(
-              //             ImagesManager.more,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ],
               ),
         );
       },

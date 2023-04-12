@@ -1,4 +1,4 @@
-class DakliaRoomModel {
+class AddRoomModel {
   int roomId;
   int roomNumber;
   String roomImage;
@@ -11,7 +11,7 @@ class DakliaRoomModel {
   int numAvailableBeds;
   int dakliaId;
 
-  DakliaRoomModel({
+  AddRoomModel({
     required this.roomId,
     required this.roomNumber,
     required this.roomImage,
@@ -25,8 +25,8 @@ class DakliaRoomModel {
     required this.dakliaId,
   });
 
-factory DakliaRoomModel.fromJson(Map<String, dynamic> json) {
-  return DakliaRoomModel(
+factory AddRoomModel.fromJson(Map<String, dynamic> json) {
+  return AddRoomModel(
     roomId: json['room_id'],
     roomNumber: json['room_number'],
     roomImage: json['room_image'],
@@ -41,5 +41,3 @@ factory DakliaRoomModel.fromJson(Map<String, dynamic> json) {
   );
 }
 }
-
-

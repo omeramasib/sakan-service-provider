@@ -211,12 +211,11 @@ class RoomManagementView extends GetView<RoomManagementController> {
           SizedBox(
             height: 20,
           ),
-          roomsList(context, controller.roomsList),
-          // Obx(
-          //   () => controller.roomsList.length == 0
-          //       ? emptyRoom(context)
-          //       : roomsList(context, controller.roomsList),
-          // )
+          Obx(
+            () => controller.roomsList.isEmpty
+                ? emptyRoom(context)
+                : roomsList(context, controller.roomsList),
+          ),
         ],
       ),
     );

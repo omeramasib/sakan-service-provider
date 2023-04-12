@@ -120,7 +120,7 @@ const Map<String, String> arSA = {
   'please_select_image': 'الرجاء اختيار صورة للداخلية من المعرض او الكاميرا',
   'please_select_daklia_doc': 'الرجاء اختيار صورة من تصديق الداخلية ساري الصلاحية',
   'please_select_daklia_owner_doc': 'الرجاء اختيار صورة من إثبات شخصية مالك الداخلية',
-  'daklia_dosent_exist': 'الداخلية غير موجودة',
+  'daklia_dosent_exist': 'الداخلية غير موجودة يرجى تسجيل الدخول او التسجيل مرة اخرى',
   // Change Location Screen
   'success_change_location': 'تم تغيير عنوان الداخلية بنجاح',
   'invalid_data': 'الرجاء ادخال بيانات صحيحة',
@@ -274,7 +274,7 @@ const Map<String, String> arSA = {
   'room_type': 'نوع الغرفة',
   'multi_room': ': غرفة متعددة',
   'beds_number': 'عدد السرائر',
-  '2_beds': '2  شاغر',
+  'empty': 'شاغر',
   'single_room': 'غرفة فردية',
   'shared_room': 'غرفة مشتركة',
   'edit_room_info': 'تعديل بيانات الغرفة',
@@ -293,6 +293,9 @@ const Map<String, String> arSA = {
   'delete_feature_finaly': 'حذف الميزة نهائيا',
   'delete_feature_des': '         هل انت متأكد من حذف الميزة\nسيتم حذف جميع البيانات الخاصة بهذه الميزة',
   'edit_information': 'تعديل البيانات',
+  'Failed_to_load_rooms': 'فشل في تحميل الغرف',
+  'room_added_successfully': 'تم إضافة الغرفة بنجاح',
+  'account_not_verified': 'لم يتم تفعيل الحساب بعد يرجى التواصل مع الإدارة',
   // Add Multi Room
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',

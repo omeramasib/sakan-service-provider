@@ -65,61 +65,33 @@ class RoomManagementController extends GetxController {
 
   static RoomManagementController get instance =>
       Get.put(RoomManagementController());
-  // define instance of DakliaRoomsModel()
-  // var roomModelList = dakliaRoomModelFromJson;
+
   final provider = DakliaRoomProvider();
   final storage = GetStorage();
   final roomsList = <DakliaRoomModel>[].obs;
   final isLoading = false.obs;
-
+  
+  // method to get rooms list from api
   Future<void> getRoomsList() async {
-    isLoading.value = true;
     final dakliaId = storage.read('dakliaId').toString();
     try {
+      isLoading.value = true;
       final data = await provider.getRoomsList(dakliaId);
-      final roomsData = List<Map<String, dynamic>>.from(data);
-      final rooms = roomsData
-          .map((roomData) => DakliaRoomModel.fromJson(roomData))
-          .toList();
-      roomsList.value = rooms;
+      roomsList.clear();
+      roomsList.addAll(data);
+      print('this is the list length: ${roomsList.length}');
     } catch (e) {
       print(e);
-      Dialogs.errorDialog(Get.context!, 'Failed to load rooms');
+      Dialogs.errorDialog(Get.context!, 'Failed_to_load_rooms'.tr);
     }
     isLoading.value = false;
     EasyLoading.dismiss();
     update();
   }
-  // RxList roomsList = [DakliaRoomModel].obs;
-  // RxBool isLoading = false.obs;
-  // var storage = GetStorage();
-  // var provider = DakliaRoomProvider();
-  // getRoomsList() async {
-  //   isLoading.value = true;
-  //   var data = await provider
-  //       .getRoomsList(
-  //     storage.read('dakliaId').toString(),
-  //   )
-  //       .timeout(
-  //     const Duration(seconds: 3),
-  //     onTimeout: () {
-  //       EasyLoading.dismiss();
-  //       isLoading.value = false;
-  //       update();
-  //     },
-  //   );
-  //   if (data != null) {
-  //     roomsList.clear();
-  //     roomsList.add(data);
-  //     print("this is the list length: ${roomsList.length}");
-  //   }
-  //   isLoading.value = false;
-  //   EasyLoading.dismiss();
-  //   update();
-  // }
+
 
   @override
-  void onInit(){
+  void onInit() {
     super.onInit();
     roomNumberController = TextEditingController();
     allBedsNumberController = TextEditingController();
@@ -128,7 +100,7 @@ class RoomManagementController extends GetxController {
     monthlyBedPriceController = TextEditingController();
     featureController = TextEditingController();
     otherDetailsController = TextEditingController();
-     getRoomsList();
+    getRoomsList();
   }
 
   @override
