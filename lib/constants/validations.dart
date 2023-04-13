@@ -83,4 +83,14 @@ class Validations {
       return null;
     }
   }
+
+  String? validateNumber(String value) {
+    if (value.isEmpty || value == '0') {
+      return "required_field".tr;
+    } else {
+      return null;
+    }
+  }
+
+
 }

@@ -1072,14 +1072,16 @@ Widget roomNumberWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: controller.roomNumberController,
         enabled: true,
         onSaved: (value) {
           log('this is the roomNumber value $value');
-          controller.roomNumber = value;
+          controller.roomNumber = int.parse(value!);
+        },
+        validator: (value) {
+          return Validations().validateNumber(value!);
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1094,10 +1096,6 @@ Widget roomNumberWidget(
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),
@@ -1114,14 +1112,16 @@ Widget allBedsNumberWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: controller.allBedsNumberController,
         enabled: true,
         onSaved: (value) {
           log('this is the numberOfBeds value $value');
-          controller.numberOfBeds = value;
+          controller.numberOfBeds = int.parse(value!);
+        },
+        validator: (value) {
+          return Validations().validateNumber(value!);
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1136,10 +1136,6 @@ Widget allBedsNumberWidget(
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),
@@ -1156,11 +1152,17 @@ Widget emptyBedsNumberWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: controller.emptyBedsNumberController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the empty Beds Number value $value');
+          controller.numAvailableBeds = int.parse(value!);
+        },
+        validator: (value) {
+          return Validations().validateNumber(value!);
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1174,10 +1176,6 @@ Widget emptyBedsNumberWidget(
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),
@@ -1194,14 +1192,16 @@ Widget dailyBedPriceWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: controller.dailyBedPriceController,
         enabled: true,
         onSaved: (newValue) {
           log('this is the price Per Day value $newValue');
-          controller.pricePerDay = newValue;
+          controller.pricePerDay = int.parse(newValue!);
+        },
+        validator: (value) {
+          return Validations().validateNumber(value!);
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1216,10 +1216,6 @@ Widget dailyBedPriceWidget(
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),
@@ -1236,14 +1232,16 @@ Widget monthlyBedPriceWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.number,
         controller: controller.monthlyBedPriceController,
         enabled: true,
         onSaved: (newValue) {
           log('this is the price Per Month value $newValue');
-          controller.pricePerMonth = newValue;
+          controller.pricePerMonth = int.parse(newValue!);
+        },
+        validator: (value) {
+          return Validations().validateNumber(value!);
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1258,10 +1256,6 @@ Widget monthlyBedPriceWidget(
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../constants/colors_manager.dart';
 import '../../../../constants/dialogs.dart';
 import '../models/daklia_rooms_models.dart';
 import '../providers/add_room_provider.dart';
@@ -16,13 +16,14 @@ class RoomManagementController extends GetxController {
   RxString imagePath = ''.obs;
   File? image;
   int? roomNumber;
-  String? roomType;
-  int? roomPrice;
-  String? bookingType;
+  String roomType = '';
+  int? roomPrice = 0;
   int? pricePerMonth;
   int? pricePerDay;
   int? numberOfBeds;
   int? numAvailableBeds;
+  bool daily_booking = false;
+  bool monthly_booking = false;
 
   var roomNumberController = TextEditingController();
   var allBedsNumberController = TextEditingController();
@@ -31,6 +32,8 @@ class RoomManagementController extends GetxController {
   var monthlyBedPriceController = TextEditingController();
   var featureController = TextEditingController();
   var otherDetailsController = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
 
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -64,11 +67,25 @@ class RoomManagementController extends GetxController {
 
   chooseDailyBooking(bool value) {
     dailyBooking.value = value;
+    if (dailyBooking.value == true) {
+      daily_booking = true;
+      print('daily booking is $daily_booking');
+    } else {
+      daily_booking = false;
+      print('monthly booking is $monthly_booking');
+    }
     update();
   }
 
   chooseMonthlyBooking(bool value) {
     monthlyBooking.value = value;
+    if (monthlyBooking.value == true) {
+      monthly_booking = true;
+      print('monthly booking is $monthly_booking');
+    } else {
+      monthly_booking = false;
+      print('monthly booking is $monthly_booking');
+    }
     update();
   }
 
@@ -98,19 +115,21 @@ class RoomManagementController extends GetxController {
     EasyLoading.dismiss();
     update();
   }
+
   // method to add new room
-  Future<void> addNewRoom() async {
+  Future<void> addNewMultipleRoom() async {
     try {
-      final data = await addRoomProvider.addNewRoom(
+      final data = await addRoomProvider.addMultipleRoom(
         roomImage: image!,
         roomNumber: roomNumber!,
-        roomType: roomType!,
+        roomType: roomType,
         roomPrice: roomPrice!,
-        bookingType: bookingType!,
         pricePerMonth: pricePerMonth!,
         pricePerDay: pricePerDay!,
         numberOfBeds: numberOfBeds!,
         numAvailableBeds: numAvailableBeds!,
+        dailyBooking: daily_booking,
+        monthlyBooking: monthly_booking,
       );
       print('this is the data: $data');
     } catch (e) {
@@ -122,6 +141,39 @@ class RoomManagementController extends GetxController {
     update();
   }
 
+  void checkAddRoom() {
+    var isValid = formKey.currentState!.validate();
+    if (imagePath.value == '') {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'please_select_room_image'.tr,
+          backgroundColor: ColorsManager.errorColor,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    formKey.currentState!.save();
+    // if (networkController.isConnected.value == true) {
+    //   EasyLoading.show(status: 'loading'.tr);
+    //   try {
+    //     updatePatientProfile();
+    //   } catch (e) {
+    //     EasyLoading.dismiss();
+    //     print(e);
+    //   }
+    // } else {
+    //   Dialogs.connectionErrorDialog(Get.context!);
+    // }
+    EasyLoading.show(status: 'loading'.tr);
+    addNewMultipleRoom();
+    update();
+  }
 
   @override
   void onInit() {

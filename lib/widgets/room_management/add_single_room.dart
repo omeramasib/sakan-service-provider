@@ -12,9 +12,11 @@ import '../stepper/add_room_step1.dart';
 import '../text_form_fields.dart';
 import 'next_or_previus.dart';
 
-addSingleRoom(BuildContext context) {
+addSingleRoom(BuildContext context, String roomType) {
   final isEnglish = Get.locale!.languageCode == 'en';
-  final controller = Get.put(RoomManagementController());
+  var controller = Get.put(RoomManagementController());
+  controller.roomType = roomType;
+  print('roomType: ${controller.roomType}');
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,

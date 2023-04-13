@@ -4,7 +4,8 @@ class DakliaRoomModel {
   String roomImage;
   String roomType;
   double roomPrice;
-  String bookingType;
+  bool dailyBooking;
+  bool monthlyBooking;
   double pricePerMonth;
   double pricePerDay;
   int numberOfBeds;
@@ -17,7 +18,8 @@ class DakliaRoomModel {
     required this.roomImage,
     required this.roomType,
     required this.roomPrice,
-    required this.bookingType,
+    required this.dailyBooking,
+    required this.monthlyBooking,
     required this.pricePerMonth,
     required this.pricePerDay,
     required this.numberOfBeds,
@@ -32,11 +34,12 @@ factory DakliaRoomModel.fromJson(Map<String, dynamic> json) {
     roomImage: json['room_image'] ?? '',
     roomType: json['room_type'] ?? '',
     roomPrice: json['room_price'].toDouble() ?? 0.0,
-    bookingType: json['booking_type'] ?? '',
-    pricePerMonth: json['price_per_month'].toDouble() ?? 0.0,
+    dailyBooking: json['daily_booking'] ?? false,
+    monthlyBooking: json['monthly_booking'] ?? false,
+    pricePerMonth: json['price_per_month'].toDouble() ?? 0,
     pricePerDay: json['price_per_day'].toDouble() ?? 0.0,
-    numberOfBeds: json['numberOfBeds'] as int ?? 0,
-    numAvailableBeds: json['num_Available_Beds'] as int ?? 0,
+    numberOfBeds: json['numberOfBeds'] as int ,
+    numAvailableBeds: json['num_Available_Beds'] as int ,
     dakliaId: json['daklia_id'],
   );
 }

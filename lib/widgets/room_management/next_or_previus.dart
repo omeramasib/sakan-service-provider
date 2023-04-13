@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sakan/widgets/room_management/room_features/room_features.dart';
-
+import '../../app/modules/room_management/controllers/room_management_controller.dart';
 import '../../constants/buttons_manager.dart';
 import '../../constants/colors_manager.dart';
 
 nextOrPreviousButton(BuildContext context) {
+  var controller = Get.put(RoomManagementController());
   return Container(
     width: Get.width,
     height: 78,
@@ -21,7 +21,8 @@ nextOrPreviousButton(BuildContext context) {
           ButtonsManager.primaryButton(
             text: 'next'.tr,
             onPressed: () {
-              roomFeatures(context);
+              // roomFeatures(context);
+              controller.checkAddRoom();
             },
             context: context,
             maximumSize: Size(174, 50),

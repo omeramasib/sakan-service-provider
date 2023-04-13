@@ -121,6 +121,7 @@ const Map<String, String> arSA = {
   'please_select_daklia_doc': 'الرجاء اختيار صورة من تصديق الداخلية ساري الصلاحية',
   'please_select_daklia_owner_doc': 'الرجاء اختيار صورة من إثبات شخصية مالك الداخلية',
   'daklia_dosent_exist': 'الداخلية غير موجودة يرجى تسجيل الدخول او التسجيل مرة اخرى',
+  'please_select_room_image': 'الرجاء اختيار صورة للغرفة من المعرض او الكاميرا',
   // Change Location Screen
   'success_change_location': 'تم تغيير عنوان الداخلية بنجاح',
   'invalid_data': 'الرجاء ادخال بيانات صحيحة',

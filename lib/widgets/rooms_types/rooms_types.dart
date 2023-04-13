@@ -55,7 +55,7 @@ selectRoomTypes(BuildContext context){
               ),
               child: GestureDetector(
                 onTap: () {
-                  addMultiRoom(context);
+                  addMultiRoom(context, 'multiple');
                 },
                 child: Row(
                   children: [
@@ -95,7 +95,7 @@ selectRoomTypes(BuildContext context){
               ),
               child: GestureDetector(
                 onTap: () {
-                  addSingleRoom(context);
+                  addSingleRoom(context, 'single');
                 },
                 child: Row(
                   children: [
