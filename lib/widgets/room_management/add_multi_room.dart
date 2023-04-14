@@ -165,60 +165,60 @@ addMultiRoom(BuildContext context, String roomType) {
                         controller,
                         'beds_number'.tr,
                       ),
-                      // This is row 4
-                      Row(
-                        children: [
-                          Padding(
-                            padding: isEnglish
-                                ? const EdgeInsets.only(
-                                    top: AppPadding.p10, left: AppPadding.p40)
-                                : const EdgeInsets.only(
-                                    top: AppPadding.p10, right: AppPadding.p30),
-                            child: Text(
-                              'daily_bed_price'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      dailyBedPriceWidget(
-                        context,
-                        controller,
-                        'bed_price'.tr,
-                      ),
-                      // This is row 5
-                      Row(
-                        children: [
-                          Padding(
-                            padding: isEnglish
-                                ? const EdgeInsets.only(
-                                    top: AppPadding.p10, left: AppPadding.p40)
-                                : const EdgeInsets.only(
-                                    top: AppPadding.p10, right: AppPadding.p30),
-                            child: Text(
-                              'monthly_bed_price'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      monthlyBedPriceWidget(
-                        context,
-                        controller,
-                        'bed_price'.tr,
-                      ),
+                      // // This is row 4
+                      // Row(
+                      //   children: [
+                      //     Padding(
+                      //       padding: isEnglish
+                      //           ? const EdgeInsets.only(
+                      //               top: AppPadding.p10, left: AppPadding.p40)
+                      //           : const EdgeInsets.only(
+                      //               top: AppPadding.p10, right: AppPadding.p30),
+                      //       child: Text(
+                      //         'daily_bed_price'.tr,
+                      //         style: getRegularStyle(
+                      //           color: ColorsManager.mainColor,
+                      //           fontSize: FontSizeManager.s14,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // dailyBedPriceWidget(
+                      //   context,
+                      //   controller,
+                      //   'bed_price'.tr,
+                      // ),
+                      // // This is row 5
+                      // Row(
+                      //   children: [
+                      //     Padding(
+                      //       padding: isEnglish
+                      //           ? const EdgeInsets.only(
+                      //               top: AppPadding.p10, left: AppPadding.p40)
+                      //           : const EdgeInsets.only(
+                      //               top: AppPadding.p10, right: AppPadding.p30),
+                      //       child: Text(
+                      //         'monthly_bed_price'.tr,
+                      //         style: getRegularStyle(
+                      //           color: ColorsManager.mainColor,
+                      //           fontSize: FontSizeManager.s14,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: 15,
+                      // ),
+                      // monthlyBedPriceWidget(
+                      //   context,
+                      //   controller,
+                      //   'bed_price'.tr,
+                      // ),
                       // This is row 6
                       Row(
                         children: [
@@ -342,6 +342,82 @@ addMultiRoom(BuildContext context, String roomType) {
                           ),
                         ],
                       ),
+                      Obx(
+                        () =>  Visibility(
+                          visible: controller.dailyBooking.value == true,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: isEnglish
+                                    ? const EdgeInsets.only(
+                                        top: AppPadding.p10, left: AppPadding.p40)
+                                    : const EdgeInsets.only(
+                                        top: AppPadding.p10, right: AppPadding.p30),
+                                child: Text(
+                                  'daily_bed_price'.tr,
+                                  style: getRegularStyle(
+                                    color: ColorsManager.mainColor,
+                                    fontSize: FontSizeManager.s14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Obx(
+                        ()=> Visibility(
+                          visible: controller.dailyBooking.value == true,
+                          child: dailyBedPriceWidget(
+                            context,
+                            controller,
+                            'bed_price'.tr,
+                          ),
+                        ),
+                      ),
+                      // This is row 5
+                      Obx(
+                        ()=> Visibility(
+                          visible: controller.monthlyBooking.value == true,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding: isEnglish
+                                    ? const EdgeInsets.only(
+                                        top: AppPadding.p10, left: AppPadding.p40)
+                                    : const EdgeInsets.only(
+                                        top: AppPadding.p10, right: AppPadding.p30),
+                                child: Text(
+                                  'monthly_bed_price'.tr,
+                                  style: getRegularStyle(
+                                    color: ColorsManager.mainColor,
+                                    fontSize: FontSizeManager.s14,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Obx(
+                        ()=> Visibility(
+                          visible: controller.monthlyBooking.value == true,
+                          child: monthlyBedPriceWidget(
+                            context,
+                            controller,
+                            'bed_price'.tr,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
@@ -349,7 +425,7 @@ addMultiRoom(BuildContext context, String roomType) {
               SizedBox(
                 height: 10,
               ),
-              nextOrPreviousButton(context),
+              nextOrPreviousButton(context, 0),
             ],
           ),
         ),

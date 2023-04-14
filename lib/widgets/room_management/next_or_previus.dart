@@ -4,7 +4,7 @@ import '../../app/modules/room_management/controllers/room_management_controller
 import '../../constants/buttons_manager.dart';
 import '../../constants/colors_manager.dart';
 
-nextOrPreviousButton(BuildContext context) {
+nextOrPreviousButton(BuildContext context, int number) {
   var controller = Get.put(RoomManagementController());
   return Container(
     width: Get.width,
@@ -22,7 +22,13 @@ nextOrPreviousButton(BuildContext context) {
             text: 'next'.tr,
             onPressed: () {
               // roomFeatures(context);
-              controller.checkAddRoom();
+              // controller.checkAddRoom();
+              if (number == 0){
+                controller.checkAddRoom();
+              }
+              else if (number == 1){
+                controller.checkAddSingleRoom();
+              }
             },
             context: context,
             maximumSize: Size(174, 50),

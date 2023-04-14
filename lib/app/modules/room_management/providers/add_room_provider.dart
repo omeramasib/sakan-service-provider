@@ -122,13 +122,15 @@ class AddRoomProvider extends GetConnect {
     }
     return AddRoomModel.fromJson(data);
   }
+
     Future<AddRoomModel> addSingleRoom({
     required File? roomImage,
     required int roomNumber,
     required String roomType,
     required int roomPrice,
-    required String bookingType,
     required int pricePerMonth,
+    required bool dailyBooking,
+    required bool monthlyBooking,
     required int pricePerDay,
     required int numberOfBeds,
     required int numAvailableBeds,
@@ -149,7 +151,8 @@ class AddRoomProvider extends GetConnect {
     ));
     request.fields['room_type'] = roomType;
     request.fields['room_price'] = roomPrice.toString();
-    request.fields['booking_type'] = bookingType;
+    request.fields['daily_booking'] = dailyBooking.toString();
+    request.fields['monthly_booking'] = monthlyBooking.toString();
     request.fields['price_per_month'] = pricePerMonth.toString();
     request.fields['price_per_day'] = pricePerDay.toString();
     request.fields['numberOfBeds'] = numberOfBeds.toString();

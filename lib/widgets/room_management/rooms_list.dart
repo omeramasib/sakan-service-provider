@@ -78,7 +78,7 @@ Widget roomsList(BuildContext context, List roomsList) {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height,
+                  height: Get.height * 0.65,
                   width: Get.width,
                   child: ListView.separated(
                       itemCount: roomsList.length,
@@ -246,12 +246,18 @@ Widget roomsList(BuildContext context, List roomsList) {
                                     child: Container(
                                       height: 22,
                                       width: 73,
-                                      decoration: BoxDecoration(
+                                      decoration: roomsList[index].numAvailableBeds != 0 ?
+                                      BoxDecoration(
                                         color: ColorsManager.blueColor
                                             .withOpacity(0.2),
                                         borderRadius: BorderRadius.circular(11),
+                                      ): BoxDecoration(
+                                        color: ColorsManager.greenColor
+                                            .withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(11),
                                       ),
-                                      child: Center(
+                                      child: roomsList[index].numAvailableBeds != 0
+                                      ? Center(
                                         child: Text(
                                           '${roomsList[index].numAvailableBeds} ${'empty'.tr} ',
                                           style: getRegularStyle(
@@ -259,7 +265,15 @@ Widget roomsList(BuildContext context, List roomsList) {
                                             fontSize: FontSizeManager.s11,
                                           ),
                                         ),
-                                      ),
+                                      ):Center(
+                                        child: Text(
+                                          'occupied'.tr,
+                                          style: getRegularStyle(
+                                            color: ColorsManager.greenColor,
+                                            fontSize: FontSizeManager.s11,
+                                          ),
+                                        ),
+                                      )
                                     ),
                                   ),
                                   Padding(

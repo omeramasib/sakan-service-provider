@@ -18,10 +18,11 @@ class RoomManagementController extends GetxController {
   int? roomNumber;
   String roomType = '';
   int? roomPrice = 0;
-  int? pricePerMonth;
-  int? pricePerDay;
+  int pricePerMonth = 0;
+  int pricePerDay = 0;
   int? numberOfBeds;
   int? numAvailableBeds;
+  int? numAvailableBedsSingleRoom;
   bool daily_booking = false;
   bool monthly_booking = false;
 
@@ -62,6 +63,13 @@ class RoomManagementController extends GetxController {
   RxBool isAvailable = false.obs;
   chooseIsAvailable(bool value) {
     isAvailable.value = value;
+    if (isAvailable.value == true) {
+      numAvailableBedsSingleRoom = 1;
+      print('is available is true');
+    } else {
+      numAvailableBedsSingleRoom = 0;
+      print('is available is false');
+    }
     update();
   }
 
@@ -124,8 +132,8 @@ class RoomManagementController extends GetxController {
         roomNumber: roomNumber!,
         roomType: roomType,
         roomPrice: roomPrice!,
-        pricePerMonth: pricePerMonth!,
-        pricePerDay: pricePerDay!,
+        pricePerMonth: pricePerMonth,
+        pricePerDay: pricePerDay,
         numberOfBeds: numberOfBeds!,
         numAvailableBeds: numAvailableBeds!,
         dailyBooking: daily_booking,
@@ -172,6 +180,65 @@ class RoomManagementController extends GetxController {
     // }
     EasyLoading.show(status: 'loading'.tr);
     addNewMultipleRoom();
+    update();
+  }
+
+  // method to add single room
+  Future<void> addSingleRoom() async {
+    try {
+      final data = await addRoomProvider.addSingleRoom(
+        roomImage: image!,
+        roomNumber: roomNumber!,
+        roomType: roomType,
+        roomPrice: roomPrice!,
+        pricePerMonth: pricePerMonth,
+        pricePerDay: pricePerDay,
+        numberOfBeds: 1,
+        numAvailableBeds: numAvailableBedsSingleRoom!,
+        dailyBooking: daily_booking,
+        monthlyBooking: monthly_booking,
+      );
+      print('this is the data: $data');
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
+    }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
+  }
+
+  void checkAddSingleRoom() {
+    var isValid = formKey.currentState!.validate();
+    if (imagePath.value == '') {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'please_select_room_image'.tr,
+          backgroundColor: ColorsManager.errorColor,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    if (!isValid) {
+      return;
+    }
+
+    formKey.currentState!.save();
+    // if (networkController.isConnected.value == true) {
+    //   EasyLoading.show(status: 'loading'.tr);
+    //   try {
+    //     updatePatientProfile();
+    //   } catch (e) {
+    //     EasyLoading.dismiss();
+    //     print(e);
+    //   }
+    // } else {
+    //   Dialogs.connectionErrorDialog(Get.context!);
+    // }
+    EasyLoading.show(status: 'loading'.tr);
+    addSingleRoom();
     update();
   }
 

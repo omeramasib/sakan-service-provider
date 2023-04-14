@@ -271,6 +271,7 @@ const Map<String, String> arSA = {
   'all_rooms': 'كل الغرف',
   'available_rooms': 'الشاغرة',
   'occupied_rooms': 'المحجوزة',
+  'occupied': 'محجوزة',
   'room_number': 'رقم الغرفة',
   'room_type': 'نوع الغرفة',
   'multi_room': ': غرفة متعددة',
@@ -297,6 +298,7 @@ const Map<String, String> arSA = {
   'Failed_to_load_rooms': 'فشل في تحميل الغرف',
   'room_added_successfully': 'تم إضافة الغرفة بنجاح',
   'account_not_verified': 'لم يتم تفعيل الحساب بعد يرجى التواصل مع الإدارة',
+  'Failed_to_add_room': 'فشل في إضافة الغرفة',
   // Add Multi Room
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',
