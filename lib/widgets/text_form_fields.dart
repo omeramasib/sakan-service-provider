@@ -1200,9 +1200,6 @@ Widget dailyBedPriceWidget(
           log('this is the price Per Day value $newValue');
           controller.pricePerDay = int.parse(newValue!);
         },
-        validator: (value) {
-          return Validations().validateNumber(value!);
-        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1239,9 +1236,6 @@ Widget monthlyBedPriceWidget(
         onSaved: (newValue) {
           log('this is the price Per Month value $newValue');
           controller.pricePerMonth = int.parse(newValue!);
-        },
-        validator: (value) {
-          return Validations().validateNumber(value!);
         },
         decoration: InputDecoration(
           hintText: hinText,
