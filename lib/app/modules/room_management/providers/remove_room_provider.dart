@@ -12,9 +12,9 @@ import '../../network/controllers/network_controller.dart';
 import '../models/daklia_rooms_models.dart';
 import 'package:http/http.dart' as http;
 
-class DakliaRoomProvider extends GetConnect {
+class RemoveRoomProvider extends GetConnect {
   var networkController = NetworkController.instance;
-  static DakliaRoomProvider get instance => Get.put(DakliaRoomProvider());
+  static RemoveRoomProvider get instance => Get.put(RemoveRoomProvider());
   GetStorage storage = GetStorage();
   Timer? timer;
   @override
@@ -27,12 +27,12 @@ class DakliaRoomProvider extends GetConnect {
     });
   }
 
-  Future<List<DakliaRoomModel>> getRoomsList(String dakliaId) async {
+  Future<List<DakliaRoomModel>> deleteRoom(String dakliaId, String roomId) async {
     final url = Uri.parse(
-      '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}',
+      '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/${HttpHelper.deleteRoom}',
     );
 
-    final response = await http.get(
+    final response = await http.delete(
       url,
       headers: {
         'Accept': 'application/json',
@@ -83,4 +83,5 @@ class DakliaRoomProvider extends GetConnect {
     }
     return [];
   }
+
 }
