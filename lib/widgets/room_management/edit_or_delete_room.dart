@@ -8,7 +8,7 @@ import '../../constants/fonts_manager.dart';
 import '../../constants/styles_manager.dart';
 import 'delete_room.dart';
 
-editOrDelete(BuildContext context){
+editOrDelete(BuildContext context, dynamic room) {
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,

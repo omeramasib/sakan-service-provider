@@ -26,6 +26,7 @@ class RoomManagementController extends GetxController {
   int? numAvailableBedsSingleRoom;
   bool daily_booking = false;
   bool monthly_booking = false;
+  String? roomId = '';
 
   var roomNumberController = TextEditingController();
   var allBedsNumberController = TextEditingController();
