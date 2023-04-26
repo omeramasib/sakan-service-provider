@@ -247,12 +247,6 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                       ),
                     )),
               ),
-                        // addRoomPhotoWidget(
-                        //   context,
-                        //   roomController,
-                        //   'room_image'.tr,
-                        // ),
-
                         // This is row 7
                         Row(
                           children: [
@@ -385,7 +379,7 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                             child: dailyBedPriceWidget(
                               context,
                               roomController,
-                              'bed_price'.tr,
+                              roomController.getRooms.pricePerDay!.toStringAsFixed(0),
                             ),
                           ),
                         ),
@@ -424,7 +418,7 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                             child: monthlyBedPriceWidget(
                               context,
                               roomController,
-                              'bed_price'.tr,
+                              roomController.getRooms.pricePerMonth!.toStringAsFixed(0),
                             ),
                           ),
                         ),
