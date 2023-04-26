@@ -1,30 +1,30 @@
 class DakliaRoomModel {
-  int roomId;
-  int roomNumber;
-  String roomImage;
-  String roomType;
-  double roomPrice;
-  bool dailyBooking;
-  bool monthlyBooking;
-  double pricePerMonth;
-  double pricePerDay;
-  int numberOfBeds;
-  int numAvailableBeds;
-  int dakliaId;
+  int? roomId;
+  int? roomNumber;
+  String? roomImage;
+  String? roomType;
+  double? roomPrice;
+  bool? dailyBooking;
+  bool? monthlyBooking;
+  double? pricePerMonth;
+  double? pricePerDay;
+  int? numberOfBeds;
+  int? numAvailableBeds;
+  int? dakliaId;
 
   DakliaRoomModel({
-    required this.roomId,
-    required this.roomNumber,
-    required this.roomImage,
-    required this.roomType,
-    required this.roomPrice,
-    required this.dailyBooking,
-    required this.monthlyBooking,
-    required this.pricePerMonth,
-    required this.pricePerDay,
-    required this.numberOfBeds,
-    required this.numAvailableBeds,
-    required this.dakliaId,
+     this.roomId,
+     this.roomNumber,
+     this.roomImage,
+     this.roomType,
+     this.roomPrice,
+     this.dailyBooking,
+     this.monthlyBooking,
+     this.pricePerMonth,
+     this.pricePerDay,
+     this.numberOfBeds,
+     this.numAvailableBeds,
+     this.dakliaId,
   });
 
 factory DakliaRoomModel.fromJson(Map<String, dynamic> json) {

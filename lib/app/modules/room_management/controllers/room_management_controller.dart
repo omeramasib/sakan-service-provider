@@ -109,6 +109,15 @@ class RoomManagementController extends GetxController {
   final roomsList = <DakliaRoomModel>[].obs;
   final isLoading = false.obs;
 
+  DakliaRoomModel myRooms = new DakliaRoomModel();
+
+  set setRooms(DakliaRoomModel rooms) {
+    myRooms = rooms;
+    update();
+  }
+
+  DakliaRoomModel get getRooms => myRooms;
+
   // method to get rooms list from api
   Future<void> getRoomsList() async {
     isLoading.value = true;
@@ -155,7 +164,8 @@ class RoomManagementController extends GetxController {
   // method to remove room
   Future<void> removeRoom(String roomId) async {
     try {
-      final data = await removeRoomProvider.deleteRoom(storage.read('dakliaId'), roomId);
+      final data = await removeRoomProvider.deleteRoom(
+          storage.read('dakliaId').toString(), roomId);
       print('this is the data: $data');
     } catch (e) {
       print(e);

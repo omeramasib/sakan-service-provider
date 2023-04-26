@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/images_manager.dart';
 
+import '../../app/modules/room_management/controllers/room_management_controller.dart';
 import '../../constants/colors_manager.dart';
 import '../../constants/fonts_manager.dart';
 import '../../constants/styles_manager.dart';
 import 'delete_room.dart';
 
-editOrDelete(BuildContext context, dynamic room) {
+editOrDelete(BuildContext context) {
+  var controller = Get.put(RoomManagementController());
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -19,7 +22,8 @@ editOrDelete(BuildContext context, dynamic room) {
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(20.0),
       ),
-    ), builder: (BuildContext context) {
+    ),
+     builder: (BuildContext context) {
       return Container(
         width: Get.width,
         height: Get.height * 0.2,
@@ -52,22 +56,32 @@ editOrDelete(BuildContext context, dynamic room) {
                 right: 30,
                 top: 30,
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    ImagesManager.editRoom,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    'edit_room_info'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.blackColor,
-                      fontSize: FontSizeManager.s14,
+              child: GestureDetector(
+                onTap: () {
+                  if (controller.getRooms.roomType == "multiple"){
+                    Get.toNamed(Routes.EDIT_MULTIPLE_ROOM);
+                  }
+                  else{
+                    Get.toNamed(Routes.EDIT_SINGLE_ROOM);
+                  }
+                },
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      ImagesManager.editRoom,
                     ),
-                  ),
-                ],
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'edit_room_info'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.blackColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(

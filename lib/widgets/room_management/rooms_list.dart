@@ -301,7 +301,8 @@ Widget roomsList(BuildContext context, List roomsList) {
                                       ),
                                       child: GestureDetector(
                                         onTap: () {
-                                          editOrDelete(context, roomsList[index]);
+                                          controller.setRooms = roomsList[index];
+                                          editOrDelete(context);
                                         },
                                         child: SvgPicture.asset(
                                           ImagesManager.more,

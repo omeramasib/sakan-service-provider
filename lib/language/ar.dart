@@ -13,11 +13,13 @@ const Map<String, String> arSA = {
   'password': 'كلمة المرور',
   'forget_password': 'نسيت كلمة المرور ؟',
   'login_failed': 'خطأ في رقم الهاتف او كلمة المرور',
-  'user_not_active': 'عفوا هذا الحساب غير مفعل يرجى التواصل مع الإدارة لتفعيل الحساب',
+  'user_not_active':
+      'عفوا هذا الحساب غير مفعل يرجى التواصل مع الإدارة لتفعيل الحساب',
   'login_success': 'تم تسجيل الدخول بنجاح',
   'user_not_allowed': 'عفوا هذا الحساب غير مسموح له بالدخول لهذا التطبيق',
   'user_not_exist': 'عفوا هذا الحساب غير موجود يرجى التأكد من البيانات المدخلة',
-  'user_not_verified': 'عفوا هذا الحساب غير مفعل يرجى إدخال كود التفعيل المرسل لك',
+  'user_not_verified':
+      'عفوا هذا الحساب غير مفعل يرجى إدخال كود التفعيل المرسل لك',
   // register screen
   'daklia_name': 'اسم الداخلية',
   'first_name': 'الاسم الاول',
@@ -61,7 +63,8 @@ const Map<String, String> arSA = {
   'wrong_otp': 'كود التحقق غير صحيح',
 
   // reset password
-  'password_cant_be_as_old_one': 'كلمة المرور الجديدة لا يمكن ان تكون نفس كلمة المرور القديمة',
+  'password_cant_be_as_old_one':
+      'كلمة المرور الجديدة لا يمكن ان تكون نفس كلمة المرور القديمة',
   'password_changed_successfully': 'تم تغيير كلمة المرور بنجاح',
   // change password
   'old_password_not_correct': 'كلمة المرور القديمة غير صحيحة',
@@ -78,15 +81,15 @@ const Map<String, String> arSA = {
   'select_location': 'اختر الموقع',
   'other_detailes': 'تفاصيل اخرى',
   'address_details': 'العنوان',
-  'address_details_des':
-      'صف العنوان بتفصيل اكثر',
+  'address_details_des': 'صف العنوان بتفصيل اكثر',
   'daklia_documentation_des':
       'ادخل البيانات التي سيتم من خلالها توثيق حساب الداخلية،\nرجاء تأكد من ادخال بيانات صحيحة',
   'daklia_doc': 'صورة من تصديق الداخلية ساري الصلاحية',
   'daklia_owner_doc': 'صورة من إثبات شخصية مالك الداخلية',
   'sucsses_add_daklia_location': 'تم اضافة عنوان الداخلية بنجاح',
   "add_photo": "اضف صورة",
-  'sucsses_submit_confirm_account': 'تم ارسال بيانات توثيق الحساب بنجاح سيتم مراجعته من قبل الادارة وسيتم ارسال رسالة تأكيد اليكم',
+  'sucsses_submit_confirm_account':
+      'تم ارسال بيانات توثيق الحساب بنجاح سيتم مراجعته من قبل الادارة وسيتم ارسال رسالة تأكيد اليكم',
   'confirm_account': 'توثيق الحساب',
   'confirm_account_des':
       'سيتم توثيق الحساب بأقرب وقت ممكن حيث\nسيظهر حساب الداخلية لمستخدمين التطبيق\n في قائمة الداخليات المتاحة',
@@ -109,7 +112,8 @@ const Map<String, String> arSA = {
   'det': 'تفاصيل',
   'obstruction_question': 'هل لديك إعاقة ؟',
   'obstruction_name': 'مااسم الإعاقة؟',
-  'warning':  'ستظهر هذه البيانات في الملف التعريفي للداخلية\nتأكد من كتابتها بشكل جيد وإضافة صور ذات جودة عالية',
+  'warning':
+      'ستظهر هذه البيانات في الملف التعريفي للداخلية\nتأكد من كتابتها بشكل جيد وإضافة صور ذات جودة عالية',
   'daklia_image': 'صورة الداخلية',
   'daklia_description': 'وصف عن الداخلية',
   'room_count': 'عدد الغرف',
@@ -118,11 +122,16 @@ const Map<String, String> arSA = {
   'daklia_description_required': 'وصف عن الداخلية مطلوب',
   'token_is_invalid': 'الرجاء تسجيل الدخول مرة اخرى',
   'please_select_image': 'الرجاء اختيار صورة للداخلية من المعرض او الكاميرا',
-  'please_select_daklia_doc': 'الرجاء اختيار صورة من تصديق الداخلية ساري الصلاحية',
-  'please_select_daklia_owner_doc': 'الرجاء اختيار صورة من إثبات شخصية مالك الداخلية',
-  'daklia_dosent_exist': 'الداخلية غير موجودة يرجى تسجيل الدخول او التسجيل مرة اخرى',
+  'please_select_daklia_doc':
+      'الرجاء اختيار صورة من تصديق الداخلية ساري الصلاحية',
+  'please_select_daklia_owner_doc':
+      'الرجاء اختيار صورة من إثبات شخصية مالك الداخلية',
+  'daklia_dosent_exist':
+      'الداخلية غير موجودة يرجى تسجيل الدخول او التسجيل مرة اخرى',
   'please_select_room_image': 'الرجاء اختيار صورة للغرفة من المعرض او الكاميرا',
   'Failed_to_remove_room': 'فشل في حذف الغرفة',
+  'room_not_exist': 'الغرفة غير موجودة',
+  'delete_room_successufully': 'تم حذف الغرفة بنجاح',
   // Change Location Screen
   'success_change_location': 'تم تغيير عنوان الداخلية بنجاح',
   'invalid_data': 'الرجاء ادخال بيانات صحيحة',
@@ -145,7 +154,7 @@ const Map<String, String> arSA = {
   'not_receive_code': 'لم يصلك كود التحقق ؟',
   'resend': 'اعادة ارسال',
   'validate_otp': 'يرجى ادخال كود التحقق',
-  'valid_otp' : 'رقم التحقق يجب ان يكون 6 ارقام',
+  'valid_otp': 'رقم التحقق يجب ان يكون 6 ارقام',
   // forget password screen
   'phone_number_does_not_exist': ' عفوا رقم الجوال غير موجود',
   'forget_password_description':
@@ -189,7 +198,8 @@ const Map<String, String> arSA = {
 
   // profile screen
   'confirmed': 'موثق',
-  'daklia_description_description': 'وصف عن الداخلية هذا الوصف الذي ادخله المستخدم \nفي خطوة استبداله حسب طول النص الذي ادخله المستخدم',
+  'daklia_description_description':
+      'وصف عن الداخلية هذا الوصف الذي ادخله المستخدم \nفي خطوة استبداله حسب طول النص الذي ادخله المستخدم',
   'Save_changes': 'حفظ التغييرات',
   'my_profile': 'الملف الشخصي',
   'medical_profile': 'الملف الطبي',
@@ -199,11 +209,11 @@ const Map<String, String> arSA = {
   'birth_date': 'تاريخ الميلاد',
   'social_status': 'الحالة الإجتماعية',
   'gender': 'الجنس',
-  'daklia_management' : 'إدارة الداخلية',
-  'rooms_management' : 'إدارة الغرف',
-  'services_management' : 'إدارة الخدمات',
-  'appointments_management' : 'إدارة الحجوزات',
-  'settings' : 'الإعدادات',
+  'daklia_management': 'إدارة الداخلية',
+  'rooms_management': 'إدارة الغرف',
+  'services_management': 'إدارة الخدمات',
+  'appointments_management': 'إدارة الحجوزات',
+  'settings': 'الإعدادات',
   'terms': 'إدارة اللوائح',
   'room': 'الغرف',
   'services': 'الخدمات',
@@ -214,20 +224,24 @@ const Map<String, String> arSA = {
   'try_again': 'حاول مرة أخرى',
   // update profile screen
   "success_update_profile": "تم تحديث الملف الشخصي بنجاح",
-  'please_select_at_least_one_field': 'يرجى اختيار حقل واحد على الأقل لتعديل الملف الشخصي',
+  'please_select_at_least_one_field':
+      'يرجى اختيار حقل واحد على الأقل لتعديل الملف الشخصي',
   // regulation management screen
   'empty_regulation': 'لم تضف أي لوائح بعد',
-  'empyt_regulation_des': 'قم بإضافة قائمة اللوائح الخاصة بالداخلية هنا حتى\n                       تظهر للمستخدمين',
+  'empyt_regulation_des':
+      'قم بإضافة قائمة اللوائح الخاصة بالداخلية هنا حتى\n                       تظهر للمستخدمين',
   'add_regulation': 'إضافة لائحة',
   'add_new_regulation': 'إضافة لائحة جديدة',
   'regulation_text': 'نص اللائحة',
   'regulation_des': 'العقوبات المترتبة على مخالفة اللائحة',
   'regulation1': 'يتم اغلاق الداخلية عند الساعة العاشرة م',
-  'regulation1_des': 'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص من مولد النص العربي',
+  'regulation1_des':
+      'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة،لقد تم توليد هذا النص من مولد النص العربي',
   'edit_regulation': 'تعديل بيانات اللائحة',
   'delete_regulation': 'حذف اللائحة',
   'delete_regulation_finally': 'حذف اللائحة نهائيا',
-  'delete_regulation_des': '         هل انت متأكد من حذف اللائحة\nسيتم حذف جميع البيانات الخاصة بهذه اللائحة',
+  'delete_regulation_des':
+      '         هل انت متأكد من حذف اللائحة\nسيتم حذف جميع البيانات الخاصة بهذه اللائحة',
   // medical_profile screen
   'Q1': 'هل سبق وان زرت طبيب شخصي من قبل ؟',
   'Q2': 'هل يوجد لديك إعاقة؟',
@@ -237,7 +251,8 @@ const Map<String, String> arSA = {
   'no': 'لا',
   // edit_profile screen
   'edit_profile': 'تعديل البيانات',
-  'warning_edit_profile': 'رجاء تأكد من ادخال بيانات صحيحة حيث ستظهر هذه البيانات في حساب الداخلية المعروض للمستخدمين',
+  'warning_edit_profile':
+      'رجاء تأكد من ادخال بيانات صحيحة حيث ستظهر هذه البيانات في حساب الداخلية المعروض للمستخدمين',
   'single': 'أعزب/عزباء',
   'married': 'متزوج/ ة',
   'divorced': 'مطلق/ ة',
@@ -266,7 +281,8 @@ const Map<String, String> arSA = {
   'no_notification_yet': 'لايوجد اي إشعارات بعد',
   // room management screen
   'no_rooms': 'لايوجد غرف بعد',
-  'no_rooms_des': '       لم تقم بإدخال اي غرف بعد\nقم بإضافة الغرف الخاصة بك من هنا',
+  'no_rooms_des':
+      '       لم تقم بإدخال اي غرف بعد\nقم بإضافة الغرف الخاصة بك من هنا',
   'add_room': 'إضافة غرفة',
   'rooms': 'الغرف',
   'all_rooms': 'كل الغرف',
@@ -283,7 +299,8 @@ const Map<String, String> arSA = {
   'edit_room_info': 'تعديل بيانات الغرفة',
   'delete_room': 'حذف الغرفة',
   'delete_room_finally': 'حذف الغرفة نهائيا',
-  'delete_room_des': '         هل انت متأكد من حذف الغرفة\nسيتم حذف جميع البيانات الخاصة بهذه الغرفة',
+  'delete_room_des':
+      '         هل انت متأكد من حذف الغرفة\nسيتم حذف جميع البيانات الخاصة بهذه الغرفة',
   'add_room_features': 'إضافة مميزات الغرفة',
   'feature': 'الميزة',
   'feature_des': 'وصف الميزة',
@@ -294,7 +311,8 @@ const Map<String, String> arSA = {
   'edit_feature': 'تعديل الميزة',
   'delete_feature': 'حذف الميزة',
   'delete_feature_finaly': 'حذف الميزة نهائيا',
-  'delete_feature_des': '         هل انت متأكد من حذف الميزة\nسيتم حذف جميع البيانات الخاصة بهذه الميزة',
+  'delete_feature_des':
+      '         هل انت متأكد من حذف الميزة\nسيتم حذف جميع البيانات الخاصة بهذه الميزة',
   'edit_information': 'تعديل البيانات',
   'Failed_to_load_rooms': 'فشل في تحميل الغرف',
   'room_added_successfully': 'تم إضافة الغرفة بنجاح',
@@ -323,7 +341,8 @@ const Map<String, String> arSA = {
   'active_services': 'مفعلة',
   'inactive_services': 'غير مفعلة',
   'no_services': 'لا يوجد خدمات بعد',
-  'no_services_des': '       لم تقم بإضافة اي خدمة بعد\nقم بإضافة الخدمات التي توفرها من هنا',
+  'no_services_des':
+      '       لم تقم بإضافة اي خدمة بعد\nقم بإضافة الخدمات التي توفرها من هنا',
   'add_service': 'إضافة خدمة',
   'the_services': 'الخدمات',
   'internet_service': 'خدمة الإنترنت',

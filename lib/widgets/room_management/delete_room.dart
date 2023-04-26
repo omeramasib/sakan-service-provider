@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/modules/room_management/controllers/room_management_controller.dart';
 import 'package:sakan/constants/images_manager.dart';
 
 import '../../constants/colors_manager.dart';
@@ -9,6 +10,7 @@ import '../../constants/styles_manager.dart';
 
 deleteRoom(BuildContext context) {
   var isArabic = Get.locale!.languageCode == 'ar';
+  var controller = Get.put(RoomManagementController());
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -68,7 +70,6 @@ deleteRoom(BuildContext context) {
                 ),
               ),
             ),
-
             const SizedBox(
               height: 20,
             ),
@@ -86,7 +87,8 @@ deleteRoom(BuildContext context) {
               child: Padding(
                 padding: isArabic
                     ? const EdgeInsets.only(
-                      right: 30,)
+                        right: 30,
+                      )
                     : const EdgeInsets.only(
                         left: 30,
                       ),
@@ -103,12 +105,12 @@ deleteRoom(BuildContext context) {
             Expanded(
               child: Padding(
                 padding: Get.locale!.languageCode == 'ar'
-                    ?  EdgeInsets.only(
-                        right: Get.width/ 5,
+                    ? EdgeInsets.only(
+                        right: Get.width / 5,
                         bottom: 40,
                       )
-                    :  EdgeInsets.only(
-                        left: Get.width/ 5,
+                    : EdgeInsets.only(
+                        left: Get.width / 5,
                         bottom: 40,
                       ),
                 child: Row(
@@ -139,7 +141,12 @@ deleteRoom(BuildContext context) {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        // controller.removeRoom(rooms[0].id.toString());
+                        controller.removeRoom(
+                          controller.getRooms.roomId.toString(),
+                        );
+                      },
                       child: Container(
                         height: 50,
                         width: Get.locale!.languageCode == 'ar' ? 124 : 155,

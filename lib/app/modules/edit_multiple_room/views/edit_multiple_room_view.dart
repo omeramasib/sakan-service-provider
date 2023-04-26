@@ -1,35 +1,29 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:sakan/constants/fonts_manager.dart';
-import 'package:sakan/constants/styles_manager.dart';
 
-import '../../app/modules/room_management/controllers/room_management_controller.dart';
-import '../../app/routes/app_pages.dart';
-import '../../constants/buttons_manager.dart';
-import '../../constants/colors_manager.dart';
-import '../../constants/values_manager.dart';
-import '../stepper/add_room_step1.dart';
-import '../text_form_fields.dart';
-import 'next_or_previus.dart';
+import '../../../../constants/colors_manager.dart';
+import '../../../../constants/fonts_manager.dart';
+import '../../../../constants/styles_manager.dart';
+import '../../../../constants/values_manager.dart';
+import '../../../../widgets/room_management/next_or_previus.dart';
+import '../../../../widgets/stepper/add_room_step1.dart';
+import '../../../../widgets/text_form_fields.dart';
+import '../../room_management/controllers/room_management_controller.dart';
+import '../controllers/edit_multiple_room_controller.dart';
 
-addMultiRoom(BuildContext context, String roomType) {
-  final isEnglish = Get.locale!.languageCode == 'en';
-  var controller = Get.put(RoomManagementController());
-  controller.roomType = roomType;
-  print('roomType: ${controller.roomType}');
-  return showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    constraints: BoxConstraints(
-      maxHeight: Get.height,
-    ),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(20.0),
+class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
+  const EditMultipleRoomView({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    final isEnglish = Get.locale!.languageCode == 'en';
+    var controller = Get.put(RoomManagementController());
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('EditMultipleRoomView'),
+        centerTitle: true,
       ),
-    ),
-    builder: (context) {
-      return Container(
+      body: Container(
         width: Get.width,
         height: Get.height * 0.9,
         decoration: const BoxDecoration(
@@ -40,7 +34,7 @@ addMultiRoom(BuildContext context, String roomType) {
           ),
         ),
         child: Form(
-          key: controller.formKey,
+          // key: controller.formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
@@ -375,7 +369,7 @@ addMultiRoom(BuildContext context, String roomType) {
             ],
           ),
         ),
-      );
-    },
-  );
+      ),
+    );
+  }
 }

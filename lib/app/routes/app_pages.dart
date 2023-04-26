@@ -20,6 +20,10 @@ import '../modules/dakliaProfile/bindings/daklia_profile_binding.dart';
 import '../modules/dakliaProfile/views/daklia_profile_view.dart';
 import '../modules/edit_daklia_profile/bindings/edit_daklia_profile_binding.dart';
 import '../modules/edit_daklia_profile/views/edit_daklia_profile_view.dart';
+import '../modules/edit_multiple_room/bindings/edit_multiple_room_binding.dart';
+import '../modules/edit_multiple_room/views/edit_multiple_room_view.dart';
+import '../modules/edit_single_room/bindings/edit_single_room_binding.dart';
+import '../modules/edit_single_room/views/edit_single_room_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/network/bindings/network_binding.dart';
@@ -128,6 +132,16 @@ class AppPages {
       name: _Paths.CHANGE_LOCATION_ON_MAP,
       page: () => const ChangeLocationOnMapView(),
       binding: ChangeLocationOnMapBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_SINGLE_ROOM,
+      page: () => const EditSingleRoomView(),
+      binding: EditSingleRoomBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_MULTIPLE_ROOM,
+      page: () => const EditMultipleRoomView(),
+      binding: EditMultipleRoomBinding(),
     ),
   ];
 }

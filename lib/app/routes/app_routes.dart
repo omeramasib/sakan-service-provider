@@ -20,6 +20,8 @@ abstract class Routes {
   static const MORE_SCREEN = _Paths.MORE_SCREEN;
   static const NETWORK = _Paths.NETWORK;
   static const CHANGE_LOCATION_ON_MAP = _Paths.CHANGE_LOCATION_ON_MAP;
+  static const EDIT_SINGLE_ROOM = _Paths.EDIT_SINGLE_ROOM;
+  static const EDIT_MULTIPLE_ROOM = _Paths.EDIT_MULTIPLE_ROOM;
 }
 
 abstract class _Paths {
@@ -41,4 +43,6 @@ abstract class _Paths {
   static const MORE_SCREEN = '/more-screen';
   static const NETWORK = '/network';
   static const CHANGE_LOCATION_ON_MAP = '/change-location-on-map';
+  static const EDIT_SINGLE_ROOM = '/edit-single-room';
+  static const EDIT_MULTIPLE_ROOM = '/edit-multiple-room';
 }
