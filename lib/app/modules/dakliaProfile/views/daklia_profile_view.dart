@@ -72,7 +72,8 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                               decoration: BoxDecoration(
                                 image: DecorationImage(
                                   image: NetworkImage(
-                                      controller.profileList[0].dakliaImage!),
+                                      controller.profileList[0].dakliaImage!
+                                      ),
                                   fit: BoxFit.cover,
                                   colorFilter: ColorFilter.mode(
                                     ColorsManager.blackColor.withOpacity(0.4),

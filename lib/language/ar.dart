@@ -318,6 +318,8 @@ const Map<String, String> arSA = {
   'room_added_successfully': 'تم إضافة الغرفة بنجاح',
   'account_not_verified': 'لم يتم تفعيل الحساب بعد يرجى التواصل مع الإدارة',
   'Failed_to_add_room': 'فشل في إضافة الغرفة',
+  'edit_multiple_room_info': 'تعديل بيانات الغرفة المشتركة',
+  'edit_single_room_info': 'تعديل بيانات الغرفة الفردية',
   // Add Multi Room
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',

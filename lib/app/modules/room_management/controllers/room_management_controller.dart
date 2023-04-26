@@ -120,7 +120,7 @@ class RoomManagementController extends GetxController {
 
   // method to get rooms list from api
   Future<void> getRoomsList() async {
-    isLoading.value = true;
+    // isLoading.value = true;
     final dakliaId = storage.read('dakliaId').toString();
     try {
       final data = await provider.getRoomsList(dakliaId);
@@ -131,7 +131,7 @@ class RoomManagementController extends GetxController {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_load_rooms'.tr);
     }
-    isLoading.value = false;
+    // isLoading.value = false;
     EasyLoading.dismiss();
     update();
   }
