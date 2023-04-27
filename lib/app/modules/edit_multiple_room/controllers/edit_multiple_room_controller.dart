@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class EditMultipleRoomController extends GetxController {
-  //TODO: Implement EditMultipleRoomController
+
   RxString imagePath = ''.obs;
   File image = File('');
+  
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
