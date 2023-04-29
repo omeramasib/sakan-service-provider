@@ -32,7 +32,6 @@ class AddRoomProvider extends GetConnect {
     required File? roomImage,
     required int roomNumber,
     required String roomType,
-    required int roomPrice,
     required int pricePerMonth,
     required int pricePerDay,
     required int numberOfBeds,
@@ -55,7 +54,6 @@ class AddRoomProvider extends GetConnect {
       roomImage!.path,
     ));
     request.fields['room_type'] = roomType;
-    request.fields['room_price'] = roomPrice.toString();
     request.fields['price_per_month'] = pricePerMonth.toString();
     request.fields['price_per_day'] = pricePerDay.toString();
     request.fields['numberOfBeds'] = numberOfBeds.toString();
@@ -127,7 +125,6 @@ class AddRoomProvider extends GetConnect {
     required File? roomImage,
     required int roomNumber,
     required String roomType,
-    required int roomPrice,
     required int pricePerMonth,
     required bool dailyBooking,
     required bool monthlyBooking,
@@ -150,7 +147,6 @@ class AddRoomProvider extends GetConnect {
       roomImage!.path,
     ));
     request.fields['room_type'] = roomType;
-    request.fields['room_price'] = roomPrice.toString();
     request.fields['daily_booking'] = dailyBooking.toString();
     request.fields['monthly_booking'] = monthlyBooking.toString();
     request.fields['price_per_month'] = pricePerMonth.toString();

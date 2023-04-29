@@ -18,7 +18,6 @@ class RoomManagementController extends GetxController {
   File? image;
   int? roomNumber;
   String roomType = '';
-  int? roomPrice = 0;
   int pricePerMonth = 0;
   int pricePerDay = 0;
   int? numberOfBeds;
@@ -143,7 +142,6 @@ class RoomManagementController extends GetxController {
         roomImage: image!,
         roomNumber: roomNumber!,
         roomType: roomType,
-        roomPrice: roomPrice!,
         pricePerMonth: pricePerMonth,
         pricePerDay: pricePerDay,
         numberOfBeds: numberOfBeds!,
@@ -217,7 +215,6 @@ class RoomManagementController extends GetxController {
         roomImage: image!,
         roomNumber: roomNumber!,
         roomType: roomType,
-        roomPrice: roomPrice!,
         pricePerMonth: pricePerMonth,
         pricePerDay: pricePerDay,
         numberOfBeds: 1,

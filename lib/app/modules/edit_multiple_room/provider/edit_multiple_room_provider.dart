@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -28,19 +29,22 @@ class EditMultipleRoomProvider extends GetConnect {
 
   Future<void> editMultipleRoom({
     required File image,
-    required String dakliaDescription,
-    required int numberOfRooms,
+    required int roomNumber,
+    required int numberOfBeds,
+    required int numberOfAvailableBeds,
+    required bool dailyBooking,
+    required bool monthlyBooking,
+    required int pricePerDay,
+    required int pricePerMonth,
     required String roomId,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     EasyLoading.show(status: 'loading'.tr);
     log('this is the image: $image');
-    log('this is the daklia description: $dakliaDescription');
-    log('this is the number of rooms: $numberOfRooms');
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse(
-          'https://sakanapp.onrender.com/api/v1/daklia/${storage.read('dakliaId')}/rooms/$roomId'),
+          '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}$roomId/'),
     );
     log('this is the request: $request');
     request.headers["authorization"] = "Token ${storage.read('token')}";
@@ -55,14 +59,19 @@ class EditMultipleRoomProvider extends GetConnect {
     else {
       request.fields['room_image'] = '';
     }
-    request.fields['daklia_description'] = dakliaDescription;
-    request.fields['numberOfRooms'] = numberOfRooms.toString();
-
+    request.fields['room_number'] = roomNumber.toString();
+    request.fields['numberOfBeds'] = numberOfBeds.toString();
+    request.fields['num_Available_Beds'] = numberOfAvailableBeds.toString();
+    request.fields['daily_booking'] = dailyBooking.toString();
+    request.fields['monthly_booking'] = monthlyBooking.toString();
+    request.fields['price_per_day'] = pricePerDay.toString();
+    request.fields['price_per_month'] = pricePerMonth.toString();
     var response = await request.send();
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
     var data = json.decode(responseString);
     var statusCode = response.statusCode;
+
     log('this is the status code: $statusCode');
     log('this is the data: $data');
     EasyLoading.show(status: 'loading'.tr);
@@ -72,7 +81,7 @@ class EditMultipleRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      Dialogs.successDialog(Get.context!, "success_update_profile".tr);
+      Dialogs.successDialog(Get.context!, "success_update_room_information".tr);
       Get.offAllNamed(Routes.HOME);
     }
 
@@ -117,16 +126,16 @@ class EditMultipleRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+      if (data['message'] == 'Daklia is not exist') {
+        Dialogs.errorDialog(Get.context!, 'daklia_not_exist'.tr);
+      }
+      else if(data['message'] == 'Room does not exist'){
+       Dialogs.errorDialog(Get.context!, 'room_not_exist'.tr);
+      }
     }
 
-    if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
-      timer = Timer(
-        const Duration(seconds: 1),
-        () {
-          EasyLoading.dismiss();
-        },
-      );
+    if (statusCode == 500) {
+      EasyLoading.dismiss();
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }

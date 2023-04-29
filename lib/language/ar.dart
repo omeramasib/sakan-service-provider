@@ -320,6 +320,9 @@ const Map<String, String> arSA = {
   'Failed_to_add_room': 'فشل في إضافة الغرفة',
   'edit_multiple_room_info': 'تعديل بيانات الغرفة المشتركة',
   'edit_single_room_info': 'تعديل بيانات الغرفة الفردية',
+  'Failed_to_update_multiple_room': 'فشل في تعديل بيانات الغرفة المشتركة',
+  "success_update_room_information": "تم تعديل بيانات الغرفة بنجاح",
+  'daklia_not_exist': 'عفوا الداخلية غير موجودة يرجى التواصل مع الإدارة',
   // Add Multi Room
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',

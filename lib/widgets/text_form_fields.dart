@@ -1106,6 +1106,49 @@ Widget roomNumberWidget(
   );
 }
 
+Widget editRoomNumberWidget(
+    BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.roomNumberController,
+        enabled: true,
+        // onSaved: (value) {
+        //   log('this is the roomNumber value $value');
+        //   controller.roomNumber = int.parse(value!);
+        // },
+        onChanged: (value) {
+          controller.roomNumber = int.parse(value);
+        },
+        // validator: (value) {
+        //   return Validations().validateNumber(value!);
+        // },
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
 Widget allBedsNumberWidget(
     BuildContext context, dynamic controller, String hinText) {
   return Padding(
@@ -1122,6 +1165,42 @@ Widget allBedsNumberWidget(
         },
         validator: (value) {
           return Validations().validateNumber(value!);
+        },
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget editAllBedsNumberWidget(
+    BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.allBedsNumberController,
+        enabled: true,
+        onChanged: (value) {
+          controller.numberOfBeds = int.parse(value);
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1186,6 +1265,43 @@ Widget emptyBedsNumberWidget(
   );
 }
 
+Widget editEmptyBedsNumberWidget(
+    BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.emptyBedsNumberController,
+        enabled: true,
+        onChanged: (value) {
+           log('this is the empty Beds Number value $value');
+          controller.numAvailableBeds = int.parse(value);
+        },
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
 Widget dailyBedPriceWidget(
     BuildContext context, dynamic controller, String hinText) {
   return Padding(
@@ -1196,9 +1312,12 @@ Widget dailyBedPriceWidget(
         keyboardType: TextInputType.number,
         controller: controller.dailyBedPriceController,
         enabled: true,
-        onSaved: (newValue) {
-          log('this is the price Per Day value $newValue');
-          controller.pricePerDay = int.parse(newValue!);
+        // onSaved: (newValue) {
+        //   log('this is the price Per Day value $newValue');
+        //   controller.pricePerDay = int.parse(newValue!);
+        // },
+        onChanged: (value) {
+          controller.pricePerDay = int.parse(value);
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1233,9 +1352,12 @@ Widget monthlyBedPriceWidget(
         keyboardType: TextInputType.number,
         controller: controller.monthlyBedPriceController,
         enabled: true,
-        onSaved: (newValue) {
-          log('this is the price Per Month value $newValue');
-          controller.pricePerMonth = int.parse(newValue!);
+        // onSaved: (newValue) {
+        //   log('this is the price Per Month value $newValue');
+        //   controller.pricePerMonth = int.parse(newValue!);
+        // },
+        onChanged: (value) {
+          controller.pricePerMonth = int.parse(value);
         },
         decoration: InputDecoration(
           hintText: hinText,

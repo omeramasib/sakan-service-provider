@@ -21,8 +21,6 @@ nextOrPreviousButton(BuildContext context, int number) {
           ButtonsManager.primaryButton(
             text: 'next'.tr,
             onPressed: () {
-              // roomFeatures(context);
-              // controller.checkAddRoom();
               if (number == 0){
                 controller.checkAddRoom();
               }
