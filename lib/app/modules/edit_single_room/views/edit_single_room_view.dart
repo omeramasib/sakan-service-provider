@@ -23,6 +23,11 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
   Widget build(BuildContext context) {
     final isEnglish = Get.locale!.languageCode == 'en';
     var roomController = Get.put(RoomManagementController());
+    if (roomController.getRooms.numAvailableBeds == 1) {
+      controller.isAvailable.value = true;
+    } else {
+      controller.isAvailable.value = false;
+    }
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(80),
@@ -237,22 +242,17 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
                                                   right: AppPadding.p30),
                                           child: Obx(
                                             () => Checkbox(
-                                              value: controller
-                                                      .isAvailable.value ||
-                                                  roomController.getRooms
-                                                          .numAvailableBeds! ==
-                                                      1,
+                                              value:
+                                                  controller.isAvailable.value,
                                               checkColor:
                                                   ColorsManager.whiteColor,
                                               fillColor:
                                                   MaterialStateProperty.all(
-                                                      ColorsManager.mainColor),
+                                                ColorsManager.mainColor,
+                                              ),
                                               onChanged: (value) {
                                                 controller
                                                     .chooseIsAvailable(value!);
-                                                roomController.getRooms
-                                                        .numAvailableBeds! ==
-                                                    0;
                                               },
                                             ),
                                           ),
@@ -525,6 +525,7 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
                 text: 'save_changes'.tr,
                 onPressed: () async {
                   // await controller.checkSubmitEMR();
+                  await controller.checkSubmitESR();
                 },
                 context: context,
                 maximumSize: Size(287, 50),

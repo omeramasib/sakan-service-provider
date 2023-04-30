@@ -86,7 +86,7 @@ class EditMultipleRoomController extends GetxController {
 
   Future<void> updateMultipleRoom() async {
     try {
-      provider.editMultipleRoom(
+     await provider.editMultipleRoom(
           image: image,
           roomNumber: roomNumber == 0
               ? roomNumber = roomController.getRooms.roomNumber!
@@ -94,11 +94,6 @@ class EditMultipleRoomController extends GetxController {
           numberOfBeds: numberOfBeds == 0
               ? numberOfBeds = roomController.getRooms.numberOfBeds!
               : numberOfBeds,
-          // numberOfAvailableBeds: numAvailableBeds == 0
-          //     ? numAvailableBeds = 0
-          //     : numAvailableBeds == roomController.getRooms.numAvailableBeds!
-          //         ? numAvailableBeds = roomController.getRooms.numAvailableBeds!
-          //         : numAvailableBeds,
           numberOfAvailableBeds : numAvailableBeds!,
 
           dailyBooking: daily_booking == false
@@ -128,17 +123,6 @@ class EditMultipleRoomController extends GetxController {
       return;
     }
     formKey.currentState!.save();
-    // if (networkController.isConnected.value == true) {
-    //   EasyLoading.show(status: 'loading'.tr);
-    //   try {
-    //     updatePatientProfile();
-    //   } catch (e) {
-    //     EasyLoading.dismiss();
-    //     print(e);
-    //   }
-    // } else {
-    //   Dialogs.connectionErrorDialog(Get.context!);
-    // }
     EasyLoading.show(status: 'loading'.tr);
     await updateMultipleRoom();
     update();

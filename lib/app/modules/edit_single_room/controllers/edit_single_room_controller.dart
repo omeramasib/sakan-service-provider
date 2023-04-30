@@ -1,8 +1,14 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../constants/dialogs.dart';
+import '../../room_management/controllers/room_management_controller.dart';
+import '../provider/edit_single_room_provider.dart';
 
 class EditSingleRoomController extends GetxController {
   //TODO: Implement EditSingleRoomController
@@ -28,6 +34,9 @@ class EditSingleRoomController extends GetxController {
   var monthlyBedPriceController = TextEditingController();
   var pricePerDayController = TextEditingController();
   var pricePerMonthController = TextEditingController();
+
+  var provider = EditSingleRoomProvider();
+  var roomController = Get.put(RoomManagementController());
 
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -83,6 +92,46 @@ class EditSingleRoomController extends GetxController {
     } else {
       numAvailableBedsSingleRoom = 0;
       print('is available is false');
+    }
+    update();
+  }
+
+  Future<void> editSingleRoom() async {
+    try {
+      await provider.editSingleRoom(
+          image: image,
+          roomNumber: roomNumber == 0
+              ? roomNumber = roomController.getRooms.roomNumber!
+              : roomNumber,
+          pricePerMonth: pricePerMonth == 0
+              ? pricePerMonth = roomController.getRooms.pricePerMonth!.toInt()
+              : pricePerMonth,
+          pricePerDay: pricePerDay == 0
+              ? pricePerDay = roomController.getRooms.pricePerDay!.toInt()
+              : pricePerDay,
+          numberOfAvailableBeds: numAvailableBedsSingleRoom,
+          dailyBooking: daily_booking == false
+              ? daily_booking = roomController.getRooms.dailyBooking!
+              : daily_booking,
+          monthlyBooking: monthly_booking == false
+              ? monthly_booking = roomController.getRooms.monthlyBooking!
+              : monthly_booking,
+          roomId: roomController.getRooms.roomId!.toString());
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
+    }
+    EasyLoading.dismiss();
+    update();
+  }
+
+  checkSubmitESR() async {
+    final isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    } else {
+      formKey.currentState!.save();
+      await editSingleRoom();
     }
     update();
   }
