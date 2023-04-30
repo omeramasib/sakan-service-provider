@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class EditMultipleRoomController extends GetxController {
   File image = File('');
   int roomNumber = 0;
   int numberOfBeds = 0;
-  int numAvailableBeds = 0;
+  int? numAvailableBeds;
   RxBool dailyBooking = false.obs;
   RxBool monthlyBooking = false.obs;
   bool daily_booking = false;
@@ -66,7 +67,7 @@ class EditMultipleRoomController extends GetxController {
       print('daily booking is $daily_booking');
     } else {
       daily_booking = false;
-      print('monthly booking is $monthly_booking');
+      print('daily booking is $daily_booking');
     }
     update();
   }
@@ -93,19 +94,26 @@ class EditMultipleRoomController extends GetxController {
           numberOfBeds: numberOfBeds == 0
               ? numberOfBeds = roomController.getRooms.numberOfBeds!
               : numberOfBeds,
-          numberOfAvailableBeds: numAvailableBeds == 0
-              ? numAvailableBeds = roomController.getRooms.numAvailableBeds!
-              : numAvailableBeds,
-          dailyBooking: daily_booking,
-          monthlyBooking: monthly_booking,
+          // numberOfAvailableBeds: numAvailableBeds == 0
+          //     ? numAvailableBeds = 0
+          //     : numAvailableBeds == roomController.getRooms.numAvailableBeds!
+          //         ? numAvailableBeds = roomController.getRooms.numAvailableBeds!
+          //         : numAvailableBeds,
+          numberOfAvailableBeds : numAvailableBeds!,
+
+          dailyBooking: daily_booking == false
+              ? daily_booking = roomController.getRooms.dailyBooking!
+              : daily_booking,
+          monthlyBooking: monthly_booking == false
+              ? monthly_booking = roomController.getRooms.monthlyBooking!
+              : monthly_booking,
           pricePerDay: pricePerDay == 0
               ? pricePerDay = roomController.getRooms.pricePerDay!.toInt()
               : pricePerDay,
           pricePerMonth: pricePerMonth == 0
               ? pricePerMonth = roomController.getRooms.pricePerMonth!.toInt()
               : pricePerMonth,
-          roomId: roomController.getRooms.roomId!.toString()
-          );
+          roomId: roomController.getRooms.roomId!.toString());
     } catch (e) {
       Dialogs.errorDialog(Get.context!, 'Failed_to_update_multiple_room'.tr);
     }
@@ -116,9 +124,9 @@ class EditMultipleRoomController extends GetxController {
 
   checkSubmitEMR() async {
     final isValid = formKey.currentState!.validate();
-     if (!isValid) {
+    if (!isValid) {
       return;
-     }
+    }
     formKey.currentState!.save();
     // if (networkController.isConnected.value == true) {
     //   EasyLoading.show(status: 'loading'.tr);
@@ -147,7 +155,6 @@ class EditMultipleRoomController extends GetxController {
     monthlyBedPriceController = TextEditingController();
     pricePerDayController = TextEditingController();
     pricePerMonthController = TextEditingController();
-
   }
 
   @override
@@ -158,15 +165,14 @@ class EditMultipleRoomController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-     roomNumberController.dispose();
-      allBedsNumberController.dispose();
-      emptyBedsNumberController.dispose();
-      dailyBedPriceController.dispose();
-      monthlyBedPriceController.dispose();
-      pricePerDayController.dispose();
-      pricePerMonthController.dispose();
+    roomNumberController.dispose();
+    allBedsNumberController.dispose();
+    emptyBedsNumberController.dispose();
+    dailyBedPriceController.dispose();
+    monthlyBedPriceController.dispose();
+    pricePerDayController.dispose();
+    pricePerMonthController.dispose();
   }
 
   void increment() => count.value++;
 }
-

@@ -74,9 +74,11 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                     Padding(
                                       padding: isEnglish
                                           ? const EdgeInsets.only(
-                                              top: AppPadding.p20, left: AppPadding.p40)
+                                              top: AppPadding.p20,
+                                              left: AppPadding.p40)
                                           : const EdgeInsets.only(
-                                              top: AppPadding.p20, right: AppPadding.p30),
+                                              top: AppPadding.p20,
+                                              right: AppPadding.p30),
                                       child: Text(
                                         'room_number'.tr,
                                         style: getRegularStyle(
@@ -92,7 +94,7 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 ),
                                 editRoomNumberWidget(
                                   context,
-                                  roomController,
+                                  controller,
                                   roomController.getRooms.roomNumber.toString(),
                                 ),
                                 SizedBox(
@@ -104,9 +106,11 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                     Padding(
                                       padding: isEnglish
                                           ? const EdgeInsets.only(
-                                              top: AppPadding.p10, left: AppPadding.p40)
+                                              top: AppPadding.p10,
+                                              left: AppPadding.p40)
                                           : const EdgeInsets.only(
-                                              top: AppPadding.p10, right: AppPadding.p30),
+                                              top: AppPadding.p10,
+                                              right: AppPadding.p30),
                                       child: Text(
                                         'all_beds_number'.tr,
                                         style: getRegularStyle(
@@ -122,8 +126,9 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 ),
                                 editAllBedsNumberWidget(
                                   context,
-                                  roomController,
-                                  roomController.getRooms.numberOfBeds.toString(),
+                                  controller,
+                                  roomController.getRooms.numberOfBeds
+                                      .toString(),
                                 ),
                                 // This is row 3
                                 Row(
@@ -131,9 +136,11 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                     Padding(
                                       padding: isEnglish
                                           ? const EdgeInsets.only(
-                                              top: AppPadding.p10, left: AppPadding.p40)
+                                              top: AppPadding.p10,
+                                              left: AppPadding.p40)
                                           : const EdgeInsets.only(
-                                              top: AppPadding.p10, right: AppPadding.p30),
+                                              top: AppPadding.p10,
+                                              right: AppPadding.p30),
                                       child: Text(
                                         'empty_beds_number'.tr,
                                         style: getRegularStyle(
@@ -147,17 +154,22 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 SizedBox(
                                   height: 15,
                                 ),
-                                editEmptyBedsNumberWidget(context, roomController,
-                                    roomController.getRooms.numAvailableBeds.toString()),
+                                editEmptyBedsNumberWidget(
+                                    context,
+                                    controller,
+                                    roomController.getRooms.numAvailableBeds
+                                        .toString()),
                                 // This is row 6
                                 Row(
                                   children: [
                                     Padding(
                                       padding: isEnglish
                                           ? const EdgeInsets.only(
-                                              top: AppPadding.p10, left: AppPadding.p30)
+                                              top: AppPadding.p10,
+                                              left: AppPadding.p30)
                                           : const EdgeInsets.only(
-                                              top: AppPadding.p10, right: AppPadding.p30),
+                                              top: AppPadding.p10,
+                                              right: AppPadding.p30),
                                       child: Text(
                                         'room_image'.tr,
                                         style: getRegularStyle(
@@ -175,7 +187,8 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 Obx(
                                   (() => Padding(
                                         padding: isEnglish
-                                            ? const EdgeInsets.only(left: AppPadding.p40)
+                                            ? const EdgeInsets.only(
+                                                left: AppPadding.p40)
                                             : const EdgeInsets.only(
                                                 right: AppPadding.p40),
                                         child: Row(
@@ -186,14 +199,19 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                                     width: 317,
                                                     decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.circular(10),
+                                                          BorderRadius.circular(
+                                                              10),
                                                       image: DecorationImage(
-                                                        image: NetworkImage(roomController
-                                                            .getRooms.roomImage
-                                                            .toString()),
+                                                        image: NetworkImage(
+                                                            roomController
+                                                                .getRooms
+                                                                .roomImage
+                                                                .toString()),
                                                         fit: BoxFit.cover,
-                                                        colorFilter: ColorFilter.mode(
-                                                          ColorsManager.blackColor
+                                                        colorFilter:
+                                                            ColorFilter.mode(
+                                                          ColorsManager
+                                                              .blackColor
                                                               .withOpacity(0.4),
                                                           BlendMode.darken,
                                                         ),
@@ -202,19 +220,25 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                                     child: Column(
                                                       children: [
                                                         Padding(
-                                                          padding: const EdgeInsets.all(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(
                                                             AppPadding.p10,
                                                           ),
                                                           child: Row(
                                                             mainAxisAlignment:
-                                                                MainAxisAlignment.end,
+                                                                MainAxisAlignment
+                                                                    .end,
                                                             children: [
                                                               InkWell(
                                                                 onTap: () {
-                                                                  selectImage(context,
+                                                                  selectImage(
+                                                                      context,
                                                                       controller);
                                                                 },
-                                                                child: SvgPicture.asset(
+                                                                child:
+                                                                    SvgPicture
+                                                                        .asset(
                                                                   ImagesManager
                                                                       .edit_profile_icon,
                                                                 ),
@@ -228,21 +252,25 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                                 : Padding(
                                                     padding: isEnglish
                                                         ? const EdgeInsets.only(
-                                                            left: AppPadding.p10)
+                                                            left:
+                                                                AppPadding.p10)
                                                         : const EdgeInsets.only(
-                                                            right: AppPadding.p10),
+                                                            right:
+                                                                AppPadding.p10),
                                                     child: Container(
                                                       height: 94,
                                                       width: 315,
                                                       decoration: BoxDecoration(
-                                                        color: ColorsManager.whiteColor,
+                                                        color: ColorsManager
+                                                            .whiteColor,
                                                         borderRadius:
-                                                            BorderRadius.circular(10),
+                                                            BorderRadius
+                                                                .circular(10),
                                                       ),
                                                       child: Center(
                                                         child: Image.file(
-                                                          File(
-                                                              controller.imagePath.value),
+                                                          File(controller
+                                                              .imagePath.value),
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
@@ -258,9 +286,11 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                     Padding(
                                       padding: isEnglish
                                           ? const EdgeInsets.only(
-                                              top: AppPadding.p10, left: AppPadding.p65)
+                                              top: AppPadding.p10,
+                                              left: AppPadding.p65)
                                           : const EdgeInsets.only(
-                                              top: AppPadding.p10, right: AppPadding.p50),
+                                              top: AppPadding.p10,
+                                              right: AppPadding.p50),
                                       child: Text(
                                         'booking_type_available'.tr,
                                         style: getRegularStyle(
@@ -277,7 +307,8 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
 
                                 // Row for booking type
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -286,16 +317,26 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                               ? const EdgeInsets.only(
                                                   top: 5, left: AppPadding.p30)
                                               : const EdgeInsets.only(
-                                                  top: 5, right: AppPadding.p30),
+                                                  top: 5,
+                                                  right: AppPadding.p30),
                                           child: Obx(
                                             () => Checkbox(
-                                              value: controller.dailyBooking.value ||
-                                                  roomController.getRooms.dailyBooking!,
-                                              checkColor: ColorsManager.whiteColor,
-                                              fillColor: MaterialStateProperty.all(
-                                                  ColorsManager.mainColor),
+                                              value: controller
+                                                      .dailyBooking.value ||
+                                                  roomController
+                                                      .getRooms.dailyBooking!,
+                                              checkColor:
+                                                  ColorsManager.whiteColor,
+                                              fillColor:
+                                                  MaterialStateProperty.all(
+                                                      ColorsManager.mainColor),
                                               onChanged: (value) {
-                                                controller.chooseDailyBooking(value!);
+                                                controller
+                                                    .chooseDailyBooking(value!);
+                                                roomController
+                                                        .getRooms.dailyBooking =
+                                                    !roomController
+                                                        .getRooms.dailyBooking!;
                                               },
                                             ),
                                           ),
@@ -320,21 +361,31 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                           Padding(
                                             padding: isEnglish
                                                 ? const EdgeInsets.only(
-                                                    top: 5, left: AppPadding.p30)
+                                                    top: 5,
+                                                    left: AppPadding.p30)
                                                 : const EdgeInsets.only(
-                                                    top: 5, right: AppPadding.p30),
+                                                    top: 5,
+                                                    right: AppPadding.p30),
                                             child: Obx(
                                               () => Checkbox(
-                                                value:
-                                                    controller.monthlyBooking.value ||
-                                                        roomController
-                                                            .getRooms.monthlyBooking!,
-                                                checkColor: ColorsManager.whiteColor,
-                                                fillColor: MaterialStateProperty.all(
-                                                    ColorsManager.mainColor),
+                                                value: controller
+                                                        .monthlyBooking.value ||
+                                                    roomController.getRooms
+                                                        .monthlyBooking!,
+                                                checkColor:
+                                                    ColorsManager.whiteColor,
+                                                fillColor:
+                                                    MaterialStateProperty.all(
+                                                        ColorsManager
+                                                            .mainColor),
                                                 onChanged: (value) {
                                                   controller
-                                                      .chooseMonthlyBooking(value!);
+                                                      .chooseMonthlyBooking(
+                                                          value!);
+                                                  roomController.getRooms
+                                                          .monthlyBooking =
+                                                      !roomController.getRooms
+                                                          .monthlyBooking!;
                                                 },
                                               ),
                                             ),
@@ -353,8 +404,10 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 ),
                                 Obx(
                                   () => Visibility(
-                                    visible: roomController.dailyBooking.value == true ||
-                                        roomController.getRooms.dailyBooking == true,
+                                    visible: controller.dailyBooking.value ==
+                                            true ||
+                                        roomController.getRooms.dailyBooking ==
+                                            true,
                                     child: Row(
                                       children: [
                                         Padding(
@@ -382,11 +435,13 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 ),
                                 Obx(
                                   () => Visibility(
-                                    visible: roomController.dailyBooking.value == true ||
-                                        roomController.getRooms.dailyBooking == true,
+                                    visible: controller.dailyBooking.value ==
+                                            true ||
+                                        roomController.getRooms.dailyBooking ==
+                                            true,
                                     child: dailyBedPriceWidget(
                                       context,
-                                      roomController,
+                                      controller,
                                       roomController.getRooms.pricePerDay!
                                           .toStringAsFixed(0),
                                     ),
@@ -395,9 +450,11 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 // This is row 5
                                 Obx(
                                   () => Visibility(
-                                    visible: roomController.monthlyBooking.value ==
+                                    visible: controller.monthlyBooking.value ==
                                             true ||
-                                        roomController.getRooms.monthlyBooking == true,
+                                        roomController
+                                                .getRooms.monthlyBooking ==
+                                            true,
                                     child: Row(
                                       children: [
                                         Padding(
@@ -425,12 +482,14 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                 ),
                                 Obx(
                                   () => Visibility(
-                                    visible: roomController.monthlyBooking.value ==
+                                    visible: controller.monthlyBooking.value ==
                                             true ||
-                                        roomController.getRooms.monthlyBooking == true,
+                                        roomController
+                                                .getRooms.monthlyBooking ==
+                                            true,
                                     child: monthlyBedPriceWidget(
                                       context,
-                                      roomController,
+                                      controller,
                                       roomController.getRooms.pricePerMonth!
                                           .toStringAsFixed(0),
                                     ),

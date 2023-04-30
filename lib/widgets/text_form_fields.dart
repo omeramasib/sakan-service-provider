@@ -1116,10 +1116,6 @@ Widget editRoomNumberWidget(
         keyboardType: TextInputType.number,
         controller: controller.roomNumberController,
         enabled: true,
-        // onSaved: (value) {
-        //   log('this is the roomNumber value $value');
-        //   controller.roomNumber = int.parse(value!);
-        // },
         onChanged: (value) {
           controller.roomNumber = int.parse(value);
         },
@@ -1276,8 +1272,15 @@ Widget editEmptyBedsNumberWidget(
         controller: controller.emptyBedsNumberController,
         enabled: true,
         onChanged: (value) {
-           log('this is the empty Beds Number value $value');
+          log('this is the empty Beds Number value $value');
           controller.numAvailableBeds = int.parse(value);
+        },
+        onSaved: (value) {
+          log('this is the empty Beds Number value $value');
+          controller.numAvailableBeds = int.parse(value!);
+        },
+        validator: (value) {
+          return Validations().validateNumber(value!);
         },
         decoration: InputDecoration(
           hintText: hinText,

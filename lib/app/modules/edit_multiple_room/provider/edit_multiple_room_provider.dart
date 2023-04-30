@@ -13,7 +13,8 @@ import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 
 class EditMultipleRoomProvider extends GetConnect {
-  static EditMultipleRoomProvider get instance => Get.put(EditMultipleRoomProvider());
+  static EditMultipleRoomProvider get instance =>
+      Get.put(EditMultipleRoomProvider());
   GetStorage storage = GetStorage();
   // var networkController = Get.put(NetworkController());
   Timer? timer;
@@ -40,7 +41,16 @@ class EditMultipleRoomProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     EasyLoading.show(status: 'loading'.tr);
-    log('this is the image: $image');
+    // log('this is the image: $image');
+    // log('this is the roomNumber: $roomNumber');
+    // log('this is the numberOfBeds: $numberOfBeds');
+    // log('this is the numberOfAvailableBeds: $numberOfAvailableBeds');
+    // log('this is the dailyBooking: $dailyBooking');
+    // log('this is the monthlyBooking: $monthlyBooking');
+    // log('this is the pricePerDay: $pricePerDay');
+    // log('this is the pricePerMonth: $pricePerMonth');
+    // log('this is the roomId: $roomId');
+
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse(
@@ -48,15 +58,14 @@ class EditMultipleRoomProvider extends GetConnect {
     );
     log('this is the request: $request');
     request.headers["authorization"] = "Token ${storage.read('token')}";
-     if (image.path != '') {
+    if (image.path != '') {
       request.files.add(
         await http.MultipartFile.fromPath(
           'room_image',
           image.path,
         ),
       );
-    }
-    else {
+    } else {
       request.fields['room_image'] = '';
     }
     request.fields['room_number'] = roomNumber.toString();
@@ -128,9 +137,8 @@ class EditMultipleRoomProvider extends GetConnect {
       });
       if (data['message'] == 'Daklia is not exist') {
         Dialogs.errorDialog(Get.context!, 'daklia_not_exist'.tr);
-      }
-      else if(data['message'] == 'Room does not exist'){
-       Dialogs.errorDialog(Get.context!, 'room_not_exist'.tr);
+      } else if (data['message'] == 'Room does not exist') {
+        Dialogs.errorDialog(Get.context!, 'room_not_exist'.tr);
       }
     }
 

@@ -247,7 +247,7 @@ Widget roomsList(BuildContext context, List roomsList) {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                         top: 10,
-                                        right: 240,
+                                        right: 230,
                                       ),
                                       child: Container(
                                         height: 22,
@@ -297,11 +297,12 @@ Widget roomsList(BuildContext context, List roomsList) {
                                     Padding(
                                       padding: const EdgeInsets.only(
                                         top: 13,
-                                        right: 320,
+                                        right: 315,
                                       ),
-                                      child: GestureDetector(
+                                      child: InkWell(
                                         onTap: () {
-                                          controller.setRooms = roomsList[index];
+                                          controller.setRooms =
+                                              roomsList[index];
                                           editOrDelete(context);
                                         },
                                         child: SvgPicture.asset(
