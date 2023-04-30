@@ -16,4 +16,5 @@ static const updateProfile = '/update-profile/';
 static const rooms = '/rooms/';
 static const addRoom = '/rooms/add/';
 static const deleteRoom = 'delete/';
+static const addFeatures = 'features/add/';
 }

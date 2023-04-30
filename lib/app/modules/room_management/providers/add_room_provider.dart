@@ -12,7 +12,6 @@ import '../../../../constants/httpHelper.dart';
 import '../../../../widgets/room_management/room_features/room_features.dart';
 import '../../../routes/app_pages.dart';
 import '../models/add_room_model.dart';
-
 class AddRoomProvider extends GetConnect {
   static AddRoomProvider get instance => Get.put(AddRoomProvider());
   GetStorage storage = GetStorage();
@@ -74,7 +73,7 @@ class AddRoomProvider extends GetConnect {
         EasyLoading.dismiss();
       });
       storage.write('roomId', data['room_id']);
-      Dialogs.successDialog(Get.context!, 'room_added_successfully'.tr);
+      // Dialogs.successDialog(Get.context!, 'room_added_successfully'.tr);
       roomFeatures(Get.context!);
       return AddRoomModel.fromJson(data);
     }

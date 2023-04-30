@@ -15,12 +15,7 @@ Widget roomsList(BuildContext context, List roomsList) {
   var isEnglish = Get.locale!.languageCode == 'en';
   var controller = Get.put(RoomManagementController());
   return Expanded(
-    child: Obx(
-      () {
-        if (controller.isLoading.value == true) {
-          EasyLoading.show(status: 'loading'.tr);
-        }
-        return Container(
+    child:  Container(
           height: Get.height,
           width: Get.width,
           child: SingleChildScrollView(
@@ -321,8 +316,5 @@ Widget roomsList(BuildContext context, List roomsList) {
               ],
             ),
           ),
-        );
-      },
-    ),
-  );
+        ));
 }

@@ -820,11 +820,12 @@ Widget editProfileRoomCountWidget(
       onChanged: (value) {
         controller.roomCount = int.parse(value);
       },
-      decoration: InputDecoration(
+      decoration: InputDecoration(  
         hintText: hinText,
         errorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(10),
+          ),
         ),
         hintStyle: getRegularStyle(
           color: ColorsManager.fontColor,
