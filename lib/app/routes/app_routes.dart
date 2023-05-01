@@ -22,6 +22,7 @@ abstract class Routes {
   static const CHANGE_LOCATION_ON_MAP = _Paths.CHANGE_LOCATION_ON_MAP;
   static const EDIT_SINGLE_ROOM = _Paths.EDIT_SINGLE_ROOM;
   static const EDIT_MULTIPLE_ROOM = _Paths.EDIT_MULTIPLE_ROOM;
+  static const EDIT_ROOM_FEATURE = _Paths.EDIT_ROOM_FEATURE;
 }
 
 abstract class _Paths {
@@ -45,4 +46,5 @@ abstract class _Paths {
   static const CHANGE_LOCATION_ON_MAP = '/change-location-on-map';
   static const EDIT_SINGLE_ROOM = '/edit-single-room';
   static const EDIT_MULTIPLE_ROOM = '/edit-multiple-room';
+  static const EDIT_ROOM_FEATURE = '/edit-room-feature';
 }

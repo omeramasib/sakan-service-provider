@@ -22,6 +22,8 @@ import '../modules/edit_daklia_profile/bindings/edit_daklia_profile_binding.dart
 import '../modules/edit_daklia_profile/views/edit_daklia_profile_view.dart';
 import '../modules/edit_multiple_room/bindings/edit_multiple_room_binding.dart';
 import '../modules/edit_multiple_room/views/edit_multiple_room_view.dart';
+import '../modules/edit_room_feature/bindings/edit_room_feature_binding.dart';
+import '../modules/edit_room_feature/views/edit_room_feature_view.dart';
 import '../modules/edit_single_room/bindings/edit_single_room_binding.dart';
 import '../modules/edit_single_room/views/edit_single_room_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -142,6 +144,11 @@ class AppPages {
       name: _Paths.EDIT_MULTIPLE_ROOM,
       page: () => const EditMultipleRoomView(),
       binding: EditMultipleRoomBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_ROOM_FEATURE,
+      page: () => const EditRoomFeatureView(),
+      binding: EditRoomFeatureBinding(),
     ),
   ];
 }
