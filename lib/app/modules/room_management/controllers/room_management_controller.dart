@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -9,6 +10,8 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/dialogs.dart';
 import '../models/daklia_rooms_models.dart';
+import '../models/room_features_model.dart';
+import '../providers/room_features_provider.dart';
 import '../providers/add_room_provider.dart';
 import '../providers/daklia_room_provider.dart';
 import '../providers/remove_room_provider.dart';
@@ -22,10 +25,12 @@ class RoomManagementController extends GetxController {
   int pricePerDay = 0;
   int? numberOfBeds;
   int? numAvailableBeds;
-  int? numAvailableBedsSingleRoom;
+  int numAvailableBedsSingleRoom = 0;
   bool daily_booking = false;
   bool monthly_booking = false;
   String? roomId = '';
+  String? featureName = '';
+  String? featureDescription = '';
 
   var roomNumberController = TextEditingController();
   var allBedsNumberController = TextEditingController();
@@ -36,6 +41,7 @@ class RoomManagementController extends GetxController {
   var otherDetailsController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
+  var roomFeaturesFormKey = GlobalKey<FormState>();
 
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -104,8 +110,10 @@ class RoomManagementController extends GetxController {
   final provider = DakliaRoomProvider();
   final addRoomProvider = AddRoomProvider();
   final removeRoomProvider = RemoveRoomProvider();
+  final roomFeatureProvider = RoomFeaturesProvider();
   final storage = GetStorage();
   final roomsList = <DakliaRoomModel>[].obs;
+  final featuresList = <RoomFeaturesModel>[].obs;
   final isLoading = false.obs;
 
   DakliaRoomModel myRooms = new DakliaRoomModel();
@@ -210,6 +218,7 @@ class RoomManagementController extends GetxController {
 
   // method to add single room
   Future<void> addSingleRoom() async {
+    log('this is the number of available beds: $numAvailableBedsSingleRoom');
     try {
       final data = await addRoomProvider.addSingleRoom(
         roomImage: image!,
@@ -218,7 +227,7 @@ class RoomManagementController extends GetxController {
         pricePerMonth: pricePerMonth,
         pricePerDay: pricePerDay,
         numberOfBeds: 1,
-        numAvailableBeds: numAvailableBedsSingleRoom!,
+        numAvailableBeds: numAvailableBedsSingleRoom,
         dailyBooking: daily_booking,
         monthlyBooking: monthly_booking,
       );
@@ -268,6 +277,68 @@ class RoomManagementController extends GetxController {
     // }
     EasyLoading.show(status: 'loading'.tr);
     addSingleRoom();
+    update();
+  }
+
+  // method to get room features
+  Future<void> getRoomFeatures() async {
+    isLoading.value = true;
+    try {
+      final data = await roomFeatureProvider.getAllFeatures(
+        roomId: getRooms.roomId!.toString(),
+      );
+      featuresList.clear();
+      featuresList.addAll(data);
+      print('this is the list length: ${featuresList.length}');
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_load_features'.tr);
+    }
+    EasyLoading.dismiss();
+    isLoading.value = false;
+    update();
+  }
+
+  // method to add room feature
+  Future<void> addRoomFeature() async {
+    log('this is the room id: ${storage.read('roomId')}');
+    try {
+      final data = await roomFeatureProvider.addFeature(
+        roomId: storage.read('roomId'),
+        featureName: featureController.text,
+        featureDescription: otherDetailsController.text,
+      );
+      print('this is the data: $data');
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_add_feature'.tr);
+    }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
+  }
+
+  // method to check add room feature
+  void checkAddRoomFeature() {
+    var isValid = roomFeaturesFormKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    roomFeaturesFormKey.currentState!.save();
+    // if (networkController.isConnected.value == true) {
+    //   EasyLoading.show(status: 'loading'.tr);
+    //   try {
+    //     updatePatientProfile();
+    //   } catch (e) {
+    //     EasyLoading.dismiss();
+    //     print(e);
+    //   }
+    // } else {
+    //   Dialogs.connectionErrorDialog(Get.context!);
+    // }
+    EasyLoading.show(status: 'loading'.tr);
+    addRoomFeature();
     update();
   }
 

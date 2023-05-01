@@ -37,98 +37,103 @@ addRoomFeatures(BuildContext context) {
         child: SingleChildScrollView(
           child: Padding(
             padding: MediaQuery.of(context).viewInsets,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                  ),
-                  child: Container(
-                    width: 44,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: ColorsManager.lightGreyColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
+            child: Form(
+              key: controller.roomFeaturesFormKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    'add_room_features'.tr,
-                    style: getMediumStyle(
-                        color: ColorsManager.blackColor,
-                        fontSize: FontSizeManager.s15),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: isEnglish
-                          ? const EdgeInsets.only(
-                              top: AppPadding.p20, left: AppPadding.p40)
-                          : const EdgeInsets.only(
-                              top: AppPadding.p20, right: AppPadding.p30),
-                      child: Text(
-                        'feature'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
+                    child: Container(
+                      width: 44,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: ColorsManager.lightGreyColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                featureWidget(context, controller, 'feature_des'.tr),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: isEnglish
-                          ? const EdgeInsets.only(
-                              top: AppPadding.p20, left: AppPadding.p40)
-                          : const EdgeInsets.only(
-                              top: AppPadding.p20, right: AppPadding.p30),
-                      child: Text(
-                        'otherDetails'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      'add_room_features'.tr,
+                      style: getMediumStyle(
+                          color: ColorsManager.blackColor,
+                          fontSize: FontSizeManager.s15),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'feature'.tr,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                otherDetailsWidget(context, controller),
-                SizedBox(
-                  height: Get.height * 0.1,
-                ),
-                ButtonsManager.primaryButton(
-                  text: 'add_feature'.tr,
-                  onPressed: (){
-                    // controller.addRoomFeature();
-                    Get.back();
-                  },
-                  context: context,
-                  minimumSize: Size(287, 50),
-                  maximumSize: Size(287, 50),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  featureWidget(context, controller, 'feature_des'.tr),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'otherDetails'.tr,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  otherDetailsWidget(context, controller),
+                  SizedBox(
+                    height: Get.height * 0.1,
+                  ),
+                  ButtonsManager.primaryButton(
+                    text: 'add_feature'.tr,
+                    onPressed: () {
+                      // controller.addRoomFeature();
+                      // Get.back();
+                      controller.checkAddRoomFeature();
+                    },
+                    context: context,
+                    minimumSize: Size(287, 50),
+                    maximumSize: Size(287, 50),
                   )
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -23,10 +23,10 @@ editOrDelete(BuildContext context) {
         top: Radius.circular(20.0),
       ),
     ),
-     builder: (BuildContext context) {
+    builder: (BuildContext context) {
       return Container(
         width: Get.width,
-        height: Get.height * 0.2,
+        height: Get.height * 0.25,
         decoration: const BoxDecoration(
           color: ColorsManager.whiteColor,
           borderRadius: BorderRadius.only(
@@ -58,10 +58,9 @@ editOrDelete(BuildContext context) {
               ),
               child: GestureDetector(
                 onTap: () {
-                  if (controller.getRooms.roomType == "multiple"){
+                  if (controller.getRooms.roomType == "multiple") {
                     Get.toNamed(Routes.EDIT_MULTIPLE_ROOM);
-                  }
-                  else{
+                  } else {
                     Get.toNamed(Routes.EDIT_SINGLE_ROOM);
                   }
                 },
@@ -87,11 +86,48 @@ editOrDelete(BuildContext context) {
             SizedBox(
               height: 5,
             ),
-          Divider(
-            color: ColorsManager.lightGreyColor,
-            thickness: 1,
-          ),
-          SizedBox(
+            Divider(
+              color: ColorsManager.lightGreyColor,
+              thickness: 1,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 30,
+                top: 5,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                },
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      ImagesManager.editRoom,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      'edit_room_features'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.blackColor,
+                        fontSize: FontSizeManager.s14,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              color: ColorsManager.lightGreyColor,
+              thickness: 1,
+            ),
+            SizedBox(
               height: 5,
             ),
             Padding(
@@ -131,6 +167,6 @@ editOrDelete(BuildContext context) {
           ],
         ),
       );
-     },
+    },
   );
 }

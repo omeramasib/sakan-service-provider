@@ -77,161 +77,76 @@ addSingleRoom(BuildContext context, String roomType) {
               Container(
                 width: Get.width,
                 height: Get.height * 0.6,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      // This is row 1
-                      Row(
-                        children: [
-                          Padding(
-                            padding: isEnglish
-                                ? const EdgeInsets.only(
-                                    top: AppPadding.p20, left: AppPadding.p40)
-                                : const EdgeInsets.only(
-                                    top: AppPadding.p20, right: AppPadding.p30),
-                            child: Text(
-                              'room_number'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      roomNumberWidget(
-                        context,
-                        controller,
-                        'room_number'.tr,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      // This is row 2
-                      Row(
-                        children: [
-                          Padding(
-                            padding: isEnglish
-                                ? const EdgeInsets.only(
-                                    top: AppPadding.p10, left: AppPadding.p30)
-                                : const EdgeInsets.only(
-                                    top: AppPadding.p10, right: AppPadding.p30),
-                            child: Text(
-                              'room_image'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s14,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      // widget for add image
-                      addRoomPhotoWidget(
-                        context,
-                        controller,
-                        'room_image'.tr,
-                      ),
-                      // This is row 3
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: isEnglish
-                                    ? const EdgeInsets.only(
-                                        top: 5, left: AppPadding.p30)
-                                    : const EdgeInsets.only(
-                                        top: 5, right: AppPadding.p30),
-                                child: Obx(
-                                  () => Checkbox(
-                                    value: controller.isAvailable.value,
-                                    checkColor: ColorsManager.whiteColor,
-                                    fillColor: MaterialStateProperty.all(
-                                        ColorsManager.mainColor),
-                                    onChanged: (value) {
-                                      controller.chooseIsAvailable(value!);
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                'empty_room'.tr,
+                child: Padding(
+                  padding: MediaQuery.of(context).viewInsets,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        // This is row 1
+                        Row(
+                          children: [
+                            Padding(
+                              padding: isEnglish
+                                  ? const EdgeInsets.only(
+                                      top: AppPadding.p20, left: AppPadding.p40)
+                                  : const EdgeInsets.only(
+                                      top: AppPadding.p20,
+                                      right: AppPadding.p30),
+                              child: Text(
+                                'room_number'.tr,
                                 style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
+                                  color: ColorsManager.mainColor,
                                   fontSize: FontSizeManager.s14,
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // This is row 4
-                      Row(
-                        children: [
-                          Padding(
-                            padding: isEnglish
-                                ? const EdgeInsets.only(
-                                    top: AppPadding.p10, left: AppPadding.p65)
-                                : const EdgeInsets.only(
-                                    top: AppPadding.p10, right: AppPadding.p50),
-                            child: Text(
-                              'booking_type_available'.tr,
-                              style: getRegularStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s14,
-                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      // Row for booking type
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: isEnglish
-                                    ? const EdgeInsets.only(
-                                        top: 5, left: AppPadding.p30)
-                                    : const EdgeInsets.only(
-                                        top: 5, right: AppPadding.p30),
-                                child: Obx(
-                                  () => Checkbox(
-                                    value: controller.dailyBooking.value,
-                                    checkColor: ColorsManager.whiteColor,
-                                    fillColor: MaterialStateProperty.all(
-                                        ColorsManager.mainColor),
-                                    onChanged: (value) {
-                                      controller.chooseDailyBooking(value!);
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                'daily_booking'.tr,
+                          ],
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        roomNumberWidget(
+                          context,
+                          controller,
+                          'room_number'.tr,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        // This is row 2
+                        Row(
+                          children: [
+                            Padding(
+                              padding: isEnglish
+                                  ? const EdgeInsets.only(
+                                      top: AppPadding.p10, left: AppPadding.p30)
+                                  : const EdgeInsets.only(
+                                      top: AppPadding.p10,
+                                      right: AppPadding.p30),
+                              child: Text(
+                                'room_image'.tr,
                                 style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
+                                  color: ColorsManager.mainColor,
                                   fontSize: FontSizeManager.s14,
                                 ),
                               ),
-                            ],
-                          ),
-                          Padding(
-                            padding: isEnglish
-                                ? const EdgeInsets.only(
-                                    bottom: 5, right: AppPadding.p60)
-                                : const EdgeInsets.only(
-                                    bottom: 5, left: AppPadding.p60),
-                            child: Row(
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        // widget for add image
+                        addRoomPhotoWidget(
+                          context,
+                          controller,
+                          'room_image'.tr,
+                        ),
+                        // This is row 3
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
                                 Padding(
                                   padding: isEnglish
@@ -241,18 +156,18 @@ addSingleRoom(BuildContext context, String roomType) {
                                           top: 5, right: AppPadding.p30),
                                   child: Obx(
                                     () => Checkbox(
-                                      value: controller.monthlyBooking.value,
+                                      value: controller.isAvailable.value,
                                       checkColor: ColorsManager.whiteColor,
                                       fillColor: MaterialStateProperty.all(
                                           ColorsManager.mainColor),
                                       onChanged: (value) {
-                                        controller.chooseMonthlyBooking(value!);
+                                        controller.chooseIsAvailable(value!);
                                       },
                                     ),
                                   ),
                                 ),
                                 Text(
-                                  'monthly_booking'.tr,
+                                  'empty_room'.tr,
                                   style: getRegularStyle(
                                     color: ColorsManager.fontColor,
                                     fontSize: FontSizeManager.s14,
@@ -260,89 +175,185 @@ addSingleRoom(BuildContext context, String roomType) {
                                 ),
                               ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Obx(
-                        () =>  Visibility(
-                          visible: controller.dailyBooking.value == true,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: isEnglish
-                                    ? const EdgeInsets.only(
-                                        top: AppPadding.p10, left: AppPadding.p40)
-                                    : const EdgeInsets.only(
-                                        top: AppPadding.p10, right: AppPadding.p30),
-                                child: Text(
-                                  'daily_bed_price'.tr,
+                          ],
+                        ),
+                        // This is row 4
+                        Row(
+                          children: [
+                            Padding(
+                              padding: isEnglish
+                                  ? const EdgeInsets.only(
+                                      top: AppPadding.p10, left: AppPadding.p65)
+                                  : const EdgeInsets.only(
+                                      top: AppPadding.p10,
+                                      right: AppPadding.p50),
+                              child: Text(
+                                'booking_type_available'.tr,
+                                style: getRegularStyle(
+                                  color: ColorsManager.mainColor,
+                                  fontSize: FontSizeManager.s14,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        // Row for booking type
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: isEnglish
+                                      ? const EdgeInsets.only(
+                                          top: 5, left: AppPadding.p30)
+                                      : const EdgeInsets.only(
+                                          top: 5, right: AppPadding.p30),
+                                  child: Obx(
+                                    () => Checkbox(
+                                      value: controller.dailyBooking.value,
+                                      checkColor: ColorsManager.whiteColor,
+                                      fillColor: MaterialStateProperty.all(
+                                          ColorsManager.mainColor),
+                                      onChanged: (value) {
+                                        controller.chooseDailyBooking(value!);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'daily_booking'.tr,
                                   style: getRegularStyle(
-                                    color: ColorsManager.mainColor,
+                                    color: ColorsManager.fontColor,
                                     fontSize: FontSizeManager.s14,
                                   ),
                                 ),
+                              ],
+                            ),
+                            Padding(
+                              padding: isEnglish
+                                  ? const EdgeInsets.only(
+                                      bottom: 5, right: AppPadding.p60)
+                                  : const EdgeInsets.only(
+                                      bottom: 5, left: AppPadding.p60),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: isEnglish
+                                        ? const EdgeInsets.only(
+                                            top: 5, left: AppPadding.p30)
+                                        : const EdgeInsets.only(
+                                            top: 5, right: AppPadding.p30),
+                                    child: Obx(
+                                      () => Checkbox(
+                                        value: controller.monthlyBooking.value,
+                                        checkColor: ColorsManager.whiteColor,
+                                        fillColor: MaterialStateProperty.all(
+                                            ColorsManager.mainColor),
+                                        onChanged: (value) {
+                                          controller
+                                              .chooseMonthlyBooking(value!);
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Text(
+                                    'monthly_booking'.tr,
+                                    style: getRegularStyle(
+                                      color: ColorsManager.fontColor,
+                                      fontSize: FontSizeManager.s14,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Obx(
-                        ()=> Visibility(
-                          visible: controller.dailyBooking.value == true,
-                          child: dailyBedPriceWidget(
-                            context,
-                            controller,
-                            'bed_price'.tr,
-                          ),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                      // This is row 5
-                      Obx(
-                        ()=> Visibility(
-                          visible: controller.monthlyBooking.value == true,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: isEnglish
-                                    ? const EdgeInsets.only(
-                                        top: AppPadding.p10, left: AppPadding.p40)
-                                    : const EdgeInsets.only(
-                                        top: AppPadding.p10, right: AppPadding.p30),
-                                child: Text(
-                                  'monthly_bed_price'.tr,
-                                  style: getRegularStyle(
-                                    color: ColorsManager.mainColor,
-                                    fontSize: FontSizeManager.s14,
+                        Obx(
+                          () => Visibility(
+                            visible: controller.dailyBooking.value == true,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: isEnglish
+                                      ? const EdgeInsets.only(
+                                          top: AppPadding.p10,
+                                          left: AppPadding.p40)
+                                      : const EdgeInsets.only(
+                                          top: AppPadding.p10,
+                                          right: AppPadding.p30),
+                                  child: Text(
+                                    'daily_bed_price'.tr,
+                                    style: getRegularStyle(
+                                      color: ColorsManager.mainColor,
+                                      fontSize: FontSizeManager.s14,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Obx(
-                        ()=> Visibility(
-                          visible: controller.monthlyBooking.value == true,
-                          child: monthlyBedPriceWidget(
-                            context,
-                            controller,
-                            'bed_price'.tr,
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Obx(
+                          () => Visibility(
+                            visible: controller.dailyBooking.value == true,
+                            child: dailyBedPriceWidget(
+                              context,
+                              controller,
+                              'bed_price'.tr,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                        // This is row 5
+                        Obx(
+                          () => Visibility(
+                            visible: controller.monthlyBooking.value == true,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: isEnglish
+                                      ? const EdgeInsets.only(
+                                          top: AppPadding.p10,
+                                          left: AppPadding.p40)
+                                      : const EdgeInsets.only(
+                                          top: AppPadding.p10,
+                                          right: AppPadding.p30),
+                                  child: Text(
+                                    'monthly_bed_price'.tr,
+                                    style: getRegularStyle(
+                                      color: ColorsManager.mainColor,
+                                      fontSize: FontSizeManager.s14,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Obx(
+                          () => Visibility(
+                            visible: controller.monthlyBooking.value == true,
+                            child: monthlyBedPriceWidget(
+                              context,
+                              controller,
+                              'bed_price'.tr,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

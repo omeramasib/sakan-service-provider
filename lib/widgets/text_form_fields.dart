@@ -820,11 +820,12 @@ Widget editProfileRoomCountWidget(
       onChanged: (value) {
         controller.roomCount = int.parse(value);
       },
-      decoration: InputDecoration(  
+      decoration: InputDecoration(
         hintText: hinText,
         errorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-          borderRadius: BorderRadius.all(Radius.circular(10),
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
           ),
         ),
         hintStyle: getRegularStyle(
@@ -1391,11 +1392,17 @@ Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.featureController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the feature value $value');
+          controller.featureController.text = value!;
+        },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1409,10 +1416,6 @@ Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
           filled: true,
           fillColor: ColorsManager.greyColor,
         ),
@@ -1432,6 +1435,13 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
         keyboardType: TextInputType.text,
         controller: controller.otherDetailsController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the other details value $value');
+          controller.otherDetailsController.text = value!;
+        },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,
@@ -1440,10 +1450,6 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
             bottom: 80,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),
