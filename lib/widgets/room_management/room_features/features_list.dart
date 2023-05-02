@@ -9,7 +9,7 @@ import '../../../constants/images_manager.dart';
 import '../edit_or_delete_room.dart';
 import 'edit_or_delete_feature.dart';
 
-featuresList(BuildContext context) {
+featuresList(BuildContext context, dynamic controller) {
   return Container(
     width: Get.width,
     height: Get.height * 0.6,
@@ -40,7 +40,7 @@ featuresList(BuildContext context) {
                         top: 10,
                       ),
                       child: Text(
-                        'feature1'.tr,
+                        controller.getFeatures.featureName!,
                         style: getRegularStyle(
                           color: ColorsManager.mainColor,
                           fontSize: FontSizeManager.s14,
@@ -89,7 +89,7 @@ featuresList(BuildContext context) {
         SizedBox(
           height: 10,
         ),
-         Container(
+        Container(
           width: 330,
           height: 73,
           decoration: BoxDecoration(
@@ -117,7 +117,7 @@ featuresList(BuildContext context) {
                   Padding(
                     padding: const EdgeInsets.only(
                       top: 13,
-                      left: 15, 
+                      left: 15,
                     ),
                     child: GestureDetector(
                       onTap: () {

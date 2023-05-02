@@ -125,6 +125,15 @@ class RoomManagementController extends GetxController {
 
   DakliaRoomModel get getRooms => myRooms;
 
+  RoomFeaturesModel myRoomFeatures = new RoomFeaturesModel();
+
+  set setRoomFeatures(RoomFeaturesModel features) {
+    myRoomFeatures = features;
+    update();
+  }
+
+  RoomFeaturesModel get getFeatures => myRoomFeatures;
+
   // method to get rooms list from api
   Future<void> getRoomsList() async {
     isLoading.value = true;
@@ -283,19 +292,27 @@ class RoomManagementController extends GetxController {
   // method to get room features
   Future<void> getRoomFeatures() async {
     isLoading.value = true;
+    log('doing the logic');
+    log('this is the room id: ${getRooms.roomId}');
     try {
       final data = await roomFeatureProvider.getAllFeatures(
         roomId: getRooms.roomId!.toString(),
       );
       featuresList.clear();
       featuresList.addAll(data);
-      print('this is the list length: ${featuresList.length}');
+      log('this is the features list: ${featuresList.length}');
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_load_features'.tr);
     }
     EasyLoading.dismiss();
     isLoading.value = false;
+    update();
+  }
+
+  // method to refresh room features
+  Future<void> refreshRoomFeatures() async {
+    await getRoomFeatures();
     update();
   }
 
@@ -353,6 +370,7 @@ class RoomManagementController extends GetxController {
     featureController = TextEditingController();
     otherDetailsController = TextEditingController();
     await getRoomsList();
+    // await getRoomFeatures();
   }
 
   @override

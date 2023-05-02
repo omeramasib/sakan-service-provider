@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/modules/edit_room_feature/views/edit_room_feature_view.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/images_manager.dart';
 
+import '../../app/modules/edit_room_feature/views/edit_room_feature_view.dart';
+import '../../app/modules/edit_room_feature/views/edit_room_feature_view.dart';
 import '../../app/modules/room_management/controllers/room_management_controller.dart';
 import '../../constants/colors_manager.dart';
 import '../../constants/fonts_manager.dart';
@@ -100,6 +103,7 @@ editOrDelete(BuildContext context) {
               ),
               child: GestureDetector(
                 onTap: () {
+                  Get.toNamed(Routes.EDIT_ROOM_FEATURE);
                 },
                 child: Row(
                   children: [

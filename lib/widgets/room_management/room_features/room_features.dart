@@ -129,7 +129,7 @@ roomFeatures(BuildContext context) {
                         ],
                       ),
                     ),
-                    featuresList(context),
+                    featuresList(context, controller),
                     // no_features(context),
                   ],
                 ),

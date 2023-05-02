@@ -143,9 +143,9 @@ class RoomFeaturesProvider extends GetConnect {
       storage.write('featureId', data['feature_id']);
       Dialogs.successDialog(Get.context!, 'feature_added_successfully'.tr);
       roomFeatures(Get.context!);
-      // make disponse to the controller
-      roomController.featureController.clear();
-      roomController.otherDetailsController.clear();
+      // // make disponse to the controller
+      // roomController.featureController.clear();
+      // roomController.otherDetailsController.clear();
       roomController.getRoomFeatures();
       return RoomFeaturesModel.fromJson(data);
     }
