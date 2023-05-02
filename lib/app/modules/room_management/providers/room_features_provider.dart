@@ -197,4 +197,90 @@ class RoomFeaturesProvider extends GetConnect {
     }
     return RoomFeaturesModel.fromJson(data);
   }
+
+   Future<RoomFeaturesModel> editFeature({
+    required int roomId,
+    required String featureName,
+    required String featureDescription,
+    required int featureId,
+  }) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    final response = await put(
+        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}$roomId/features/$featureId/',
+        {
+          'feature_name': featureName,
+          'feature_description': featureDescription,
+        },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Token ${storage.read('token')}',
+        });
+
+    var data = response.body;
+    var statusCode = response.statusCode;
+    log('this is the status code: $statusCode');
+    log('this is the data: $data');
+    var roomController = RoomManagementController();
+
+    if (statusCode == 200) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      Dialogs.successDialog(Get.context!, 'feature_updated_successfully'.tr);
+
+      // roomController.getRoomFeatures();
+      // Get.offAllNamed(Routes.EDIT_ROOM_FEATURE);
+      Get.back();
+      return RoomFeaturesModel.fromJson(data);
+    }
+
+    if (statusCode == 400) {
+      if (data['message'] != "Room does not belong to this Daklia") {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'room_not_belong_to_daklia'.tr);
+      }
+    }
+
+    if (statusCode == 401) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
+      Get.offAllNamed(Routes.AUTH, arguments: 0);
+    }
+
+    if (statusCode == 404) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      if (data['message'] != 'Daklia does not exis') {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
+      }
+      if (data['message'] != 'Room does not exist') {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'room_does_not_exist'.tr);
+      }
+    }
+
+    if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
+      timer = Timer(
+        const Duration(seconds: 1),
+        () {
+          EasyLoading.dismiss();
+        },
+      );
+      EasyLoading.show(status: 'loading'.tr);
+      Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+    }
+    return RoomFeaturesModel.fromJson(data);
+  }
 }

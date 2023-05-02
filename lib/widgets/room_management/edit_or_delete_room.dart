@@ -103,6 +103,7 @@ editOrDelete(BuildContext context) {
               ),
               child: GestureDetector(
                 onTap: () {
+                  controller.getRoomFeatures();
                   Get.toNamed(Routes.EDIT_ROOM_FEATURE);
                 },
                 child: Row(

@@ -127,12 +127,12 @@ class RoomManagementController extends GetxController {
 
   RoomFeaturesModel myRoomFeatures = new RoomFeaturesModel();
 
-  set setRoomFeatures(RoomFeaturesModel features) {
-    myRoomFeatures = features;
-    update();
-  }
+  // set setRoomFeatures(RoomFeaturesModel features) {
+  //   myRoomFeatures = features;
+  //   update();
+  // }
 
-  RoomFeaturesModel get getFeatures => myRoomFeatures;
+  // RoomFeaturesModel get getFeatures => myRoomFeatures;
 
   // method to get rooms list from api
   Future<void> getRoomsList() async {
@@ -292,7 +292,6 @@ class RoomManagementController extends GetxController {
   // method to get room features
   Future<void> getRoomFeatures() async {
     isLoading.value = true;
-    log('doing the logic');
     log('this is the room id: ${getRooms.roomId}');
     try {
       final data = await roomFeatureProvider.getAllFeatures(
@@ -300,7 +299,6 @@ class RoomManagementController extends GetxController {
       );
       featuresList.clear();
       featuresList.addAll(data);
-      log('this is the features list: ${featuresList.length}');
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_load_features'.tr);
@@ -322,8 +320,8 @@ class RoomManagementController extends GetxController {
     try {
       final data = await roomFeatureProvider.addFeature(
         roomId: storage.read('roomId'),
-        featureName: featureController.text,
-        featureDescription: otherDetailsController.text,
+        featureName: featureName!,
+        featureDescription: featureDescription!,
       );
       print('this is the data: $data');
     } catch (e) {
@@ -370,7 +368,6 @@ class RoomManagementController extends GetxController {
     featureController = TextEditingController();
     otherDetailsController = TextEditingController();
     await getRoomsList();
-    // await getRoomFeatures();
   }
 
   @override

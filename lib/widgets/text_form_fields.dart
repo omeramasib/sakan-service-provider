@@ -1398,7 +1398,7 @@ Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
         enabled: true,
         onSaved: (value) {
           log('this is the feature value $value');
-          controller.featureController.text = value!;
+          controller.featureName = value!;
         },
         validator: (value) {
           return Validations().textValidation(value!);
@@ -1437,7 +1437,7 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
         enabled: true,
         onSaved: (value) {
           log('this is the other details value $value');
-          controller.otherDetailsController.text = value!;
+          controller.featureDescription = value!;
         },
         validator: (value) {
           return Validations().textValidation(value!);

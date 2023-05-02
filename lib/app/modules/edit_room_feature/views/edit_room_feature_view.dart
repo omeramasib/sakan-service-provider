@@ -7,6 +7,7 @@ import '../../../../constants/images_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../widgets/room_management/room_features/add_room_feature.dart';
 import '../../../../widgets/room_management/room_features/features_list.dart';
+import '../../../../widgets/room_management/room_features/no_features.dart';
 import '../../room_management/controllers/room_management_controller.dart';
 import '../controllers/edit_room_feature_controller.dart';
 
@@ -32,7 +33,7 @@ class EditRoomFeatureView extends GetView<EditRoomFeatureController> {
         ),
       ),
       body: GetBuilder(
-        init: EditRoomFeatureController(),
+        init: controller,
         builder: (controller) => Column(
           children: [
             SizedBox(
@@ -89,8 +90,24 @@ class EditRoomFeatureView extends GetView<EditRoomFeatureController> {
                 ],
               ),
             ),
-            featuresList(context, roomController),
-            // no_features(context),
+            // featuresList(context, roomController),
+            // // no_features(context),
+            Obx(
+           (){
+             if(roomController.isLoading.value){
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: ColorsManager.mainColor,
+                  )
+                  );
+            }
+            else{
+              return roomController.featuresList.isEmpty
+                  ? no_features(context)
+                  : featuresList(context, roomController);
+            }
+            }
+          ),
           ],
         ),
       ),
