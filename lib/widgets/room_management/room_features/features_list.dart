@@ -4,21 +4,23 @@ import 'package:get/get.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
+import '../../../app/modules/edit_room_feature/controllers/edit_room_feature_controller.dart';
 import '../../../constants/fonts_manager.dart';
 import '../../../constants/images_manager.dart';
 import 'edit_or_delete_feature.dart';
 
-featuresList(BuildContext context, dynamic controller) {
+featuresList(BuildContext context, dynamic roomController) {
+  var editFeatureController = Get.put(EditRoomFeatureController());
   return Container(
     width: Get.width,
     height: Get.height * 0.6,
     child: RefreshIndicator(
       color: ColorsManager.mainColor,
       onRefresh: () async {
-        await controller.refreshRoomFeatures();
+        await roomController.refreshRoomFeatures();
       },
       child: ListView.separated(
-        itemCount: controller.featuresList.length,
+        itemCount: roomController.featuresList.length,
         itemBuilder: (context, index) => Column(
           children: [
             SizedBox(
@@ -32,44 +34,38 @@ featuresList(BuildContext context, dynamic controller) {
               ),
               child: Column(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      editOrDeleteFeature(context);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 15,
-                            top: 10,
-                          ),
-                          child: Text(
-                            controller.featuresList[index].featureName,
-                            style: getRegularStyle(
-                              color: ColorsManager.mainColor,
-                              fontSize: FontSizeManager.s14,
-                            ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: 15,
+                          top: 10,
+                        ),
+                        child: Text(
+                          roomController.featuresList[index].featureName,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 13,
-                            left: 20,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              controller.featureId =
-                                  controller.featuresList[index].id;
-                              editOrDeleteFeature(context);
-                            },
-                            child: SvgPicture.asset(
-                              ImagesManager.more,
-                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 13,
+                          left: 20,
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            editFeatureController.setRoomFeatures = roomController.featuresList[index];
+                            editOrDeleteFeature(context, editFeatureController);
+                          }, 
+                          child: SvgPicture.asset(
+                            ImagesManager.more,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 15,
@@ -82,7 +78,7 @@ featuresList(BuildContext context, dynamic controller) {
                       children: [
                         Expanded(
                           child: Text(
-                            controller.featuresList[index].featureDescription,
+                            roomController.featuresList[index].featureDescription,
                             style: getRegularStyle(
                               color: ColorsManager.blackColor,
                               fontSize: FontSizeManager.s12,

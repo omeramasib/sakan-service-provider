@@ -1439,9 +1439,6 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
           log('this is the other details value $value');
           controller.featureDescription = value!;
         },
-        validator: (value) {
-          return Validations().textValidation(value!);
-        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,
@@ -1470,6 +1467,9 @@ Widget editFeatureWidget(
       child: TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.featureController,
+        onChanged: (value) {
+          controller.featureName = value;
+        },
         enabled: true,
         decoration: InputDecoration(
           hintText: hinText,
@@ -1508,6 +1508,10 @@ Widget editOtherDetailsWidget(
         keyboardType: TextInputType.text,
         controller: controller.otherDetailsController,
         enabled: true,
+        onChanged: (value) {
+          log('this is the other details value $value');
+          controller.featureDescription = value;
+        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,

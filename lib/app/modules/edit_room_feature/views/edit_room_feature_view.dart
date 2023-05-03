@@ -90,8 +90,6 @@ class EditRoomFeatureView extends GetView<EditRoomFeatureController> {
                 ],
               ),
             ),
-            // featuresList(context, roomController),
-            // // no_features(context),
             Obx(
            (){
              if(roomController.isLoading.value){

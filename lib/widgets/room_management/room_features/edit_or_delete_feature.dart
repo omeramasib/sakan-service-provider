@@ -9,7 +9,7 @@ import '../../../constants/styles_manager.dart';
 import 'delete_feature.dart';
 import 'edit_feature.dart';
 
-editOrDeleteFeature(BuildContext context){
+editOrDeleteFeature(BuildContext context, controller){
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -20,7 +20,8 @@ editOrDeleteFeature(BuildContext context){
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(20.0),
       ),
-    ), builder: (BuildContext context) {
+    ),
+     builder: (BuildContext context) {
       return Container(
         width: Get.width,
         height: Get.height * 0.2,
@@ -55,13 +56,13 @@ editOrDeleteFeature(BuildContext context){
               ),
               child: GestureDetector(
                 onTap: () {
-                  editFeatures(context);
+                  editFeatures(context, controller);
                 },
                 child: Row(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        editFeatures(context);
+                        editFeatures(context, controller);
                       },
                       child: SvgPicture.asset(
                         ImagesManager.editRoom,

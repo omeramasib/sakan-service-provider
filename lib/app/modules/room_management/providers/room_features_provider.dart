@@ -229,10 +229,6 @@ class RoomFeaturesProvider extends GetConnect {
         EasyLoading.dismiss();
       });
       Dialogs.successDialog(Get.context!, 'feature_updated_successfully'.tr);
-
-      // roomController.getRoomFeatures();
-      // Get.offAllNamed(Routes.EDIT_ROOM_FEATURE);
-      Get.back();
       return RoomFeaturesModel.fromJson(data);
     }
 
