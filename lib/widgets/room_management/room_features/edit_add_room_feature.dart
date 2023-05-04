@@ -9,7 +9,7 @@ import '../../../constants/colors_manager.dart';
 import '../../../constants/values_manager.dart';
 import '../../text_form_fields.dart';
 
-addRoomFeatures(BuildContext context) {
+editAddRoomFeatures(BuildContext context) {
   final isEnglish = Get.locale!.languageCode == 'en';
   final controller = Get.put(RoomManagementController());
   return showModalBottomSheet(
@@ -38,7 +38,7 @@ addRoomFeatures(BuildContext context) {
           child: Padding(
             padding: MediaQuery.of(context).viewInsets,
             child: Form(
-              key: controller.roomFeaturesFormKey,
+              key: controller.editAddFeaturesFormKey,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               child: Column(
                 children: [
@@ -124,7 +124,7 @@ addRoomFeatures(BuildContext context) {
                   ButtonsManager.primaryButton(
                     text: 'add_feature'.tr,
                     onPressed: () {
-                      controller.checkAddRoomFeature();
+                      controller.checkEditAddRoomFeature();
                       Get.back();
                     },
                     context: context,

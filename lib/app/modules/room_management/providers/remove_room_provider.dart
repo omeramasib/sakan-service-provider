@@ -28,27 +28,6 @@ class RemoveRoomProvider extends GetConnect {
     });
   }
 
-  // Future<TheResponse<DakliaRoomModel>> theDelete(
-  //     String dakliaId, String roomId) async {
-  //   try {
-  //     final response = await delete(
-  //       '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/${HttpHelper.deleteRoom}',
-  //     );
-
-  //     if (response.body['code'] == 0) {}
-
-  //     if (response.body['code'] == 1) {}
-
-  //     if (response.status.hasError) {
-  //       return Future.error(response.statusText.toString());
-  //     } else {
-  //       return TheResponse.fromJson(response.body);
-  //     }
-  //   } catch (e) {
-  //     return Future.error(e.toString());
-  //   }
-  // }
-
   deleteRoom(String dakliaId, String roomId) async {
 
     final url = Uri.parse(

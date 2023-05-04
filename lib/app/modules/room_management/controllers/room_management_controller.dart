@@ -39,9 +39,12 @@ class RoomManagementController extends GetxController {
   var monthlyBedPriceController = TextEditingController();
   var featureController = TextEditingController();
   var otherDetailsController = TextEditingController();
+  var editFeatureController = TextEditingController();
+  var editOtherDetailsController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
   var roomFeaturesFormKey = GlobalKey<FormState>();
+  var editAddFeaturesFormKey = GlobalKey<FormState>();
 
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -316,10 +319,10 @@ class RoomManagementController extends GetxController {
 
   // method to add room feature
   Future<void> addRoomFeature() async {
-    log('this is the room id: ${storage.read('roomId')}');
+    log('this is the room id: ${getRooms.roomId}');
     try {
       final data = await roomFeatureProvider.addFeature(
-        roomId: storage.read('roomId'),
+        roomId: getRooms.roomId!,
         featureName: featureName!,
         featureDescription: featureDescription!,
       );
@@ -357,6 +360,29 @@ class RoomManagementController extends GetxController {
     update();
   }
 
+   void checkEditAddRoomFeature() {
+    var isValid = editAddFeaturesFormKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    editAddFeaturesFormKey.currentState!.save();
+    // if (networkController.isConnected.value == true) {
+    //   EasyLoading.show(status: 'loading'.tr);
+    //   try {
+    //     updatePatientProfile();
+    //   } catch (e) {
+    //     EasyLoading.dismiss();
+    //     print(e);
+    //   }
+    // } else {
+    //   Dialogs.connectionErrorDialog(Get.context!);
+    // }
+    EasyLoading.show(status: 'loading'.tr);
+    addRoomFeature();
+    update();
+  }
+
   @override
   void onInit() async {
     super.onInit();
@@ -377,13 +403,6 @@ class RoomManagementController extends GetxController {
 
   @override
   void onClose() {
-    roomNumberController.dispose();
-    allBedsNumberController.dispose();
-    emptyBedsNumberController.dispose();
-    dailyBedPriceController.dispose();
-    monthlyBedPriceController.dispose();
-    featureController.dispose();
-    otherDetailsController.dispose();
     super.onClose();
   }
 }

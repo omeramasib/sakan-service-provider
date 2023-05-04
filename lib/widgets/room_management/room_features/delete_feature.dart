@@ -3,12 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sakan/constants/images_manager.dart';
 
+import '../../../app/modules/edit_room_feature/controllers/edit_room_feature_controller.dart';
 import '../../../constants/colors_manager.dart';
 import '../../../constants/fonts_manager.dart';
 import '../../../constants/styles_manager.dart';
 
 deleteFeature(BuildContext context) {
   var isArabic = Get.locale!.languageCode == 'ar';
+  var controller = Get.put(EditRoomFeatureController());
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -68,7 +70,6 @@ deleteFeature(BuildContext context) {
                 ),
               ),
             ),
-
             const SizedBox(
               height: 20,
             ),
@@ -86,7 +87,8 @@ deleteFeature(BuildContext context) {
               child: Padding(
                 padding: isArabic
                     ? const EdgeInsets.only(
-                      right: 30,)
+                        right: 30,
+                      )
                     : const EdgeInsets.only(
                         left: 30,
                       ),
@@ -103,12 +105,12 @@ deleteFeature(BuildContext context) {
             Expanded(
               child: Padding(
                 padding: Get.locale!.languageCode == 'ar'
-                    ?  EdgeInsets.only(
-                        right: Get.width/ 5,
+                    ? EdgeInsets.only(
+                        right: Get.width / 5,
                         bottom: 40,
                       )
-                    :  EdgeInsets.only(
-                        left: Get.width/ 5,
+                    : EdgeInsets.only(
+                        left: Get.width / 5,
                         bottom: 40,
                       ),
                 child: Row(
@@ -139,7 +141,10 @@ deleteFeature(BuildContext context) {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () async {
+                        Get.back();
+                        await controller.checkDeleteFeature();
+                      },
                       child: Container(
                         height: 50,
                         width: Get.locale!.languageCode == 'ar' ? 124 : 155,

@@ -334,6 +334,8 @@ const Map<String, String> arSA = {
   'edit_room_feature': 'تعديل مميزات الغرفة',
   'feature_updated_successfully': 'تم تعديل ميزة الغرفة بنجاح',
   'Failed_to_update_feature': 'فشل في تعديل ميزة الغرفة',
+  // Delete Feature
+  'feature_deleted_successfully': 'تم حذف ميزة الغرفة بنجاح',
   // Add Multi Room
   'add_multi_room': 'إضافة غرفة مشتركة',
   'room_detailes': 'تفاصيل الغرفة',

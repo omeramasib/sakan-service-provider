@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -49,6 +51,29 @@ class EditRoomFeatureController extends GetxController {
     update();
   }
 
+  Future<void> deleteFeature() async {
+    log('this is the feature id: ${getFeatures.featureId}');
+    log('this is the room id: ${roomController.getRooms.roomId}');
+    try {
+      await provider.deleteFeature(
+        roomId: roomController.getRooms.roomId!,
+        featureId: getFeatures.featureId!,
+      );
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_delete_feature'.tr);
+    }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
+  }
+
+  checkDeleteFeature() async {
+    isLoading.value = true;
+    EasyLoading.show(status: 'loading'.tr);
+    await deleteFeature();
+  }
+
   checkEditFeature() async {
     isLoading.value = true;
     EasyLoading.show(status: 'loading'.tr);
@@ -70,7 +95,5 @@ class EditRoomFeatureController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    featureController.dispose();
-    otherDetailsController.dispose();
   }
 }

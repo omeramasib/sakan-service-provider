@@ -10,7 +10,9 @@ import '../../../constants/images_manager.dart';
 import '../../stepper/add_room_step2.dart';
 import '../next_or_previous2.dart';
 import 'add_room_feature.dart';
+import 'edit_add_room_feature.dart';
 import 'features_list.dart';
+import 'no_features.dart';
 
 roomFeatures(BuildContext context) {
   final isEnglish = Get.locale!.languageCode == 'en';
@@ -108,7 +110,7 @@ roomFeatures(BuildContext context) {
                             child: Row(children: [
                               GestureDetector(
                                 onTap: () {
-                                  addRoomFeatures(context);
+                                  editAddRoomFeatures(context);
                                 },
                                 child: SvgPicture.asset(
                                   ImagesManager.add,
@@ -129,8 +131,20 @@ roomFeatures(BuildContext context) {
                         ],
                       ),
                     ),
-                    featuresList(context, controller),
+                    // featuresList(context, controller),
                     // no_features(context),
+                    Obx(() {
+                      if (controller.isLoading.value) {
+                        return Center(
+                            child: CircularProgressIndicator(
+                          color: ColorsManager.mainColor,
+                        ));
+                      } else {
+                        return controller.featuresList.isEmpty
+                            ? no_features(context)
+                            : featuresList(context, controller);
+                      }
+                    }),
                   ],
                 ),
               ),
