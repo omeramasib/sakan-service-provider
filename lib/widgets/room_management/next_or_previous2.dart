@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/widgets/room_management/room_features/room_features.dart';
 
 import '../../constants/buttons_manager.dart';
@@ -21,6 +22,7 @@ nextOrPrevious2Button(BuildContext context) {
           ButtonsManager.primaryButton(
             text: 'next'.tr,
             onPressed: () {
+              Get.offAllNamed(Routes.ROOM_MANAGEMENT);
             },
             context: context,
             maximumSize: Size(174, 50),
