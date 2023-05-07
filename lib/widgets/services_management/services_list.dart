@@ -7,7 +7,6 @@ import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
 import '../../app/modules/services_management/controllers/services_management_controller.dart';
-import '../rooms_types/rooms_types.dart';
 import 'add_service.dart';
 
 Widget servicesList(BuildContext context) {

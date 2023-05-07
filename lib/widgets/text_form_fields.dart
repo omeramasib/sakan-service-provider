@@ -1545,11 +1545,59 @@ Widget serviceNameWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.serviceNameController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the service name value $value');
+          controller.serviceNameController.text = value;
+        },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
+        decoration: InputDecoration(
+          hintText: hinText,
+          hintStyle: getRegularStyle(
+            color: ColorsManager.hintStyleColor,
+            fontSize: FontSizeManager.s13,
+          ),
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 20,
+          ),
+          isDense: true,
+          enabledBorder: const UnderlineInputBorder(
+            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+          ),
+          filled: true,
+          fillColor: ColorsManager.lightGreyColor,
+        ),
+        maxLines: 5,
+        minLines: 1,
+      ),
+    ),
+  );
+}
+
+Widget servicePriceWidget(
+    BuildContext context, dynamic controller, String hinText) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 20, right: 20),
+    child: SizedBox(
+      width: 315,
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        controller: controller.servicePriceController,
+        enabled: true,
+        onChanged: (value) {
+          log('this is the service price value $value');
+          controller.servicePrice = value;
+          controller.chooseServiceType(value);
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1577,33 +1625,39 @@ Widget serviceNameWidget(
   );
 }
 
-Widget servicePriceWidget(
+Widget serviceDescriptionWidget(
     BuildContext context, dynamic controller, String hinText) {
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
-        keyboardType: TextInputType.number,
-        controller: controller.servicePriceController,
+        keyboardType: TextInputType.text,
+        controller: controller.serviceDescriptionController,
         enabled: true,
+        onSaved: (value) {
+          log('this is the service description value $value');
+          controller.serviceDescriptionController.text = value;
+        },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
         decoration: InputDecoration(
+          contentPadding: const EdgeInsets.only(
+            left: 25,
+            right: 25,
+            top: 10,
+            bottom: 80,
+          ),
           hintText: hinText,
           hintStyle: getRegularStyle(
             color: ColorsManager.hintStyleColor,
             fontSize: FontSizeManager.s13,
           ),
-          contentPadding: const EdgeInsets.only(
-            left: 25,
-            right: 25,
-            top: 20,
-            bottom: 20,
-          ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,

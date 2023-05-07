@@ -8,6 +8,7 @@ import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
 import '../rooms_types/rooms_types.dart';
+import 'add_service.dart';
 
 Widget emptyServices(BuildContext context) {
   var isEnglish = Get.locale!.languageCode == 'en';
@@ -49,8 +50,7 @@ Widget emptyServices(BuildContext context) {
             : const EdgeInsets.only(
                 right: 20,
               ),
-        child: Text(
-           'no_services_des'.tr,
+        child: Text('no_services_des'.tr,
             style: getRegularStyle(
               color: ColorsManager.blackColor,
               fontSize: FontSizeManager.s14,
@@ -62,13 +62,13 @@ Widget emptyServices(BuildContext context) {
       ),
       ButtonsManager.primaryButton(
         text: 'add_service'.tr,
-        onPressed: (){
-          // selectRoomTypes(context);
+        onPressed: () {
+          addService(context);
         },
         context: context,
         minimumSize: Size(188, 50),
         maximumSize: Size(188, 50),
-        )
+      )
     ],
   );
 }

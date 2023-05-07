@@ -130,13 +130,6 @@ class RoomManagementController extends GetxController {
 
   RoomFeaturesModel myRoomFeatures = new RoomFeaturesModel();
 
-  // set setRoomFeatures(RoomFeaturesModel features) {
-  //   myRoomFeatures = features;
-  //   update();
-  // }
-
-  // RoomFeaturesModel get getFeatures => myRoomFeatures;
-
   // method to get rooms list from api
   Future<void> getRoomsList() async {
     isLoading.value = true;

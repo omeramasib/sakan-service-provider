@@ -37,136 +37,166 @@ addService(BuildContext context) {
         child: SingleChildScrollView(
           child: Padding(
             padding: MediaQuery.of(context).viewInsets,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                  ),
-                  child: Container(
-                    width: 44,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: ColorsManager.lightGreyColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    'add_new_service'.tr,
-                    style: getMediumStyle(
-                        color: ColorsManager.blackColor,
-                        fontSize: FontSizeManager.s15),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: isEnglish
-                          ? const EdgeInsets.only(
-                              top: AppPadding.p20, left: AppPadding.p40)
-                          : const EdgeInsets.only(
-                              top: AppPadding.p20, right: AppPadding.p30),
-                      child: Text(
-                        'service_name'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
+                    child: Container(
+                      width: 44,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: ColorsManager.lightGreyColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                serviceNameWidget(context, controller, 'service_name'.tr),
-                // featureWidget(context, controller, 'feature_des'.tr),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: isEnglish
-                          ? const EdgeInsets.only(
-                              top: AppPadding.p20, left: AppPadding.p40)
-                          : const EdgeInsets.only(
-                              top: AppPadding.p20, right: AppPadding.p30),
-                      child: Text(
-                        'service_price'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
-                        ),
-                      ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      'add_new_service'.tr,
+                      style: getMediumStyle(
+                          color: ColorsManager.blackColor,
+                          fontSize: FontSizeManager.s15),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                servicePriceWidget(context, controller, '0'),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: isEnglish
-                              ? const EdgeInsets.only(
-                                  top: 5, left: AppPadding.p30)
-                              : const EdgeInsets.only(
-                                  top: 5, right: AppPadding.p30),
-                          child: Obx(
-                            () => Checkbox(
-                              value: controller.isAvailable.value,
-                              checkColor: ColorsManager.whiteColor,
-                              fillColor: MaterialStateProperty.all(
-                                  ColorsManager.mainColor),
-                              onChanged: (value) {
-                                controller.chooseIsAvailable(value!);
-                              },
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'service_active_right_now'.tr,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'service_name'.tr,
                           style: getRegularStyle(
-                            color: ColorsManager.fontColor,
+                            color: ColorsManager.mainColor,
                             fontSize: FontSizeManager.s14,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: Get.height * 0.1,
-                ),
-                ButtonsManager.primaryButton(
-                  text: 'add_service'.tr,
-                  onPressed: () {
-                    // controller.addRoomFeature();
-                    Get.back();
-                  },
-                  context: context,
-                  minimumSize: Size(287, 50),
-                  maximumSize: Size(287, 50),
-                )
-              ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  serviceNameWidget(context, controller, 'service_name'.tr),
+                  // featureWidget(context, controller, 'feature_des'.tr),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'service_price'.tr,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  servicePriceWidget(context, controller, '0'),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  // Service Type Widget
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'service_description'.tr,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  serviceDescriptionWidget(
+                      context, controller, 'service_description'.tr),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: isEnglish
+                                ? const EdgeInsets.only(
+                                    top: 5, left: AppPadding.p30)
+                                : const EdgeInsets.only(
+                                    top: 5, right: AppPadding.p30),
+                            child: Obx(
+                              () => Checkbox(
+                                value: controller.isAvailable.value,
+                                checkColor: ColorsManager.whiteColor,
+                                fillColor: MaterialStateProperty.all(
+                                    ColorsManager.mainColor),
+                                onChanged: (value) {
+                                  controller.chooseIsAvailable(value!);
+                                },
+                              ),
+                            ),
+                          ),
+                          Text(
+                            'service_active_right_now'.tr,
+                            style: getRegularStyle(
+                              color: ColorsManager.fontColor,
+                              fontSize: FontSizeManager.s14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  ButtonsManager.primaryButton(
+                    text: 'add_service'.tr,
+                    onPressed: () {
+                      controller.checkAddService();
+                      Get.back();
+                    },
+                    context: context,
+                    minimumSize: Size(287, 50),
+                    maximumSize: Size(287, 50),
+                  )
+                ],
+              ),
             ),
           ),
         ),
