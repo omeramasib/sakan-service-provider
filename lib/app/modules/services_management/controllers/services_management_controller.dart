@@ -13,12 +13,24 @@ class ServicesManagementController extends GetxController {
   var serviceNameController = TextEditingController();
   var servicePriceController = TextEditingController();
   var serviceDescriptionController = TextEditingController();
+  var editServiceNameController = TextEditingController();
+  var editServicePriceController = TextEditingController();
+  var editServiceDescriptionController = TextEditingController();
   String servicePrice = '0';
+  String editServicePrice = '0';
   var formKey = GlobalKey<FormState>();
   RxBool isAvailable = false.obs;
+  RxBool editIsAvailable = false.obs;
   RxString serviceType = 'free'.obs;
+  RxString editServiceType = 'free'.obs;
+
   chooseIsAvailable(bool value) {
     isAvailable.value = value;
+    update();
+  }
+
+  chooseEditIsAvailable(bool value) {
+    editIsAvailable.value = value;
     update();
   }
 
@@ -28,6 +40,17 @@ class ServicesManagementController extends GetxController {
       log('$serviceType');
     } else {
       serviceType.value = 'paid';
+      log('$serviceType');
+    }
+    update();
+  }
+
+  chooseEditServiceType(String value) {
+    if (value == '') {
+      editServiceType.value = 'free';
+      log('$serviceType');
+    } else {
+      editServiceType.value = 'paid';
       log('$serviceType');
     }
     update();
@@ -80,7 +103,7 @@ class ServicesManagementController extends GetxController {
         isAvailable: isAvailable.value,
       );
       getRoomsList();
-      Dialogs.successDialog(Get.context!, 'Service_added_successfully'.tr);
+      Dialogs.successDialog(Get.context!, 'service_added_successfully'.tr);
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_service'.tr);
@@ -112,10 +135,55 @@ class ServicesManagementController extends GetxController {
     update();
   }
 
+  Future<void> editService() async {
+    final serviceId = myServices.serviceId;
+    try {
+      await provider.editService(
+        serviceId: serviceId!,
+        serviceName: editServiceNameController.text == ''
+            ? editServiceNameController.text = myServices.serviceName!
+            : editServiceNameController.text,
+        serviceDescription: editServiceDescriptionController.text == ''
+            ? editServiceDescriptionController.text =
+                myServices.serviceDescription!
+            : editServiceDescriptionController.text,
+        servicePrice: editServicePrice == ''
+            ? editServicePrice = myServices.servicePrice!.toString()
+            : editServicePrice,
+        serviceType: editServiceType.value,
+        isAvailable: isAvailable.value,
+      );
+      getRoomsList();
+      Dialogs.successDialog(Get.context!, 'service_edited_successfully'.tr);
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_edit_service'.tr);
+    }
+    EasyLoading.dismiss();
+    update();
+  }
+
+  checkSendUpdate() {
+    var isValid = formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    formKey.currentState!.save();
+    EasyLoading.show(status: 'loading'.tr);
+    editService();
+    update();
+  }
+
   @override
   void onInit() {
     serviceNameController = TextEditingController();
     servicePriceController = TextEditingController();
+    serviceDescriptionController = TextEditingController();
+    editServiceNameController = TextEditingController();
+    editServicePriceController = TextEditingController();
+    editServiceDescriptionController = TextEditingController();
+
     getRoomsList();
     super.onInit();
   }
@@ -130,6 +198,9 @@ class ServicesManagementController extends GetxController {
     serviceNameController.dispose();
     servicePriceController.dispose();
     serviceDescriptionController.dispose();
+    editServiceNameController.dispose();
+    editServicePriceController.dispose();
+    editServiceDescriptionController.dispose();
     super.onClose();
   }
 }

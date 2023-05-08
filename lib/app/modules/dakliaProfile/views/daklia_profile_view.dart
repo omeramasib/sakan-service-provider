@@ -215,21 +215,6 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                                 fontSize: FontSizeManager.s14,
                                               ),
                                             ),
-                                            //   SvgPicture.asset(
-                                            //     ImagesManager.unVerified,
-                                            //     height: 20,
-                                            //     width: 20,
-                                            //   ),
-                                            //   SizedBox(
-                                            //   width: 5,
-                                            // ),
-                                            // Text(
-                                            //   'under_verification'.tr,
-                                            //   style: getRegularStyle(
-                                            //     color: ColorsManager.errorColor,
-                                            //     fontSize: FontSizeManager.s14,
-                                            //   ),
-                                            // ),
                                             ]
                                             else ...[
                                               SvgPicture.asset(

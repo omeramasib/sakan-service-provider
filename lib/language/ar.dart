@@ -377,6 +377,10 @@ const Map<String, String> arSA = {
   'service_deleted_successfully': 'تم حذف الخدمة بنجاح',
   'Failed_to_load_services': 'فشل في تحميل الخدمات',
   'service_description': 'وصف الخدمة',
+  'edit_service': 'تعديل الخدمة',
+  'delete_service': 'حذف الخدمة',
+  'services_updated_successfully': 'تم تعديل الخدمات بنجاح',
+  'Failed_to_edit_service': 'فشل في تعديل الخدمة',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',
