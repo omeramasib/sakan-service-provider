@@ -18,47 +18,59 @@ class RegulationsManagementView
     return Scaffold(
       backgroundColor: ColorsManager.lightGreyColor,
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(10),
-          child: AppBar(
-            backgroundColor: ColorsManager.lightGreyColor,
-            elevation: 0,
-          ),
+        preferredSize: Size.fromHeight(10),
+        child: AppBar(
+          backgroundColor: ColorsManager.lightGreyColor,
+          elevation: 0,
         ),
+      ),
       body: Column(
         children: [
           Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: AppPadding.p20,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: AppPadding.p20,
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: ColorsManager.blackColor,
                   ),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: ColorsManager.blackColor,
-                    ),
-                    onPressed: () => Get.back(),
+                  onPressed: () => Get.back(),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: Get.width * 0.20,
+                ),
+                child: Text(
+                  'terms'.tr,
+                  style: getMediumStyle(
+                    fontSize: FontSizeManager.s15,
+                    color: ColorsManager.mainColor,
                   ),
                 ),
-                Padding(
-                  padding:  EdgeInsets.only(
-                    right: Get.width * 0.25,
-                  ),
-                  child: Text(
-                    'terms'.tr,
-                    style: getMediumStyle(
-                      fontSize: FontSizeManager.s15,
-                      color: ColorsManager.mainColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 30,
-            ),
-            // emptyRegulation(context),
-            regulationList(context),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Obx(
+            () {
+              if (controller.isLoading.value) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: ColorsManager.mainColor,
+                ));
+              } else {
+                return controller.lawsList.isEmpty
+                    ? emptyRegulation(context)
+                    : regulationList(context);
+              }
+            },
+          ),
         ],
       ),
     );

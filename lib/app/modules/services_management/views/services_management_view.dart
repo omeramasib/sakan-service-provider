@@ -60,144 +60,144 @@ class ServicesManagementView extends GetView<ServicesManagementController> {
           SizedBox(
             height: 30,
           ),
-          Container(
-            height: 100,
-            width: double.infinity,
-            child: LayoutBuilder(
-              builder: (BuildContext, BoxConstraints constraints) {
-                return Padding(
-                  padding: isEnglish
-                      ? EdgeInsets.only(
-                          right: Get.width * 0.080,
-                        )
-                      : EdgeInsets.only(
-                          right: Get.width * 0.080,
-                        ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 105,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppPadding.p20),
-                            child: Text(
-                              '0',
-                              style: getSemiBoldStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'all_services'.tr,
-                            style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s14),
-                          )
-                        ]),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Container(
-                        width: 105,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppPadding.p20),
-                            child: Text(
-                              '0',
-                              style: getSemiBoldStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'active_services'.tr,
-                            style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s14),
-                          )
-                        ]),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Container(
-                        width: 105,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppPadding.p20),
-                            child: Text(
-                              '0',
-                              style: getSemiBoldStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'inactive_services'.tr,
-                            style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s14),
-                          ),
-                        ]),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
+          // Container(
+          //   height: 100,
+          //   width: double.infinity,
+          //   child: LayoutBuilder(
+          //     builder: (BuildContext, BoxConstraints constraints) {
+          //       return Padding(
+          //         padding: isEnglish
+          //             ? EdgeInsets.only(
+          //                 right: Get.width * 0.080,
+          //               )
+          //             : EdgeInsets.only(
+          //                 right: Get.width * 0.080,
+          //               ),
+          //         child: Row(
+          //           children: [
+          //             Container(
+          //               width: 105,
+          //               height: 100,
+          //               decoration: BoxDecoration(
+          //                 color: ColorsManager.whiteColor,
+          //                 borderRadius: BorderRadius.circular(10),
+          //                 boxShadow: [
+          //                   BoxShadow(
+          //                     color: ColorsManager.shadowColor,
+          //                     blurRadius: 6,
+          //                     offset: Offset(0, 3),
+          //                   ),
+          //                 ],
+          //               ),
+          //               child: Column(children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.only(top: AppPadding.p20),
+          //                   child: Text(
+          //                     '0',
+          //                     style: getSemiBoldStyle(
+          //                       color: ColorsManager.mainColor,
+          //                       fontSize: FontSizeManager.s18,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Text(
+          //                   'all_services'.tr,
+          //                   style: getRegularStyle(
+          //                       color: ColorsManager.fontColor,
+          //                       fontSize: FontSizeManager.s14),
+          //                 )
+          //               ]),
+          //             ),
+          //             SizedBox(
+          //               width: 15,
+          //             ),
+          //             Container(
+          //               width: 105,
+          //               height: 100,
+          //               decoration: BoxDecoration(
+          //                 color: ColorsManager.whiteColor,
+          //                 borderRadius: BorderRadius.circular(10),
+          //                 boxShadow: [
+          //                   BoxShadow(
+          //                     color: ColorsManager.shadowColor,
+          //                     blurRadius: 6,
+          //                     offset: Offset(0, 3),
+          //                   ),
+          //                 ],
+          //               ),
+          //               child: Column(children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.only(top: AppPadding.p20),
+          //                   child: Text(
+          //                     '0',
+          //                     style: getSemiBoldStyle(
+          //                       color: ColorsManager.mainColor,
+          //                       fontSize: FontSizeManager.s18,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Text(
+          //                   'active_services'.tr,
+          //                   style: getRegularStyle(
+          //                       color: ColorsManager.fontColor,
+          //                       fontSize: FontSizeManager.s14),
+          //                 )
+          //               ]),
+          //             ),
+          //             SizedBox(
+          //               width: 15,
+          //             ),
+          //             Container(
+          //               width: 105,
+          //               height: 100,
+          //               decoration: BoxDecoration(
+          //                 color: ColorsManager.whiteColor,
+          //                 borderRadius: BorderRadius.circular(10),
+          //                 boxShadow: [
+          //                   BoxShadow(
+          //                     color: ColorsManager.shadowColor,
+          //                     blurRadius: 6,
+          //                     offset: Offset(0, 3),
+          //                   ),
+          //                 ],
+          //               ),
+          //               child: Column(children: [
+          //                 Padding(
+          //                   padding: const EdgeInsets.only(top: AppPadding.p20),
+          //                   child: Text(
+          //                     '0',
+          //                     style: getSemiBoldStyle(
+          //                       color: ColorsManager.mainColor,
+          //                       fontSize: FontSizeManager.s18,
+          //                     ),
+          //                   ),
+          //                 ),
+          //                 SizedBox(
+          //                   height: 10,
+          //                 ),
+          //                 Text(
+          //                   'inactive_services'.tr,
+          //                   style: getRegularStyle(
+          //                       color: ColorsManager.fontColor,
+          //                       fontSize: FontSizeManager.s14),
+          //                 ),
+          //               ]),
+          //             ),
+          //           ],
+          //         ),
+          //       );
+          //     },
+          //   ),
+          // ),
+          // SizedBox(
+          //   height: 20,
+          // ),
           Obx(() {
             if (controller.isLoading.value) {
               return Center(

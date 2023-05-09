@@ -37,98 +37,103 @@ addRegulation(BuildContext context) {
         child: SingleChildScrollView(
           child: Padding(
             padding: MediaQuery.of(context).viewInsets,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                  ),
-                  child: Container(
-                    width: 44,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                      color: ColorsManager.lightGreyColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(4),
-                      ),
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 20,
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    'add_new_regulation'.tr,
-                    style: getMediumStyle(
-                        color: ColorsManager.blackColor,
-                        fontSize: FontSizeManager.s15),
-                  ),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: isEnglish
-                          ? const EdgeInsets.only(
-                              top: AppPadding.p20, left: AppPadding.p40)
-                          : const EdgeInsets.only(
-                              top: AppPadding.p20, right: AppPadding.p30),
-                      child: Text(
-                        'regulation_text'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
+                    child: Container(
+                      width: 44,
+                      height: 8,
+                      decoration: const BoxDecoration(
+                        color: ColorsManager.lightGreyColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(4),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                regulationTextWidget(context, controller, 'regulation_text'.tr),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: isEnglish
-                          ? const EdgeInsets.only(
-                              top: AppPadding.p20, left: AppPadding.p40)
-                          : const EdgeInsets.only(
-                              top: AppPadding.p20, right: AppPadding.p30),
-                      child: Text(
-                        'regulation_des'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child: Text(
+                      'add_new_regulation'.tr,
+                      style: getMediumStyle(
+                          color: ColorsManager.blackColor,
+                          fontSize: FontSizeManager.s15),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'regulation_text'.tr,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                regulationDescriptionWidget(context, controller),
-                SizedBox(
-                  height: Get.height * 0.1,
-                ),
-                ButtonsManager.primaryButton(
-                  text: 'add_regulation'.tr,
-                  onPressed: (){
-                    // controller.addRegulation();
-                    Get.back();
-                  },
-                  context: context,
-                  minimumSize: Size(287, 50),
-                  maximumSize: Size(287, 50),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  regulationTextWidget(
+                      context, controller, 'regulation_text'.tr),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: isEnglish
+                            ? const EdgeInsets.only(
+                                top: AppPadding.p20, left: AppPadding.p40)
+                            : const EdgeInsets.only(
+                                top: AppPadding.p20, right: AppPadding.p30),
+                        child: Text(
+                          'regulation_des'.tr,
+                          style: getRegularStyle(
+                            color: ColorsManager.mainColor,
+                            fontSize: FontSizeManager.s14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  regulationDescriptionWidget(context, controller),
+                  SizedBox(
+                    height: Get.height * 0.1,
+                  ),
+                  ButtonsManager.primaryButton(
+                    text: 'add_regulation'.tr,
+                    onPressed: () {
+                      // controller.addRegulation();
+                      controller.checkAddLaw();
+                      Get.back();
+                    },
+                    context: context,
+                    minimumSize: Size(287, 50),
+                    maximumSize: Size(287, 50),
                   )
-              ],
+                ],
+              ),
             ),
           ),
         ),

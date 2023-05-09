@@ -164,7 +164,8 @@ addService(BuildContext context) {
                                 value: controller.isAvailable.value,
                                 checkColor: ColorsManager.whiteColor,
                                 fillColor: MaterialStateProperty.all(
-                                    ColorsManager.mainColor),
+                                  ColorsManager.mainColor,
+                                ),
                                 onChanged: (value) {
                                   controller.chooseIsAvailable(value!);
                                 },

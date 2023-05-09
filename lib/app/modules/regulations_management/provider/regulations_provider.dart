@@ -9,13 +9,12 @@ import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 import '../../network/controllers/network_controller.dart';
-import 'package:http/http.dart' as http;
+import '../model/regulations_model.dart';
 
-import '../model/service_model.dart';
-
-class DakliaServiceProvider extends GetConnect {
+class DakliaRegulationsProvider extends GetConnect {
   var networkController = NetworkController.instance;
-  static DakliaServiceProvider get instance => Get.put(DakliaServiceProvider());
+  static DakliaRegulationsProvider get instance =>
+      Get.put(DakliaRegulationsProvider());
   GetStorage storage = GetStorage();
   Timer? timer;
   @override
@@ -28,8 +27,8 @@ class DakliaServiceProvider extends GetConnect {
     });
   }
 
-  Future<List<ServiceModel>> getServiceList(String dakliaId) async {
-    final url = '${HttpHelper.baseUrl2}/$dakliaId/services/';
+  Future<List<DakliaLawsModel>> getLawsList(String dakliaId) async {
+    final url = '${HttpHelper.baseUrl2}/$dakliaId/laws/';
 
     final response = await get(
       url,
@@ -42,14 +41,14 @@ class DakliaServiceProvider extends GetConnect {
     final data = response.body;
 
     if (statusCode == 200) {
-      final List<ServiceModel> servicesList = [];
+      final List<DakliaLawsModel> lawsList = [];
 
-      for (final serviceData in data) {
-        final service = ServiceModel.fromJson(serviceData);
-        servicesList.add(service);
+      for (final lawsData in data) {
+        final laws = DakliaLawsModel.fromJson(lawsData);
+        lawsList.add(laws);
       }
 
-      return servicesList;
+      return lawsList;
     }
     if (statusCode == 401) {
       timer = Timer(const Duration(seconds: 1), () {
@@ -65,15 +64,6 @@ class DakliaServiceProvider extends GetConnect {
         EasyLoading.dismiss();
       });
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
-    }
-
-    if (statusCode == 400) {
-      if (data['message'] != "Service does not belong to this Daklia") {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'service_not_belong_to_daklia'.tr);
-      }
     }
 
     if (statusCode == 401) {
@@ -94,36 +84,22 @@ class DakliaServiceProvider extends GetConnect {
         });
         Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
       }
-      if (data['message'] != 'Service does not exist') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'service_does_not_exist'.tr);
-      }
     }
     return [];
   }
 
-  Future<ServiceModel> addService({
-    required String serviceId,
-    required String serviceName,
-    required String serviceDescription,
-    required String serviceType,
-    required bool isAvailable,
-    required String servicePrice,
+  Future<DakliaLawsModel> addLaw({
+    required String lawDescription,
+    required String punishmentDescription,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
-    log('this is the service type: $serviceType');
+
     final response = await post(
-      '${HttpHelper.baseUrl2}${HttpHelper.servicesAdd}',
+      '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}/laws/add/',
       {
         'daklia_id': storage.read('dakliaId'),
-        'service_id': int.parse(serviceId),
-        'service_name': serviceName,
-        'service_description': serviceDescription,
-        'service_type': serviceType,
-        'isAvailable': isAvailable,
-        'service_price': servicePrice,
+        'law_description': lawDescription,
+        'punishment_description': punishmentDescription,
       },
       headers: {
         'Accept': 'application/json',
@@ -142,10 +118,10 @@ class DakliaServiceProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('serviceId', data['service_id']);
-      Dialogs.successDialog(Get.context!, 'service_added_successfully'.tr);
-      Get.offAllNamed(Routes.SERVICES_MANAGEMENT);
-      return ServiceModel.fromJson(data);
+      storage.write('lawId', data['law_id']);
+      Dialogs.successDialog(Get.context!, 'law_added_successfully'.tr);
+      Get.toNamed(Routes.REGULATIONS_MANAGEMENT);
+      return DakliaLawsModel.fromJson(data);
     }
 
     if (statusCode == 401) {
@@ -178,33 +154,28 @@ class DakliaServiceProvider extends GetConnect {
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
-    return ServiceModel.fromJson(data);
+    return DakliaLawsModel.fromJson(data);
   }
 
-  Future<ServiceModel> editService({
-    required int serviceId,
-    required String serviceName,
-    required String serviceDescription,
-    required String serviceType,
-    required bool isAvailable,
-    required String servicePrice,
+  Future<DakliaLawsModel> editLaw({
+    required int lawId,
+    required String lawDescription,
+    required String punishmentDescription,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
     final response = await put(
-        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}/services/$serviceId/',
-        {
-          'service_name': serviceName,
-          'service_description': serviceDescription,
-          'service_type': serviceType,
-          'isAvailable': isAvailable,
-          'service_price': servicePrice,
-        },
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
-        });
+      '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}/laws/$lawId/',
+      {
+        'law_description': lawDescription,
+        'punishment_description': punishmentDescription,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ${storage.read('token')}',
+      },
+    );
 
     var data = response.body;
     var statusCode = response.statusCode;
@@ -215,56 +186,66 @@ class DakliaServiceProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      Dialogs.successDialog(Get.context!, 'service_edited_successfully'.tr);
-      Get.offAllNamed(Routes.SERVICES_MANAGEMENT);
-      return ServiceModel.fromJson(data);
+      Dialogs.successDialog(Get.context!, 'law_edited_successfully'.tr);
+      Get.offAllNamed(Routes.REGULATIONS_MANAGEMENT);
+      return DakliaLawsModel.fromJson(data);
     }
 
     if (statusCode == 400) {
-      if (data['message'] != "Service does not belong to this Daklia") {
+      if (data['message'] != "Law does not belong to this Daklia") {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'service_not_belong_to_daklia'.tr);
+        Dialogs.errorDialog(Get.context!, 'law_not_belong_to_daklia'.tr);
       }
     }
 
     if (statusCode == 401) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
+      timer = Timer(
+        const Duration(seconds: 1),
+        () {
+          EasyLoading.dismiss();
+        },
+      );
       Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
       Get.offAllNamed(Routes.AUTH, arguments: 0);
     }
 
     if (statusCode == 404) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
+      timer = Timer(
+        const Duration(seconds: 1),
+        () {
+          EasyLoading.dismiss();
+        },
+      );
       if (data['message'] != 'Daklia does not exis') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
       }
-      if (data['message'] != 'Service does not exist') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'service_does_not_exist'.tr);
+      if (data['message'] != 'Law does not exist') {
+        timer = Timer(
+          const Duration(seconds: 1),
+          () {
+            EasyLoading.dismiss();
+          },
+        );
+        Dialogs.errorDialog(Get.context!, 'law_does_not_exist'.tr);
       }
     }
-    return ServiceModel.fromJson(data);
+    return DakliaLawsModel.fromJson(data);
   }
 
-  deleteService(String dakliaId, String serviceId) async {
+  deleteLaw(String dakliaId, String lawId) async {
     final response = await delete(
-        '${HttpHelper.baseUrl2}/$dakliaId/services/$serviceId/delete/',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
-        });
+      '${HttpHelper.baseUrl2}/$dakliaId/laws/$lawId/delete/',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Token ${storage.read('token')}',
+      },
+    );
     var data = response.body;
     var statusCode = response.statusCode;
     log('this is the status code: $statusCode');
@@ -274,23 +255,29 @@ class DakliaServiceProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      Dialogs.successDialog(Get.context!, 'service_deleted_successfully'.tr);
+      Dialogs.successDialog(Get.context!, 'laws_deleted_successfully'.tr);
       Get.offAllNamed(Routes.SERVICES_MANAGEMENT);
     }
 
     if (statusCode == 400) {
-      if (data['message'] != "Service does not belong to this Daklia") {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'service_not_belong_to_daklia'.tr);
+      if (data['message'] != "Law does not belong to this Daklia") {
+        timer = Timer(
+          const Duration(seconds: 1),
+          () {
+            EasyLoading.dismiss();
+          },
+        );
+        Dialogs.errorDialog(Get.context!, 'law_not_belong_to_daklia'.tr);
       }
     }
 
     if (statusCode == 401) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
+      timer = Timer(
+        const Duration(seconds: 1),
+        () {
+          EasyLoading.dismiss();
+        },
+      );
       Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
       Get.offAllNamed(Routes.AUTH, arguments: 0);
     }
@@ -305,11 +292,11 @@ class DakliaServiceProvider extends GetConnect {
         });
         Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
       }
-      if (data['message'] != 'Service does not exist') {
+      if (data['message'] != 'Law does not exist') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'service_does_not_exist'.tr);
+        Dialogs.errorDialog(Get.context!, 'law_does_not_exist'.tr);
       }
     }
   }

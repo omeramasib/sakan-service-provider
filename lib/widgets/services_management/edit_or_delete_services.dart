@@ -57,8 +57,6 @@ editOrDeleteService(BuildContext context) {
               ),
               child: GestureDetector(
                 onTap: () {
-                  // controller.getRoomFeatures();
-                  // Get.toNamed(Routes.EDIT_ROOM_FEATURE);
                   editService(context);
                 },
                 child: Row(
@@ -98,7 +96,7 @@ editOrDeleteService(BuildContext context) {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // deleteRoom(context);
+                      controller.removeRoom();
                     },
                     child: SvgPicture.asset(
                       ImagesManager.delete,

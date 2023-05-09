@@ -1788,7 +1788,9 @@ Widget editServiceDescriptionWidget(
           isDense: true,
           enabledBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
           ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
@@ -1811,6 +1813,12 @@ Widget regulationTextWidget(
         keyboardType: TextInputType.text,
         controller: controller.regulationTextController,
         enabled: true,
+        onSaved: (value) {
+          controller.regulationTextController.text = value!;
+        },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1847,6 +1855,12 @@ Widget regulationDescriptionWidget(BuildContext context, dynamic controller) {
         keyboardType: TextInputType.text,
         controller: controller.regulationDescriptionController,
         enabled: true,
+        onSaved: (value) {
+          controller.regulationDescriptionController.text = value!;
+        },
+        validator: (value) {
+          return Validations().textValidation(value!);
+        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,

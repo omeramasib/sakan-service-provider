@@ -19,7 +19,7 @@ class ServicesManagementController extends GetxController {
   String servicePrice = '0';
   String editServicePrice = '0';
   var formKey = GlobalKey<FormState>();
-  RxBool isAvailable = false.obs;
+  RxBool isAvailable = true.obs;
   RxBool editIsAvailable = false.obs;
   RxString serviceType = 'free'.obs;
   RxString editServiceType = 'free'.obs;
@@ -75,7 +75,7 @@ class ServicesManagementController extends GetxController {
 
   ServiceModel myServiceFeatures = new ServiceModel();
 
-  Future<void> getRoomsList() async {
+  Future<void> getServiceList() async {
     isLoading.value = true;
     final dakliaId = storage.read('dakliaId').toString();
     try {
@@ -102,7 +102,7 @@ class ServicesManagementController extends GetxController {
         serviceType: serviceType.value,
         isAvailable: isAvailable.value,
       );
-      getRoomsList();
+      getServiceList();
       Dialogs.successDialog(Get.context!, 'service_added_successfully'.tr);
     } catch (e) {
       print(e);
@@ -153,8 +153,7 @@ class ServicesManagementController extends GetxController {
         serviceType: editServiceType.value,
         isAvailable: isAvailable.value,
       );
-      getRoomsList();
-      Dialogs.successDialog(Get.context!, 'service_edited_successfully'.tr);
+      getServiceList();
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_edit_service'.tr);
@@ -164,14 +163,34 @@ class ServicesManagementController extends GetxController {
   }
 
   checkSendUpdate() {
-    var isValid = formKey.currentState!.validate();
-    if (!isValid) {
-      return;
-    }
+    // var isValid = formKey.currentState!.validate();
+    // if (!isValid) {
+    //   return;
+    // }
 
-    formKey.currentState!.save();
+    // formKey.currentState!.save();
     EasyLoading.show(status: 'loading'.tr);
     editService();
+    update();
+  }
+
+  Future<void> removeRoom() async {
+    try {
+      final serviceId = myServices.serviceId;
+      final data = await provider.deleteService(
+          storage.read('dakliaId').toString(), serviceId.toString());
+      print('this is the data: $data');
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_remove_service'.tr);
+    }
+    isLoading.value = false;
+    EasyLoading.show(status: 'loading'.tr);
+    update();
+  }
+
+  Future<void> refresServiceList() async {
+    await getServiceList();
     update();
   }
 
@@ -184,7 +203,7 @@ class ServicesManagementController extends GetxController {
     editServicePriceController = TextEditingController();
     editServiceDescriptionController = TextEditingController();
 
-    getRoomsList();
+    getServiceList();
     super.onInit();
   }
 
@@ -195,12 +214,6 @@ class ServicesManagementController extends GetxController {
 
   @override
   void onClose() {
-    serviceNameController.dispose();
-    servicePriceController.dispose();
-    serviceDescriptionController.dispose();
-    editServiceNameController.dispose();
-    editServicePriceController.dispose();
-    editServiceDescriptionController.dispose();
     super.onClose();
   }
 }

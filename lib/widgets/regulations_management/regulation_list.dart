@@ -6,11 +6,13 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
+import '../../app/modules/regulations_management/controllers/regulations_management_controller.dart';
 import 'add_regulations.dart';
 import 'edit_or_delete_regulations.dart';
 
 Widget regulationList(BuildContext context) {
   var isEnglish = Get.locale!.languageCode == 'en';
+  var controller = Get.put(RegulationsManagementController());
   return Expanded(
     child: Container(
       height: Get.height,
@@ -71,76 +73,99 @@ Widget regulationList(BuildContext context) {
           SizedBox(
             height: 20,
           ),
-          // Container 1
-          Container(
-            width: 330,
-            decoration: BoxDecoration(
-              color: ColorsManager.whiteColor,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: ColorsManager.shadowColor,
-                  // spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 0), // changes position of shadow
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        right: 10,
-                        top: 15,
-                      ),
-                      child: Text(
-                        'regulation1'.tr,
-                        style: getRegularStyle(
-                          color: ColorsManager.mainColor,
-                          fontSize: FontSizeManager.s14,
-                          overflow: TextOverflow.ellipsis,
+          Expanded(
+            child: SizedBox(
+              width: 330,
+              child: RefreshIndicator(
+                color: ColorsManager.mainColor,
+                onRefresh: () async {
+                  await controller.getLawsList();
+                },
+                child: ListView.separated(
+                  itemCount: controller.lawsList.length,
+                  itemBuilder: (context, index) => Container(
+                    width: 330,
+                    decoration: BoxDecoration(
+                      color: ColorsManager.whiteColor,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: ColorsManager.shadowColor,
+                          // spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 0), // changes position of shadow
                         ),
-                      ),
+                      ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        editOrDeleteRegulation(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          left: 10,
-                          top: 15,
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                right: 10,
+                                top: 15,
+                              ),
+                              child: Text(
+                                controller.lawsList[index].lawDescription!,
+                                style: getRegularStyle(
+                                  color: ColorsManager.mainColor,
+                                  fontSize: FontSizeManager.s14,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                editOrDeleteRegulation(context);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 20,
+                                  top: 15,
+                                ),
+                                child: SvgPicture.asset(
+                                  ImagesManager.more,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        child: SvgPicture.asset(
-                          ImagesManager.more,
+                        SizedBox(
+                          height: 20,
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            right: 10,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  controller
+                                      .lawsList[index].punishmentDescription!,
+                                  style: getRegularStyle(
+                                    color: ColorsManager.blackColor,
+                                    fontSize: FontSizeManager.s12,
+                                    height: 2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10,
                   ),
-                  child: Text(
-                    'regulation1_des'.tr,
-                    style: getRegularStyle(
-                      color: ColorsManager.blackColor,
-                      fontSize: FontSizeManager.s12,
-                      height: 2,
-                    ),
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 15,
                   ),
                 ),
-                SizedBox(
-                  height: 20,
-                ),
-              ],
+              ),
             ),
           ),
         ],

@@ -379,8 +379,17 @@ const Map<String, String> arSA = {
   'service_description': 'وصف الخدمة',
   'edit_service': 'تعديل الخدمة',
   'delete_service': 'حذف الخدمة',
-  'services_updated_successfully': 'تم تعديل الخدمات بنجاح',
+  'service_edited_successfully': 'تم تعديل الخدمة بنجاح',
   'Failed_to_edit_service': 'فشل في تعديل الخدمة',
+  'Failed_to_remove_service': 'فشل في حذف الخدمة',
+  // Laws management
+  'law_added_successfully': 'تم إضافة اللائحة بنجاح',
+  'Failed_to_add_law': 'فشل في إضافة اللائحة',
+  'law_edited_successfully': 'تم تعديل اللائحة بنجاح',
+  'law_not_belong_to_daklia': ' عفوا هذه اللائحة لاتنتمي لهذه الداخلية',
+  'law_does_not_exist': 'عفوا هذه اللائحة غير موجودة',
+  'laws_deleted_successfully': 'تم حذف اللائحة بنجاح',
+  'Failed_to_load_laws': 'فشل في تحميل اللوائح',
   // Sanedny screen
   'dr_mohamed': ' محمد أحمد',
   'psychiatry': 'الطب الشخصي',
