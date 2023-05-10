@@ -17,7 +17,7 @@ class RegulationsManagementView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorsManager.lightGreyColor,
+      backgroundColor: ColorsManager.whiteColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(10),
         child: AppBar(

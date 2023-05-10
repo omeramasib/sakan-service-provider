@@ -87,16 +87,8 @@ Widget regulationList(BuildContext context) {
                   itemBuilder: (context, index) => Container(
                     width: 330,
                     decoration: BoxDecoration(
-                      color: ColorsManager.whiteColor,
+                      color: ColorsManager.lightGreyColor,
                       borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: ColorsManager.shadowColor,
-                          // spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 0), // changes position of shadow
-                        ),
-                      ],
                     ),
                     child: Column(
                       children: [
