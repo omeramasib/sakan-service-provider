@@ -46,7 +46,8 @@ Widget regulationList(BuildContext context) {
                       : EdgeInsets.only(
                           left: Get.width * 0.060,
                         ),
-                  child: Row(children: [
+                  child: Row(
+                    children: [
                     GestureDetector(
                       onTap: () {
                         addRegulation(context);
@@ -118,6 +119,8 @@ Widget regulationList(BuildContext context) {
                             ),
                             GestureDetector(
                               onTap: () {
+                                controller.setLaws =
+                                    controller.lawsList[index];
                                 editOrDeleteRegulation(context);
                               },
                               child: Padding(

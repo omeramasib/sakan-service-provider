@@ -11,6 +11,7 @@ import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/room_management/empty_room.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/room_management_controller.dart';
 
 class RoomManagementView extends GetView<RoomManagementController> {
@@ -42,7 +43,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
                     Icons.arrow_back,
                     color: ColorsManager.blackColor,
                   ),
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.offAllNamed(Routes.HOME),
                 ),
               ),
               Padding(

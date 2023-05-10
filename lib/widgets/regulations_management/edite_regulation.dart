@@ -89,7 +89,8 @@ editRegulation(BuildContext context) {
                 SizedBox(
                   height: 10,
                 ),
-                editRegulationWidget(context, controller, 'regulation1'.tr),
+                editRegulationWidget(
+                    context, controller, controller.getLaws.lawDescription!),
                 SizedBox(
                   height: 20,
                 ),
@@ -114,20 +115,22 @@ editRegulation(BuildContext context) {
                 SizedBox(
                   height: 10,
                 ),
-                editRegulationDetailsWidget(context, controller, 'regulation1_des'.tr),
+                editRegulationDetailsWidget(context, controller,
+                    controller.getLaws.punishmentDescription!),
                 SizedBox(
                   height: 30,
                 ),
                 ButtonsManager.primaryButton(
                   text: 'Save_changes'.tr,
-                  onPressed: (){
+                  onPressed: () {
                     // controller.addRoomFeature();
+                    controller.editLaw();
                     Get.back();
                   },
                   context: context,
                   minimumSize: Size(287, 50),
                   maximumSize: Size(287, 50),
-                  )
+                )
               ],
             ),
           ),

@@ -45,7 +45,7 @@ class RemoveRoomProvider extends GetConnect {
     print('this is the response: ${response.body}');
     print('this is the status code: ${response.statusCode}');
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 204) {
       final roomsData = json.decode(response.body);
       log('this is the rooms data: $roomsData');
       Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);

@@ -19,7 +19,10 @@ class MoreScreenController extends GetxController {
   RxBool isLoading = false.obs;
   var provider = LogoutProvider();
   var storage = GetStorage();
-    Future<void> submitLogot() async {
+
+  Future<void> submitLogot() async {
+    isLoading.value = true;
+    EasyLoading.show(status: 'loading'.tr);
     await provider.logout();
     update();
   }

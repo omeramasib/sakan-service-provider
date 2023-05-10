@@ -10,6 +10,8 @@ import '../provider/regulations_provider.dart';
 class RegulationsManagementController extends GetxController {
   var regulationTextController = TextEditingController();
   var regulationDescriptionController = TextEditingController();
+  var editRegulationTextController = TextEditingController();
+  var editRegulationDescriptionController = TextEditingController();
   var formKey = GlobalKey<FormState>();
 
   static RegulationsManagementController get instance =>
@@ -47,12 +49,12 @@ class RegulationsManagementController extends GetxController {
     update();
   }
 
-    Future<void> addLaw() async {
+  Future<void> addLaw() async {
     try {
       await provider.addLaw(
-        lawDescription: regulationTextController.text,
-        punishmentDescription: regulationDescriptionController.text
-      );
+          lawDescription: regulationTextController.text,
+          punishmentDescription: regulationDescriptionController.text);
+      Get.back();
       getLawsList();
     } catch (e) {
       print(e);
@@ -74,10 +76,46 @@ class RegulationsManagementController extends GetxController {
     update();
   }
 
+  Future<void> editLaw() async {
+    try {
+      await provider.editLaw(
+        lawId: myLaws.lawId!,
+        lawDescription: editRegulationTextController.text == ''
+            ? myLaws.lawDescription!
+            : editRegulationTextController.text,
+        punishmentDescription: editRegulationDescriptionController.text == ''
+            ? myLaws.punishmentDescription!
+            : editRegulationDescriptionController.text,
+      );
+      EasyLoading.show(status: 'loading'.tr);
+      getLawsList();
+      Get.back();
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_edit_law'.tr);
+    }
+    update();
+  }
+
+  Future deleteLaw() async {
+    EasyLoading.show(status: 'loading'.tr);
+    try {
+      await provider.deleteLaw(
+          storage.read('dakliaId').toString(), myLaws.lawId!.toString());
+      getLawsList();
+    } catch (e) {
+      print(e);
+      Dialogs.errorDialog(Get.context!, 'Failed_to_delete_law'.tr);
+    }
+    update();
+  }
+
   @override
   void onInit() {
     regulationTextController = TextEditingController();
     regulationDescriptionController = TextEditingController();
+    editRegulationTextController = TextEditingController();
+    editRegulationDescriptionController = TextEditingController();
     getLawsList();
     super.onInit();
   }

@@ -3,12 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sakan/constants/images_manager.dart';
 
+import '../../app/modules/regulations_management/controllers/regulations_management_controller.dart';
 import '../../constants/colors_manager.dart';
 import '../../constants/fonts_manager.dart';
 import '../../constants/styles_manager.dart';
 
 deleteRegulation(BuildContext context) {
   var isArabic = Get.locale!.languageCode == 'ar';
+  var controller = Get.put(RegulationsManagementController());
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -68,7 +70,6 @@ deleteRegulation(BuildContext context) {
                 ),
               ),
             ),
-
             const SizedBox(
               height: 20,
             ),
@@ -86,7 +87,8 @@ deleteRegulation(BuildContext context) {
               child: Padding(
                 padding: isArabic
                     ? const EdgeInsets.only(
-                      right: 30,)
+                        right: 30,
+                      )
                     : const EdgeInsets.only(
                         left: 30,
                       ),
@@ -103,12 +105,12 @@ deleteRegulation(BuildContext context) {
             Expanded(
               child: Padding(
                 padding: Get.locale!.languageCode == 'ar'
-                    ?  EdgeInsets.only(
-                        right: Get.width/ 5,
+                    ? EdgeInsets.only(
+                        right: Get.width / 5,
                         bottom: 40,
                       )
-                    :  EdgeInsets.only(
-                        left: Get.width/ 5,
+                    : EdgeInsets.only(
+                        left: Get.width / 5,
                         bottom: 40,
                       ),
                 child: Row(
@@ -139,7 +141,9 @@ deleteRegulation(BuildContext context) {
                       width: 10,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        controller.deleteLaw();
+                      },
                       child: Container(
                         height: 50,
                         width: Get.locale!.languageCode == 'ar' ? 124 : 155,

@@ -10,6 +10,7 @@ import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../../../widgets/services_management/empty_services.dart';
 import '../../../../widgets/services_management/services_list.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/services_management_controller.dart';
 
 class ServicesManagementView extends GetView<ServicesManagementController> {
@@ -40,7 +41,7 @@ class ServicesManagementView extends GetView<ServicesManagementController> {
                     Icons.arrow_back,
                     color: ColorsManager.blackColor,
                   ),
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.offAllNamed(Routes.HOME),
                 ),
               ),
               Padding(

@@ -48,7 +48,7 @@ class LoginProvider extends GetConnect {
       });
       storage.write('token', data['token']);
       storage.write('userId', data['id']);
-
+      storage.write('phone', data['phone_number']);
       if (data['user_type'] == 1) {
         if (data['Daklia_id'] != null) {
           storage.write('dakliaId', data['Daklia_id']);

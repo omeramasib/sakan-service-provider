@@ -63,7 +63,15 @@ class ChangePasswordProvider extends GetConnect {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'phone_number_does_not_exist'.tr);
-      } else {
+      }
+      if (data['message'] == 'User is not active') {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'user_not_active'.tr);
+      }
+
+      else {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });

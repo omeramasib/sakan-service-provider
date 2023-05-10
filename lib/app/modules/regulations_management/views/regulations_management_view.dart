@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/colors_manager.dart';
 
 import '../../../../constants/fonts_manager.dart';
@@ -37,7 +38,7 @@ class RegulationsManagementView
                     Icons.arrow_back,
                     color: ColorsManager.blackColor,
                   ),
-                  onPressed: () => Get.back(),
+                  onPressed: () => Get.offAllNamed(Routes.HOME),
                 ),
               ),
               Padding(

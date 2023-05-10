@@ -120,7 +120,7 @@ class DakliaRegulationsProvider extends GetConnect {
       });
       storage.write('lawId', data['law_id']);
       Dialogs.successDialog(Get.context!, 'law_added_successfully'.tr);
-      Get.toNamed(Routes.REGULATIONS_MANAGEMENT);
+      Get.offAllNamed(Routes.REGULATIONS_MANAGEMENT);
       return DakliaLawsModel.fromJson(data);
     }
 
@@ -251,12 +251,12 @@ class DakliaRegulationsProvider extends GetConnect {
     log('this is the status code: $statusCode');
     log('this is the data: $data');
 
-    if (statusCode == 200) {
+    if (statusCode == 200 || statusCode == 204) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
       Dialogs.successDialog(Get.context!, 'laws_deleted_successfully'.tr);
-      Get.offAllNamed(Routes.SERVICES_MANAGEMENT);
+      Get.offAllNamed(Routes.REGULATIONS_MANAGEMENT);
     }
 
     if (statusCode == 400) {

@@ -1808,7 +1808,6 @@ Widget regulationTextWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.regulationTextController,
@@ -1832,10 +1831,10 @@ Widget regulationTextWidget(
             bottom: 20,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-          ),
+          // enabledBorder: const UnderlineInputBorder(
+          //   borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          //   borderRadius: BorderRadius.all(Radius.circular(50)),
+          // ),
           filled: true,
           fillColor: ColorsManager.greyColor,
         ),
@@ -1869,10 +1868,10 @@ Widget regulationDescriptionWidget(BuildContext context, dynamic controller) {
             bottom: 80,
           ),
           isDense: true,
-          enabledBorder: const UnderlineInputBorder(
-            borderSide: BorderSide(color: ColorsManager.lightGreyColor),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
+          // enabledBorder: const UnderlineInputBorder(
+          //   borderSide: BorderSide(color: ColorsManager.lightGreyColor),
+          //   borderRadius: BorderRadius.all(Radius.circular(10)),
+          // ),
           filled: true,
           fillColor: ColorsManager.lightGreyColor,
         ),
@@ -1892,8 +1891,11 @@ Widget editRegulationWidget(
       height: 50,
       child: TextFormField(
         keyboardType: TextInputType.text,
-        controller: controller.regulationTextController,
+        controller: controller.editRegulationTextController,
         enabled: true,
+        onChanged: (value) {
+          log('this is the regulation value ${controller.editRegulationTextController.text}');
+        },
         decoration: InputDecoration(
           hintText: hinText,
           hintStyle: getRegularStyle(
@@ -1929,8 +1931,11 @@ Widget editRegulationDetailsWidget(
       width: 315,
       child: TextFormField(
         keyboardType: TextInputType.text,
-        controller: controller.regulationDescriptionController,
+        controller: controller.editRegulationDescriptionController,
         enabled: true,
+        onChanged: (value) {
+          log('this is the regulation description value ${controller.editRegulationDescriptionController.text}');
+        },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.only(
             left: 25,

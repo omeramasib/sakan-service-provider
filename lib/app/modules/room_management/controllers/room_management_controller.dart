@@ -174,6 +174,7 @@ class RoomManagementController extends GetxController {
 
   // method to remove room
   Future<void> removeRoom(String roomId) async {
+    EasyLoading.show(status: 'loading'.tr);
     try {
       final data = await removeRoomProvider.deleteRoom(
           storage.read('dakliaId').toString(), roomId);
@@ -353,7 +354,7 @@ class RoomManagementController extends GetxController {
     update();
   }
 
-   void checkEditAddRoomFeature() {
+  void checkEditAddRoomFeature() {
     var isValid = editAddFeaturesFormKey.currentState!.validate();
     if (!isValid) {
       return;

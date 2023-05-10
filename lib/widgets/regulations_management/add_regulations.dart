@@ -124,14 +124,12 @@ addRegulation(BuildContext context) {
                   ButtonsManager.primaryButton(
                     text: 'add_regulation'.tr,
                     onPressed: () {
-                      // controller.addRegulation();
                       controller.checkAddLaw();
-                      Get.back();
                     },
                     context: context,
                     minimumSize: Size(287, 50),
                     maximumSize: Size(287, 50),
-                  )
+                  ),
                 ],
               ),
             ),
