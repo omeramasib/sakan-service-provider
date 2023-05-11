@@ -18,4 +18,5 @@ static const addRoom = '/rooms/add/';
 static const deleteRoom = 'delete/';
 static const addFeatures = 'features/add/';
 static const servicesAdd = '/services/add/';
+static const deleteAccount = '/delete-account/';
 }

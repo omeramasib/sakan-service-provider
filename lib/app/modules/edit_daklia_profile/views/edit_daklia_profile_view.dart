@@ -118,7 +118,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                                           .profileList[0].dakliaImage!),
                                       fit: BoxFit.cover,
                                       colorFilter: ColorFilter.mode(
-                                        ColorsManager.blackColor.withOpacity(0.4),
+                                        ColorsManager.blackColor
+                                            .withOpacity(0.4),
                                         BlendMode.darken,
                                       ),
                                     ),
@@ -135,7 +136,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                                           children: [
                                             InkWell(
                                               onTap: () {
-                                                selectImage(context, controller);
+                                                selectImage(
+                                                    context, controller);
                                               },
                                               child: SvgPicture.asset(
                                                 ImagesManager.edit_profile_icon,
@@ -243,7 +245,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                     editProfileRoomCountWidget(
                       context,
                       controller,
-                      profileController.profileList[0].numberOfRooms!.toString(),
+                      profileController.profileList[0].numberOfRooms!
+                          .toString(),
                     ),
                   ],
                 ),

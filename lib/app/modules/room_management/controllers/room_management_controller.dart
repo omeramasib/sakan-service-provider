@@ -18,7 +18,9 @@ import '../providers/remove_room_provider.dart';
 
 class RoomManagementController extends GetxController {
   RxString imagePath = ''.obs;
+  RxString imagePath2 = ''.obs;
   File? image;
+  File? image2;
   int? roomNumber;
   String roomType = '';
   int pricePerMonth = 0;
@@ -62,6 +64,28 @@ class RoomManagementController extends GetxController {
     if (pickedFile != null) {
       image = File(pickedFile.path);
       imagePath.value = pickedFile.path;
+      update();
+      Get.back();
+    }
+    update();
+  }
+
+    void getImageFromGallery2(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    if (pickedFile != null) {
+      image2 = File(pickedFile.path);
+      imagePath2.value = pickedFile.path;
+      update();
+      Get.back();
+    }
+    update();
+  }
+
+  void getImageFromCamera2(ImageSource imageSource) async {
+    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    if (pickedFile != null) {
+      image2 = File(pickedFile.path);
+      imagePath2.value = pickedFile.path;
       update();
       Get.back();
     }
@@ -227,7 +251,7 @@ class RoomManagementController extends GetxController {
     log('this is the number of available beds: $numAvailableBedsSingleRoom');
     try {
       final data = await addRoomProvider.addSingleRoom(
-        roomImage: image!,
+        roomImage: image2!,
         roomNumber: roomNumber!,
         roomType: roomType,
         pricePerMonth: pricePerMonth,

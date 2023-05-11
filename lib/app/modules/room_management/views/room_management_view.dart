@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -214,20 +213,19 @@ class RoomManagementView extends GetView<RoomManagementController> {
             height: 20,
           ),
           Obx(
-           (){
-             if(controller.isLoading.value){
+            () {
+              if (controller.isLoading.value) {
                 return Center(
                   child: CircularProgressIndicator(
                     color: ColorsManager.mainColor,
-                  )
-                  );
-            }
-            else{
-              return controller.roomsList.isEmpty
-                  ? emptyRoom(context)
-                  : roomsList(context, controller.roomsList);
-            }
-            }
+                  ),
+                );
+              } else {
+                return controller.roomsList.isEmpty
+                    ? emptyRoom(context)
+                    : roomsList(context, controller.roomsList);
+              }
+            },
           ),
         ],
       ),

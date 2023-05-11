@@ -81,6 +81,7 @@ class AddRoomProvider extends GetConnect {
       roomFeatures(Get.context!);
       roomController.setRooms = DakliaRoomModel.fromJson(data);
       roomController.getRoomFeatures();
+      Get.offAllNamed(Routes.ROOM_MANAGEMENT);
       return DakliaRoomModel.fromJson(data);
     }
 
@@ -177,6 +178,7 @@ class AddRoomProvider extends GetConnect {
       roomFeatures(Get.context!);
       roomController.setRooms = DakliaRoomModel.fromJson(data);
       roomController.getRoomFeatures();
+      Get.offAllNamed(Routes.ROOM_MANAGEMENT);
       return DakliaRoomModel.fromJson(data);
     }
 
