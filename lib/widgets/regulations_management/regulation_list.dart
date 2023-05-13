@@ -142,7 +142,7 @@ Widget regulationList(BuildContext context) {
                                       .lawsList[index].punishmentDescription!,
                                   style: getRegularStyle(
                                     color: ColorsManager.blackColor,
-                                    fontSize: FontSizeManager.s12,
+                                    fontSize: FontSizeManager.s12, 
                                     height: 2,
                                   ),
                                 ),
