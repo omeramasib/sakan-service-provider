@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:sakan/constants/buttons_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/values_manager.dart';
-import 'package:shimmer/shimmer.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
