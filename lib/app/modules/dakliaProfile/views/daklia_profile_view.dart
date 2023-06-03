@@ -96,7 +96,7 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                             Icons.arrow_back,
                                             color: ColorsManager.whiteColor,
                                           ),
-                                          onPressed: () => Get.back(),
+                                          onPressed: () => Get.offAllNamed(Routes.HOME),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
