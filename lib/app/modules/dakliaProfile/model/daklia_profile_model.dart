@@ -40,8 +40,10 @@ class DakliaProfileModel {
     lawCount = json['law_count'];
     userId = json['user_id'];
     locationId = json['location_id'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+
+    // Handle longitude and latitude type conversion (double to String)
+    longitude = json['longitude']?.toString();
+    latitude = json['latitude']?.toString();
   }
 
   Map<String, dynamic> toJson() {

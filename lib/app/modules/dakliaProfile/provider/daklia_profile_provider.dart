@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -27,18 +28,26 @@ class DakliaProfileProvider extends GetConnect {
   }
 
   Future getProfileInfo(String? id) async {
-    final response = await get(
-        HttpHelper.baseUrl2 + HttpHelper.dakliaProfile + '$id',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
-        });
+    try {
+      final response = await get(
+          HttpHelper.baseUrl.replaceAll('/user', '/daklia') + HttpHelper.dakliaProfile + '$id',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Token ${storage.read('token')}',
+          }).timeout(
+        const Duration(seconds: 30),
+        onTimeout: () {
+          EasyLoading.dismiss();
+          Dialogs.errorDialog(Get.context!, 'connection_timeout'.tr);
+          throw TimeoutException('Request timeout', const Duration(seconds: 30));
+        },
+      );
 
-    var data = response.body;
-    var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log(data.toString());
+      var data = response.body;
+      var statusCode = response.statusCode;
+      log('this is the status code: $statusCode');
+      log('Profile data: $data');
     if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -58,14 +67,28 @@ class DakliaProfileProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+
+      // Check if it's the specific daklia_image error
+      if (data.toString().contains('daklia_image') && data.toString().contains('no file associated')) {
+        Dialogs.errorDialog(Get.context!, 'profile_image_missing'.tr);
+      } else {
+        Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+      }
     }
 
-    if (statusCode == 404) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
-      Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+      if (statusCode == 404) {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+      }
+
+      return null;
+    } catch (e) {
+      log('Error in getProfileInfo: $e');
+      EasyLoading.dismiss();
+      Dialogs.errorDialog(Get.context!, 'network_error'.tr);
+      return null;
     }
   }
 }

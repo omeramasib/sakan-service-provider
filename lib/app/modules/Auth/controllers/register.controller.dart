@@ -22,7 +22,7 @@ class RegisterController extends GetxController {
   String password = '';
   String confirmPassword = '';
 
-  RxInt key = 966.obs;
+  RxInt key = 249.obs;
   var isObscure = true.obs;
   var isObscureConfirm = true.obs;
 

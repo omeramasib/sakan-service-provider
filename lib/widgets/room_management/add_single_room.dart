@@ -42,7 +42,8 @@ addSingleRoom(BuildContext context, String roomType) {
         child: Form(
           key: controller.formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.only(
@@ -363,6 +364,7 @@ addSingleRoom(BuildContext context, String roomType) {
               nextOrPreviousButton(context, 1),
             ],
           ),
+        ),
         ),
       );
     },

@@ -30,11 +30,17 @@ class LoginProvider extends GetConnect {
     required String phone,
     required String password,
   }) async {
+    log('this is the phone: $phone');
+    log('this is the password: $password');
     final response = await post(
       HttpHelper.baseUrl + HttpHelper.login,
       {
         'phone_number': phone,
         'password': password,
+      },
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
     );
     var data = response.body;

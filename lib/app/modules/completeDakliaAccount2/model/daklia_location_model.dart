@@ -15,8 +15,11 @@ class DakliaLocationModel {
   DakliaLocationModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     locationId = json['location_id'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+
+    // Handle longitude and latitude type conversion (double to String)
+    longitude = json['longitude']?.toString();
+    latitude = json['latitude']?.toString();
+
     additionalAddress = json['additional_address'];
   }
 

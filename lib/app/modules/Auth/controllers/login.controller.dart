@@ -21,7 +21,7 @@ class LoginController extends GetxController {
   // text field values
   String phone = '';
   String password = '';
-  RxInt key = 966.obs;
+  RxInt key = 249.obs;
   var isObscure = true.obs;
 
   var loginProvider = LoginProvider();

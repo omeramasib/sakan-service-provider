@@ -29,7 +29,8 @@ class RoomManagementView extends GetView<RoomManagementController> {
           elevation: 0,
         ),
       ),
-      body: Column(
+      body: SingleChildScrollView(
+        child:  Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -230,6 +231,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
             }
           ),
         ],
+      ),
       ),
     );
   }

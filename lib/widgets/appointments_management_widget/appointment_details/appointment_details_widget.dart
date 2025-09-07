@@ -9,7 +9,8 @@ import '../../../constants/fonts_manager.dart';
 import '../../../constants/images_manager.dart';
 
 appointmentDetailsWidget(BuildContext context) {
-  return Column(
+  return SingleChildScrollView(
+    child: Column(
     children: [
       SizedBox(
         height: 30,
@@ -333,5 +334,7 @@ appointmentDetailsWidget(BuildContext context) {
       ),
       paymentDetails(context),
     ],
-  );
+  )
+  )
+  ;
 }

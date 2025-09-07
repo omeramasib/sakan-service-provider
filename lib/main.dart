@@ -12,7 +12,7 @@ import 'language_controller/language_controller.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  
+
   runApp(
     GetMaterialApp(
       title: "Sakan",

@@ -25,7 +25,7 @@ changeAdditionalAddress(BuildContext context) {
     ),
     builder: (context) {
       return Container(
-        height: Get.height * 0.5,
+        height: Get.height * 0.4,
         width: Get.width,
         decoration: BoxDecoration(
           color: ColorsManager.whiteColor,
