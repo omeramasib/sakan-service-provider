@@ -42,6 +42,7 @@ addMultiRoom(BuildContext context, String roomType) {
         child: Form(
           key: controller.formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
@@ -387,6 +388,7 @@ addMultiRoom(BuildContext context, String roomType) {
               nextOrPreviousButton(context, 0),
             ],
           ),
+        ),
         ),
       );
     },

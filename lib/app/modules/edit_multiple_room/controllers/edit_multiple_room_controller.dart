@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -122,7 +123,25 @@ class EditMultipleRoomController extends GetxController {
     if (!isValid) {
       return;
     }
+
     formKey.currentState!.save();
+
+    // Set price values from controllers if they're not already set
+    if (dailyBedPriceController.text.isNotEmpty) {
+      pricePerDay = int.tryParse(dailyBedPriceController.text) ?? 0;
+    }
+    if (monthlyBedPriceController.text.isNotEmpty) {
+      pricePerMonth = int.tryParse(monthlyBedPriceController.text) ?? 0;
+    }
+
+    // Set default values for unselected booking types
+    if (!daily_booking) {
+      pricePerDay = 0;
+    }
+    if (!monthly_booking) {
+      pricePerMonth = 0;
+    }
+
     EasyLoading.show(status: 'loading'.tr);
     await updateMultipleRoom();
     update();

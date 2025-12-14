@@ -20,7 +20,7 @@ ThemeData getApplicationTheme() {
     // appBar theme
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      color: ColorsManager.mainColor,
+      backgroundColor: ColorsManager.mainColor,
       elevation: AppSize.s4,
       titleTextStyle: getMediumStyle(
           fontSize: FontSizeManager.s14, color: ColorsManager.whiteColor),
@@ -37,7 +37,7 @@ ThemeData getApplicationTheme() {
       style: ElevatedButton.styleFrom(
         textStyle: getRegularStyle(
             color: ColorsManager.whiteColor, fontSize: AppSize.s14),
-        primary: ColorsManager.primaryColor,
+        backgroundColor: ColorsManager.primaryColor,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(AppSize.s20)),
       ),
@@ -46,22 +46,22 @@ ThemeData getApplicationTheme() {
 // TextTheme
     textTheme: TextTheme(
       // use in welcome screen
-      headline1: getBoldStyle(
+      displayLarge: getBoldStyle(
         color: ColorsManager.fontColor,
         fontSize: AppSize.s16,
       ),
       // use in welcome scrren
-      subtitle1: getRegularStyle(
+      titleMedium: getRegularStyle(
         color: ColorsManager.fontColor,
         fontSize: AppSize.s15,
       ),
       // use in onBoarding screens
-      headline2: getMediumStyle(
+      displayMedium: getMediumStyle(
         color: ColorsManager.fontColor,
         fontSize: AppSize.s16,
       ),
       // use in onBoarding screens
-      subtitle2: getRegularStyle(
+      titleSmall: getRegularStyle(
         color: ColorsManager.fontColor,
         fontSize: AppSize.s14,
       ),

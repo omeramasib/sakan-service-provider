@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -22,7 +24,7 @@ class RegulationsManagementController extends GetxController {
   final lawsList = <DakliaLawsModel>[].obs;
   final isLoading = false.obs;
 
-  DakliaLawsModel myLaws = new DakliaLawsModel();
+  DakliaLawsModel myLaws = DakliaLawsModel();
 
   set setLaws(DakliaLawsModel lawModel) {
     myLaws = lawModel;
@@ -31,7 +33,7 @@ class RegulationsManagementController extends GetxController {
 
   DakliaLawsModel get getLaws => myLaws;
 
-  DakliaLawsModel myServiceFeatures = new DakliaLawsModel();
+  DakliaLawsModel myServiceFeatures = DakliaLawsModel();
 
   Future<void> getLawsList() async {
     isLoading.value = true;

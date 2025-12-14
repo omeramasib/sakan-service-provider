@@ -1,9 +1,4 @@
 const Map<String, String> arSA = {
-  // welcome screen
-  'join': 'انضم لعائلة ساندني',
-  'best': 'أفضل الأطباء والأخصائيين أصحاب خبرات كبيرة',
-  'year': ' وسنين عمل طويلة انضم لنا ',
-  'get_your_consultation': ' و احصل على استشارتك',
   // login screen
   'login': 'تسجيل دخول',
   'create account': 'انشاء حساب',
@@ -576,4 +571,18 @@ const Map<String, String> arSA = {
   // Doctors Screen
   'doctors': 'الأطباء',
   'all': 'الكل',
+
+  // Room validation messages
+  'room_number_required': 'رقم الغرفة مطلوب',
+  'room_number_invalid': 'يرجى إدخال رقم غرفة صحيح',
+  'beds_number_required': 'عدد السرائر مطلوب',
+  'beds_number_invalid': 'يرجى إدخال رقم صحيح',
+  'available_beds_required': 'عدد السرائر المتاحة مطلوب',
+  'available_beds_invalid': 'يرجى إدخال رقم صحيح',
+  'price_required': 'السعر مطلوب',
+  'price_invalid': 'يرجى إدخال رقم صحيح',
+  'select_room_type': 'يرجى اختيار نوع الغرفة',
+  'select_booking_type': 'يرجى اختيار نوع حجز واحد على الأقل',
+  'enter_daily_price': 'يرجى إدخال السعر اليومي',
+  'enter_monthly_price': 'يرجى إدخال السعر الشهري',
 };

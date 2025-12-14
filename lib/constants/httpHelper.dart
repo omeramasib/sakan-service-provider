@@ -1,6 +1,6 @@
 class HttpHelper{
-static const baseUrl = 'http://192.168.73.46:8000/api/v1/user';
-static const baseUrl2 = 'http://192.168.73.46:8000/api/v1/daklia';
+static const baseUrl = 'http://10.0.2.2:8000/api/v1/user';
+static const baseUrl2 = 'http://10.0.2.2:8000/api/v1/daklia';
 static const register = '/create';
 static const login = '/login';
 static const verifyOtp = '/verify-code';

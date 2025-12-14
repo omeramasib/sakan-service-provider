@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -119,7 +120,7 @@ class RoomManagementController extends GetxController {
   final featuresList = <RoomFeaturesModel>[].obs;
   final isLoading = false.obs;
 
-  DakliaRoomModel myRooms = new DakliaRoomModel();
+  DakliaRoomModel myRooms = DakliaRoomModel();
 
   set setRooms(DakliaRoomModel rooms) {
     myRooms = rooms;
@@ -128,7 +129,7 @@ class RoomManagementController extends GetxController {
 
   DakliaRoomModel get getRooms => myRooms;
 
-  RoomFeaturesModel myRoomFeatures = new RoomFeaturesModel();
+  RoomFeaturesModel myRoomFeatures = RoomFeaturesModel();
 
   // method to get rooms list from api
   Future<void> getRoomsList() async {
@@ -173,7 +174,7 @@ class RoomManagementController extends GetxController {
   }
 
   // method to remove room
-  Future<void> removeRoom(String roomId) async {
+  FutureOr<void> removeRoom(String roomId) async {
     EasyLoading.show(status: 'loading'.tr);
     try {
       final data = await removeRoomProvider.deleteRoom(
@@ -201,22 +202,91 @@ class RoomManagementController extends GetxController {
       return;
     }
 
+    if (roomType.isEmpty) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'select_room_type'.tr,
+          backgroundColor: ColorsManager.errorColor,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
     if (!isValid) {
       return;
     }
 
     formKey.currentState!.save();
-    // if (networkController.isConnected.value == true) {
-    //   EasyLoading.show(status: 'loading'.tr);
-    //   try {
-    //     updatePatientProfile();
-    //   } catch (e) {
-    //     EasyLoading.dismiss();
-    //     print(e);
-    //   }
-    // } else {
-    //   Dialogs.connectionErrorDialog(Get.context!);
-    // }
+
+    // Ensure boolean values are properly set
+    daily_booking = dailyBooking.value;
+    monthly_booking = monthlyBooking.value;
+
+    // Debug logging
+    log('=== DEBUG: Controller values before API call ===');
+    log('roomNumber: $roomNumber (type: ${roomNumber.runtimeType})');
+    log('roomType: "$roomType" (type: ${roomType.runtimeType})');
+    log('pricePerMonth: $pricePerMonth (type: ${pricePerMonth.runtimeType})');
+    log('pricePerDay: $pricePerDay (type: ${pricePerDay.runtimeType})');
+    log('numberOfBeds: $numberOfBeds (type: ${numberOfBeds.runtimeType})');
+    log('numAvailableBeds: $numAvailableBeds (type: ${numAvailableBeds.runtimeType})');
+    log('daily_booking: $daily_booking (type: ${daily_booking.runtimeType})');
+    log('monthly_booking: $monthly_booking (type: ${monthly_booking.runtimeType})');
+    log('image: ${image?.path}');
+    log('==============================================');
+
+    // Validate that at least one booking type is selected
+    if (!daily_booking && !monthly_booking) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'select_booking_type'.tr,
+          backgroundColor: ColorsManager.errorColor,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    // Set price values from controllers if they're not already set
+    if (dailyBedPriceController.text.isNotEmpty) {
+      pricePerDay = int.tryParse(dailyBedPriceController.text) ?? 0;
+    }
+    if (monthlyBedPriceController.text.isNotEmpty) {
+      pricePerMonth = int.tryParse(monthlyBedPriceController.text) ?? 0;
+    }
+
+    // Validate price fields based on selected booking types
+    if (daily_booking && (pricePerDay == 0 || dailyBedPriceController.text.isEmpty)) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'enter_daily_price'.tr,
+          backgroundColor: ColorsManager.errorColor,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    if (monthly_booking && (pricePerMonth == 0 || monthlyBedPriceController.text.isEmpty)) {
+      Get.showSnackbar(
+        GetSnackBar(
+          message: 'enter_monthly_price'.tr,
+          backgroundColor: ColorsManager.errorColor,
+          duration: const Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    // Set default values for unselected booking types
+    if (!daily_booking) {
+      pricePerDay = 0;
+    }
+    if (!monthly_booking) {
+      pricePerMonth = 0;
+    }
+
     EasyLoading.show(status: 'loading'.tr);
     addNewMultipleRoom();
     update();

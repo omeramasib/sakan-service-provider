@@ -68,7 +68,7 @@ Widget phoneNumberFormField(
                           size: 15,
                         ),
                         Text(
-                          '${controller.key.value}+' ?? '+966',
+                          '${controller.key.value}+',
                           style: getRegularStyle(
                             color: ColorsManager.blackColor,
                             fontSize: FontSizeManager.s16,
@@ -491,7 +491,7 @@ Widget cardHolderNameFormField(BuildContext context, dynamic controller,
         keyboardType: TextInputType.text,
         controller: controller.cardHolderNameController,
         validator: (value) {
-          // return Validations().validateIdentityNumber(value!);
+          return null; // Add proper validation if needed
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -550,7 +550,7 @@ Widget cvvFormField(BuildContext context, dynamic controller, Color color,
         keyboardType: TextInputType.text,
         controller: controller.cvvController,
         validator: (value) {
-          // return Validations().validateIdentityNumber(value!);
+          return null; // Add proper validation if needed
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -612,7 +612,7 @@ Widget ticketTitleFormField(BuildContext context, dynamic controller,
         keyboardType: TextInputType.text,
         // controller: controller.cardHolderNameController,
         validator: (value) {
-          // return Validations().validateIdentityNumber(value!);
+          return null; // Add proper validation if needed
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -687,7 +687,7 @@ Widget addPhotoWidget(BuildContext context, dynamic controller, String text) {
                       ImagesManager.daklia_image,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -879,7 +879,7 @@ Widget addRoomPhotoWidget(
                       ImagesManager.daklia_image,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -979,7 +979,7 @@ Widget dakliaConfirmationWidget(
                       ImagesManager.daklia_image,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -1037,7 +1037,7 @@ Widget dakliaOwnerIdWidget(
                       ImagesManager.daklia_image,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Text(
@@ -1079,11 +1079,19 @@ Widget roomNumberWidget(
         controller: controller.roomNumberController,
         enabled: true,
         onSaved: (value) {
-          log('this is the roomNumber value $value');
-          controller.roomNumber = int.parse(value!);
+          if (value != null && value.isNotEmpty) {
+            log('this is the roomNumber value $value');
+            controller.roomNumber = int.parse(value);
+          }
         },
         validator: (value) {
-          return Validations().validateNumber(value!);
+          if (value == null || value.isEmpty) {
+            return 'room_number_required'.tr;
+          }
+          if (int.tryParse(value) == null) {
+            return 'room_number_invalid'.tr;
+          }
+          return null;
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1158,11 +1166,19 @@ Widget allBedsNumberWidget(
         controller: controller.allBedsNumberController,
         enabled: true,
         onSaved: (value) {
-          log('this is the numberOfBeds value $value');
-          controller.numberOfBeds = int.parse(value!);
+          if (value != null && value.isNotEmpty) {
+            log('this is the numberOfBeds value $value');
+            controller.numberOfBeds = int.parse(value);
+          }
         },
         validator: (value) {
-          return Validations().validateNumber(value!);
+          if (value == null || value.isEmpty) {
+            return 'beds_number_required'.tr;
+          }
+          if (int.tryParse(value) == null) {
+            return 'beds_number_invalid'.tr;
+          }
+          return null;
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1234,11 +1250,19 @@ Widget emptyBedsNumberWidget(
         controller: controller.emptyBedsNumberController,
         enabled: true,
         onSaved: (value) {
-          log('this is the empty Beds Number value $value');
-          controller.numAvailableBeds = int.parse(value!);
+          if (value != null && value.isNotEmpty) {
+            log('this is the empty Beds Number value $value');
+            controller.numAvailableBeds = int.parse(value);
+          }
         },
         validator: (value) {
-          return Validations().validateNumber(value!);
+          if (value == null || value.isEmpty) {
+            return 'available_beds_required'.tr;
+          }
+          if (int.tryParse(value) == null) {
+            return 'available_beds_invalid'.tr;
+          }
+          return null;
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1317,12 +1341,20 @@ Widget dailyBedPriceWidget(
         keyboardType: TextInputType.number,
         controller: controller.dailyBedPriceController,
         enabled: true,
-        // onSaved: (newValue) {
-        //   log('this is the price Per Day value $newValue');
-        //   controller.pricePerDay = int.parse(newValue!);
-        // },
-        onChanged: (value) {
-          controller.pricePerDay = int.parse(value);
+        onSaved: (value) {
+          if (value != null && value.isNotEmpty) {
+            log('this is the price Per Day value $value');
+            controller.pricePerDay = int.parse(value);
+          }
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'price_required'.tr;
+          }
+          if (int.tryParse(value) == null) {
+            return 'price_invalid'.tr;
+          }
+          return null;
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1357,12 +1389,20 @@ Widget monthlyBedPriceWidget(
         keyboardType: TextInputType.number,
         controller: controller.monthlyBedPriceController,
         enabled: true,
-        // onSaved: (newValue) {
-        //   log('this is the price Per Month value $newValue');
-        //   controller.pricePerMonth = int.parse(newValue!);
-        // },
-        onChanged: (value) {
-          controller.pricePerMonth = int.parse(value);
+        onSaved: (value) {
+          if (value != null && value.isNotEmpty) {
+            log('this is the price Per Month value $value');
+            controller.pricePerMonth = int.parse(value);
+          }
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'price_required'.tr;
+          }
+          if (int.tryParse(value) == null) {
+            return 'price_invalid'.tr;
+          }
+          return null;
         },
         decoration: InputDecoration(
           hintText: hinText,
@@ -1388,14 +1428,19 @@ Widget monthlyBedPriceWidget(
 }
 
 Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
+  final isArabic = Get.locale?.languageCode == 'ar';
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
       child: TextFormField(
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
         controller: controller.featureController,
         enabled: true,
+        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+        textAlign: isArabic ? TextAlign.right : TextAlign.left,
+        style: const TextStyle(),
         onSaved: (value) {
           log('this is the feature value $value');
           controller.featureName = value!;
@@ -1405,6 +1450,7 @@ Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
         },
         decoration: InputDecoration(
           hintText: hinText,
+          hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           hintStyle: getRegularStyle(
             color: ColorsManager.hintStyleColor,
             fontSize: FontSizeManager.s13,
@@ -1427,19 +1473,25 @@ Widget featureWidget(BuildContext context, dynamic controller, String hinText) {
 }
 
 Widget otherDetailsWidget(BuildContext context, dynamic controller) {
+  final isArabic = Get.locale?.languageCode == 'ar';
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
       child: TextFormField(
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
         controller: controller.otherDetailsController,
         enabled: true,
+        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+        textAlign: isArabic ? TextAlign.right : TextAlign.left,
+        style: const TextStyle(),
         onSaved: (value) {
           log('this is the other details value $value');
           controller.featureDescription = value!;
         },
         decoration: InputDecoration(
+          hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           contentPadding: const EdgeInsets.only(
             left: 25,
             right: 25,
@@ -1459,20 +1511,26 @@ Widget otherDetailsWidget(BuildContext context, dynamic controller) {
 
 Widget editFeatureWidget(
     BuildContext context, dynamic controller, String hinText) {
+  final isArabic = Get.locale?.languageCode == 'ar';
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
       height: 50,
       child: TextFormField(
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
         controller: controller.featureController,
+        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+        textAlign: isArabic ? TextAlign.right : TextAlign.left,
+        style: const TextStyle(),
         onChanged: (value) {
           controller.featureName = value;
         },
         enabled: true,
         decoration: InputDecoration(
           hintText: hinText,
+          hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           hintStyle: getRegularStyle(
             color: ColorsManager.blackColor,
             fontSize: FontSizeManager.s13,
@@ -1500,14 +1558,19 @@ Widget editFeatureWidget(
 
 Widget editOtherDetailsWidget(
     BuildContext context, dynamic controller, String hinText) {
+  final isArabic = Get.locale?.languageCode == 'ar';
   return Padding(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
       child: TextFormField(
-        keyboardType: TextInputType.text,
+        keyboardType: TextInputType.multiline,
+        textInputAction: TextInputAction.newline,
         controller: controller.otherDetailsController,
         enabled: true,
+        textDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
+        textAlign: isArabic ? TextAlign.right : TextAlign.left,
+        style: const TextStyle(),
         onChanged: (value) {
           log('this is the other details value $value');
           controller.featureDescription = value;
@@ -1520,6 +1583,7 @@ Widget editOtherDetailsWidget(
             bottom: 80,
           ),
           hintText: hinText,
+          hintTextDirection: isArabic ? TextDirection.rtl : TextDirection.ltr,
           hintStyle: getRegularStyle(
             color: ColorsManager.blackColor,
             fontSize: FontSizeManager.s13,

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../../../constants/buttons_manager.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
+import '../../../../constants/httpHelper.dart';
 import '../../../../constants/images_manager.dart';
 import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
@@ -201,23 +202,57 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10),
-                                                      image: DecorationImage(
-                                                        image: NetworkImage(
-                                                            roomController
-                                                                .getRooms
-                                                                .roomImage
-                                                                .toString()),
-                                                        fit: BoxFit.cover,
-                                                        colorFilter:
-                                                            ColorFilter.mode(
-                                                          ColorsManager
-                                                              .blackColor
-                                                              .withOpacity(0.4),
-                                                          BlendMode.darken,
-                                                        ),
-                                                      ),
                                                     ),
-                                                    child: Column(
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      child: Stack(
+                                                        children: [
+                                                          Image.network(
+                                                            '${HttpHelper.baseUrl}${roomController.getRooms.roomImage}',
+                                                            height: 95,
+                                                            width: 317,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (context, error, stackTrace) {
+                                                              return Image.asset(
+                                                                ImagesManager.room_example,
+                                                                height: 95,
+                                                                width: 317,
+                                                                fit: BoxFit.cover,
+                                                              );
+                                                            },
+                                                            loadingBuilder: (context, child, loadingProgress) {
+                                                              if (loadingProgress == null) return child;
+                                                              return Container(
+                                                                height: 95,
+                                                                width: 317,
+                                                                child: Center(
+                                                                  child: CircularProgressIndicator(
+                                                                    color: ColorsManager.mainColor,
+                                                                    value: loadingProgress.expectedTotalBytes != null
+                                                                        ? loadingProgress.cumulativeBytesLoaded /
+                                                                            loadingProgress.expectedTotalBytes!
+                                                                        : null,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            },
+                                                          ),
+                                                          Container(
+                                                            height: 95,
+                                                            width: 317,
+                                                            decoration: BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      10),
+                                                              color: ColorsManager
+                                                                  .blackColor
+                                                                  .withOpacity(0.4),
+                                                            ),
+                                                          ),
+                                                          Positioned.fill(
+                                                            child: Column(
                                                       children: [
                                                         Padding(
                                                           padding:
@@ -247,6 +282,10 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
                                                           ),
                                                         )
                                                       ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   )
                                                 : Padding(

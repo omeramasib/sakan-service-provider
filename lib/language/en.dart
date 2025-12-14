@@ -465,4 +465,18 @@ const Map<String, String> enUS = {
   // "total_amount": "Total Amount",
   // "payment_method": "Payment Method",
   // "pay_with_credit_card": "Pay with Credit Card",
+
+  // Room validation messages
+  'room_number_required': 'Room number is required',
+  'room_number_invalid': 'Please enter a valid room number',
+  'beds_number_required': 'Number of beds is required',
+  'beds_number_invalid': 'Please enter a valid number',
+  'available_beds_required': 'Available beds number is required',
+  'available_beds_invalid': 'Please enter a valid number',
+  'price_required': 'Price is required',
+  'price_invalid': 'Please enter a valid number',
+  'select_room_type': 'Please select a room type',
+  'select_booking_type': 'Please select at least one booking type',
+  'enter_daily_price': 'Please enter daily price',
+  'enter_monthly_price': 'Please enter monthly price',
 };

@@ -34,7 +34,10 @@ class EditRoomFeatureView extends GetView<EditRoomFeatureController> {
       ),
       body: GetBuilder(
         init: controller,
-        builder: (controller) => Column(
+        builder: (controller) =>
+        SingleChildScrollView(
+          child:
+        Column(
           children: [
             SizedBox(
               height: 30,
@@ -109,6 +112,7 @@ class EditRoomFeatureView extends GetView<EditRoomFeatureController> {
           ],
         ),
       ),
+        ),
     );
   }
 }

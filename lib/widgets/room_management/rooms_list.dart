@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/constants/fonts_manager.dart';
+import 'package:sakan/constants/httpHelper.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 
@@ -14,13 +15,10 @@ import 'edit_or_delete_room.dart';
 Widget roomsList(BuildContext context, List roomsList) {
   var isEnglish = Get.locale!.languageCode == 'en';
   var controller = Get.put(RoomManagementController());
-  return Expanded(
-    child:  Container(
-          height: Get.height,
-          width: Get.width,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
+  return Container(
+    width: Get.width,
+    child: Column(
+      children: [
                 Padding(
                   padding: isEnglish
                       ? EdgeInsets.only(
@@ -72,29 +70,34 @@ Widget roomsList(BuildContext context, List roomsList) {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: Get.height * 0.65,
-                  width: Get.width,
-                  child: RefreshIndicator(
-                    color: ColorsManager.mainColor,
-                    onRefresh: () async {
-                      await controller.refreshRoomsList();
-                    },
-                    child: ListView.separated(
-                        itemCount: roomsList.length,
-                        separatorBuilder: (context, index) {
-                          return SizedBox(
-                            height: 10,
-                          );
-                        },
-                        itemBuilder: (context, index) {
+                SizedBox(height: 20),
+                RefreshIndicator(
+                  color: ColorsManager.mainColor,
+                  onRefresh: () async {
+                    await controller.refreshRoomsList();
+                  },
+                  child: ListView.separated(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: roomsList.length,
+                      separatorBuilder: (context, index) {
+                        return SizedBox(
+                          height: 10,
+                        );
+                      },
+                      itemBuilder: (context, index) {
                           return Column(
                             children: [
                               const SizedBox(
                                 height: 10,
                               ),
-                              // Container 1
-                              Container(
+                              GestureDetector(
+                                onTap: () {
+                                  controller.setRooms =
+                                              roomsList[index];
+                                          editOrDelete(context);
+                                },
+                                child: Container(
                                 width: 341,
                                 height: 115,
                                 decoration: BoxDecoration(
@@ -120,11 +123,31 @@ Widget roomsList(BuildContext context, List roomsList) {
                                       height: 115,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(6),
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                            roomsList[index].roomImage,
-                                          ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(6),
+                                        child: Image.network(
+                                          '${HttpHelper.baseUrl}${roomsList[index].roomImage}',
                                           fit: BoxFit.cover,
+                                          errorBuilder: (context, error, stackTrace) {
+                                            // Show fallback image when network image fails
+                                            return Image.asset(
+                                              ImagesManager.room_example,
+                                              fit: BoxFit.cover,
+                                            );
+                                          },
+                                          loadingBuilder: (context, child, loadingProgress) {
+                                            if (loadingProgress == null) return child;
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                color: ColorsManager.mainColor,
+                                                value: loadingProgress.expectedTotalBytes != null
+                                                    ? loadingProgress.cumulativeBytesLoaded /
+                                                        loadingProgress.expectedTotalBytes!
+                                                    : null,
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
@@ -308,13 +331,12 @@ Widget roomsList(BuildContext context, List roomsList) {
                                   ],
                                 ),
                               ),
+                              ),
                             ],
                           );
                         }),
-                  ),
                 ),
               ],
             ),
-          ),
-        ));
+          );
 }

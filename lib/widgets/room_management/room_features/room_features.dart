@@ -39,7 +39,10 @@ roomFeatures(BuildContext context) {
             topRight: Radius.circular(20),
           ),
         ),
-        child: Column(
+        child: SingleChildScrollView(
+          child:
+
+        Column(
           children: [
             Padding(
               padding: const EdgeInsets.only(
@@ -53,7 +56,7 @@ roomFeatures(BuildContext context) {
                   borderRadius: BorderRadius.all(
                     Radius.circular(4),
                   ),
-                ),
+               ),
               ),
             ),
             SizedBox(
@@ -151,6 +154,7 @@ roomFeatures(BuildContext context) {
             ),
             nextOrPrevious2Button(context),
           ],
+        ),
         ),
       );
     },

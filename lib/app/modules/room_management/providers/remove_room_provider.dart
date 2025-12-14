@@ -46,11 +46,21 @@ class RemoveRoomProvider extends GetConnect {
     print('this is the status code: ${response.statusCode}');
 
     if (response.statusCode == 200 || response.statusCode == 204) {
-      final roomsData = json.decode(response.body);
-      log('this is the rooms data: $roomsData');
-      Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
-      Get.offAllNamed(Routes.ROOM_MANAGEMENT);
-      return roomsData;
+      // Handle successful deletion
+      if (response.statusCode == 204) {
+        // Status 204 means success with no content - don't try to parse JSON
+        log('Room deleted successfully - no content returned (204)');
+        Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
+        Get.offAllNamed(Routes.ROOM_MANAGEMENT);
+        return null; // No data to return for 204
+      } else {
+        // Status 200 means success with content - parse JSON
+        final roomsData = json.decode(response.body);
+        log('this is the rooms data: $roomsData');
+        Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
+        Get.offAllNamed(Routes.ROOM_MANAGEMENT);
+        return roomsData;
+      }
     }
     if (response.statusCode == 401) {
       timer = Timer(const Duration(seconds: 1), () {

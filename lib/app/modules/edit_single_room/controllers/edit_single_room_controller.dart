@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -6,6 +7,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../constants/colors_manager.dart';
 import '../../../../constants/dialogs.dart';
 import '../../room_management/controllers/room_management_controller.dart';
 import '../provider/edit_single_room_provider.dart';
@@ -129,10 +131,27 @@ class EditSingleRoomController extends GetxController {
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
-    } else {
-      formKey.currentState!.save();
-      await editSingleRoom();
     }
+
+    formKey.currentState!.save();
+
+    // Set price values from controllers if they're not already set
+    if (dailyBedPriceController.text.isNotEmpty) {
+      pricePerDay = int.tryParse(dailyBedPriceController.text) ?? 0;
+    }
+    if (monthlyBedPriceController.text.isNotEmpty) {
+      pricePerMonth = int.tryParse(monthlyBedPriceController.text) ?? 0;
+    }
+
+    // Set default values for unselected booking types
+    if (!daily_booking) {
+      pricePerDay = 0;
+    }
+    if (!monthly_booking) {
+      pricePerMonth = 0;
+    }
+
+    await editSingleRoom();
     update();
   }
 

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
