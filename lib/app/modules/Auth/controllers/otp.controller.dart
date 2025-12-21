@@ -6,11 +6,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:sakan/app/modules/Auth/resetpassword/views/reset_password_view.dart';
 import 'package:sakan/app/routes/app_pages.dart';
+import '../../../helpers/fcm_helper.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../network/controllers/network_controller.dart';
 import '../models/verify_otp_model.dart';
 import '../providers/verify_otp_provider.dart';
+import '../providers/forget_password_provider.dart';
 
 class OtpController extends GetxController {
   // form key
@@ -23,14 +25,25 @@ class OtpController extends GetxController {
 
   TextEditingController otpController = TextEditingController();
 
-  // get the sing_up provider here
   var verifyOtpProvider = VerifyOtpProvider.instance;
-
   var networkController = NetworkController.instance;
+  var forgetPasswordProvider = ForgetPasswordProvider.instance;
+
   // storage insialisations
   GetStorage storage = GetStorage();
+
   // text field values
   String code = '';
+
+  void resendOtp() async {
+    String? phone = storage.read('phone');
+    if (phone != null) {
+      EasyLoading.show(status: 'loading'.tr);
+      await forgetPasswordProvider.forgetPassword(phone: phone);
+    } else {
+      Dialogs.errorDialog(Get.context!, 'phone_not_found'.tr);
+    }
+  }
 
   Future<VerifyOtpModel> verifyCode(int? number) async {
     return await verifyOtpProvider
@@ -44,13 +57,14 @@ class OtpController extends GetxController {
       });
 
       if (value.message == 'OTP verified successfully') {
+        FCMHelper.instance.updateFCMToken();
         if (number != null) {
           if (number == 0) {
             Get.to(ResetpasswordView());
           } else if (number == 1) {
             Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT1);
             Dialogs.successDialog(Get.context!, 'sucsses_register'.tr);
-          } else if (number == 2){
+          } else if (number == 2) {
             Get.toNamed(Routes.HOME);
           }
         }
@@ -80,12 +94,11 @@ class OtpController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    otpController = TextEditingController();
   }
 
   @override
   void onClose() {
+    otpController.dispose();
     super.onClose();
-    // otpController.dispose();
   }
 }

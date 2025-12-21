@@ -13,6 +13,7 @@ import '../widgets/choose_login_or_register.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Get.put(AuthController());
@@ -23,67 +24,58 @@ class AuthView extends GetView<AuthController> {
     } else {
       controller.selectLoginOrRegister = true;
     }
+
     return Scaffold(
       backgroundColor: ColorsManager.whiteColor,
-      body: Builder(builder: (context) {
-        return Column(
+      body: SafeArea(
+        top: false,
+        child: Column(
           children: [
-             Container(
-                height: 205,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  color: ColorsManager.mainColor,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(AppPadding.p25),
-                    bottomRight: Radius.circular(AppPadding.p25),
+            // Header with logo
+            Container(
+              height: 205,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                color: ColorsManager.mainColor,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(AppPadding.p25),
+                  bottomRight: Radius.circular(AppPadding.p25),
+                ),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: AppPadding.p30),
+                  child: Image.asset(
+                    ImagesManager.logo,
+                    height: 129,
+                    width: 128,
+                    color: ColorsManager.whiteColor,
                   ),
                 ),
-               child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: AppPadding.p30,
-                    ),
-                    child: Image.asset(
-                      ImagesManager.logo,
-                      height: 129,
-                      width: 128,
-                      color: ColorsManager.whiteColor,
-                    ),
-                  ),
-                ),
-             ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
+              ),
+            ),
+
+            // Login/Register toggle and form
             Expanded(
-              child: Container(
-                height: Get.height,
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  color: ColorsManager.whiteColor,
-                ),
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     loginOrRegister(context),
                     SizedBox(
                       height: controller.selectLoginOrRegister ? 0 : 20,
                     ),
-                    Expanded(
-                      child: Column(children: [
-                        Obx( 
-                          () => controller.selectLoginOrRegister == true
-                              ? const RegisterScreen()
-                              : const LoginScreen(),
-                        ),
-                      ]),
+                    Obx(
+                      () => controller.selectLoginOrRegister == true
+                          ? const RegisterScreen()
+                          : const LoginScreen(),
                     ),
                   ],
                 ),
               ),
             ),
           ],
-        );
-      }),
+        ),
+      ),
     );
   }
 }

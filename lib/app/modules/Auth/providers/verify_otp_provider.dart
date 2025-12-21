@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,11 +40,12 @@ class VerifyOtpProvider extends GetConnect {
     );
     var data = response.body;
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the data: $data');
+    debugPrint('VerifyOtpProvider: status code: $statusCode');
+    debugPrint('VerifyOtpProvider: data: $data');
 
     if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
+        debugPrint('VerifyOtpProvider 200: this is the otp response: $data');
         EasyLoading.dismiss();
       });
       return VerifyOtpModel.fromJson(data);

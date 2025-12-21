@@ -7,11 +7,11 @@ import '../controllers/my_appointments_controller.dart';
 class MyAppointmentsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AppointmentDetailesController>(
-      () => AppointmentDetailesController(),
+    Get.put<AppointmentDetailesController>(
+      AppointmentDetailesController(),
     );
-    Get.lazyPut<MyAppointmentsController>(
-      () => MyAppointmentsController(),
+    Get.put<MyAppointmentsController>(
+      MyAppointmentsController(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:developer';
 
@@ -37,8 +38,8 @@ class ResetPasswordProvider extends GetConnect {
     );
     var data = response.body;
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the data: $data');
+    debugPrint('this is the status code: $statusCode');
+    debugPrint('this is the data: $data');
 
     if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
@@ -54,7 +55,6 @@ class ResetPasswordProvider extends GetConnect {
       if (data['user_type'] == 0) {
         Dialogs.errorDialog(Get.context!, 'user_not_allowed'.tr);
       }
-
     }
 
     if (statusCode == 400) {
@@ -63,13 +63,15 @@ class ResetPasswordProvider extends GetConnect {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'password_cant_be_as_old_one'.tr);
+      } else if (data['phone_number'] != null) {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
       }
-
     }
 
-
     if (statusCode == 404) {
-
       if (data['message'] == 'Phone Number does not exist') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
@@ -93,6 +95,5 @@ class ResetPasswordProvider extends GetConnect {
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
-
   }
 }

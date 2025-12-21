@@ -1,9 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import '../../../helpers/fcm_helper.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -22,17 +24,15 @@ class RegisterProvider extends GetConnect {
       if (status == EasyLoadingStatus.dismiss) {
         timer?.cancel();
       }
-    }
-    );
+    });
   }
 
-  Future<RegisterModel> register(
-      {
-        required String dakliaName,
-        required String phone,
-        required String password,
-        required String confirmPassword,
-      }) async {
+  Future<RegisterModel> register({
+    required String dakliaName,
+    required String phone,
+    required String password,
+    required String confirmPassword,
+  }) async {
     final response = await post(
       HttpHelper.baseUrl + HttpHelper.register,
       {
@@ -48,8 +48,8 @@ class RegisterProvider extends GetConnect {
     );
     var data = response.body;
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the data: $data');
+    debugPrint('this is the status code: $statusCode');
+    debugPrint('this is the data: $data');
     if (statusCode == 201) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -58,32 +58,32 @@ class RegisterProvider extends GetConnect {
       storage.write('otp', data['otp']);
       storage.write('phone', data['phone_number']);
       storage.write('userId', data['id']);
-       Get.offAll(OtpScreen(), arguments: 1);
+      FCMHelper.instance.updateFCMToken();
+      Get.offAll(OtpScreen(), arguments: 1);
       return RegisterModel.fromJson(data);
     }
 
     if (statusCode == 400) {
-      if(data['phone_number'] != null){
+      if (data['phone_number'] != null) {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
       }
 
-      if(data['message'] == 'Phone Number already exists'){
+      if (data['message'] == 'Phone Number already exists') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'phone_already_exist'.tr);
       }
 
-      if(data['message'] == 'Username already exist.'){
+      if (data['message'] == 'Username already exist.') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'user_already_exist'.tr);
       }
-
 
       if (data['username'] != null) {
         timer = Timer(const Duration(seconds: 1), () {
@@ -91,10 +91,9 @@ class RegisterProvider extends GetConnect {
         });
         Dialogs.errorDialog(Get.context!, 'user_already_exist'.tr);
       }
-
     }
 
-    if(statusCode == 404){
+    if (statusCode == 404) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
@@ -108,6 +107,6 @@ class RegisterProvider extends GetConnect {
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
-  return RegisterModel.fromJson(data);
+    return RegisterModel.fromJson(data);
   }
 }

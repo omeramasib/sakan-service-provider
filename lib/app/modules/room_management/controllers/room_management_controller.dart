@@ -18,8 +18,10 @@ import '../providers/daklia_room_provider.dart';
 import '../providers/remove_room_provider.dart';
 
 class RoomManagementController extends GetxController {
-  RxString imagePath = ''.obs;
-  File? image;
+  // Multiple images support
+  RxList<String> imagePaths = <String>[].obs;
+  List<File> images = [];
+
   int? roomNumber;
   String roomType = '';
   int pricePerMonth = 0;
@@ -47,31 +49,63 @@ class RoomManagementController extends GetxController {
   var roomFeaturesFormKey = GlobalKey<FormState>();
   var editAddFeaturesFormKey = GlobalKey<FormState>();
 
+  // Pick multiple images from gallery
+  void pickMultipleImages() async {
+    final List<XFile> pickedFiles = await ImagePicker().pickMultiImage();
+    if (pickedFiles.isNotEmpty) {
+      for (var file in pickedFiles) {
+        images.add(File(file.path));
+        imagePaths.add(file.path);
+      }
+      update();
+      Get.back();
+    }
+  }
+
+  // Pick single image from gallery (for backward compatibility)
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
-      image = File(pickedFile.path);
-      imagePath.value = pickedFile.path;
+      images.add(File(pickedFile.path));
+      imagePaths.add(pickedFile.path);
       update();
       Get.back();
     }
     update();
   }
 
+  // Pick image from camera
   void getImageFromCamera(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
-      image = File(pickedFile.path);
-      imagePath.value = pickedFile.path;
+      images.add(File(pickedFile.path));
+      imagePaths.add(pickedFile.path);
       update();
       Get.back();
     }
+    update();
+  }
+
+  // Remove image at index
+  void removeImage(int index) {
+    if (index >= 0 && index < images.length) {
+      images.removeAt(index);
+      imagePaths.removeAt(index);
+      update();
+    }
+  }
+
+  // Clear all images
+  void clearImages() {
+    images.clear();
+    imagePaths.clear();
     update();
   }
 
   RxBool dailyBooking = false.obs;
   RxBool monthlyBooking = false.obs;
   RxBool isAvailable = false.obs;
+
   chooseIsAvailable(bool value) {
     isAvailable.value = value;
     if (isAvailable.value == true) {
@@ -131,6 +165,19 @@ class RoomManagementController extends GetxController {
 
   RoomFeaturesModel myRoomFeatures = RoomFeaturesModel();
 
+  // Computed properties for room statistics
+  int get totalRooms => roomsList.length;
+
+  int get occupiedRooms => roomsList
+      .where(
+          (room) => room.numAvailableBeds == 0 || room.numAvailableBeds == null)
+      .length;
+
+  int get availableRooms => roomsList
+      .where(
+          (room) => room.numAvailableBeds != null && room.numAvailableBeds! > 0)
+      .length;
+
   // method to get rooms list from api
   Future<void> getRoomsList() async {
     isLoading.value = true;
@@ -149,11 +196,11 @@ class RoomManagementController extends GetxController {
     update();
   }
 
-  // method to add new room
+  // method to add new room with multiple images
   Future<void> addNewMultipleRoom() async {
     try {
       final data = await addRoomProvider.addMultipleRoom(
-        roomImage: image!,
+        roomImages: images,
         roomNumber: roomNumber!,
         roomType: roomType,
         pricePerMonth: pricePerMonth,
@@ -164,6 +211,8 @@ class RoomManagementController extends GetxController {
         monthlyBooking: monthly_booking,
       );
       print('this is the data: $data');
+      // Clear images after successful upload
+      clearImages();
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
@@ -191,7 +240,7 @@ class RoomManagementController extends GetxController {
 
   void checkAddRoom() {
     var isValid = formKey.currentState!.validate();
-    if (imagePath.value == '') {
+    if (imagePaths.isEmpty) {
       Get.showSnackbar(
         GetSnackBar(
           message: 'please_select_room_image'.tr,
@@ -233,7 +282,7 @@ class RoomManagementController extends GetxController {
     log('numAvailableBeds: $numAvailableBeds (type: ${numAvailableBeds.runtimeType})');
     log('daily_booking: $daily_booking (type: ${daily_booking.runtimeType})');
     log('monthly_booking: $monthly_booking (type: ${monthly_booking.runtimeType})');
-    log('image: ${image?.path}');
+    log('images count: ${images.length}');
     log('==============================================');
 
     // Validate that at least one booking type is selected
@@ -257,7 +306,8 @@ class RoomManagementController extends GetxController {
     }
 
     // Validate price fields based on selected booking types
-    if (daily_booking && (pricePerDay == 0 || dailyBedPriceController.text.isEmpty)) {
+    if (daily_booking &&
+        (pricePerDay == 0 || dailyBedPriceController.text.isEmpty)) {
       Get.showSnackbar(
         GetSnackBar(
           message: 'enter_daily_price'.tr,
@@ -268,7 +318,8 @@ class RoomManagementController extends GetxController {
       return;
     }
 
-    if (monthly_booking && (pricePerMonth == 0 || monthlyBedPriceController.text.isEmpty)) {
+    if (monthly_booking &&
+        (pricePerMonth == 0 || monthlyBedPriceController.text.isEmpty)) {
       Get.showSnackbar(
         GetSnackBar(
           message: 'enter_monthly_price'.tr,
@@ -297,7 +348,7 @@ class RoomManagementController extends GetxController {
     log('this is the number of available beds: $numAvailableBedsSingleRoom');
     try {
       final data = await addRoomProvider.addSingleRoom(
-        roomImage: image!,
+        roomImages: images,
         roomNumber: roomNumber!,
         roomType: roomType,
         pricePerMonth: pricePerMonth,
@@ -308,6 +359,8 @@ class RoomManagementController extends GetxController {
         monthlyBooking: monthly_booking,
       );
       print('this is the data: $data');
+      // Clear images after successful upload
+      clearImages();
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
@@ -324,7 +377,7 @@ class RoomManagementController extends GetxController {
 
   void checkAddSingleRoom() {
     var isValid = formKey.currentState!.validate();
-    if (imagePath.value == '') {
+    if (imagePaths.isEmpty) {
       Get.showSnackbar(
         GetSnackBar(
           message: 'please_select_room_image'.tr,
@@ -340,17 +393,6 @@ class RoomManagementController extends GetxController {
     }
 
     formKey.currentState!.save();
-    // if (networkController.isConnected.value == true) {
-    //   EasyLoading.show(status: 'loading'.tr);
-    //   try {
-    //     updatePatientProfile();
-    //   } catch (e) {
-    //     EasyLoading.dismiss();
-    //     print(e);
-    //   }
-    // } else {
-    //   Dialogs.connectionErrorDialog(Get.context!);
-    // }
     EasyLoading.show(status: 'loading'.tr);
     addSingleRoom();
     update();
@@ -408,17 +450,6 @@ class RoomManagementController extends GetxController {
     }
 
     roomFeaturesFormKey.currentState!.save();
-    // if (networkController.isConnected.value == true) {
-    //   EasyLoading.show(status: 'loading'.tr);
-    //   try {
-    //     updatePatientProfile();
-    //   } catch (e) {
-    //     EasyLoading.dismiss();
-    //     print(e);
-    //   }
-    // } else {
-    //   Dialogs.connectionErrorDialog(Get.context!);
-    // }
     EasyLoading.show(status: 'loading'.tr);
     addRoomFeature();
     update();
@@ -431,17 +462,6 @@ class RoomManagementController extends GetxController {
     }
 
     editAddFeaturesFormKey.currentState!.save();
-    // if (networkController.isConnected.value == true) {
-    //   EasyLoading.show(status: 'loading'.tr);
-    //   try {
-    //     updatePatientProfile();
-    //   } catch (e) {
-    //     EasyLoading.dismiss();
-    //     print(e);
-    //   }
-    // } else {
-    //   Dialogs.connectionErrorDialog(Get.context!);
-    // }
     EasyLoading.show(status: 'loading'.tr);
     addRoomFeature();
     update();

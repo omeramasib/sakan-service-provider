@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -118,7 +120,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                                           .profileList[0].dakliaImage!),
                                       fit: BoxFit.cover,
                                       colorFilter: ColorFilter.mode(
-                                        ColorsManager.blackColor.withOpacity(0.4),
+                                        ColorsManager.blackColor
+                                            .withOpacity(0.4),
                                         BlendMode.darken,
                                       ),
                                     ),
@@ -135,7 +138,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                                           children: [
                                             InkWell(
                                               onTap: () {
-                                                selectImage(context, controller);
+                                                selectImage(
+                                                    context, controller);
                                               },
                                               child: SvgPicture.asset(
                                                 ImagesManager.edit_profile_icon,
@@ -161,10 +165,16 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Center(
-                                      child: Image.file(
-                                        File(controller.imagePath.value),
-                                        fit: BoxFit.cover,
-                                      ),
+                                      child: kIsWeb
+                                          ? Icon(
+                                              Icons.check_circle,
+                                              color: ColorsManager.mainColor,
+                                              size: 40,
+                                            )
+                                          : Image.file(
+                                              File(controller.imagePath.value),
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -243,7 +253,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                     editProfileRoomCountWidget(
                       context,
                       controller,
-                      profileController.profileList[0].numberOfRooms!.toString(),
+                      profileController.profileList[0].numberOfRooms!
+                          .toString(),
                     ),
                   ],
                 ),

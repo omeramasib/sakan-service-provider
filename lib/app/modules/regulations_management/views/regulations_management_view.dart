@@ -29,30 +29,25 @@ class RegulationsManagementView
         children: [
           Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: AppPadding.p20,
+              IconButton(
+                icon: Icon(
+                  Icons.arrow_back,
+                  color: ColorsManager.blackColor,
                 ),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: ColorsManager.blackColor,
-                  ),
-                  onPressed: () => Get.offAllNamed(Routes.HOME),
-                ),
+                onPressed: () => Get.offAllNamed(Routes.HOME),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  right: Get.width * 0.20,
-                ),
-                child: Text(
-                  'terms'.tr,
-                  style: getMediumStyle(
-                    fontSize: FontSizeManager.s15,
-                    color: ColorsManager.mainColor,
+              Expanded(
+                child: Center(
+                  child: Text(
+                    'terms'.tr,
+                    style: getMediumStyle(
+                      fontSize: FontSizeManager.s15,
+                      color: ColorsManager.mainColor,
+                    ),
                   ),
                 ),
               ),
+              SizedBox(width: 48), // Balance the back button
             ],
           ),
           SizedBox(

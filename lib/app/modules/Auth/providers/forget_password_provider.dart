@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:developer';
 
@@ -35,8 +36,8 @@ class ForgetPasswordProvider extends GetConnect {
     );
     var data = response.body;
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the data: $data');
+    debugPrint('this is the status code: $statusCode');
+    debugPrint('this is the data: $data');
 
     if (statusCode == 200) {
       timer = Timer(const Duration(seconds: 1), () {
@@ -48,7 +49,6 @@ class ForgetPasswordProvider extends GetConnect {
     }
 
     if (statusCode == 400) {
-
       if (data['message'] == 'User is not active') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
@@ -63,8 +63,7 @@ class ForgetPasswordProvider extends GetConnect {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'phone_number_does_not_exist'.tr);
-      }
-      else {
+      } else {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });

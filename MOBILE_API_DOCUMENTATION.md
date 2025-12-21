@@ -375,6 +375,30 @@ Invalidates the user's authentication token.
 ```json
 {
   "message": "logout successful"
+    "message": "logout successful"
+}
+```
+
+---
+
+### 1.8 Update FCM Token (NEW)
+Registers the device for push notifications.
+
+**Endpoint:** `POST /api/v1/person/profile/update-fcm-token/`
+
+**Authentication:** Required
+
+**Request Body:**
+```json
+{
+  "fcm_token": "firebase_device_token_string"
+}
+```
+
+**Success Response (200 OK):**
+```json
+{
+  "message": "FCM token updated successfully"
 }
 ```
 
@@ -1220,7 +1244,107 @@ curl -X PUT http://localhost:8000/api/v1/daklia/1/rooms/1/ \
 
 ---
 
+  "booking_status": "pending",
+  "can_receive_bookings": true,
+  "is_active": true,
+  "owner_username": "daklia_owner",
+  "owner_user_id": 456
+}
+```
+
+---
+
 ## 8. Booking Management
+
+### 8.1 Create Booking
+Initiates a new booking.
+
+**Endpoint:** `POST /api/v1/person/create-new-booking/`
+
+**Authentication:** Required
+
+**Request Body:**
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `room_id` | integer | Yes | Room ID |
+| `student_id` | integer | No | Student profile ID (if booking as student) |
+| `employee_id` | integer | No | Employee profile ID (if booking as employee) |
+| `start_date` | date | Yes | YYYY-MM-DD |
+| `end_date` | date | Yes | YYYY-MM-DD |
+| `invoice_receipt` | file | **No (Optional)** | Proof of payment/deposit |
+
+**Changes:**
+- `invoice_receipt` is now optional.
+- Booking status defaults to `pending`.
+- Daklia Owner will receive a notification to approve/reject.
+
+**Success Response (201 Created):**
+```json
+{
+  "message": "Booking created successfully and is pending owner approval",
+  "booking_id": 123,
+  "status": "pending"
+}
+```
+
+### 8.2 Owner Booking Action (NEW)
+Approve or Reject a booking (For Daklia Owners).
+
+**Endpoint:** `POST /api/v1/person/owner/bookings/{booking_id}/action/`
+
+**Authentication:** Required (Must be Daklia Owner)
+
+**Request Body:**
+```json
+{
+  "action": "approve" // or "reject"
+  "reason": "optional reason for rejection"
+}
+```
+
+### 8.3 Owner Get Bookings (NEW)
+Retrieve all bookings for the Daklia owned by the authenticated user.
+
+**Endpoint:** `GET /api/v1/person/owner/bookings/`
+
+**Authentication:** Required (Must be Daklia Owner)
+
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `status` | string | No | Filter by booking status (pending, approved, rejected, cancelled) |
+
+**Success Response (200 OK):**
+```json
+{
+  "message": "Bookings retrieved successfully",
+  "count": 3,
+  "data": [
+    {
+      "booking_id": 1,
+      "room_id": 1,
+      "student_id": 5,
+      "daklia_id": 1,
+      "start_date": "2025-01-01",
+      "end_date": "2025-01-30",
+      "booking_status": "pending",
+      "beds_booked": 1,
+      "booking_time": "2024-12-20T10:00:00Z",
+      "customer_name": "john_doe",
+      "customer_type": "Student"
+    }
+  ]
+}
+```
+
+**Error Responses:**
+
+| Status | Message |
+|--------|---------|
+| 403 | "You are not a Daklia owner" |
+| 404 | "No Daklia found for this user" |
+
 
 ### 8.1 Create New Booking
 
@@ -2008,6 +2132,8 @@ curl -X POST \
 |--------|----------|------|
 | POST | `/api/v1/person/create-new-booking/` | Yes |
 | GET | `/api/v1/person/bookings/<id>/` | Yes |
+| GET | `/api/v1/person/owner/bookings/` | Yes (Owner) |
+| POST | `/api/v1/person/owner/bookings/<id>/action/` | Yes (Owner) |
 
 ### Feedback Endpoints (Complaints & Suggestions)
 

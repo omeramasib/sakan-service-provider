@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:developer';
 
@@ -39,8 +40,8 @@ class ChangePasswordProvider extends GetConnect {
     );
     var data = response.body;
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log(data.toString());
+    debugPrint('this is the status code: $statusCode');
+    debugPrint(data.toString());
 
     if (statusCode == 200) {
       EasyLoading.dismiss();
@@ -69,9 +70,7 @@ class ChangePasswordProvider extends GetConnect {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'user_not_active'.tr);
-      }
-
-      else {
+      } else {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });

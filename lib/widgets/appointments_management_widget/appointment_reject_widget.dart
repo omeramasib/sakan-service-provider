@@ -5,7 +5,6 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 import 'package:sakan/widgets/text_form_fields.dart';
 
-
 import '../../../constants/colors_manager.dart';
 import '../../../constants/values_manager.dart';
 import '../../app/modules/MyAppointments/controllers/appointment_detailes_controller.dart';
@@ -100,14 +99,11 @@ appointmentReject(BuildContext context) {
                 ),
                 ButtonsManager.primaryButton(
                   text: 'send'.tr,
-                  onPressed: (){
-                    // controller.addRoomFeature();
-                    Get.back();
-                  },
+                  onPressed: () => controller.rejectBooking(),
                   context: context,
                   minimumSize: Size(287, 50),
                   maximumSize: Size(287, 50),
-                  )
+                )
               ],
             ),
           ),

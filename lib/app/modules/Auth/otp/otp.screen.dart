@@ -21,7 +21,6 @@ class OtpScreen extends GetView<OtpController> {
   @override
   Widget build(BuildContext context) {
     int? number = Get.arguments;
-    var controller = Get.put(OtpController());
     var storage = GetStorage();
     return Scaffold(
       backgroundColor: ColorsManager.whiteColor,
@@ -95,45 +94,48 @@ class OtpScreen extends GetView<OtpController> {
                     const SizedBox(
                       height: 40,
                     ),
-                    PinCodeTextField(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      length: 6,
-                      obscureText: false,
-                      animationType: AnimationType.fade,
-                      textStyle: getMediumStyle(
-                        color: ColorsManager.fontColor,
-                        fontSize: FontSizeManager.s14,
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: PinCodeTextField(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        length: 6,
+                        obscureText: false,
+                        animationType: AnimationType.fade,
+                        textStyle: getMediumStyle(
+                          color: ColorsManager.fontColor,
+                          fontSize: FontSizeManager.s14,
+                        ),
+                        pinTheme: PinTheme(
+                          activeColor: ColorsManager.greyColor,
+                          inactiveColor: ColorsManager.whiteColor,
+                          disabledColor: ColorsManager.whiteColor,
+                          selectedColor: ColorsManager.mainColor,
+                          selectedFillColor: ColorsManager.whiteColor,
+                          activeFillColor: ColorsManager.greyColor,
+                          inactiveFillColor: ColorsManager.lightGreyColor,
+                          errorBorderColor: ColorsManager.errorColor,
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(5),
+                          fieldHeight: 54,
+                          fieldWidth: 52,
+                          // activeFillColor: Colors.white,
+                        ),
+                        validator: (value) => Validations().validateOtp(value!),
+                        backgroundColor: ColorsManager.whiteColor,
+                        enableActiveFill: true,
+                        controller: controller.otpController,
+                        onCompleted: (v) {
+                          controller.code = v;
+                        },
+                        onChanged: (value) {
+                          controller.changeOtp(value);
+                        },
+                        beforeTextPaste: (text) {
+                          print("Allowing to paste $text");
+                          return true;
+                        },
+                        appContext: context,
                       ),
-                      pinTheme: PinTheme(
-                        activeColor: ColorsManager.greyColor,
-                        inactiveColor: ColorsManager.whiteColor,
-                        disabledColor: ColorsManager.whiteColor,
-                        selectedColor: ColorsManager.mainColor,
-                        selectedFillColor: ColorsManager.whiteColor,
-                        activeFillColor: ColorsManager.greyColor,
-                        inactiveFillColor: ColorsManager.lightGreyColor,
-                        errorBorderColor: ColorsManager.errorColor,
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: 54,
-                        fieldWidth: 52,
-                        // activeFillColor: Colors.white,
-                      ),
-                      validator: (value) => Validations().validateOtp(value!),
-                      backgroundColor: ColorsManager.whiteColor,
-                      enableActiveFill: true,
-                      controller: controller.otpController,
-                      onCompleted: (v) {
-                        controller.code = v;
-                      },
-                      onChanged: (value) {
-                        controller.changeOtp(value);
-                      },
-                      beforeTextPaste: (text) {
-                        print("Allowing to paste $text");
-                        return true;
-                      },
-                      appContext: context,
                     ),
                     const SizedBox(
                       height: 50,
@@ -176,7 +178,9 @@ class OtpScreen extends GetView<OtpController> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            controller.resendOtp();
+                          },
                           child: Text(
                             'resend'.tr,
                             style: getRegularStyle(

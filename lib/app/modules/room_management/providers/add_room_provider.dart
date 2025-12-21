@@ -19,8 +19,8 @@ import '../models/daklia_rooms_models.dart';
 class AddRoomProvider extends GetConnect {
   static AddRoomProvider get instance => Get.put(AddRoomProvider());
   GetStorage storage = GetStorage();
-  // var networkController = Get.put(NetworkController());
   Timer? timer;
+
   @override
   void onInit() {
     httpClient.baseUrl = HttpHelper.baseUrl;
@@ -32,7 +32,7 @@ class AddRoomProvider extends GetConnect {
   }
 
   Future<DakliaRoomModel> addMultipleRoom({
-    required File? roomImage,
+    required List<File> roomImages,
     required int roomNumber,
     required String roomType,
     required int pricePerMonth,
@@ -55,38 +55,41 @@ class AddRoomProvider extends GetConnect {
 
     // Debug logging
     log('=== DEBUG: Data being sent to API ===');
-    log('roomNumber: $roomNumber (type: ${roomNumber.runtimeType})');
-    log('roomType: "$roomType" (type: ${roomType.runtimeType})');
-    log('pricePerMonth: $pricePerMonth (type: ${pricePerMonth.runtimeType})');
-    log('pricePerDay: $pricePerDay (type: ${pricePerDay.runtimeType})');
-    log('numberOfBeds: $numberOfBeds (type: ${numberOfBeds.runtimeType})');
-    log('numAvailableBeds: $numAvailableBeds (type: ${numAvailableBeds.runtimeType})');
-    log('dailyBooking: $dailyBooking (type: ${dailyBooking.runtimeType})');
-    log('monthlyBooking: $monthlyBooking (type: ${monthlyBooking.runtimeType})');
-    log('roomImage path: ${roomImage?.path}');
+    log('roomNumber: $roomNumber');
+    log('roomType: "$roomType"');
+    log('pricePerMonth: $pricePerMonth');
+    log('pricePerDay: $pricePerDay');
+    log('numberOfBeds: $numberOfBeds');
+    log('numAvailableBeds: $numAvailableBeds');
+    log('dailyBooking: $dailyBooking');
+    log('monthlyBooking: $monthlyBooking');
+    log('roomImages count: ${roomImages.length}');
     log('===================================');
 
     // Ensure proper data types and validation
-    if (roomNumber == null || roomNumber <= 0) {
+    if (roomNumber <= 0) {
       throw Exception('Invalid room number: $roomNumber');
     }
-    if (roomType == null || roomType.trim().isEmpty) {
+    if (roomType.trim().isEmpty) {
       throw Exception('Room type cannot be empty');
     }
-    if (numberOfBeds == null || numberOfBeds <= 0) {
+    if (numberOfBeds <= 0) {
       throw Exception('Invalid number of beds: $numberOfBeds');
     }
-    if (numAvailableBeds == null || numAvailableBeds < 0) {
+    if (numAvailableBeds < 0) {
       throw Exception('Invalid available beds: $numAvailableBeds');
     }
-    if (pricePerMonth == null || pricePerMonth < 0) {
+    if (pricePerMonth < 0) {
       throw Exception('Invalid monthly price: $pricePerMonth');
     }
-    if (pricePerDay == null || pricePerDay < 0) {
+    if (pricePerDay < 0) {
       throw Exception('Invalid daily price: $pricePerDay');
     }
+    if (roomImages.isEmpty) {
+      throw Exception('At least one image is required');
+    }
 
-    // Set proper form data with correct types
+    // Set proper form data
     request.fields['daklia_id'] = storage.read('dakliaId').toString();
     request.fields['room_number'] = roomNumber.toString();
     request.fields['room_type'] = roomType.trim();
@@ -94,32 +97,43 @@ class AddRoomProvider extends GetConnect {
     request.fields['price_per_day'] = pricePerDay.toString();
     request.fields['numberOfBeds'] = numberOfBeds.toString();
     request.fields['num_Available_Beds'] = numAvailableBeds.toString();
-
-    // Use the same boolean format as the edit provider
     request.fields['daily_booking'] = dailyBooking.toString();
     request.fields['monthly_booking'] = monthlyBooking.toString();
 
-    // Add file using fromBytes method (similar to daklia verify account)
+    // Add multiple images
     try {
-      if (roomImage != null && await roomImage.exists()) {
-        log('Image file exists: ${roomImage.path}');
-        log('Image file size: ${await roomImage.length()} bytes');
+      for (int i = 0; i < roomImages.length; i++) {
+        final roomImage = roomImages[i];
+        if (await roomImage.exists()) {
+          log('Adding image ${i + 1}: ${roomImage.path}');
+          log('Image file size: ${await roomImage.length()} bytes');
 
-        final multipartFile = await http.MultipartFile.fromBytes(
-          'room_image',
-          roomImage.readAsBytesSync(),
-          filename: roomImage.path.split('/').last,
-          contentType: MediaType('image', 'jpeg'),
-        );
-        log('File info: ${multipartFile.filename}, ${multipartFile.contentType}, ${multipartFile.length} bytes');
-        request.files.add(multipartFile);
-      } else {
-        log('Image file does not exist: ${roomImage?.path}');
-        throw Exception('Image file is required and must exist');
+          if (i == 0) {
+            // First image as room_image (backward compatible)
+            final multipartFile = await http.MultipartFile.fromBytes(
+              'room_image',
+              roomImage.readAsBytesSync(),
+              filename: roomImage.path.split('/').last,
+              contentType: MediaType('image', 'jpeg'),
+            );
+            request.files.add(multipartFile);
+          }
+
+          // All images (including first) as images[] array
+          final multipartFile = await http.MultipartFile.fromBytes(
+            'images[]',
+            roomImage.readAsBytesSync(),
+            filename: roomImage.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'),
+          );
+          request.files.add(multipartFile);
+        } else {
+          log('Image file does not exist: ${roomImage.path}');
+        }
       }
     } catch (e) {
-      log('Error adding file: $e');
-      throw Exception('Failed to attach image file: $e');
+      log('Error adding files: $e');
+      throw Exception('Failed to attach image files: $e');
     }
 
     // Log what we're actually sending
@@ -133,12 +147,10 @@ class AddRoomProvider extends GetConnect {
     var responseString = String.fromCharCodes(responseData);
     var data = json.decode(responseString);
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the response: $responseString');
-    log('this is the parsed data: $data');
+    log('Status code: $statusCode');
+    log('Response: $responseString');
 
     if (statusCode == 201) {
-      log('this is the statusCode : $statusCode');
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
@@ -152,11 +164,14 @@ class AddRoomProvider extends GetConnect {
     }
 
     if (statusCode == 400) {
-      if (data['message'] != "Daklia account is not verified") {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      if (data['message'] == "Daklia account is not verified") {
         Dialogs.errorDialog(Get.context!, 'account_not_verified'.tr);
+      } else {
+        Dialogs.errorDialog(
+            Get.context!, data['message']?.toString() ?? 'Error adding room');
       }
     }
 
@@ -172,29 +187,21 @@ class AddRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      if (data['message'] != 'Daklia does not exis') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
-      }
+      Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
     }
 
     if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
-      timer = Timer(
-        const Duration(seconds: 1),
-        () {
-          EasyLoading.dismiss();
-        },
-      );
-      EasyLoading.show(status: 'loading'.tr);
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
+
     return DakliaRoomModel.fromJson(data);
   }
 
   Future<DakliaRoomModel> addSingleRoom({
-    required File? roomImage,
+    required List<File> roomImages,
     required int roomNumber,
     required String roomType,
     required int pricePerMonth,
@@ -224,28 +231,45 @@ class AddRoomProvider extends GetConnect {
     request.fields['numberOfBeds'] = numberOfBeds.toString();
     request.fields['num_Available_Beds'] = numAvailableBeds.toString();
 
-    // Add file using fromBytes method
-    if (roomImage != null && await roomImage.exists()) {
-      final multipartFile = await http.MultipartFile.fromBytes(
-        'room_image',
-        roomImage.readAsBytesSync(),
-        filename: roomImage.path.split('/').last,
-        contentType: MediaType('image', 'jpeg'),
-      );
-      request.files.add(multipartFile);
-    } else {
-      throw Exception('Image file is required and must exist');
+    // Add multiple images
+    if (roomImages.isEmpty) {
+      throw Exception('At least one image is required');
     }
+
+    for (int i = 0; i < roomImages.length; i++) {
+      final roomImage = roomImages[i];
+      if (await roomImage.exists()) {
+        if (i == 0) {
+          // First image as room_image (backward compatible)
+          final multipartFile = await http.MultipartFile.fromBytes(
+            'room_image',
+            roomImage.readAsBytesSync(),
+            filename: roomImage.path.split('/').last,
+            contentType: MediaType('image', 'jpeg'),
+          );
+          request.files.add(multipartFile);
+        }
+
+        // All images as images[] array
+        final multipartFile = await http.MultipartFile.fromBytes(
+          'images[]',
+          roomImage.readAsBytesSync(),
+          filename: roomImage.path.split('/').last,
+          contentType: MediaType('image', 'jpeg'),
+        );
+        request.files.add(multipartFile);
+      }
+    }
+
     var response = await request.send();
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
     var data = json.decode(responseString);
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the data: $data');
+    log('Status code: $statusCode');
+    log('Response: $responseString');
 
     if (statusCode == 201) {
-      log('this is the statusCode : $statusCode');
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
@@ -259,11 +283,14 @@ class AddRoomProvider extends GetConnect {
     }
 
     if (statusCode == 400) {
-      if (data['message'] != "Daklia account is not verified") {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      if (data['message'] == "Daklia account is not verified") {
         Dialogs.errorDialog(Get.context!, 'account_not_verified'.tr);
+      } else {
+        Dialogs.errorDialog(
+            Get.context!, data['message']?.toString() ?? 'Error adding room');
       }
     }
 
@@ -279,24 +306,16 @@ class AddRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      if (data['message'] != 'Daklia does not exis') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
-      }
+      Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
     }
 
     if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
-      timer = Timer(
-        const Duration(seconds: 1),
-        () {
-          EasyLoading.dismiss();
-        },
-      );
-      EasyLoading.show(status: 'loading'.tr);
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
+
     return DakliaRoomModel.fromJson(data);
   }
 }

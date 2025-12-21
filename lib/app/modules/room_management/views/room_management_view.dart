@@ -30,208 +30,199 @@ class RoomManagementView extends GetView<RoomManagementController> {
         ),
       ),
       body: SingleChildScrollView(
-        child:  Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  right: AppPadding.p20,
-                ),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    color: ColorsManager.blackColor,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: AppPadding.p20,
                   ),
-                  onPressed: () => Get.offAllNamed(Routes.HOME),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: AppPadding.p40,
-                ),
-                child: Text(
-                  'rooms_management'.tr,
-                  style: getMediumStyle(
-                    fontSize: FontSizeManager.s15,
-                    color: ColorsManager.mainColor,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: ColorsManager.blackColor,
+                    ),
+                    onPressed: () => Get.offAllNamed(Routes.HOME),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: AppPadding.p20,
-                ),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: SvgPicture.asset(
-                    ImagesManager.search,
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: AppPadding.p40,
+                  ),
+                  child: Text(
+                    'rooms_management'.tr,
+                    style: getMediumStyle(
+                      fontSize: FontSizeManager.s15,
+                      color: ColorsManager.mainColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 100,
-            width: double.infinity,
-            child: LayoutBuilder(
-              builder: (BuildContext, BoxConstraints constraints) {
-                return Padding(
-                  padding: isEnglish
-                      ? EdgeInsets.only(
-                          right: Get.width * 0.080,
-                        )
-                      : EdgeInsets.only(
-                          right: Get.width * 0.080,
-                        ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 105,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppPadding.p20),
-                            child: Text(
-                              '0',
-                              style: getSemiBoldStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'all_rooms'.tr,
-                            style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s14),
-                          )
-                        ]),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Container(
-                        width: 105,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppPadding.p20),
-                            child: Text(
-                              '0',
-                              style: getSemiBoldStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'occupied_rooms'.tr,
-                            style: getRegularStyle(
-                                color: ColorsManager.fontColor,
-                                fontSize: FontSizeManager.s14),
-                          )
-                        ]),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Container(
-                        width: 105,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: AppPadding.p20),
-                            child: Text(
-                              '0',
-                              style: getSemiBoldStyle(
-                                color: ColorsManager.mainColor,
-                                fontSize: FontSizeManager.s18,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Text(
-                            'available_rooms'.tr,
-                            style: getRegularStyle(
-                              color: ColorsManager.fontColor,
-                              fontSize: FontSizeManager.s14,
-                            ),
-                          ),
-                        ]),
-                      ),
-                    ],
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: AppPadding.p20,
                   ),
-                );
-              },
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: SvgPicture.asset(
+                      ImagesManager.search,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Obx(
-           (){
-             if(controller.isLoading.value){
+            SizedBox(
+              height: 30,
+            ),
+            Obx(() {
+              // We listen to roomsList to trigger rebuilds when the list changes
+              // This is necessary because totalRooms, occupiedRooms, availableRooms are computed from roomsList
+              // effectively making them dependent on roomsList.
+              // Just referencing controller.roomsList.length is enough to register the listener.
+              final _ = controller.roomsList.length;
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${controller.availableRooms}',
+                              style: getSemiBoldStyle(
+                                color: ColorsManager.mainColor,
+                                fontSize: FontSizeManager.s18,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'available_rooms'.tr,
+                              style: getRegularStyle(
+                                color: ColorsManager.fontColor,
+                                fontSize: FontSizeManager.s12,
+                              ),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${controller.occupiedRooms}',
+                              style: getSemiBoldStyle(
+                                color: ColorsManager.mainColor,
+                                fontSize: FontSizeManager.s18,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'occupied_rooms'.tr,
+                              style: getRegularStyle(
+                                color: ColorsManager.fontColor,
+                                fontSize: FontSizeManager.s12,
+                              ),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Container(
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: ColorsManager.whiteColor,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${controller.totalRooms}',
+                              style: getSemiBoldStyle(
+                                color: ColorsManager.mainColor,
+                                fontSize: FontSizeManager.s18,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              'all_rooms'.tr,
+                              style: getRegularStyle(
+                                color: ColorsManager.fontColor,
+                                fontSize: FontSizeManager.s12,
+                              ),
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+            SizedBox(
+              height: 20,
+            ),
+            Obx(() {
+              if (controller.isLoading.value) {
                 return Center(
-                  child: CircularProgressIndicator(
-                    color: ColorsManager.mainColor,
-                  )
-                  );
-            }
-            else{
-              return controller.roomsList.isEmpty
-                  ? emptyRoom(context)
-                  : roomsList(context, controller.roomsList);
-            }
-            }
-          ),
-        ],
-      ),
+                    child: CircularProgressIndicator(
+                  color: ColorsManager.mainColor,
+                ));
+              } else {
+                return controller.roomsList.isEmpty
+                    ? emptyRoom(context)
+                    : roomsList(context, controller.roomsList);
+              }
+            }),
+          ],
+        ),
       ),
     );
   }

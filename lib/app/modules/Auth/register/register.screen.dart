@@ -6,177 +6,120 @@ import '../../../../constants/buttons_manager.dart';
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/fonts_manager.dart';
 import '../../../../constants/styles_manager.dart';
-import '../../../../constants/values_manager.dart';
+import '../../../../constants/responsive_helper.dart';
 import '../../../../widgets/text_form_fields.dart';
+import '../../../../widgets/responsive_builder.dart';
 import '../controllers/register.controller.dart';
 
 class RegisterScreen extends GetView<RegisterController> {
   const RegisterScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(RegisterController());
     var isEnglish = Get.locale!.languageCode == 'en';
+    final labelPadding = ResponsiveHelper.wp(5);
+
     return Form(
       key: controller.registerFormKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      child: Expanded(
-        child: SizedBox(
-          height: Get.height,
-          width: Get.width,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 500),
           child: Padding(
-            padding: MediaQuery.of(context).viewInsets,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Padding(
-                        padding: isEnglish
-                            ? const EdgeInsets.only(
-                                top: AppPadding.p20, left: AppPadding.p65)
-                            : const EdgeInsets.only(
-                                top: AppPadding.p20, right: AppPadding.p40),
-                        child: Text(
-                          'daklia_name'.tr,
-                          style: getRegularStyle(
-                            color: ColorsManager.fontColor,
-                            fontSize: FontSizeManager.s14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: isEnglish
-                            ? const EdgeInsets.only(left: AppPadding.p40)
-                            : const EdgeInsets.only(right: AppPadding.p40),
-                        child: dakliaNameFormField(
-                            context,
-                            controller,
-                            ColorsManager.greyColor,
-                            'daklia_name'.tr,
-                            ColorsManager.hintStyleColor),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: isEnglish
-                            ? const EdgeInsets.only(
-                                top: AppPadding.p20, left: AppPadding.p65)
-                            : const EdgeInsets.only(
-                                top: AppPadding.p20, right: AppPadding.p40),
-                        child: Text(
-                          'phone_number'.tr,
-                          style: getRegularStyle(
-                            color: ColorsManager.fontColor,
-                            fontSize: FontSizeManager.s14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+            padding: EdgeInsets.symmetric(horizontal: labelPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Daklia Name Label
+                _buildLabel('daklia_name'.tr, isEnglish, labelPadding),
+                ResponsiveSpacing(
+                    mobileHeight: 10, tabletHeight: 12, desktopHeight: 14),
 
-                  // Phone number text field widget
-                  phoneNumberFormField(
-                      context,
-                      controller,
-                      ColorsManager.greyColor,
-                      'phone_number'.tr,
-                      ColorsManager.hintStyleColor),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                // Daklia Name Field
+                dakliaNameFormField(
+                  context,
+                  controller,
+                  ColorsManager.greyColor,
+                  'daklia_name'.tr,
+                  ColorsManager.hintStyleColor,
+                ),
+                ResponsiveSpacing(
+                    mobileHeight: 10, tabletHeight: 12, desktopHeight: 14),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: isEnglish
-                            ? const EdgeInsets.only(
-                                top: AppPadding.p20, left: AppPadding.p65)
-                            : const EdgeInsets.only(
-                                top: AppPadding.p20, right: AppPadding.p40),
-                        child: Text(
-                          'password'.tr,
-                          style: getRegularStyle(
-                            color: ColorsManager.fontColor,
-                            fontSize: FontSizeManager.s14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // Password text field widget
-                  passwordFormField(
-                      context,
-                      controller,
-                      ColorsManager.greyColor,
-                      'password'.tr,
-                      ColorsManager.hintStyleColor),
+                // Phone Number Label
+                _buildLabel('phone_number'.tr, isEnglish, labelPadding),
+                ResponsiveSpacing(
+                    mobileHeight: 12, tabletHeight: 14, desktopHeight: 16),
 
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // confirm password
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: isEnglish
-                            ? const EdgeInsets.only(
-                                top: AppPadding.p20, left: AppPadding.p65)
-                            : const EdgeInsets.only(
-                                top: AppPadding.p20, right: AppPadding.p40),
-                        child: Text(
-                          'confirm_password'.tr,
-                          style: getRegularStyle(
-                            color: ColorsManager.fontColor,
-                            fontSize: FontSizeManager.s14,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  // confirm password text field widget
-                  confirmPasswordFormField(context, controller),
+                // Phone number text field widget
+                phoneNumberFormField(
+                  context,
+                  controller,
+                  ColorsManager.greyColor,
+                  'phone_number'.tr,
+                  ColorsManager.hintStyleColor,
+                ),
+                ResponsiveSpacing(
+                    mobileHeight: 12, tabletHeight: 14, desktopHeight: 16),
 
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  ButtonsManager.secondaryButton(
+                // Password Label
+                _buildLabel('password'.tr, isEnglish, labelPadding),
+                ResponsiveSpacing(
+                    mobileHeight: 12, tabletHeight: 14, desktopHeight: 16),
+
+                // Password text field widget
+                passwordFormField(
+                  context,
+                  controller,
+                  ColorsManager.greyColor,
+                  'password'.tr,
+                  ColorsManager.hintStyleColor,
+                ),
+                ResponsiveSpacing(
+                    mobileHeight: 12, tabletHeight: 14, desktopHeight: 16),
+
+                // Confirm Password Label
+                _buildLabel('confirm_password'.tr, isEnglish, labelPadding),
+                ResponsiveSpacing(
+                    mobileHeight: 12, tabletHeight: 14, desktopHeight: 16),
+
+                // Confirm password text field widget
+                confirmPasswordFormField(context, controller),
+
+                ResponsiveSpacing(
+                    mobileHeight: 40, tabletHeight: 50, desktopHeight: 60),
+
+                // Register Button
+                Center(
+                  child: ButtonsManager.secondaryButton(
                     text: 'register'.tr,
-                    onPressed: () {
-                      controller.checkRegister();
-                    },
+                    onPressed: () => controller.checkRegister(),
                     context: context,
                   ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(height: 30),
+              ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLabel(String text, bool isEnglish, double padding) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: ResponsiveHelper.hp(2.5),
+        left: isEnglish ? padding : 0,
+        right: isEnglish ? 0 : padding,
+      ),
+      child: Text(
+        text,
+        style: getRegularStyle(
+          color: ColorsManager.fontColor,
+          fontSize: ResponsiveHelper.responsiveFontSize(FontSizeManager.s14),
         ),
       ),
     );

@@ -2,415 +2,196 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 import 'package:sakan/constants/colors_manager.dart';
 import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
+import 'package:sakan/constants/responsive_helper.dart';
+import 'package:sakan/widgets/responsive_builder.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     var isArabic = Get.locale?.languageCode == 'ar';
-    var storage = GetStorage();
+
     return Scaffold(
       backgroundColor: ColorsManager.lightGreyColor,
-      body: Column(children: [
-        SizedBox(height: 80),
-        Padding(
-          padding:
-              isArabic ? EdgeInsets.only(right: 20) : EdgeInsets.only(left: 20),
-          child: Row(
+      body: SafeArea(
+        child: ResponsiveContainer(
+          padding: EdgeInsets.symmetric(
+            horizontal: ResponsiveHelper.responsiveHorizontalPadding(context),
+          ),
+          child: Column(
             children: [
-              SizedBox(
-                width: 140,
-              ),
-              Text(
-                'home'.tr,
-                style: getRegularStyle(
-                  color: ColorsManager.blackColor,
-                  fontSize: FontSizeManager.s16,
+              ResponsiveSpacing(
+                  mobileHeight: 40, tabletHeight: 50, desktopHeight: 60),
+              _buildHeader(context, isArabic),
+              ResponsiveSpacing(
+                  mobileHeight: 30, tabletHeight: 40, desktopHeight: 50),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: _buildMenuGrid(context, isArabic),
                 ),
               ),
-              SizedBox(
-                width: 130,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed('/notifications');
-                },
-                child: SvgPicture.asset(
-                  ImagesManager.notification,
-                ),
-              )
             ],
           ),
         ),
-        SizedBox(
-          height: 50,
-        ),
+      ),
+    );
+  }
 
-       Container(
-        width:
-            Get.width < 360
-                ? Get.width * 0.8
-                : Get.width < 400
-                    ? Get.width * 1
-                    : Get.width * 0.95,
-        child: Column(
-          children: [
-         // 1st Row
-        Container(
-          height: 171,
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (BuildContext, BoxConstraints constraints) {
-              return Row(
-                children: [
-                  Padding(
-                    padding: isArabic
-                        ? EdgeInsets.only(right: Get.width * 0.07)
-                        : EdgeInsets.only(left: Get.width * 0.07),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.DAKLIA_PROFILE);
-                      },
-                      child: Container(
-                        height: 171,
-                        width: 164,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              SvgPicture.asset(
-                                ImagesManager.building,
-                                height: 65,
-                                width: 60,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'daklia_management'.tr,
-                                style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
-                                  fontSize: FontSizeManager.s15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: isArabic
-                        ? EdgeInsets.only(right: 10)
-                        : EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.ROOM_MANAGEMENT);
-                      },
-                      child: Container(
-                        height: 171,
-                        width: 164,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              SvgPicture.asset(
-                                ImagesManager.rooms,
-                                height: 65,
-                                width: 60,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'rooms_management'.tr,
-                                style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
-                                  fontSize: FontSizeManager.s15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
+  Widget _buildHeader(BuildContext context, bool isArabic) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(child: SizedBox()),
+        Text(
+          'home'.tr,
+          style: getRegularStyle(
+            color: ColorsManager.blackColor,
+            fontSize: ResponsiveHelper.responsiveFontSize(FontSizeManager.s16),
           ),
         ),
-        SizedBox(
-          height: 20,
-        ),
-
-        // 2st Row
-        Container(
-          height: 171,
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (BuildContext, BoxConstraints constraints) {
-              return Row(
-                children: [
-                  Padding(
-                    padding: isArabic
-                        ? EdgeInsets.only(right: Get.width * 0.07)
-                        : EdgeInsets.only(left: Get.width * 0.07),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.MY_APPOINTMENTS);
-                      },
-                      child: Container(
-                        height: 171,
-                        width: 164,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              SvgPicture.asset(
-                                ImagesManager.booking,
-                                height: 65,
-                                width: 60,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'appointments_management'.tr,
-                                style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
-                                  fontSize: FontSizeManager.s15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // SizedBox(
-                  //   width: 10,
-                  // ),
-                  Padding(
-                    padding: isArabic
-                        ? EdgeInsets.only(right: 10)
-                        : EdgeInsets.only(left: 10),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.SERVICES_MANAGEMENT);
-                      },
-                      child: Container(
-                        height: 171,
-                        width: 164,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              SvgPicture.asset(
-                                ImagesManager.service,
-                                height: 65,
-                                width: 60,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'services_management'.tr,
-                                style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
-                                  fontSize: FontSizeManager.s15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-
-        // 3st Row
-        GestureDetector(
-          onTap: () {
-            Get.toNamed(Routes.REGULATIONS_MANAGEMENT);
-          },
-          child: Container(
-            height: 171,
-            width: double.infinity,
-            child: LayoutBuilder(
-              builder: (BuildContext, BoxConstraints constraints) {
-                return Row(
-                  children: [
-                    Padding(
-                      padding: isArabic
-                          ? EdgeInsets.only(right: Get.width * 0.07)
-                          : EdgeInsets.only(left: Get.width * 0.07),
-                      child: Container(
-                        height: 171,
-                        width: 164,
-                        decoration: BoxDecoration(
-                          color: ColorsManager.whiteColor,
-                          borderRadius: BorderRadius.circular(15),
-                          boxShadow: [
-                            BoxShadow(
-                              color: ColorsManager.shadowColor,
-                              blurRadius: 6,
-                              offset: Offset(0, 3),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 30,
-                              ),
-                              SvgPicture.asset(
-                                ImagesManager.terms,
-                                height: 65,
-                                width: 60,
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                'terms'.tr,
-                                style: getRegularStyle(
-                                  color: ColorsManager.fontColor,
-                                  fontSize: FontSizeManager.s15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: isArabic
-                          ? EdgeInsets.only(right: 10)
-                          : EdgeInsets.only(left: 10),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.toNamed(Routes.MORE_SCREEN);
-                        },
-                        child: Container(
-                          height: 171,
-                          width: 164,
-                          decoration: BoxDecoration(
-                            color: ColorsManager.whiteColor,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                color: ColorsManager.shadowColor,
-                                blurRadius: 6,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                SvgPicture.asset(
-                                  ImagesManager.setting,
-                                  height: 65,
-                                  width: 60,
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  'settings'.tr,
-                                  style: getRegularStyle(
-                                    color: ColorsManager.fontColor,
-                                    fontSize: FontSizeManager.s15,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
+        Expanded(
+          child: Align(
+            alignment: isArabic ? Alignment.centerLeft : Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () => Get.toNamed('/notifications'),
+              child: SvgPicture.asset(
+                ImagesManager.notification,
+                height: context.responsive(
+                    mobile: 24.0, tablet: 28.0, desktop: 32.0),
+              ),
             ),
           ),
         ),
-          ],
-        ),
-       )
-      ]),
+      ],
     );
   }
+
+  Widget _buildMenuGrid(BuildContext context, bool isArabic) {
+    final menuItems = [
+      _MenuItem(
+        icon: ImagesManager.building,
+        title: 'daklia_management'.tr,
+        route: Routes.DAKLIA_PROFILE,
+      ),
+      _MenuItem(
+        icon: ImagesManager.rooms,
+        title: 'rooms_management'.tr,
+        route: Routes.ROOM_MANAGEMENT,
+      ),
+      _MenuItem(
+        icon: ImagesManager.booking,
+        title: 'appointments_management'.tr,
+        route: Routes.MY_APPOINTMENTS,
+      ),
+      _MenuItem(
+        icon: ImagesManager.service,
+        title: 'services_management'.tr,
+        route: Routes.SERVICES_MANAGEMENT,
+      ),
+      _MenuItem(
+        icon: ImagesManager.terms,
+        title: 'terms'.tr,
+        route: Routes.REGULATIONS_MANAGEMENT,
+      ),
+      _MenuItem(
+        icon: ImagesManager.setting,
+        title: 'settings'.tr,
+        route: Routes.MORE_SCREEN,
+      ),
+    ];
+
+    final columns = ResponsiveHelper.responsiveGridColumns(context);
+    final spacing =
+        context.responsive(mobile: 12.0, tablet: 16.0, desktop: 20.0);
+
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: columns,
+        crossAxisSpacing: spacing,
+        mainAxisSpacing: spacing,
+        childAspectRatio:
+            context.responsive(mobile: 1.0, tablet: 1.0, desktop: 1.0),
+      ),
+      itemCount: menuItems.length,
+      itemBuilder: (context, index) =>
+          _buildMenuCard(context, menuItems[index]),
+    );
+  }
+
+  Widget _buildMenuCard(BuildContext context, _MenuItem item) {
+    final cardPadding =
+        context.responsive(mobile: 16.0, tablet: 20.0, desktop: 24.0);
+    final iconSize =
+        context.responsive(mobile: 50.0, tablet: 60.0, desktop: 60.0);
+    final fontSize = ResponsiveHelper.responsiveFontSize(FontSizeManager.s14);
+
+    return GestureDetector(
+      onTap: () => Get.toNamed(item.route),
+      child: Container(
+        decoration: BoxDecoration(
+          color: ColorsManager.whiteColor,
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              color: ColorsManager.shadowColor,
+              blurRadius: 6,
+              offset: Offset(0, 3),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(cardPadding),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: SvgPicture.asset(
+                  item.icon,
+                  height: iconSize,
+                  width: iconSize,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(
+                  height: context.responsive(
+                      mobile: 8.0, tablet: 12.0, desktop: 16.0)),
+              Text(
+                item.title,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: getRegularStyle(
+                  color: ColorsManager.fontColor,
+                  fontSize: fontSize,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MenuItem {
+  final String icon;
+  final String title;
+  final String route;
+
+  _MenuItem({
+    required this.icon,
+    required this.title,
+    required this.route,
+  });
 }

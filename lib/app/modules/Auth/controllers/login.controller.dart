@@ -30,14 +30,16 @@ class LoginController extends GetxController {
   var networkController = NetworkController();
 
   Future<LoginModel> login() async {
+    log('Login called with phone: $phone, password: $password');
     return await loginProvider
         .loginUser(
       phone: phone,
       password: password,
     )
         .timeout(
-      Duration(seconds: 2),
+      Duration(seconds: 30),
       onTimeout: () {
+        log('Login timeout!');
         EasyLoading.dismiss();
         return LoginModel();
       },

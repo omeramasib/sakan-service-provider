@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -31,7 +33,7 @@ Widget phoneNumberFormField(
         keyboardType: TextInputType.phone,
         controller: controller.phoneNumberController,
         onSaved: (value) {
-          controller.phone = '+${controller.key}${value!}';
+          controller.phone = '${controller.key.value}${value!}';
           print('this is the daklia phone number: ${controller.phone}');
         },
         validator: (value) {
@@ -195,7 +197,7 @@ Widget newPasswordFormField(BuildContext context, Color color, String hinText,
       (() => SizedBox(
             width: 315,
             child: TextFormField(
-              obscureText: controller.isObscure.value == true ? true : false,
+              obscureText: controller.isObscureNew.value,
               controller: controller.passwordController,
               validator: (value) {
                 return Validations().validatePassword(value!);
@@ -240,7 +242,7 @@ Widget newPasswordFormField(BuildContext context, Color color, String hinText,
 Widget dakliaNameFormField(BuildContext context, dynamic controller,
     Color color, String hinText, Color hinTextColor) {
   return SizedBox(
-    width: 315,
+    width: double.infinity,
     child: TextFormField(
       keyboardType: TextInputType.name,
       controller: controller.nameController,
@@ -709,10 +711,16 @@ Widget addPhotoWidget(BuildContext context, dynamic controller, String text) {
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Image.file(
-                File(controller.imagePath.value),
-                fit: BoxFit.cover,
-              ),
+              child: kIsWeb
+                  ? Icon(
+                      Icons.check_circle,
+                      color: ColorsManager.mainColor,
+                      size: 40,
+                    )
+                  : Image.file(
+                      File(controller.imagePath.value),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
   );
@@ -852,11 +860,11 @@ Widget editProfileRoomCountWidget(
   );
 }
 
-// add photo widget
+// add photo widget for room with multiple image support
 Widget addRoomPhotoWidget(
     BuildContext context, dynamic controller, String text) {
   return Obx(
-    () => controller.imagePath.value == ''
+    () => controller.imagePaths.isEmpty
         ? Container(
             height: 94,
             width: 315,
@@ -872,8 +880,7 @@ Widget addRoomPhotoWidget(
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // controller.getImage(ImageSource.camera);
-                      selectImage(context, controller);
+                      selectMultipleImages(context, controller);
                     },
                     child: SvgPicture.asset(
                       ImagesManager.daklia_image,
@@ -894,19 +901,167 @@ Widget addRoomPhotoWidget(
             ),
           )
         : Container(
-            height: 94,
             width: 315,
             decoration: BoxDecoration(
               color: ColorsManager.whiteColor,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Center(
-              child: Image.file(
-                File(controller.imagePath.value),
-                fit: BoxFit.cover,
-              ),
+            child: Column(
+              children: [
+                // Image grid
+                SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.imagePaths.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == controller.imagePaths.length) {
+                        // Add more button
+                        return GestureDetector(
+                          onTap: () {
+                            selectMultipleImages(context, controller);
+                          },
+                          child: Container(
+                            width: 80,
+                            height: 80,
+                            margin: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: ColorsManager.lightGreyColor,
+                              borderRadius: BorderRadius.circular(10),
+                              border:
+                                  Border.all(color: ColorsManager.mainColor),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.add_photo_alternate,
+                                color: ColorsManager.mainColor,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      // Image thumbnail with delete option
+                      return Stack(
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 80,
+                            margin: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: kIsWeb
+                                  ? Icon(
+                                      Icons.check_circle,
+                                      color: ColorsManager.mainColor,
+                                      size: 40,
+                                    )
+                                  : Image.file(
+                                      File(controller.imagePaths[index]),
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: GestureDetector(
+                              onTap: () {
+                                controller.removeImage(index);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: ColorsManager.errorColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.close,
+                                  color: ColorsManager.whiteColor,
+                                  size: 18,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                // Image count label
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    '${controller.imagePaths.length} ${'images_selected'.tr}',
+                    style: getRegularStyle(
+                      color: ColorsManager.fontColor,
+                      fontSize: FontSizeManager.s12,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+  );
+}
+
+// Dialog for selecting multiple images
+void selectMultipleImages(BuildContext context, dynamic controller) {
+  showModalBottomSheet(
+    context: context,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) => Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'select_images'.tr,
+            style: getMediumStyle(
+              color: ColorsManager.blackColor,
+              fontSize: FontSizeManager.s16,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  controller.getImageFromCamera(ImageSource.camera);
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.camera_alt,
+                        size: 40, color: ColorsManager.mainColor),
+                    const SizedBox(height: 8),
+                    Text('camera'.tr),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  controller.pickMultipleImages();
+                },
+                child: Column(
+                  children: [
+                    Icon(Icons.photo_library,
+                        size: 40, color: ColorsManager.mainColor),
+                    const SizedBox(height: 8),
+                    Text('gallery'.tr),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+        ],
+      ),
+    ),
   );
 }
 
@@ -1001,10 +1156,16 @@ Widget dakliaConfirmationWidget(
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Image.file(
-                File(controller.confirmationPath.value),
-                fit: BoxFit.cover,
-              ),
+              child: kIsWeb
+                  ? Icon(
+                      Icons.check_circle,
+                      color: ColorsManager.mainColor,
+                      size: 40,
+                    )
+                  : Image.file(
+                      File(controller.confirmationPath.value),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
   );
@@ -1059,10 +1220,16 @@ Widget dakliaOwnerIdWidget(
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
-              child: Image.file(
-                File(controller.ownerIdPath.value),
-                fit: BoxFit.cover,
-              ),
+              child: kIsWeb
+                  ? Icon(
+                      Icons.check_circle,
+                      color: ColorsManager.mainColor,
+                      size: 40,
+                    )
+                  : Image.file(
+                      File(controller.ownerIdPath.value),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
   );

@@ -46,24 +46,20 @@ class MoreScreenView extends GetView<MoreScreenController> {
       body: Scaffold(
         backgroundColor: ColorsManager.greyColor,
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: isArabic
-                    ? const EdgeInsets.only(
-                        top: AppPadding.p30,
-                        left: AppPadding.p40,
-                      )
-                    : const EdgeInsets.only(
-                        top: AppPadding.p30,
-                        right: AppPadding.p40,
-                      ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 500),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 30,
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                     color: ColorsManager.whiteColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  width: 315,
+                  width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
@@ -539,7 +535,7 @@ class MoreScreenView extends GetView<MoreScreenController> {
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

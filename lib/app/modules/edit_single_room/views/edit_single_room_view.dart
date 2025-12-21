@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -160,23 +162,35 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
                                                             height: 95,
                                                             width: 317,
                                                             fit: BoxFit.cover,
-                                                            errorBuilder: (context, error, stackTrace) {
-                                                              return Image.asset(
-                                                                ImagesManager.room_example,
+                                                            errorBuilder:
+                                                                (context, error,
+                                                                    stackTrace) {
+                                                              return Image
+                                                                  .asset(
+                                                                ImagesManager
+                                                                    .room_example,
                                                                 height: 95,
                                                                 width: 317,
-                                                                fit: BoxFit.cover,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                               );
                                                             },
-                                                            loadingBuilder: (context, child, loadingProgress) {
-                                                              if (loadingProgress == null) return child;
+                                                            loadingBuilder:
+                                                                (context, child,
+                                                                    loadingProgress) {
+                                                              if (loadingProgress ==
+                                                                  null)
+                                                                return child;
                                                               return Container(
                                                                 height: 95,
                                                                 width: 317,
                                                                 child: Center(
-                                                                  child: CircularProgressIndicator(
-                                                                    color: ColorsManager.mainColor,
-                                                                    value: loadingProgress.expectedTotalBytes != null
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    color: ColorsManager
+                                                                        .mainColor,
+                                                                    value: loadingProgress.expectedTotalBytes !=
+                                                                            null
                                                                         ? loadingProgress.cumulativeBytesLoaded /
                                                                             loadingProgress.expectedTotalBytes!
                                                                         : null,
@@ -188,46 +202,50 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
                                                           Container(
                                                             height: 95,
                                                             width: 317,
-                                                            decoration: BoxDecoration(
+                                                            decoration:
+                                                                BoxDecoration(
                                                               borderRadius:
-                                                                  BorderRadius.circular(
-                                                                      10),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10),
                                                               color: ColorsManager
                                                                   .blackColor
-                                                                  .withOpacity(0.4),
+                                                                  .withOpacity(
+                                                                      0.4),
                                                             ),
                                                           ),
                                                           Positioned.fill(
                                                             child: Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .all(
-                                                            AppPadding.p10,
-                                                          ),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              InkWell(
-                                                                onTap: () {
-                                                                  selectImage(
-                                                                      context,
-                                                                      controller);
-                                                                },
-                                                                child:
-                                                                    SvgPicture
-                                                                        .asset(
-                                                                  ImagesManager
-                                                                      .edit_profile_icon,
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
+                                                              children: [
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                    AppPadding
+                                                                        .p10,
+                                                                  ),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: [
+                                                                      InkWell(
+                                                                        onTap:
+                                                                            () {
+                                                                          selectImage(
+                                                                              context,
+                                                                              controller);
+                                                                        },
+                                                                        child: SvgPicture
+                                                                            .asset(
+                                                                          ImagesManager
+                                                                              .edit_profile_icon,
+                                                                        ),
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                )
+                                                              ],
                                                             ),
                                                           ),
                                                         ],
@@ -253,11 +271,21 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
                                                                 .circular(10),
                                                       ),
                                                       child: Center(
-                                                        child: Image.file(
-                                                          File(controller
-                                                              .imagePath.value),
-                                                          fit: BoxFit.cover,
-                                                        ),
+                                                        child: kIsWeb
+                                                            ? Icon(
+                                                                Icons
+                                                                    .check_circle,
+                                                                color: ColorsManager
+                                                                    .mainColor,
+                                                                size: 40,
+                                                              )
+                                                            : Image.file(
+                                                                File(controller
+                                                                    .imagePath
+                                                                    .value),
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
                                                       ),
                                                     ),
                                                   ),

@@ -20,12 +20,15 @@ class ResetpasswordController extends GetxController {
   String newPassword = '';
   String confirmPassword = '';
   var isObscure = true.obs;
+  var isObscureNew = true.obs;
   var isObscureConfirm = true.obs;
 
   Future<void> resetPassword() async {
-    return await resetPasswordPr.resetPassword(
+    return await resetPasswordPr
+        .resetPassword(
       password: newPassword,
-    ).timeout(
+    )
+        .timeout(
       Duration(seconds: 1),
       onTimeout: () {
         EasyLoading.dismiss();
@@ -34,7 +37,7 @@ class ResetpasswordController extends GetxController {
     );
   }
 
-   checkResetPassword() {
+  checkResetPassword() {
     var isValid = resetPasswordFormKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -91,6 +94,10 @@ class ResetpasswordController extends GetxController {
 
   @override
   void onClose() {
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    otpController.dispose();
+    newPasswordController.dispose();
     super.onClose();
   }
 }

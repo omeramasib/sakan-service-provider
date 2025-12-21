@@ -179,6 +179,7 @@ const Map<String, String> arSA = {
   'booking_details': 'بيانات الحجز',
   'student_details': 'بيانات الطالبة',
   'paid': 'مدفوع',
+  'no_pending_bookings': 'عفوا لاتوجد حجوزات بعد',
   'beds_number_in_room': 'عدد السرائر في الغرفة',
   'room_price': 'سعر الغرفة',
   'accept': 'قبول',
@@ -189,7 +190,28 @@ const Map<String, String> arSA = {
   'ID_photo': 'صورة اثبات الشخصية',
   'appointment_rejection_reason': 'وضح سبب الرفض',
   'appointment_reject': 'رفض الحجز',
+  'no_previous_bookings': 'عفوا لاتوجد حجوزات سابقة',
   'send': 'ارسال',
+
+  // Booking status and currency
+  'sdg': 'ج.س',
+  'approved': 'موافق عليه',
+  'rejected': 'مرفوض',
+  'cancelled': 'ملغي',
+  'daily': 'يومي',
+  'monthly': 'شهري',
+  'customer_name': 'اسم العميل',
+  'customer_type': 'نوع العميل',
+  'employee': 'موظف',
+  'student': 'طالب',
+  'dates': 'التواريخ',
+  'beds_booked': 'عدد السرائر المحجوزة',
+  'booking_approved': 'تمت الموافقة على الحجز بنجاح',
+  'booking_rejected': 'تم رفض الحجز',
+  'please_enter_rejection_reason': 'الرجاء ادخال سبب الرفض',
+  'rejection_reason': 'سبب الرفض',
+  'unknown': 'غير معروف',
+  'no_booking_data': 'لا توجد بيانات حجز',
 
   // profile screen
   'confirmed': 'موثق',
@@ -585,4 +607,8 @@ const Map<String, String> arSA = {
   'select_booking_type': 'يرجى اختيار نوع حجز واحد على الأقل',
   'enter_daily_price': 'يرجى إدخال السعر اليومي',
   'enter_monthly_price': 'يرجى إدخال السعر الشهري',
+
+  // Multiple image selection
+  'images_selected': 'صور مختارة',
+  'select_images': 'اختر الصور',
 };

@@ -26,6 +26,9 @@ dependencies:
   http_parser: ^4.0.1
   shimmer: ^2.0.0
   flutter_native_splash: ^2.2.16
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  firebase_analytics: ^10.7.0
 
 
 dependency_overrides:

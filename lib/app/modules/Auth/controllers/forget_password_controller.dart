@@ -16,7 +16,7 @@ class ForgetPasswordController extends GetxController {
 
   String phone = '';
   String password = '';
-  RxInt key = 966.obs;
+  RxInt key = 249.obs;
   var isObscure = true.obs;
 
   var forgetPasswordP = ForgetPasswordProvider();
@@ -24,9 +24,11 @@ class ForgetPasswordController extends GetxController {
   var networkController = NetworkController();
 
   Future<ForgetPasswordModel> forgetPassword() async {
-    return await forgetPasswordP.forgetPassword(
+    return await forgetPasswordP
+        .forgetPassword(
       phone: phone,
-    ).timeout(
+    )
+        .timeout(
       Duration(seconds: 1),
       onTimeout: () {
         EasyLoading.dismiss();

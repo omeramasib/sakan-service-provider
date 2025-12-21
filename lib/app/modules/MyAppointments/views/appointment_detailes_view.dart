@@ -48,11 +48,13 @@ class AppointmentDetailesView extends GetView {
                   padding: EdgeInsets.only(
                     right: Get.width * 0.2,
                   ),
-                  child: Text(
-                    'booking_details'.tr,
-                    style: getMediumStyle(
-                      fontSize: FontSizeManager.s15,
-                      color: ColorsManager.blackColor,
+                  child: Center(
+                    child: Text(
+                      'booking_details'.tr,
+                      style: getMediumStyle(
+                        fontSize: FontSizeManager.s15,
+                        color: ColorsManager.blackColor,
+                      ),
                     ),
                   ),
                 ),
@@ -72,39 +74,39 @@ class AppointmentDetailesView extends GetView {
                     : studentInfoWidget(context),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                    right: Get.width * 0.12,
-                  ),
-                  child: ButtonsManager.primaryButton(
-                    text: 'accept'.tr,
-                    onPressed: () {},
-                    context: context,
-                    buttonColor: ColorsManager.greenColor,
-                    minimumSize: Size(157, 50),
-                    maximumSize: Size(157, 50),
-                  ),
+            Obx(() {
+              final booking = controller.booking;
+              // Only show accept/reject buttons for pending bookings
+              if (booking?.bookingStatus != 'pending') {
+                return const SizedBox.shrink();
+              }
+
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ButtonsManager.primaryButton(
+                      text: 'accept'.tr,
+                      onPressed: () => controller.acceptBooking(),
+                      context: context,
+                      buttonColor: ColorsManager.greenColor,
+                      minimumSize: Size(150, 50),
+                      maximumSize: Size(150, 50),
+                    ),
+                    SizedBox(width: 20),
+                    ButtonsManager.primaryButton(
+                      text: 'reject'.tr,
+                      onPressed: () => appointmentReject(context),
+                      context: context,
+                      buttonColor: ColorsManager.errorColor,
+                      minimumSize: Size(150, 50),
+                      maximumSize: Size(150, 50),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: 10,
-                ),
-                ButtonsManager.primaryButton(
-                  text: 'reject'.tr,
-                  onPressed: () {
-                    appointmentReject(context);
-                  },
-                  context: context,
-                  buttonColor: ColorsManager.errorColor,
-                  minimumSize: Size(157, 50),
-                  maximumSize: Size(157, 50),
-                ),
-              ],
-            )
+              );
+            })
           ],
         ));
   }
