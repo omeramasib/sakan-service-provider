@@ -36,6 +36,7 @@ Authorization: Token <your_auth_token>
 
 ## Table of Contents
 
+0. [App Configuration (Splash Screen)](#0-app-configuration-splash-screen)
 1. [User Registration & Authentication](#1-user-registration--authentication)
 2. [Person Profiles (Student/Employee)](#2-person-profiles-studentemployee)
 3. [Daklia (Property) Endpoints](#3-daklia-property-endpoints)
@@ -48,6 +49,95 @@ Authorization: Token <your_auth_token>
 10. [Complaints & Suggestions](#10-complaints--suggestions)
 11. [Status Codes & Error Handling](#11-status-codes--error-handling)
 12. [Mobile App Flow](#12-mobile-app-flow)
+
+---
+
+## 0. App Configuration (Splash Screen)
+
+This endpoint should be called on the **Splash Screen** before any authentication to check app status.
+
+**Supports two apps:**
+- `sakan-customer` - Customer app for students/employees
+- `sakan-service-provider` - Service provider app for Daklia owners
+
+### 0.1 Get App Configuration
+
+Returns maintenance mode status, version requirements, and store URLs for the specified app.
+
+**Endpoint:** `GET /api/app-configuration/?app_type={customer|provider}`
+
+**Authentication:** Not required (public endpoint)
+
+**Query Parameters:**
+
+| Parameter | Required | Values | Description |
+|-----------|----------|--------|-------------|
+| `app_type` | Yes | `customer` or `provider` | Which app's configuration to retrieve |
+
+**Examples:**
+- Customer app: `GET /api/app-configuration/?app_type=customer`
+- Service Provider app: `GET /api/app-configuration/?app_type=provider`
+
+**Success Response (200 OK):**
+
+```json
+{
+  "min_android_version": "1.0.0",
+  "min_ios_version": "1.0.0",
+  "current_active_version": "1.2.3",
+  "is_maintenance_mode": false,
+  "maintenance_message": "We will be back soon. We're doing some maintenance.",
+  "store_urls": {
+    "android": "https://play.google.com/store/apps/details?id=com.sakan.customer",
+    "ios": "https://apps.apple.com/app/sakan-customer"
+  },
+  "is_force_update": false
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `min_android_version` | string | Minimum required Android app version |
+| `min_ios_version` | string | Minimum required iOS app version |
+| `current_active_version` | string | Currently recommended/active version |
+| `is_maintenance_mode` | boolean | If `true`, show maintenance screen and block access |
+| `maintenance_message` | string | Message to display during maintenance |
+| `store_urls` | object | Store URLs for app updates |
+| `is_force_update` | boolean | If `true`, user must update and cannot skip |
+
+**Error Response (400 Bad Request):**
+
+```json
+{
+  "error": "Invalid or missing app_type parameter",
+  "message": "app_type must be 'customer' or 'provider'",
+  "valid_values": ["customer", "provider"]
+}
+```
+
+### Mobile Client Behavior:
+
+1. **If `is_maintenance_mode == true`:**
+   - Show full-screen maintenance screen
+   - Display `maintenance_message`
+   - Block all further access
+
+2. **Else if user's app version < `min_android_version` / `min_ios_version`:**
+   - Show non-dismissible update dialog
+   - Link to appropriate store URL
+   - If `is_force_update == true`: User CANNOT skip
+   - If `is_force_update == false`: User CAN optionally dismiss
+
+3. **Else:** Proceed with normal app flow
+
+### Version Comparison:
+
+Compare as semantic versions (major.minor.patch):
+```
+Split on '.', compare each segment as integers from left to right.
+Example: "1.2.3" vs "1.2.10" → 1.2.10 is greater
+```
+
 
 ---
 
