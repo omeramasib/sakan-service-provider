@@ -41,6 +41,29 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
+  flutter_flavorizr: 2.4.1
+
+flavorizr:
+  flavors:
+    development:
+      app:
+        name: "Sakan Provider Dev"
+      android:
+        applicationId: "com.sakan.service_provider"
+      ios:
+        bundleId: "com.sakan.service-provider"
+        buildSettings:
+          PRODUCT_BUNDLE_IDENTIFIER: "com.sakan.service-provider"
+
+    production:
+      app:
+        name: "Sakan Provider"
+      android:
+        applicationId: "com.sakan.service_provider"
+      ios:
+        bundleId: "com.sakan.service-provider"
+        buildSettings:
+          PRODUCT_BUNDLE_IDENTIFIER: "com.sakan.service-provider"
 
 flutter_native_splash:
   color: "#FFFFFF"

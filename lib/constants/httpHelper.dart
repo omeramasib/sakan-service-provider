@@ -1,13 +1,12 @@
-class HttpHelper {
-  // Production URLs
-  static const baseUrl = 'https://sakan-sd.com/api/v1/user';
-  static const baseUrlPerson = 'https://sakan-sd.com/api/v1/person';
-  static const baseUrl2 = 'https://sakan-sd.com/api/v1/daklia';
+import 'flavor_config.dart';
 
-  // Local development URLs
-  //static const baseUrl = 'http://localhost:8000/api/v1/user';
-  //static const baseUrlPerson = 'http://localhost:8000/api/v1/person';
-  //static const baseUrl2 = 'http://localhost:8000/api/v1/daklia';
+class HttpHelper {
+  // Dynamic URLs based on current flavor
+  static String get baseUrl => '${FlavorConfig.instance.baseUrl}/api/v1/user';
+  static String get baseUrlPerson =>
+      '${FlavorConfig.instance.baseUrl}/api/v1/person';
+  static String get baseUrl2 =>
+      '${FlavorConfig.instance.baseUrl}/api/v1/daklia';
   static const register = '/create';
   static const login = '/login';
   static const verifyOtp = '/verify-code';
