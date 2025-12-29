@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../constants/colors_manager.dart';
@@ -149,7 +149,7 @@ class RoomManagementController extends GetxController {
   final addRoomProvider = AddRoomProvider();
   final removeRoomProvider = RemoveRoomProvider();
   final roomFeatureProvider = RoomFeaturesProvider();
-  final storage = GetStorage();
+  final storage = SecureStorageService.instance;
   final roomsList = <DakliaRoomModel>[].obs;
   final featuresList = <RoomFeaturesModel>[].obs;
   final isLoading = false.obs;

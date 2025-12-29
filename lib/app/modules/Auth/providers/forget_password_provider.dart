@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 
 import '../../../../constants/dialogs.dart';
@@ -14,7 +14,7 @@ import '../models/forget_password_model.dart';
 class ForgetPasswordProvider extends GetConnect {
   static ForgetPasswordProvider get instance =>
       Get.put(ForgetPasswordProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
   @override
   void onInit() {
@@ -43,7 +43,7 @@ class ForgetPasswordProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('phone', phone);
+      await storage.write('phone', phone);
       Get.to(OtpScreen(), arguments: 0);
       return ForgetPasswordModel.fromJson(data);
     }

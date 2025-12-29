@@ -5,7 +5,6 @@ import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import 'app/modules/network/bindings/network_binding.dart';
 import 'app/routes/app_pages.dart';
@@ -25,7 +24,7 @@ void main() async {
     debugPrint('MAIN: Stack trace: $stack');
   }
 
-  await GetStorage.init();
+  // SecureStorageService is initialized on first use, no init needed
 
   runApp(
     GetMaterialApp(

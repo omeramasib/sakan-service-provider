@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 
 import '../../../../constants/dialogs.dart';
@@ -14,7 +14,7 @@ import '../models/login_model.dart';
 
 class ResetPasswordProvider extends GetConnect {
   static ResetPasswordProvider get instance => Get.put(ResetPasswordProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
 
   Timer? timer;
   @override
@@ -29,10 +29,11 @@ class ResetPasswordProvider extends GetConnect {
   Future<void> resetPassword({
     required String password,
   }) async {
+    String? phone = await storage.read('phone');
     final response = await put(
       HttpHelper.baseUrl + HttpHelper.resetPassword,
       {
-        'phone_number': storage.read('phone'),
+        'phone_number': phone,
         'password': password,
       },
     );

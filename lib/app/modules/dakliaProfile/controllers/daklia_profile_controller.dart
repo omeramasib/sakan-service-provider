@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 
 import '../model/daklia_profile_model.dart';
 import '../provider/daklia_profile_provider.dart';
@@ -12,7 +12,7 @@ class DakliaProfileController extends GetxController {
       Get.put(DakliaProfileController());
   RxList profileList = <DakliaProfileModel>[].obs;
   RxBool isLoading = false.obs;
-  var storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   var provider = DakliaProfileProvider();
   getDakliaProfile() async {
     isLoading.value = true;

@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import '../../../helpers/fcm_helper.dart';
 
 import '../../../../constants/dialogs.dart';
@@ -14,7 +14,7 @@ import '../otp/otp.screen.dart';
 
 class RegisterProvider extends GetConnect {
   static RegisterProvider get instance => Get.put(RegisterProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   // var networkController = Get.put(NetworkController());
   Timer? timer;
   @override
@@ -54,10 +54,10 @@ class RegisterProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('token', data['token']);
-      storage.write('otp', data['otp']);
-      storage.write('phone', data['phone_number']);
-      storage.write('userId', data['id']);
+      await storage.write('token', data['token'].toString());
+      await storage.write('otp', data['otp'].toString());
+      await storage.write('phone', data['phone_number'].toString());
+      await storage.write('userId', data['id'].toString());
       FCMHelper.instance.updateFCMToken();
       Get.offAll(OtpScreen(), arguments: 1);
       return RegisterModel.fromJson(data);

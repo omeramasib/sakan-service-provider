@@ -1,9 +1,7 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../language/ar.dart';
 import '../language/en.dart';
@@ -11,22 +9,36 @@ import '../language/en.dart';
 class LanguageController extends GetxController implements Translations {
   static LanguageController get instance => Get.put(LanguageController());
 
-  final storage = GetStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
+
+  // Cached locale value for synchronous access
+  String? _cachedLocale;
 
   var locale = const Locale('en', 'US');
   var fallbackLocale = const Locale('en', 'US');
 
+  @override
+  void onInit() {
+    super.onInit();
+    _loadCachedLocale();
+  }
+
+  Future<void> _loadCachedLocale() async {
+    _cachedLocale = await _storage.read(key: 'locale');
+  }
+
   String get getLocale {
-    if (storage.hasData('locale')) {
-      return storage.read('locale');
+    if (_cachedLocale != null) {
+      return _cachedLocale!;
     }
-    return Get.deviceLocale!.languageCode;
+    return Get.deviceLocale?.languageCode ?? 'ar';
   }
 
   get isEnglish => getLocale == 'en';
 
   set setLocale(languageCode) {
-    storage.write('locale', languageCode);
+    _cachedLocale = languageCode;
+    _storage.write(key: 'locale', value: languageCode);
     Get.offAllNamed('/home');
   }
 

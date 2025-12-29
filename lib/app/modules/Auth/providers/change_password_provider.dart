@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -14,7 +14,7 @@ import '../../network/controllers/network_controller.dart';
 class ChangePasswordProvider extends GetConnect {
   static ChangePasswordProvider get instance =>
       Get.put(ChangePasswordProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   var networkController = NetworkController.instance;
   Timer? timer;
   @override
@@ -30,10 +30,11 @@ class ChangePasswordProvider extends GetConnect {
     required String oldPassword,
     required String newPassword,
   }) async {
+    String? phone = await storage.read('phone');
     final response = await put(
       HttpHelper.baseUrl + HttpHelper.changePassword,
       {
-        'phone_number': storage.read('phone'),
+        'phone_number': phone,
         'password': oldPassword,
         'new_password': newPassword,
       },

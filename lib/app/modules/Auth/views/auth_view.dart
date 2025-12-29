@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/constants/images_manager.dart';
 
 import '../../../../constants/colors_manager.dart';
@@ -17,7 +17,7 @@ class AuthView extends GetView<AuthController> {
   @override
   Widget build(BuildContext context) {
     Get.put(AuthController());
-    final storage = GetStorage();
+    final storage = SecureStorageService.instance;
     int? number = Get.arguments;
     if (number == 0) {
       controller.selectLoginOrRegister = false;

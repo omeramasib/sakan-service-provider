@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/app/modules/Auth/resetpassword/views/reset_password_view.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 import '../../../helpers/fcm_helper.dart';
@@ -30,13 +30,13 @@ class OtpController extends GetxController {
   var forgetPasswordProvider = ForgetPasswordProvider.instance;
 
   // storage insialisations
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
 
   // text field values
   String code = '';
 
   void resendOtp() async {
-    String? phone = storage.read('phone');
+    String? phone = await storage.read('phone');
     if (phone != null) {
       EasyLoading.show(status: 'loading'.tr);
       await forgetPasswordProvider.forgetPassword(phone: phone);

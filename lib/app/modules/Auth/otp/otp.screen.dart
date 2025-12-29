@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:sakan/constants/images_manager.dart';
 
@@ -21,7 +21,7 @@ class OtpScreen extends GetView<OtpController> {
   @override
   Widget build(BuildContext context) {
     int? number = Get.arguments;
-    var storage = GetStorage();
+    final SecureStorageService storage = SecureStorageService.instance;
     return Scaffold(
       backgroundColor: ColorsManager.whiteColor,
       body: Form(

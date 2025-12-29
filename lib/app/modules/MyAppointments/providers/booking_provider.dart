@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../constants/dialogs.dart';
@@ -14,7 +14,7 @@ import '../models/booking_model.dart';
 
 class BookingProvider extends GetConnect {
   static BookingProvider get instance => Get.put(BookingProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
 
   @override
@@ -39,10 +39,11 @@ class BookingProvider extends GetConnect {
 
       log('Fetching owner bookings from: $url');
 
+      String? token = await storage.read('token');
       final response = await http.get(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
           'Accept': 'application/json',
         },
       ).timeout(const Duration(seconds: 30));
@@ -84,10 +85,11 @@ class BookingProvider extends GetConnect {
 
       log('Fetching booking details from: $url');
 
+      String? token = await storage.read('token');
       final response = await http.get(
         Uri.parse(url),
         headers: {
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
           'Accept': 'application/json',
         },
       ).timeout(const Duration(seconds: 30));
@@ -128,11 +130,12 @@ class BookingProvider extends GetConnect {
 
       log('Approving booking at: $url');
 
+      String? token = await storage.read('token');
       final response = await http
           .post(
             Uri.parse(url),
             headers: {
-              'Authorization': 'Token ${storage.read('token')}',
+              'Authorization': 'Token $token',
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
@@ -181,11 +184,12 @@ class BookingProvider extends GetConnect {
 
       log('Rejecting booking at: $url');
 
+      String? token = await storage.read('token');
       final response = await http
           .post(
             Uri.parse(url),
             headers: {
-              'Authorization': 'Token ${storage.read('token')}',
+              'Authorization': 'Token $token',
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },

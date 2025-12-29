@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../network/controllers/network_controller.dart';
@@ -22,7 +22,7 @@ class ChangePasswordController extends GetxController {
 
   var provider = ChangePasswordProvider.instance;
   // storage insialisations
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   // text field values
   String oldPassword = '';
   String newPassword = '';

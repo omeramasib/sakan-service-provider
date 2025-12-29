@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/app/modules/Auth/providers/reset_password_provider.dart';
 
 import '../../../../constants/dialogs.dart';
@@ -11,7 +11,7 @@ import '../../../../constants/dialogs.dart';
 class ResetpasswordController extends GetxController {
   final GlobalKey<FormState> resetPasswordFormKey = GlobalKey<FormState>();
 
-  var storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   var resetPasswordPr = ResetPasswordProvider();
   late TextEditingController passwordController,
       confirmPasswordController,

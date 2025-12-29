@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/app/routes/app_pages.dart';
 
 import '../../../../constants/dialogs.dart';
@@ -13,7 +13,7 @@ import '../model/daklia_location_model.dart';
 class DakliaLocationProvider extends GetConnect {
   static DakliaLocationProvider get instance =>
       Get.put(DakliaLocationProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   // var networkController = Get.put(NetworkController());
   Timer? timer;
   @override

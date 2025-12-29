@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 
 import '../../../routes/app_pages.dart';
 import '../providers/logout_provider.dart';
@@ -20,7 +20,7 @@ class MoreScreenController extends GetxController {
 
   RxBool isLoading = false.obs;
   var provider = LogoutProvider();
-  var storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
 
   Future<void> submitLogot() async {
     isLoading.value = true;

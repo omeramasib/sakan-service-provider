@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/app/modules/Auth/otp/otp.screen.dart';
 import '../../../helpers/fcm_helper.dart';
 
@@ -15,7 +15,7 @@ import '../models/login_model.dart';
 
 class LoginProvider extends GetConnect {
   static LoginProvider get instance => Get.put(LoginProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
 
   @override
@@ -64,9 +64,9 @@ class LoginProvider extends GetConnect {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        storage.write('token', data['token']);
-        storage.write('userId', data['id']);
-        storage.write('phone', data['phone_number']);
+        await storage.write('token', data['token'].toString());
+        await storage.write('userId', data['id'].toString());
+        await storage.write('phone', data['phone_number'].toString());
 
         debugPrint('>>> DEBUG: user_type = ${data['user_type']}');
         debugPrint('>>> DEBUG: Daklia_id = ${data['Daklia_id']}');
@@ -76,7 +76,7 @@ class LoginProvider extends GetConnect {
           if (data['Daklia_id'] != null) {
             debugPrint(
                 '>>> DEBUG: Daklia_id is NOT null, calling FCMHelper...');
-            storage.write('dakliaId', data['Daklia_id']);
+            await storage.write('dakliaId', data['Daklia_id'].toString());
             Get.offAllNamed(Routes.HOME);
             FCMHelper.instance.updateFCMToken();
             debugPrint('>>> DEBUG: FCMHelper.updateFCMToken() was called');
@@ -109,7 +109,7 @@ class LoginProvider extends GetConnect {
           timer = Timer(const Duration(seconds: 1), () {
             EasyLoading.dismiss();
           });
-          storage.write('phone', phone);
+          await storage.write('phone', phone);
           Dialogs.errorDialog(Get.context!, 'user_not_verified'.tr);
           Get.to(OtpScreen(), arguments: 2);
         }

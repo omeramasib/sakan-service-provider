@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -13,7 +13,7 @@ import '../../network/controllers/network_controller.dart';
 class LogoutProvider extends GetConnect {
   static LogoutProvider get instance => LogoutProvider.instance;
   var networkController = NetworkController.instance;
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
   @override
   void onInit() {
@@ -25,11 +25,12 @@ class LogoutProvider extends GetConnect {
   }
 
   Future<void> logout() async {
+    String? token = await storage.read('token');
     final response =
         await post(HttpHelper.baseUrl + HttpHelper.logout, {}, headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Token ${storage.read('token')}',
+      'Authorization': 'Token $token',
     });
 
     var data = response.body;
@@ -38,7 +39,7 @@ class LogoutProvider extends GetConnect {
     log('this is the status code: $statusCode');
 
     if (statusCode == 200) {
-      storage.remove('token');
+      await storage.delete('token');
       EasyLoading.dismiss();
       Get.offAllNamed(Routes.AUTH, arguments: 0);
     }

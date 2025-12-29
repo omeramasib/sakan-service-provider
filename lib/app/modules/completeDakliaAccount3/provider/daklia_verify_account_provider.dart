@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -15,7 +15,7 @@ import '../model/daklia_verify_account_model.dart';
 
 class DakliaVAProvider extends GetConnect {
   static DakliaVAProvider get instance => Get.put(DakliaVAProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   // var networkController = Get.put(NetworkController());
   Timer? timer;
   @override

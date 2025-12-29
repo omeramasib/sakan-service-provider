@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import '../../../constants/httpHelper.dart';
+import '../services/secure_storage_service.dart';
+import '../../constants/httpHelper.dart';
 
 class FCMHelper extends GetConnect {
   static FCMHelper get instance => Get.put(FCMHelper());
-  final GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
 
   Future<void> updateFCMToken() async {
     // Debug: Log where this method is being called from
@@ -24,7 +24,7 @@ class FCMHelper extends GetConnect {
 
       print('FCM Token obtained: ${token.substring(0, 20)}...');
 
-      String? authToken = storage.read('token');
+      String? authToken = await storage.read('token');
       if (authToken == null) {
         print('Auth Token is null, cannot update FCM token');
         return;

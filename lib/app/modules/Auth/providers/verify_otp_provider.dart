@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -13,7 +13,7 @@ import '../models/verify_otp_model.dart';
 
 class VerifyOtpProvider extends GetConnect {
   static VerifyOtpProvider get instance => Get.put(VerifyOtpProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
   @override
   void onInit() {
@@ -27,10 +27,11 @@ class VerifyOtpProvider extends GetConnect {
   Future<VerifyOtpModel> verifyOtp({
     required String otp_code,
   }) async {
+    String? phone = await storage.read('phone');
     final response = await post(
       HttpHelper.baseUrl + HttpHelper.verifyOtp,
       {
-        'phone_number': storage.read('phone'),
+        'phone_number': phone,
         'otp': otp_code,
       },
       headers: {

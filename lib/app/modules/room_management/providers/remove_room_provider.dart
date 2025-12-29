@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:sakan/response/theResponse.dart';
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 class RemoveRoomProvider extends GetConnect {
   var networkController = NetworkController.instance;
   static RemoveRoomProvider get instance => Get.put(RemoveRoomProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
   @override
   void onInit() {

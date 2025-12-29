@@ -5,7 +5,7 @@ import 'dart:io';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import '../../../services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import '../../../../constants/dialogs.dart';
@@ -18,7 +18,7 @@ import '../models/daklia_rooms_models.dart';
 
 class AddRoomProvider extends GetConnect {
   static AddRoomProvider get instance => Get.put(AddRoomProvider());
-  GetStorage storage = GetStorage();
+  final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
 
   @override

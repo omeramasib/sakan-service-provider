@@ -11,7 +11,7 @@ ThemeData getApplicationTheme() {
     primaryColor: ColorsManager.primaryColor,
 
     // card theme
-    cardTheme: const CardTheme(
+    cardTheme: const CardThemeData(
       color: ColorsManager.whiteColor,
       shadowColor: ColorsManager.greyColor,
       elevation: AppSize.s4,
