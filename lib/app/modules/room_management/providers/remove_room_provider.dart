@@ -29,17 +29,17 @@ class RemoveRoomProvider extends GetConnect {
   }
 
   deleteRoom(String dakliaId, String roomId) async {
-
     final url = Uri.parse(
       '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/${HttpHelper.deleteRoom}',
     );
 
+    final token = await storage.read('token');
     final response = await http.delete(
       url,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
     print('this is the response: ${response.body}');

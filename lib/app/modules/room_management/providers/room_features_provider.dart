@@ -28,79 +28,81 @@ class RoomFeaturesProvider extends GetConnect {
   Future<List<RoomFeaturesModel>> getAllFeatures({
     required String roomId,
   }) async {
-    return await get(
-        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}$roomId/features/',
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
+    final response = await get(
+        '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/features/',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
-        }).then((response) {
-      var data = response.body;
-      var statusCode = response.statusCode;
-      log('this is the status code: $statusCode');
-      log('this is the data: $data');
+          'Authorization': 'Token $token',
+        });
 
-      if (statusCode == 200) {
+    var data = response.body;
+    var statusCode = response.statusCode;
+    log('this is the status code: $statusCode');
+    log('this is the data: $data');
+
+    if (statusCode == 200) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+
+      final List<dynamic> featuresData = response.body;
+      final List<RoomFeaturesModel> features = [];
+      for (final featureData in featuresData) {
+        final feature = RoomFeaturesModel.fromJson(featureData);
+        features.add(feature);
+      }
+      return features;
+    }
+
+    if (statusCode == 400) {
+      if (data['message'] != "Room does not belong to this Daklia") {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-
-        final List<dynamic> featuresData = response.body;
-        final List<RoomFeaturesModel> features = [];
-        for (final featureData in featuresData) {
-          final feature = RoomFeaturesModel.fromJson(featureData);
-          features.add(feature);
-        }
-        return features;
+        Dialogs.errorDialog(Get.context!, 'room_not_belong_to_daklia'.tr);
       }
+    }
 
-      if (statusCode == 400) {
-        if (data['message'] != "Room does not belong to this Daklia") {
-          timer = Timer(const Duration(seconds: 1), () {
-            EasyLoading.dismiss();
-          });
-          Dialogs.errorDialog(Get.context!, 'room_not_belong_to_daklia'.tr);
-        }
-      }
+    if (statusCode == 401) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
+      Get.offAllNamed(Routes.AUTH, arguments: 0);
+    }
 
-      if (statusCode == 401) {
+    if (statusCode == 404) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      if (data['message'] != 'Daklia does not exis') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
-        Get.offAllNamed(Routes.AUTH, arguments: 0);
+        Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
       }
-
-      if (statusCode == 404) {
+      if (data['message'] != 'Room does not exist') {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        if (data['message'] != 'Daklia does not exis') {
-          timer = Timer(const Duration(seconds: 1), () {
-            EasyLoading.dismiss();
-          });
-          Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
-        }
-        if (data['message'] != 'Room does not exist') {
-          timer = Timer(const Duration(seconds: 1), () {
-            EasyLoading.dismiss();
-          });
-          Dialogs.errorDialog(Get.context!, 'room_does_not_exist'.tr);
-        }
+        Dialogs.errorDialog(Get.context!, 'room_does_not_exist'.tr);
       }
+    }
 
-      if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
-        timer = Timer(
-          const Duration(seconds: 1),
-          () {
-            EasyLoading.dismiss();
-          },
-        );
-        EasyLoading.show(status: 'loading'.tr);
-        Dialogs.errorDialog(Get.context!, 'server_error'.tr);
-      }
-      return [];
-    });
+    if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
+      timer = Timer(
+        const Duration(seconds: 1),
+        () {
+          EasyLoading.dismiss();
+        },
+      );
+      EasyLoading.show(status: 'loading'.tr);
+      Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+    }
+    return [];
   }
 
   Future<RoomFeaturesModel> addFeature({
@@ -110,8 +112,10 @@ class RoomFeaturesProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     final response = await post(
-        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}${HttpHelper.addFeatures}',
+        '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}${HttpHelper.addFeatures}',
         {
           'room_id': roomId,
           'feature_name': featureName,
@@ -120,7 +124,7 @@ class RoomFeaturesProvider extends GetConnect {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
         });
 
     var data = response.body;
@@ -132,7 +136,7 @@ class RoomFeaturesProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('featureId', data['feature_id']);
+      storage.write('featureId', data['feature_id']?.toString());
       Dialogs.successDialog(Get.context!, 'feature_added_successfully'.tr);
       return RoomFeaturesModel.fromJson(data);
     }
@@ -193,8 +197,10 @@ class RoomFeaturesProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     final response = await put(
-        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}$roomId/features/$featureId/',
+        '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/features/$featureId/',
         {
           'feature_name': featureName,
           'feature_description': featureDescription,
@@ -202,7 +208,7 @@ class RoomFeaturesProvider extends GetConnect {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
         });
 
     var data = response.body;
@@ -272,12 +278,14 @@ class RoomFeaturesProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     final response = await delete(
-        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}$roomId/features/$featureId/delete/',
+        '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/features/$featureId/delete/',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
         });
 
     var data = response.body;

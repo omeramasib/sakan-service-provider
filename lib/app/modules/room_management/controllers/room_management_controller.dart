@@ -181,7 +181,7 @@ class RoomManagementController extends GetxController {
   // method to get rooms list from api
   Future<void> getRoomsList() async {
     isLoading.value = true;
-    final dakliaId = storage.read('dakliaId').toString();
+    final dakliaId = (await storage.read('dakliaId')).toString();
     try {
       final data = await provider.getRoomsList(dakliaId);
       roomsList.clear();
@@ -226,8 +226,8 @@ class RoomManagementController extends GetxController {
   FutureOr<void> removeRoom(String roomId) async {
     EasyLoading.show(status: 'loading'.tr);
     try {
-      final data = await removeRoomProvider.deleteRoom(
-          storage.read('dakliaId').toString(), roomId);
+      final dakliaId = (await storage.read('dakliaId')).toString();
+      final data = await removeRoomProvider.deleteRoom(dakliaId, roomId);
       print('this is the data: $data');
     } catch (e) {
       print(e);

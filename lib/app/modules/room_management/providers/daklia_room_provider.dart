@@ -32,12 +32,13 @@ class DakliaRoomProvider extends GetConnect {
       '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}',
     );
 
+    final token = await storage.read('token');
     final response = await http.get(
       url,
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
 

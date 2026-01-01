@@ -29,18 +29,22 @@ class DakliaProfileProvider extends GetConnect {
 
   Future getProfileInfo(String? id) async {
     try {
+      final token = await storage.read('token');
       final response = await get(
-          HttpHelper.baseUrl.replaceAll('/user', '/daklia') + HttpHelper.dakliaProfile + '$id',
+          HttpHelper.baseUrl.replaceAll('/user', '/daklia') +
+              HttpHelper.dakliaProfile +
+              '$id',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Token ${storage.read('token')}',
+            'Authorization': 'Token $token',
           }).timeout(
         const Duration(seconds: 30),
         onTimeout: () {
           EasyLoading.dismiss();
           Dialogs.errorDialog(Get.context!, 'connection_timeout'.tr);
-          throw TimeoutException('Request timeout', const Duration(seconds: 30));
+          throw TimeoutException(
+              'Request timeout', const Duration(seconds: 30));
         },
       );
 
@@ -48,33 +52,34 @@ class DakliaProfileProvider extends GetConnect {
       var statusCode = response.statusCode;
       log('this is the status code: $statusCode');
       log('Profile data: $data');
-    if (statusCode == 200) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-        storage.write('locationId', data['location_id']);
-      });
-      return DakliaProfileModel.fromJson(data);
-    }
-
-    if (statusCode == 401) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
-      Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
-      Get.offAllNamed(Routes.AUTH, arguments: 0);
-    }
-    if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
-
-      // Check if it's the specific daklia_image error
-      if (data.toString().contains('daklia_image') && data.toString().contains('no file associated')) {
-        Dialogs.errorDialog(Get.context!, 'profile_image_missing'.tr);
-      } else {
-        Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+      if (statusCode == 200) {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+          storage.write('locationId', data['location_id']?.toString());
+        });
+        return DakliaProfileModel.fromJson(data);
       }
-    }
+
+      if (statusCode == 401) {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
+        Get.offAllNamed(Routes.AUTH, arguments: 0);
+      }
+      if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+
+        // Check if it's the specific daklia_image error
+        if (data.toString().contains('daklia_image') &&
+            data.toString().contains('no file associated')) {
+          Dialogs.errorDialog(Get.context!, 'profile_image_missing'.tr);
+        } else {
+          Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+        }
+      }
 
       if (statusCode == 404) {
         timer = Timer(const Duration(seconds: 1), () {

@@ -16,11 +16,8 @@ class DakliaProfileController extends GetxController {
   var provider = DakliaProfileProvider();
   getDakliaProfile() async {
     isLoading.value = true;
-    var data = await provider
-        .getProfileInfo(
-      storage.read('dakliaId').toString(),
-    )
-        .timeout(
+    final dakliaId = (await storage.read('dakliaId')).toString();
+    var data = await provider.getProfileInfo(dakliaId).timeout(
       const Duration(seconds: 3),
       onTimeout: () {
         EasyLoading.dismiss();

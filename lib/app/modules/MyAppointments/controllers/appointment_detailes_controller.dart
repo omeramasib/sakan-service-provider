@@ -29,9 +29,9 @@ class AppointmentDetailesController extends GetxController {
     final success =
         await myAppointmentsController.approveBooking(booking!.bookingId!);
     if (success) {
-      await Future.delayed(
-          Duration(milliseconds: 500)); // Wait for snackbar to show
-      Get.back(); // Return to list after success
+      await Future.delayed(Duration(milliseconds: 500)); // Wait for snackbar
+      // Refresh the selected booking to update UI
+      await _refreshSelectedBooking();
     }
   }
 
@@ -45,10 +45,18 @@ class AppointmentDetailesController extends GetxController {
     final success = await myAppointmentsController.rejectBooking(
         booking!.bookingId!, appointmentRejectController.text);
     if (success) {
-      await Future.delayed(
-          Duration(milliseconds: 500)); // Wait for snackbar to show
-      Get.back(); // Close dialog
-      Get.back(); // Return to list
+      await Future.delayed(Duration(milliseconds: 500)); // Wait for snackbar
+      Get.back(); // Close rejection dialog
+      // Refresh the selected booking to update UI
+      await _refreshSelectedBooking();
+    }
+  }
+
+  /// Refresh the selected booking to get updated status from server
+  Future<void> _refreshSelectedBooking() async {
+    if (booking?.bookingId != null) {
+      await myAppointmentsController.getBookingDetails(booking!.bookingId!);
+      update(); // Trigger UI rebuild
     }
   }
 

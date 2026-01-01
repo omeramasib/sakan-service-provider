@@ -158,7 +158,7 @@ class EditSingleRoomView extends GetView<EditSingleRoomController> {
                                                       child: Stack(
                                                         children: [
                                                           Image.network(
-                                                            '${HttpHelper.baseUrl}${roomController.getRooms.roomImage}',
+                                                            '${roomController.getRooms.firstImageUrl ?? ''}',
                                                             height: 95,
                                                             width: 317,
                                                             fit: BoxFit.cover,

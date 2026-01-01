@@ -14,8 +14,8 @@ class LanguageController extends GetxController implements Translations {
   // Cached locale value for synchronous access
   String? _cachedLocale;
 
-  var locale = const Locale('en', 'US');
-  var fallbackLocale = const Locale('en', 'US');
+  var locale = const Locale('ar', 'SA');
+  var fallbackLocale = const Locale('ar', 'SA');
 
   @override
   void onInit() {
@@ -31,7 +31,7 @@ class LanguageController extends GetxController implements Translations {
     if (_cachedLocale != null) {
       return _cachedLocale!;
     }
-    return Get.deviceLocale?.languageCode ?? 'ar';
+    return 'ar';
   }
 
   get isEnglish => getLocale == 'en';

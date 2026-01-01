@@ -35,15 +35,18 @@ class DakliaInfoProvider extends GetConnect {
   }) async {
     try {
       await Future.delayed(const Duration(seconds: 1));
+      final token = await storage.read('token');
+      final userId = await storage.read('userId');
       var request = http.MultipartRequest(
         'POST',
         Uri.parse(
-          HttpHelper.baseUrl.replaceAll('/user', '/daklia') + HttpHelper.dakliaInfo,
+          HttpHelper.baseUrl.replaceAll('/user', '/daklia') +
+              HttpHelper.dakliaInfo,
         ),
       );
-      request.headers["authorization"] = "Token ${storage.read('token')}";
+      request.headers["authorization"] = "Token $token";
       request.headers["Accept"] = "application/json";
-      request.fields['user_id'] = storage.read('userId').toString();
+      request.fields['user_id'] = userId.toString();
 
       // Check if image file exists and is valid
       if (image != null && await image.exists()) {
@@ -85,7 +88,8 @@ class DakliaInfoProvider extends GetConnect {
         onTimeout: () {
           EasyLoading.dismiss();
           Dialogs.errorDialog(Get.context!, 'connection_timeout'.tr);
-          throw TimeoutException('Request timeout', const Duration(seconds: 30));
+          throw TimeoutException(
+              'Request timeout', const Duration(seconds: 30));
         },
       );
       var responseData = await response.stream.toBytes();
@@ -96,15 +100,15 @@ class DakliaInfoProvider extends GetConnect {
       log('this is the data: $data');
       log('this is the data type: ${data.runtimeType}');
 
-    if (statusCode == 201) {
-      log('this is the statusCode : $statusCode' );
-      timer = Timer(const Duration(seconds: 1), () {
-        EasyLoading.dismiss();
-      });
-      storage.write('dakliaId', data['Daklia_id']);
-      Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
-      return DakliaInfoModel.fromJson(data);
-    }
+      if (statusCode == 201) {
+        log('this is the statusCode : $statusCode');
+        timer = Timer(const Duration(seconds: 1), () {
+          EasyLoading.dismiss();
+        });
+        storage.write('dakliaId', data['Daklia_id']?.toString());
+        Get.toNamed(Routes.COMPLETE_DAKLIA_ACCOUNT2);
+        return DakliaInfoModel.fromJson(data);
+      }
 
       if (statusCode == 400) {
         timer = Timer(const Duration(seconds: 1), () {
@@ -122,25 +126,33 @@ class DakliaInfoProvider extends GetConnect {
           var imageError = data['daklia_image'] ?? data['image'];
           if (imageError is List) {
             List errorList = imageError;
-            errorMessage = errorList.isNotEmpty ? errorList.first.toString() : 'daklia_image_required'.tr;
+            errorMessage = errorList.isNotEmpty
+                ? errorList.first.toString()
+                : 'daklia_image_required'.tr;
           } else {
             errorMessage = 'daklia_image_required'.tr;
           }
-        } else if (data['daklia_description'] != null || data['description'] != null) {
+        } else if (data['daklia_description'] != null ||
+            data['description'] != null) {
           // Handle List<dynamic> error format
           var descError = data['daklia_description'] ?? data['description'];
           if (descError is List) {
             List errorList = descError;
-            errorMessage = errorList.isNotEmpty ? errorList.first.toString() : 'daklia_description_required'.tr;
+            errorMessage = errorList.isNotEmpty
+                ? errorList.first.toString()
+                : 'daklia_description_required'.tr;
           } else {
             errorMessage = 'daklia_description_required'.tr;
           }
-        } else if (data['numberOfRooms'] != null || data['number_of_rooms'] != null) {
+        } else if (data['numberOfRooms'] != null ||
+            data['number_of_rooms'] != null) {
           // Handle List<dynamic> error format
           var roomError = data['numberOfRooms'] ?? data['number_of_rooms'];
           if (roomError is List) {
             List errorList = roomError;
-            errorMessage = errorList.isNotEmpty ? errorList.first.toString() : 'number_of_rooms_required'.tr;
+            errorMessage = errorList.isNotEmpty
+                ? errorList.first.toString()
+                : 'number_of_rooms_required'.tr;
           } else {
             errorMessage = 'number_of_rooms_required'.tr;
           }

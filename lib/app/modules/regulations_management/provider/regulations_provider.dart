@@ -30,10 +30,11 @@ class DakliaRegulationsProvider extends GetConnect {
   Future<List<DakliaLawsModel>> getLawsList(String dakliaId) async {
     final url = '${HttpHelper.baseUrl2}/$dakliaId/laws/';
 
+    final token = await storage.read('token');
     final response = await get(
       url,
       headers: {
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
     log('${response.body}');
@@ -94,17 +95,19 @@ class DakliaRegulationsProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     final response = await post(
-      '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}/laws/add/',
+      '${HttpHelper.baseUrl2}/$dakliaId/laws/add/',
       {
-        'daklia_id': storage.read('dakliaId'),
+        'daklia_id': dakliaId,
         'law_description': lawDescription,
         'punishment_description': punishmentDescription,
       },
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
     // print the request
@@ -118,7 +121,7 @@ class DakliaRegulationsProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('lawId', data['law_id']);
+      storage.write('lawId', data['law_id']?.toString());
       Dialogs.successDialog(Get.context!, 'law_added_successfully'.tr);
       Get.offAllNamed(Routes.REGULATIONS_MANAGEMENT);
       return DakliaLawsModel.fromJson(data);
@@ -164,8 +167,10 @@ class DakliaRegulationsProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     final response = await put(
-      '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}/laws/$lawId/',
+      '${HttpHelper.baseUrl2}/$dakliaId/laws/$lawId/',
       {
         'law_description': lawDescription,
         'punishment_description': punishmentDescription,
@@ -173,7 +178,7 @@ class DakliaRegulationsProvider extends GetConnect {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
 
@@ -238,12 +243,13 @@ class DakliaRegulationsProvider extends GetConnect {
   }
 
   deleteLaw(String dakliaId, String lawId) async {
+    final token = await storage.read('token');
     final response = await delete(
       '${HttpHelper.baseUrl2}/$dakliaId/laws/$lawId/delete/',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
     var data = response.body;

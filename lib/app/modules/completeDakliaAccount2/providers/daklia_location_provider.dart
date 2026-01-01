@@ -31,19 +31,18 @@ class DakliaLocationProvider extends GetConnect {
     required String address,
     required String additonal_address,
   }) async {
-    final response = await post(
-      HttpHelper.baseUrl2 + HttpHelper.dakliaLocation,
-      {
-        'user_id': storage.read('userId'),
-        'longitude': longitude,
-        'latitude': latitude,
-        'address': address,
-        'additional_address': additonal_address,
-      },
-      headers: {
-      'Authorization': 'Token ${storage.read('token')}',
-    }
-    );
+    final token = await storage.read('token');
+    final userId = await storage.read('userId');
+    final response =
+        await post(HttpHelper.baseUrl2 + HttpHelper.dakliaLocation, {
+      'user_id': userId,
+      'longitude': longitude,
+      'latitude': latitude,
+      'address': address,
+      'additional_address': additonal_address,
+    }, headers: {
+      'Authorization': 'Token $token',
+    });
     var data = response.body;
     var statusCode = response.statusCode;
     log('this is the status code: $statusCode');

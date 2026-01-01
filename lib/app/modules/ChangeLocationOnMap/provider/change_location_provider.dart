@@ -32,17 +32,19 @@ class ChangeLocationProvider extends GetConnect {
     required String address,
     required String additonal_address,
   }) async {
+    final token = await storage.read('token');
+    final userId = await storage.read('userId');
+    final locationId = await storage.read('locationId');
     final response = await put(
-        '${HttpHelper.baseUrl2}${HttpHelper.dakliaLocation}${storage.read('locationId')}/',
-        {
-          'user_id': storage.read('userId'),
-          'longitude': longitude,
-          'latitude': latitude,
-          'address': address,
-          'additional_address': additonal_address,
-        },
+        '${HttpHelper.baseUrl2}${HttpHelper.dakliaLocation}$locationId/', {
+      'user_id': userId,
+      'longitude': longitude,
+      'latitude': latitude,
+      'address': address,
+      'additional_address': additonal_address,
+    },
         headers: {
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
         });
     // print the request url
     log('this is the url: ${response.request?.url}');

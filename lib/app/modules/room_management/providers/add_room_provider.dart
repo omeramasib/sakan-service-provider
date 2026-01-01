@@ -43,13 +43,15 @@ class AddRoomProvider extends GetConnect {
     required bool monthlyBooking,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
         HttpHelper.baseUrl2 + HttpHelper.addRoom,
       ),
     );
-    request.headers["authorization"] = "Token ${storage.read('token')}";
+    request.headers["authorization"] = "Token $token";
     request.headers["Accept"] = "application/json";
     request.headers["Content-Type"] = "multipart/form-data";
 
@@ -90,7 +92,7 @@ class AddRoomProvider extends GetConnect {
     }
 
     // Set proper form data
-    request.fields['daklia_id'] = storage.read('dakliaId').toString();
+    request.fields['daklia_id'] = dakliaId.toString();
     request.fields['room_number'] = roomNumber.toString();
     request.fields['room_type'] = roomType.trim();
     request.fields['price_per_month'] = pricePerMonth.toString();
@@ -154,7 +156,7 @@ class AddRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('roomId', data['room_id']);
+      storage.write('roomId', data['room_id']?.toString());
       Dialogs.successDialog(Get.context!, 'room_added_successfully'.tr);
       var roomController = Get.put(RoomManagementController());
       roomFeatures(Get.context!);
@@ -212,16 +214,18 @@ class AddRoomProvider extends GetConnect {
     required int numAvailableBeds,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
         HttpHelper.baseUrl2 + HttpHelper.addRoom,
       ),
     );
-    request.headers["authorization"] = "Token ${storage.read('token')}";
+    request.headers["authorization"] = "Token $token";
     request.headers["Accept"] = "application/json";
     request.headers["Content-Type"] = "multipart/form-data";
-    request.fields['daklia_id'] = storage.read('dakliaId').toString();
+    request.fields['daklia_id'] = dakliaId.toString();
     request.fields['room_number'] = roomNumber.toString();
     request.fields['room_type'] = roomType.trim();
     request.fields['daily_booking'] = dailyBooking.toString();
@@ -274,7 +278,7 @@ class AddRoomProvider extends GetConnect {
         EasyLoading.dismiss();
       });
       var roomController = Get.put(RoomManagementController());
-      storage.write('roomId', data['room_id']);
+      storage.write('roomId', data['room_id']?.toString());
       Dialogs.successDialog(Get.context!, 'room_added_successfully'.tr);
       roomFeatures(Get.context!);
       roomController.setRooms = DakliaRoomModel.fromJson(data);

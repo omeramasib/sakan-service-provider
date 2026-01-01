@@ -79,7 +79,7 @@ class ServicesManagementController extends GetxController {
 
   Future<void> getServiceList() async {
     isLoading.value = true;
-    final dakliaId = storage.read('dakliaId').toString();
+    final dakliaId = (await storage.read('dakliaId')).toString();
     try {
       final data = await provider.getServiceList(dakliaId);
       servicesList.clear();
@@ -94,7 +94,7 @@ class ServicesManagementController extends GetxController {
   }
 
   Future<void> addService() async {
-    final dakliaId = storage.read('dakliaId').toString();
+    final dakliaId = (await storage.read('dakliaId')).toString();
     try {
       await provider.addService(
         serviceId: dakliaId,
@@ -179,8 +179,8 @@ class ServicesManagementController extends GetxController {
   Future<void> removeRoom() async {
     try {
       final serviceId = myServices.serviceId;
-      final data = await provider.deleteService(
-          storage.read('dakliaId').toString(), serviceId.toString());
+      final dakliaId = (await storage.read('dakliaId')).toString();
+      final data = await provider.deleteService(dakliaId, serviceId.toString());
       print('this is the data: $data');
     } catch (e) {
       print(e);

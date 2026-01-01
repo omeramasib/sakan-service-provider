@@ -51,13 +51,14 @@ class EditMultipleRoomProvider extends GetConnect {
     // log('this is the pricePerMonth: $pricePerMonth');
     // log('this is the roomId: $roomId');
 
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     var request = http.MultipartRequest(
       'PUT',
-      Uri.parse(
-          '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}${HttpHelper.rooms}$roomId/'),
+      Uri.parse('${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/'),
     );
     log('this is the request: $request');
-    request.headers["authorization"] = "Token ${storage.read('token')}";
+    request.headers["authorization"] = "Token $token";
     if (image.path != '') {
       request.files.add(
         await http.MultipartFile.fromPath(

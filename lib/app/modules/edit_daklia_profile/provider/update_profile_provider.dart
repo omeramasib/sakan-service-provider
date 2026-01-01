@@ -36,22 +36,23 @@ class UpdateProfileProvider extends GetConnect {
     log('this is the image: $image');
     log('this is the daklia description: $dakliaDescription');
     log('this is the number of rooms: $numberOfRooms');
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse(
-          'https://sakanapp.onrender.com/api/v1/daklia/${storage.read('dakliaId')}/update-profile/'),
+          'https://sakanapp.onrender.com/api/v1/daklia/$dakliaId/update-profile/'),
     );
     log('this is the request: $request');
-    request.headers["authorization"] = "Token ${storage.read('token')}";
-     if (image.path != '') {
+    request.headers["authorization"] = "Token $token";
+    if (image.path != '') {
       request.files.add(
         await http.MultipartFile.fromPath(
           'daklia_image',
           image.path,
         ),
       );
-    }
-    else {
+    } else {
       request.fields['daklia_image'] = '';
     }
     request.fields['daklia_description'] = dakliaDescription;

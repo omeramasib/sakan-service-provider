@@ -31,10 +31,11 @@ class DakliaServiceProvider extends GetConnect {
   Future<List<ServiceModel>> getServiceList(String dakliaId) async {
     final url = '${HttpHelper.baseUrl2}/$dakliaId/services/';
 
+    final token = await storage.read('token');
     final response = await get(
       url,
       headers: {
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
     log('${response.body}');
@@ -114,10 +115,12 @@ class DakliaServiceProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     log('this is the service type: $serviceType');
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     final response = await post(
       '${HttpHelper.baseUrl2}${HttpHelper.servicesAdd}',
       {
-        'daklia_id': storage.read('dakliaId'),
+        'daklia_id': dakliaId,
         'service_id': int.parse(serviceId),
         'service_name': serviceName,
         'service_description': serviceDescription,
@@ -128,7 +131,7 @@ class DakliaServiceProvider extends GetConnect {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Token ${storage.read('token')}',
+        'Authorization': 'Token $token',
       },
     );
     // print the request
@@ -142,7 +145,7 @@ class DakliaServiceProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      storage.write('serviceId', data['service_id']);
+      storage.write('serviceId', data['service_id']?.toString());
       Dialogs.successDialog(Get.context!, 'service_added_successfully'.tr);
       Get.offAllNamed(Routes.SERVICES_MANAGEMENT);
       return ServiceModel.fromJson(data);
@@ -191,20 +194,20 @@ class DakliaServiceProvider extends GetConnect {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
 
-    final response = await put(
-        '${HttpHelper.baseUrl2}/${storage.read('dakliaId')}/services/$serviceId/',
-        {
-          'service_name': serviceName,
-          'service_description': serviceDescription,
-          'service_type': serviceType,
-          'isAvailable': isAvailable,
-          'service_price': servicePrice,
-        },
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
-        });
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
+    final response =
+        await put('${HttpHelper.baseUrl2}/$dakliaId/services/$serviceId/', {
+      'service_name': serviceName,
+      'service_description': serviceDescription,
+      'service_type': serviceType,
+      'isAvailable': isAvailable,
+      'service_price': servicePrice,
+    }, headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Token $token',
+    });
 
     var data = response.body;
     var statusCode = response.statusCode;
@@ -258,12 +261,13 @@ class DakliaServiceProvider extends GetConnect {
   }
 
   deleteService(String dakliaId, String serviceId) async {
+    final token = await storage.read('token');
     final response = await delete(
         '${HttpHelper.baseUrl2}/$dakliaId/services/$serviceId/delete/',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Token ${storage.read('token')}',
+          'Authorization': 'Token $token',
         });
     var data = response.body;
     var statusCode = response.statusCode;

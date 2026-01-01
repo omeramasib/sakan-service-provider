@@ -32,14 +32,16 @@ class DakliaVAProvider extends GetConnect {
     required File? daklia_license,
     required File? owner_license,
   }) async {
+    final token = await storage.read('token');
+    final dakliaId = await storage.read('dakliaId');
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
         HttpHelper.baseUrl2 + HttpHelper.verifyAccount,
       ),
     );
-    request.headers["authorization"] = "Token ${storage.read('token')}";
-    request.fields['Daklia_id'] = storage.read('dakliaId').toString();
+    request.headers["authorization"] = "Token $token";
+    request.fields['Daklia_id'] = dakliaId.toString();
     final file1 = await http.MultipartFile.fromBytes(
       'daklia_license',
       daklia_license!.readAsBytesSync(),

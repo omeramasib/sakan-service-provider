@@ -38,8 +38,8 @@ class RegulationsManagementController extends GetxController {
   Future<void> getLawsList() async {
     isLoading.value = true;
     try {
-      final data =
-          await provider.getLawsList(storage.read('dakliaId').toString());
+      final dakliaId = (await storage.read('dakliaId')).toString();
+      final data = await provider.getLawsList(dakliaId);
       lawsList.clear();
       lawsList.addAll(data);
     } catch (e) {
@@ -102,8 +102,8 @@ class RegulationsManagementController extends GetxController {
   Future deleteLaw() async {
     EasyLoading.show(status: 'loading'.tr);
     try {
-      await provider.deleteLaw(
-          storage.read('dakliaId').toString(), myLaws.lawId!.toString());
+      final dakliaId = (await storage.read('dakliaId')).toString();
+      await provider.deleteLaw(dakliaId, myLaws.lawId!.toString());
       getLawsList();
     } catch (e) {
       print(e);
