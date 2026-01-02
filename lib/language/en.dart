@@ -509,4 +509,13 @@ const Map<String, String> enUS = {
   'select_images': 'Select Images',
   'camera': 'Camera',
   'gallery': 'Gallery',
+
+  // Splash screen
+  'under_maintenance': 'Under Maintenance',
+  'retry': 'Retry',
+  'update_required': 'Update Required',
+  'update_message':
+      'A new version of the app is available. Please update to continue using the app.',
+  'update_now': 'Update Now',
+  'new_version': 'New Version',
 };

@@ -611,4 +611,12 @@ const Map<String, String> arSA = {
   // Multiple image selection
   'images_selected': 'صور مختارة',
   'select_images': 'اختر الصور',
+
+  // Splash screen
+  'under_maintenance': 'تحت الصيانة',
+  'retry': 'إعادة المحاولة',
+  'update_required': 'يجب تحديث التطبيق',
+  'update_message': 'يتوفر إصدار جديد من التطبيق. يرجى التحديث للمتابعة.',
+  'update_now': 'تحديث الآن',
+  'new_version': 'الإصدار الجديد',
 };

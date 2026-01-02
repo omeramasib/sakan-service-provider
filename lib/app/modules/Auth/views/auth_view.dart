@@ -19,10 +19,12 @@ class AuthView extends GetView<AuthController> {
     Get.put(AuthController());
     final storage = SecureStorageService.instance;
     int? number = Get.arguments;
-    if (number == 0) {
-      controller.selectLoginOrRegister = false;
-    } else {
+    if (number == 1) {
+      // Show register tab if explicitly requested
       controller.selectLoginOrRegister = true;
+    } else {
+      // Default: show login tab
+      controller.selectLoginOrRegister = false;
     }
 
     return Scaffold(
