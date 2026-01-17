@@ -159,6 +159,7 @@ const Map<String, String> enUS = {
   'daily': 'Daily',
   'monthly': 'Monthly',
   'customer_name': 'Customer Name',
+  'customer_phone': 'Customer Phone',
   'customer_type': 'Customer Type',
   'employee': 'Employee',
   'student': 'Student',

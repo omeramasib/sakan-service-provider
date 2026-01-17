@@ -13,20 +13,35 @@ class DakliaProfileController extends GetxController {
   RxList profileList = <DakliaProfileModel>[].obs;
   RxBool isLoading = false.obs;
   final SecureStorageService storage = SecureStorageService.instance;
-  var provider = DakliaProfileProvider();
+  var provider = DakliaProfileProvider.instance;
   getDakliaProfile() async {
     isLoading.value = true;
-    final dakliaId = (await storage.read('dakliaId')).toString();
+    final dakliaIdRaw = await storage.read('dakliaId');
+
+    // Check if dakliaId is null or empty
+    if (dakliaIdRaw == null || dakliaIdRaw.isEmpty) {
+      print('DEBUG: dakliaId is null or empty, cannot fetch profile');
+      isLoading.value = false;
+      update();
+      return;
+    }
+
+    final dakliaId = dakliaIdRaw.toString();
+    print('DEBUG: Fetching daklia profile for ID: $dakliaId');
+
     var data = await provider.getProfileInfo(dakliaId).timeout(
-      const Duration(seconds: 3),
+      const Duration(seconds: 30),
       onTimeout: () {
+        print('DEBUG: getDakliaProfile timeout after 30 seconds');
         EasyLoading.dismiss();
-        // Dialogs.connectionErrorDialog(Get.context!);
         isLoading.value = false;
         update();
-        return DakliaProfileModel();
+        return null;
       },
     );
+
+    print('DEBUG: getDakliaProfile response: $data');
+
     if (data != null) {
       profileList.clear();
       profileList.add(data);

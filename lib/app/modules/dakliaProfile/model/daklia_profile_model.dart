@@ -1,3 +1,5 @@
+import 'package:sakan/constants/flavor_config.dart';
+
 class DakliaProfileModel {
   int? dakliaId;
   String? dakliaName;
@@ -62,5 +64,19 @@ class DakliaProfileModel {
     data['longitude'] = this.longitude;
     data['latitude'] = this.latitude;
     return data;
+  }
+
+  String? get fullDakliaImage {
+    if (dakliaImage == null) return null;
+    if (dakliaImage!.startsWith('http')) return dakliaImage;
+
+    String base = FlavorConfig.instance.baseUrl;
+    if (base.endsWith('/') && dakliaImage!.startsWith('/')) {
+      return base + dakliaImage!.substring(1);
+    }
+    if (!base.endsWith('/') && !dakliaImage!.startsWith('/')) {
+      return '$base/$dakliaImage';
+    }
+    return '$base$dakliaImage';
   }
 }

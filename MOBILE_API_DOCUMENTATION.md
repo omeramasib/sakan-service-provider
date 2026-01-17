@@ -1005,13 +1005,87 @@ curl -X POST http://localhost:8000/api/v1/daklia/rooms/add/ \
 
 ---
 
-### 4.3 Get All Rooms
+### 4.3 Get All Rooms (with Availability Filtering)
+
+Retrieves all rooms for a Daklia with **optional availability filtering**.
 
 **Endpoint:** `GET /api/v1/daklia/<id>/rooms/`
 
 **Authentication:** Required
 
-**Response:** Array of room objects
+**Query Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `start_date` | string | No | Start date for availability check (YYYY-MM-DD format) |
+| `end_date` | string | No | End date for availability check (YYYY-MM-DD format) |
+| `only_available` | boolean | No | Set to `true` to filter only available rooms |
+
+**Availability Filtering Logic:**
+
+When `only_available=true` or a date range is provided, rooms are **excluded** if:
+
+1. **Fully Booked Status:** The room has `num_Available_Beds <= 0` (marked as unavailable)
+2. **No Empty Beds for Date Range:** The count of active, confirmed bookings for that room within the requested date range equals or exceeds the total number of beds
+
+**Booking Overlap Detection:**
+A booking is considered overlapping if:
+```
+booking_start_date <= requested_end_date AND booking_end_date >= requested_start_date
+```
+
+Only bookings with `booking_status='approved'` and `cancel_status=False` are counted.
+
+**Example Requests:**
+
+```bash
+# Get all rooms (no filtering)
+GET /api/v1/daklia/1/rooms/
+
+# Get only available rooms (basic filter)
+GET /api/v1/daklia/1/rooms/?only_available=true
+
+# Get rooms available for a specific date range
+GET /api/v1/daklia/1/rooms/?start_date=2026-02-01&end_date=2026-02-28
+
+# Combined filtering
+GET /api/v1/daklia/1/rooms/?only_available=true&start_date=2026-02-01&end_date=2026-02-28
+```
+
+**Success Response (200 OK):**
+
+```json
+[
+  {
+    "room_id": 1,
+    "daklia_id": 1,
+    "room_number": 101,
+    "room_type": "Single",
+    "daily_booking": false,
+    "monthly_booking": true,
+    "price_per_month": 5000.0,
+    "price_per_day": 20.0,
+    "numberOfBeds": 2,
+    "num_Available_Beds": 1,
+    "room_image": "https://example.com/room.jpg",
+    "images": [
+      {
+        "image_id": 1,
+        "image_url": "https://example.com/room1.jpg",
+        "order": 0
+      }
+    ]
+  }
+]
+```
+
+**Error Responses:**
+
+| Status | Message |
+|--------|---------|
+| 400 | "Invalid start_date format. Use YYYY-MM-DD." |
+| 400 | "Invalid end_date format. Use YYYY-MM-DD." |
+| 404 | "Daklia does not exist" |
 
 ---
 

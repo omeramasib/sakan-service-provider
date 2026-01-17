@@ -29,7 +29,7 @@ editOrDelete(BuildContext context) {
     builder: (BuildContext context) {
       return Container(
         width: Get.width,
-        height: Get.height * 0.25,
+        height: Get.height * 0.30,
         decoration: const BoxDecoration(
           color: ColorsManager.whiteColor,
           borderRadius: BorderRadius.only(

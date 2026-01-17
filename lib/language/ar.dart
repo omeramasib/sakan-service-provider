@@ -201,6 +201,7 @@ const Map<String, String> arSA = {
   'daily': 'يومي',
   'monthly': 'شهري',
   'customer_name': 'اسم العميل',
+  'customer_phone': 'رقم العميل',
   'customer_type': 'نوع العميل',
   'employee': 'موظف',
   'student': 'طالب',

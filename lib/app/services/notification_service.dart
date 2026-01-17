@@ -92,6 +92,15 @@ class NotificationService {
   Future<void> initialize() async {
     log('=== Initializing NotificationService ===');
 
+    // Skip local notifications setup on web - they're not supported
+    if (kIsWeb) {
+      log('Running on web - skipping local notifications setup');
+      // Only set up foreground message handler for web
+      _setupForegroundMessageHandler();
+      log('=== NotificationService Initialized (Web) ===');
+      return;
+    }
+
     // Request permissions for iOS
     await _requestPermissions();
 

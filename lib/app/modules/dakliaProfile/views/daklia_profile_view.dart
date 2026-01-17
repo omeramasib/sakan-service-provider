@@ -70,42 +70,52 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                               height: 244,
                               width: double.infinity,
                               decoration: BoxDecoration(
-                                image: controller.profileList[0].dakliaImage != null
-                                    ? DecorationImage(
-                                        image: NetworkImage(
-                                            controller.profileList[0].dakliaImage!
-                                        ),
-                                        fit: BoxFit.cover,
-                                        colorFilter: ColorFilter.mode(
-                                          ColorsManager.blackColor.withOpacity(0.4),
-                                          BlendMode.darken,
-                                        ),
-                                      )
-                                    : null,
-                                color: controller.profileList[0].dakliaImage == null
-                                    ? ColorsManager.greyColor
-                                    : null,
+                                image:
+                                    controller.profileList[0].fullDakliaImage !=
+                                            null
+                                        ? DecorationImage(
+                                            image: NetworkImage(controller
+                                                .profileList[0]
+                                                .fullDakliaImage!),
+                                            fit: BoxFit.cover,
+                                            colorFilter: ColorFilter.mode(
+                                              ColorsManager.blackColor
+                                                  .withOpacity(0.4),
+                                              BlendMode.darken,
+                                            ),
+                                          )
+                                        : null,
+                                color:
+                                    controller.profileList[0].fullDakliaImage ==
+                                            null
+                                        ? ColorsManager.greyColor
+                                        : null,
                               ),
                               child: Column(
                                 children: [
                                   // Show placeholder when no image
-                                  if (controller.profileList[0].dakliaImage == null)
+                                  if (controller
+                                          .profileList[0].fullDakliaImage ==
+                                      null)
                                     Expanded(
                                       child: Center(
                                         child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Icon(
                                               Icons.image_not_supported,
                                               size: 64,
-                                              color: ColorsManager.whiteColor.withOpacity(0.7),
+                                              color: ColorsManager.whiteColor
+                                                  .withOpacity(0.7),
                                             ),
                                             const SizedBox(height: 8),
                                             Text(
                                               'no_image_available'.tr,
                                               style: getMediumStyle(
                                                 fontSize: FontSizeManager.s16,
-                                                color: ColorsManager.whiteColor.withOpacity(0.8),
+                                                color: ColorsManager.whiteColor
+                                                    .withOpacity(0.8),
                                               ),
                                             ),
                                           ],
@@ -125,7 +135,8 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                             Icons.arrow_back,
                                             color: ColorsManager.whiteColor,
                                           ),
-                                          onPressed: () => Get.offAllNamed(Routes.HOME),
+                                          onPressed: () =>
+                                              Get.offAllNamed(Routes.HOME),
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -186,8 +197,9 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                                 right: AppPadding.p20,
                                               ),
                                         child: Text(
-                                          controller
-                                              .profileList[index].dakliaName ?? 'no_name_available'.tr,
+                                          controller.profileList[index]
+                                                  .dakliaName ??
+                                              'no_name_available'.tr,
                                           style: getRegularStyle(
                                             color: ColorsManager.mainColor,
                                             fontSize: FontSizeManager.s14,
@@ -216,36 +228,37 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                                 width: 20,
                                               ),
                                               SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'under_documentation'.tr,
-                                              style: getRegularStyle(
-                                                color: ColorsManager.blueColor,
-                                                fontSize: FontSizeManager.s14,
+                                                width: 5,
                                               ),
-                                            ),
-                                            ]
-                                            else if (controller.profileList[index]
+                                              Text(
+                                                'under_documentation'.tr,
+                                                style: getRegularStyle(
+                                                  color:
+                                                      ColorsManager.blueColor,
+                                                  fontSize: FontSizeManager.s14,
+                                                ),
+                                              ),
+                                            ] else if (controller
+                                                    .profileList[index]
                                                     .accountStatus ==
                                                 1) ...[
-                                                  SvgPicture.asset(
+                                              SvgPicture.asset(
                                                 ImagesManager.confirmation,
                                                 height: 20,
                                                 width: 20,
                                               ),
                                               SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'confirmed'.tr,
-                                              style: getRegularStyle(
-                                                color: ColorsManager.greenColor,
-                                                fontSize: FontSizeManager.s14,
+                                                width: 5,
                                               ),
-                                            ),
-                                            ]
-                                            else ...[
+                                              Text(
+                                                'confirmed'.tr,
+                                                style: getRegularStyle(
+                                                  color:
+                                                      ColorsManager.greenColor,
+                                                  fontSize: FontSizeManager.s14,
+                                                ),
+                                              ),
+                                            ] else ...[
                                               SvgPicture.asset(
                                                 ImagesManager.unVerified,
                                                 color: ColorsManager.errorColor,
@@ -253,15 +266,16 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                                 width: 20,
                                               ),
                                               SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'un_verified'.tr,
-                                              style: getRegularStyle(
-                                                color: ColorsManager.errorColor,
-                                                fontSize: FontSizeManager.s14,
+                                                width: 5,
                                               ),
-                                            ),
+                                              Text(
+                                                'un_verified'.tr,
+                                                style: getRegularStyle(
+                                                  color:
+                                                      ColorsManager.errorColor,
+                                                  fontSize: FontSizeManager.s14,
+                                                ),
+                                              ),
                                             ],
                                           ],
                                         ),
@@ -282,7 +296,8 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                         Expanded(
                                           child: Text(
                                             controller.profileList[index]
-                                                .dakliaDescription ?? 'no_description_available'.tr,
+                                                    .dakliaDescription ??
+                                                'no_description_available'.tr,
                                             style: getRegularStyle(
                                               color: ColorsManager.blackColor,
                                               fontSize: FontSizeManager.s13,
@@ -323,8 +338,9 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                           padding: const EdgeInsets.only(
                                               top: AppPadding.p20),
                                           child: Text(
-                                            (controller
-                                                .profileList[index].roomCount ?? 0)
+                                            (controller.profileList[index]
+                                                        .roomCount ??
+                                                    0)
                                                 .toString(),
                                             style: getSemiBoldStyle(
                                               color: ColorsManager.mainColor,
@@ -366,8 +382,9 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                         padding: const EdgeInsets.only(
                                             top: AppPadding.p20),
                                         child: Text(
-                                          (controller
-                                              .profileList[index].serviceCount ?? 0)
+                                          (controller.profileList[index]
+                                                      .serviceCount ??
+                                                  0)
                                               .toString(),
                                           style: getSemiBoldStyle(
                                             color: ColorsManager.mainColor,
@@ -409,8 +426,9 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                                           padding: const EdgeInsets.only(
                                               top: AppPadding.p20),
                                           child: Text(
-                                            (controller
-                                                .profileList[index].lawCount ?? 0)
+                                            (controller.profileList[index]
+                                                        .lawCount ??
+                                                    0)
                                                 .toString(),
                                             style: getSemiBoldStyle(
                                               color: ColorsManager.mainColor,

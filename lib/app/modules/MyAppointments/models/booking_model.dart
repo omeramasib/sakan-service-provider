@@ -75,6 +75,7 @@ class BookingModel {
   final String? ownerActionDate;
   final String? ownerRejectionReason;
   final int? adminActionBy;
+  final String? customerPhone;
 
   BookingModel({
     this.bookingId,
@@ -109,6 +110,7 @@ class BookingModel {
     this.ownerActionDate,
     this.ownerRejectionReason,
     this.adminActionBy,
+    this.customerPhone,
   });
 
   factory BookingModel.fromJson(Map<String, dynamic> json) {
@@ -154,6 +156,7 @@ class BookingModel {
       ownerActionDate: json['owner_action_date'],
       ownerRejectionReason: json['owner_rejection_reason'],
       adminActionBy: json['admin_action_by'],
+      customerPhone: json['customer_phone'],
     );
   }
 
@@ -191,6 +194,7 @@ class BookingModel {
       'owner_action_date': ownerActionDate,
       'owner_rejection_reason': ownerRejectionReason,
       'admin_action_by': adminActionBy,
+      'customer_phone': customerPhone,
     };
   }
 
@@ -213,4 +217,13 @@ class BookingModel {
 
   // Check if booking is cancelled
   bool get isCancelled => bookingStatus == 'cancelled';
+
+  // Get formatted customer phone text (replaces 249 with 0)
+  String? get formattedCustomerPhone {
+    if (customerPhone == null) return null;
+    if (customerPhone!.startsWith('249')) {
+      return '0${customerPhone!.substring(3)}';
+    }
+    return customerPhone;
+  }
 }

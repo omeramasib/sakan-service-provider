@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sakan/constants/colors_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/modules/MyAppointments/controllers/my_appointments_controller.dart';
 import '../../../app/modules/MyAppointments/models/booking_model.dart';
@@ -160,6 +161,33 @@ class BookingCard extends StatelessWidget {
                               fontSize: FontSizeManager.s12,
                             ),
                             overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 5),
+                    Row(
+                      children: [
+                        Icon(Icons.phone,
+                            size: 16, color: ColorsManager.defaultGreyColor),
+                        SizedBox(width: 5),
+                        GestureDetector(
+                          onTap: () async {
+                            final Uri phoneUri = Uri(
+                              scheme: 'tel',
+                              path: booking.customerPhone ?? '',
+                            );
+                            if (await canLaunchUrl(phoneUri)) {
+                              await launchUrl(phoneUri);
+                            }
+                          },
+                          child: Text(
+                            '${'customer_phone'.tr}: ${booking.formattedCustomerPhone ?? '-'}',
+                            style: getRegularStyle(
+                              color: ColorsManager
+                                  .mainColor, // Make it look clickable/important
+                              fontSize: FontSizeManager.s12,
+                            ),
                           ),
                         ),
                       ],

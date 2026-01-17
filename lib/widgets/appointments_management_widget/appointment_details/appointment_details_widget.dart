@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sakan/constants/styles_manager.dart';
 import 'package:sakan/widgets/appointments_management_widget/appointment_details/payment_details.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/modules/MyAppointments/controllers/appointment_detailes_controller.dart';
 import '../../../constants/colors_manager.dart';
@@ -107,6 +108,48 @@ appointmentDetailsWidget(BuildContext context) {
                 icon: ImagesManager.room_type,
                 label: 'customer_name'.tr,
                 value: booking.customerName ?? 'unknown'.tr,
+              ),
+              SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      ImagesManager
+                          .room_type, // Using same icon as other info rows if appropriate, or could be a phone icon
+                      height: 20,
+                      width: 20,
+                      color: ColorsManager.mainColor,
+                    ),
+                    SizedBox(width: 15),
+                    Text(
+                      'customer_phone'.tr,
+                      style: getRegularStyle(
+                        color: ColorsManager.defaultGreyColor,
+                        fontSize: FontSizeManager.s12,
+                      ),
+                    ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () async {
+                        final Uri phoneUri = Uri(
+                          scheme: 'tel',
+                          path: booking.customerPhone ?? '',
+                        );
+                        if (await canLaunchUrl(phoneUri)) {
+                          await launchUrl(phoneUri);
+                        }
+                      },
+                      child: Text(
+                        booking.formattedCustomerPhone ?? '-',
+                        style: getRegularStyle(
+                          color: ColorsManager.mainColor,
+                          fontSize: FontSizeManager.s12,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
               SizedBox(height: 15),
               _buildInfoRow(

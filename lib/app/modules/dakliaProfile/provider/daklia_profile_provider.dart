@@ -1,44 +1,40 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import '../../../services/secure_storage_service.dart';
 
 import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
-import '../../network/controllers/network_controller.dart';
 import '../model/daklia_profile_model.dart';
 
-class DakliaProfileProvider extends GetConnect {
-  var networkController = NetworkController.instance;
+class DakliaProfileProvider {
   static DakliaProfileProvider get instance => Get.put(DakliaProfileProvider());
   final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
-  @override
-  void onInit() {
-    httpClient.baseUrl = HttpHelper.baseUrl;
-    EasyLoading.addStatusCallback((status) {
-      if (status == EasyLoadingStatus.dismiss) {
-        timer?.cancel();
-      }
-    });
-  }
 
-  Future getProfileInfo(String? id) async {
+  Future<DakliaProfileModel?> getProfileInfo(String? id) async {
     try {
       final token = await storage.read('token');
-      final response = await get(
-          HttpHelper.baseUrl.replaceAll('/user', '/daklia') +
-              HttpHelper.dakliaProfile +
-              '$id',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Token $token',
-          }).timeout(
+      final url = HttpHelper.baseUrl.replaceAll('/user', '/daklia') +
+          HttpHelper.dakliaProfile +
+          '$id';
+
+      print('DEBUG Provider: Calling URL: $url');
+      print('DEBUG Provider: Token: ${token?.substring(0, 10)}...');
+
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Token $token',
+        },
+      ).timeout(
         const Duration(seconds: 30),
         onTimeout: () {
           EasyLoading.dismiss();
@@ -48,10 +44,14 @@ class DakliaProfileProvider extends GetConnect {
         },
       );
 
-      var data = response.body;
       var statusCode = response.statusCode;
+      var data = jsonDecode(response.body);
+
       log('this is the status code: $statusCode');
       log('Profile data: $data');
+      print('DEBUG Provider: Status code: $statusCode');
+      print('DEBUG Provider: Response body: $data');
+
       if (statusCode == 200) {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
@@ -91,6 +91,7 @@ class DakliaProfileProvider extends GetConnect {
       return null;
     } catch (e) {
       log('Error in getProfileInfo: $e');
+      print('DEBUG Provider: Error: $e');
       EasyLoading.dismiss();
       Dialogs.errorDialog(Get.context!, 'network_error'.tr);
       return null;
