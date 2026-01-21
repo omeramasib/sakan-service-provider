@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "858864824848",
+    "project_id": "sakan-service-provider",
+    "storage_bucket": "sakan-service-provider.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:858864824848:android:418a9757727375a1081095",
+        "android_client_info": {
+          "package_name": "com.sakan.service_provider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS9FuzTnhRYbCkMYDnthzyX7hIel7Jc-0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
