@@ -424,7 +424,7 @@ class RoomManagementController extends GetxController {
   }
 
   // method to add room feature
-  Future<bool> addRoomFeature() async {
+  Future<void> addRoomFeature() async {
     log('this is the room id: ${getRooms.roomId}');
     try {
       final data = await roomFeatureProvider.addFeature(
@@ -433,24 +433,17 @@ class RoomManagementController extends GetxController {
         featureDescription: featureDescription!,
       );
       print('this is the data: $data');
-      // Refresh features list after successful addition
-      await refreshRoomFeatures();
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
-      return true;
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_feature'.tr);
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
-      return false;
     }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
   }
 
   // method to check add room feature
-  Future<bool> checkAddRoomFeature() async {
+  bool checkAddRoomFeature() {
     var isValid = roomFeaturesFormKey.currentState!.validate();
     if (!isValid) {
       return false;
@@ -458,11 +451,12 @@ class RoomManagementController extends GetxController {
 
     roomFeaturesFormKey.currentState!.save();
     EasyLoading.show(status: 'loading'.tr);
-    final success = await addRoomFeature();
-    return success;
+    addRoomFeature();
+    update();
+    return true;
   }
 
-  Future<bool> checkEditAddRoomFeature() async {
+  bool checkEditAddRoomFeature() {
     var isValid = editAddFeaturesFormKey.currentState!.validate();
     if (!isValid) {
       return false;
@@ -470,8 +464,9 @@ class RoomManagementController extends GetxController {
 
     editAddFeaturesFormKey.currentState!.save();
     EasyLoading.show(status: 'loading'.tr);
-    final success = await addRoomFeature();
-    return success;
+    addRoomFeature();
+    update();
+    return true;
   }
 
   @override

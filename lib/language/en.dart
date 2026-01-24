@@ -519,4 +519,6 @@ const Map<String, String> enUS = {
       'A new version of the app is available. Please update to continue using the app.',
   'update_now': 'Update Now',
   'new_version': 'New Version',
+  'whatsapp_not_available': 'WhatsApp is not installed',
+  'error_opening_whatsapp': 'Could not open WhatsApp',
 };

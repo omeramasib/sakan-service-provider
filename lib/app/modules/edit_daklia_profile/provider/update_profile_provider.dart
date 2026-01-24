@@ -38,22 +38,11 @@ class UpdateProfileProvider extends GetConnect {
     log('this is the number of rooms: $numberOfRooms');
     final token = await storage.read('token');
     final dakliaId = await storage.read('dakliaId');
-    log('=== DEBUG: dakliaId from storage: $dakliaId ===');
-    log('=== DEBUG: token from storage: ${token?.substring(0, 10)}... ===');
-
-    if (dakliaId == null || dakliaId.isEmpty) {
-      log('=== ERROR: dakliaId is null or empty! ===');
-      EasyLoading.dismiss();
-      Dialogs.errorDialog(Get.context!, 'daklia_not_found'.tr);
-      return;
-    }
-
     var request = http.MultipartRequest(
       'PUT',
       Uri.parse(
           'https://sakanapp.onrender.com/api/v1/daklia/$dakliaId/update-profile/'),
     );
-    log('=== DEBUG: Full request URL: ${request.url} ===');
     log('this is the request: $request');
     request.headers["authorization"] = "Token $token";
     if (image.path != '') {
@@ -72,19 +61,9 @@ class UpdateProfileProvider extends GetConnect {
     var response = await request.send();
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
+    var data = json.decode(responseString);
     var statusCode = response.statusCode;
     log('this is the status code: $statusCode');
-    log('this is the response: $responseString');
-
-    // Try to parse JSON, but handle cases where response is not valid JSON
-    dynamic data;
-    try {
-      data = json.decode(responseString);
-    } catch (e) {
-      log('Failed to parse response as JSON: $e');
-      data = {'message': responseString};
-    }
-
     log('this is the data: $data');
     EasyLoading.show(status: 'loading'.tr);
 

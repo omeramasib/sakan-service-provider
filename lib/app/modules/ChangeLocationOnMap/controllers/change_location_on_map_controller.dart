@@ -19,30 +19,9 @@ class ChangeLocationOnMapController extends GetxController {
   final Completer<GoogleMapController> gMC = Completer();
   var initZoom = 14.4746;
 
-  RxBool isMoving = false.obs;
-
   // update camera position
   void onCameraMove(CameraPosition position) {
-    isMoving.value = true;
-    lat.value = position.target.latitude;
-    lon.value = position.target.longitude;
-    log("Moving: ${position.target}", name: "MAP_MOVE");
-    update();
-  }
-
-  void onCameraIdle() {
-    isMoving.value = false;
-    getAddresFromLatLon(Position(
-        longitude: lon.value,
-        latitude: lat.value,
-        timestamp: DateTime.now(),
-        accuracy: 0,
-        altitude: 0,
-        heading: 0,
-        speed: 0,
-        speedAccuracy: 0,
-        altitudeAccuracy: 0,
-        headingAccuracy: 0));
+    log(position.toString(), name: "########################");
     update();
   }
 
@@ -120,8 +99,17 @@ class ChangeLocationOnMapController extends GetxController {
       LatLng location = LatLng(position.latitude, position.longitude);
       log('this is the lon and lat: ${lat.value} , ${lon.value}');
       currentPosition = location;
-      // No marker added here, center pin is used
     }
+
+    markers.add(
+      Marker(
+        markerId: MarkerId('currentPosition'),
+        position: LatLng(lat.value, lon.value),
+        infoWindow: InfoWindow(
+          title: 'Your Location',
+        ),
+      ),
+    );
 
     getAddresFromLatLon(position);
 
@@ -137,7 +125,6 @@ class ChangeLocationOnMapController extends GetxController {
       Placemark place = placemarks[0];
       address =
           "${place.country} , ${place.locality}, ${place.name}, ${place.street}";
-      log("Address updated: $address");
     } catch (e) {
       print(e);
     }
@@ -164,7 +151,7 @@ class ChangeLocationOnMapController extends GetxController {
     );
   }
 
-  void checkChangeAddress() async {
+  void checkChangeAddress() async{
     var isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -196,4 +183,5 @@ class ChangeLocationOnMapController extends GetxController {
   void onClose() {
     super.onClose();
   }
+
 }

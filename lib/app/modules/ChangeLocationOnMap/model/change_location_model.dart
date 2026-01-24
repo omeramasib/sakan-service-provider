@@ -17,32 +17,10 @@ class ChangeLocationModel {
   ChangeLocationModel.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
     locationId = json['location_id'];
-
-    // Safely handle potential non-String types (like List from validation errors)
-    if (json['longitude'] is List) {
-      longitude = (json['longitude'] as List).first?.toString();
-    } else {
-      longitude = json['longitude']?.toString();
-    }
-
-    if (json['latitude'] is List) {
-      latitude = (json['latitude'] as List).first?.toString();
-    } else {
-      latitude = json['latitude']?.toString();
-    }
-
-    if (json['address'] is List) {
-      address = (json['address'] as List).first?.toString();
-    } else {
-      address = json['address']?.toString();
-    }
-
-    if (json['additional_address'] is List) {
-      additionalAddress =
-          (json['additional_address'] as List).first?.toString();
-    } else {
-      additionalAddress = json['additional_address']?.toString();
-    }
+    longitude = json['longitude'];
+    latitude = json['latitude'];
+    address = json['address'];
+    additionalAddress = json['additional_address'];
   }
 
   Map<String, dynamic> toJson() {

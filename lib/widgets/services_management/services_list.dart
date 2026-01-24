@@ -85,107 +85,115 @@ Widget servicesList(BuildContext context) {
                 itemCount: controller.servicesList.length,
                 itemBuilder: (context, index) => Column(
                   children: [
-                    Container(
-                      width: 341,
-                      height: 68,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                        boxShadow: [
-                          BoxShadow(
-                            color: ColorsManager.shadowColor,
-                            blurRadius: 7,
-                            offset: Offset(0, 0), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 20,
-                              right: 20,
+                    GestureDetector(
+                      onTap: () {
+                        controller.setServices = controller.servicesList[index];
+                        editOrDeleteService(context);
+                      },
+                      child: Container(
+                        width: 341,
+                        height: 68,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: [
+                            BoxShadow(
+                              color: ColorsManager.shadowColor,
+                              blurRadius: 7,
+                              offset:
+                                  Offset(0, 0), // changes position of shadow
                             ),
-                            child: Text(
-                              controller.servicesList[index].serviceName!,
-                              style: getRegularStyle(
-                                color: ColorsManager.blackColor,
-                                fontSize: FontSizeManager.s13,
+                          ],
+                        ),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 20,
+                                right: 20,
+                              ),
+                              child: Text(
+                                controller.servicesList[index].serviceName!,
+                                style: getRegularStyle(
+                                  color: ColorsManager.blackColor,
+                                  fontSize: FontSizeManager.s13,
+                                ),
                               ),
                             ),
-                          ),
-                          Obx(
-                            () => controller.servicesList[index].isAvailable!
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 20,
-                                      right: 210,
-                                    ),
-                                    child: Container(
-                                      width: 75,
-                                      height: 30,
-                                      decoration: BoxDecoration(
-                                        color: ColorsManager.greenColor
-                                            .withOpacity(
-                                          0.2,
+                            Obx(
+                              () => controller.servicesList[index].isAvailable!
+                                  ? Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 20,
+                                        right: 210,
+                                      ),
+                                      child: Container(
+                                        width: 75,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          color: ColorsManager.greenColor
+                                              .withOpacity(
+                                            0.2,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(50),
                                         ),
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          SvgPicture.asset(
-                                            ImagesManager.confirmation,
-                                            color: ColorsManager.greenColor,
-                                            height: 20,
-                                            width: 20,
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            'active_services'.tr,
-                                            style: getRegularStyle(
-                                              color: ColorsManager.greenColor,
-                                              fontSize: FontSizeManager.s13,
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 5,
                                             ),
-                                          ),
-                                        ],
+                                            SvgPicture.asset(
+                                              ImagesManager.confirmation,
+                                              color: ColorsManager.greenColor,
+                                              height: 20,
+                                              width: 20,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              'active_services'.tr,
+                                              style: getRegularStyle(
+                                                color: ColorsManager.greenColor,
+                                                fontSize: FontSizeManager.s13,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                : SizedBox(),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              top: 25,
-                              right: 315,
+                                    )
+                                  : SizedBox(),
                             ),
-                            child: InkWell(
-                              onTap: () {
-                                controller.setServices =
-                                    controller.servicesList[index];
-                                editOrDeleteService(context);
-                              },
-                              child: SvgPicture.asset(
-                                ImagesManager.more,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                top: 25,
+                                right: 315,
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  controller.setServices =
+                                      controller.servicesList[index];
+                                  editOrDeleteService(context);
+                                },
+                                child: SvgPicture.asset(
+                                  ImagesManager.more,
+                                ),
                               ),
                             ),
-                          ),
-                          // Obx(
-                          //   () => Checkbox(
-                          //     value: controller.isAvailable.value,
-                          //     checkColor: ColorsManager.whiteColor,
-                          //     fillColor: MaterialStateProperty.all(
-                          //         ColorsManager.mainColor),
-                          //     onChanged: (value) {
-                          //       controller.chooseIsAvailable(value!);
-                          //     },
-                          //   ),
-                          // ),
-                        ],
+                            // Obx(
+                            //   () => Checkbox(
+                            //     value: controller.isAvailable.value,
+                            //     checkColor: ColorsManager.whiteColor,
+                            //     fillColor: MaterialStateProperty.all(
+                            //         ColorsManager.mainColor),
+                            //     onChanged: (value) {
+                            //       controller.chooseIsAvailable(value!);
+                            //     },
+                            //   ),
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

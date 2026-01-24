@@ -8,8 +8,8 @@ import '../../../../constants/colors_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../controllers/auth_controller.dart';
 import '../login/login.screen.dart';
-import '../register/register.screen.dart';
-import '../widgets/choose_login_or_register.dart';
+// import '../register/register.screen.dart';
+// import '../widgets/choose_login_or_register.dart';
 
 class AuthView extends GetView<AuthController> {
   const AuthView({Key? key}) : super(key: key);
@@ -21,10 +21,11 @@ class AuthView extends GetView<AuthController> {
     int? number = Get.arguments;
     if (number == 1) {
       // Show register tab if explicitly requested
-      controller.selectLoginOrRegister = true;
+      // Show register tab if explicitly requested
+      // controller.selectLoginOrRegister = true;
     } else {
       // Default: show login tab
-      controller.selectLoginOrRegister = false;
+      // controller.selectLoginOrRegister = false;
     }
 
     return Scaffold(
@@ -62,15 +63,16 @@ class AuthView extends GetView<AuthController> {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    loginOrRegister(context),
-                    SizedBox(
-                      height: controller.selectLoginOrRegister ? 0 : 20,
+                    // loginOrRegister(context),
+                    const SizedBox(
+                      height: 20, // controller.selectLoginOrRegister ? 0 : 20,
                     ),
-                    Obx(
-                      () => controller.selectLoginOrRegister == true
-                          ? const RegisterScreen()
-                          : const LoginScreen(),
-                    ),
+                    const LoginScreen()
+                    // Obx(
+                    //   () => controller.selectLoginOrRegister == true
+                    //       ? const RegisterScreen()
+                    //       : const LoginScreen(),
+                    // ),
                   ],
                 ),
               ),

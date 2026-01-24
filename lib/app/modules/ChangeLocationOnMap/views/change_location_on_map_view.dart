@@ -77,33 +77,14 @@ class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
                 future: controller.getCurrentLocationFuture,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return Stack(
-                      children: [
-                        GoogleMap(
-                          onMapCreated: controller.onMapCreated,
-                          zoomControlsEnabled: false,
-                          initialCameraPosition: CameraPosition(
-                            target: controller.currentPosition!,
-                            zoom: controller.initZoom,
-                          ),
-                          onCameraMove: controller.onCameraMove,
-                          onCameraIdle: controller.onCameraIdle,
-                        ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.only(bottom: 40.0),
-                            child: Obx(
-                              () => Icon(
-                                Icons.location_on,
-                                size: 50,
-                                color: controller.isMoving.value
-                                    ? ColorsManager.mainColor.withOpacity(0.7)
-                                    : ColorsManager.errorColor,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                    return GoogleMap(
+                      onMapCreated: controller.onMapCreated,
+                      zoomControlsEnabled: false,
+                      initialCameraPosition: CameraPosition(
+                        target: controller.currentPosition!,
+                        zoom: controller.initZoom,
+                      ),
+                      markers: controller.markers,
                     );
                   } else {
                     return Center(
@@ -141,9 +122,9 @@ class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
             children: [
               ButtonsManager.primaryButton(
                 text: 'save_changes'.tr,
-                onPressed: () {
+                onPressed: (){
                   // await controller.sendUpdateProfile();
-                  changeAdditionalAddress(context);
+                changeAdditionalAddress(context);
                 },
                 context: context,
                 maximumSize: Size(287, 50),

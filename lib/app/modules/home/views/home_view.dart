@@ -8,6 +8,7 @@ import 'package:sakan/constants/fonts_manager.dart';
 import 'package:sakan/constants/images_manager.dart';
 import 'package:sakan/constants/styles_manager.dart';
 import 'package:sakan/constants/responsive_helper.dart';
+import 'package:sakan/widgets/customer_service/customer_service_button.dart';
 import 'package:sakan/widgets/responsive_builder.dart';
 
 import '../controllers/home_controller.dart';
@@ -41,6 +42,12 @@ class HomeView extends GetView<HomeController> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        shape: const CircleBorder(),
+        backgroundColor: ColorsManager.mainColor,
+        child: const CustomerServiceButton(),
       ),
     );
   }
