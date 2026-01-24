@@ -2119,7 +2119,6 @@ Widget editRegulationWidget(
     padding: const EdgeInsets.only(left: 20, right: 20),
     child: SizedBox(
       width: 315,
-      height: 50,
       child: TextFormField(
         keyboardType: TextInputType.text,
         controller: controller.editRegulationTextController,
@@ -2137,7 +2136,7 @@ Widget editRegulationWidget(
             left: 25,
             right: 25,
             top: 10,
-            bottom: 20,
+            bottom: 10,
           ),
           isDense: true,
           enabledBorder: const UnderlineInputBorder(

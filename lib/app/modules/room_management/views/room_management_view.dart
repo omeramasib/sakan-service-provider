@@ -23,54 +23,59 @@ class RoomManagementView extends GetView<RoomManagementController> {
     return Scaffold(
       backgroundColor: ColorsManager.lightGreyColor,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(10),
+        preferredSize: Size.fromHeight(0),
         child: AppBar(
-          backgroundColor: ColorsManager.lightGreyColor,
+          backgroundColor: ColorsManager.mainColor,
           elevation: 0,
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: AppPadding.p20,
-                  ),
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back,
-                      color: ColorsManager.blackColor,
+            Container(
+              color: ColorsManager.mainColor,
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      right: AppPadding.p20,
                     ),
-                    onPressed: () => Get.offAllNamed(Routes.HOME),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: AppPadding.p40,
-                  ),
-                  child: Text(
-                    'rooms_management'.tr,
-                    style: getMediumStyle(
-                      fontSize: FontSizeManager.s15,
-                      color: ColorsManager.mainColor,
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: ColorsManager.whiteColor,
+                      ),
+                      onPressed: () => Get.offAllNamed(Routes.HOME),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: AppPadding.p20,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: SvgPicture.asset(
-                      ImagesManager.search,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: AppPadding.p40,
+                    ),
+                    child: Text(
+                      'rooms_management'.tr,
+                      style: getMediumStyle(
+                        fontSize: FontSizeManager.s15,
+                        color: ColorsManager.whiteColor,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: AppPadding.p20,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: SvgPicture.asset(
+                        ImagesManager.search,
+                        color: ColorsManager.whiteColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 30,

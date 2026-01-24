@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 
+import 'package:sakan/constants/theme_manager.dart';
 import 'app/routes/app_pages.dart';
 import 'flavors.dart';
 import 'language_controller/language_controller.dart';
@@ -22,10 +23,7 @@ class App extends StatelessWidget {
       fallbackLocale: languageController.fallbackLocale,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
+      theme: getApplicationTheme(),
       builder: (context, child) {
         // Initialize EasyLoading
         child = EasyLoading.init()(context, child);
