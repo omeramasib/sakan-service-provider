@@ -123,8 +123,8 @@ editAddRoomFeatures(BuildContext context) {
                   ),
                   ButtonsManager.primaryButton(
                     text: 'add_feature'.tr,
-                    onPressed: () async {
-                      final success = await controller.checkEditAddRoomFeature();
+                    onPressed: () {
+                      final success = controller.checkEditAddRoomFeature();
                       if (success) {
                         Get.back();
                       }

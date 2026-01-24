@@ -11,12 +11,13 @@ import '../../../../constants/styles_manager.dart';
 import '../../../../constants/values_manager.dart';
 import '../../Auth/change_password/change_password.dart';
 import '../controllers/more_screen_controller.dart';
+import '../../../../core/utils/whatsapp_helper.dart';
 
 class MoreScreenView extends GetView<MoreScreenController> {
   const MoreScreenView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var controller = MoreScreenController();
+    final controller = Get.put(MoreScreenController());
     var isArabic = Get.locale!.languageCode == 'ar';
     return Scaffold(
       appBar: AppBar(
@@ -187,7 +188,7 @@ class MoreScreenView extends GetView<MoreScreenController> {
                         // Contact Support field
                         GestureDetector(
                           onTap: () {
-                            // addNewTicketWidget(context);
+                            WhatsAppHelper.launchWhatsApp(context);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -228,7 +229,8 @@ class MoreScreenView extends GetView<MoreScreenController> {
                                               top: 5, right: 30),
                                       child: GestureDetector(
                                         onTap: () {
-                                          // addNewTicketWidget(context);
+                                          WhatsAppHelper.launchWhatsApp(
+                                              context);
                                         },
                                         child: const Icon(
                                           Icons.arrow_forward_ios,
@@ -525,6 +527,16 @@ class MoreScreenView extends GetView<MoreScreenController> {
                           child: const Divider(
                             color: ColorsManager.primaryColor,
                             thickness: 0.1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Obx(
+                          () => Text(
+                            "V ${controller.version.value}",
+                            style: getRegularStyle(
+                                color: ColorsManager.fontColor, fontSize: 14),
                           ),
                         ),
                         const SizedBox(

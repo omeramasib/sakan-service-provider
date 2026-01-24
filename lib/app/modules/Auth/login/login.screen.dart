@@ -26,7 +26,7 @@ class LoginScreen extends GetView<LoginController> {
       builder: (ctx) {
         return Form(
           key: controller.loginFormKey,
-          autovalidateMode: AutovalidateMode.disabled,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Center(
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 500),

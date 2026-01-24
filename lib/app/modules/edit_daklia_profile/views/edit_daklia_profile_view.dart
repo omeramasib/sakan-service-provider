@@ -116,14 +116,8 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     image: DecorationImage(
-                                      image: profileController.profileList[0]
-                                                  .fullDakliaImage !=
-                                              null
-                                          ? NetworkImage(profileController
-                                              .profileList[0].fullDakliaImage!)
-                                          : const AssetImage(
-                                                  ImagesManager.room_example)
-                                              as ImageProvider,
+                                      image: NetworkImage(profileController
+                                          .profileList[0].dakliaImage!),
                                       fit: BoxFit.cover,
                                       colorFilter: ColorFilter.mode(
                                         ColorsManager.blackColor
@@ -299,28 +293,20 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                     GoogleMap(
                       initialCameraPosition: CameraPosition(
                           target: LatLng(
-                            double.tryParse(
-                                    profileController.profileList[0].latitude ??
-                                        '') ??
-                                15.5007,
-                            double.tryParse(profileController
-                                        .profileList[0].longitude ??
-                                    '') ??
-                                32.5599,
+                            double.parse(
+                                profileController.profileList[0].latitude!),
+                            double.parse(
+                                profileController.profileList[0].longitude!),
                           ),
                           zoom: 14),
                       markers: {
                         Marker(
                           markerId: MarkerId("1"),
                           position: LatLng(
-                            double.tryParse(
-                                    profileController.profileList[0].latitude ??
-                                        '') ??
-                                15.5007,
-                            double.tryParse(profileController
-                                        .profileList[0].longitude ??
-                                    '') ??
-                                32.5599,
+                            double.parse(
+                                profileController.profileList[0].latitude!),
+                            double.parse(
+                                profileController.profileList[0].longitude!),
                           ),
                         ),
                       },

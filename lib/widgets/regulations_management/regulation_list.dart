@@ -46,8 +46,7 @@ Widget regulationList(BuildContext context) {
                       : EdgeInsets.only(
                           left: Get.width * 0.060,
                         ),
-                  child: Row(
-                    children: [
+                  child: Row(children: [
                     GestureDetector(
                       onTap: () {
                         addRegulation(context);
@@ -84,38 +83,39 @@ Widget regulationList(BuildContext context) {
                 },
                 child: ListView.separated(
                   itemCount: controller.lawsList.length,
-                  itemBuilder: (context, index) => Container(
-                    width: 330,
-                    decoration: BoxDecoration(
-                      color: ColorsManager.lightGreyColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                right: 10,
-                                top: 15,
-                              ),
-                              child: Text(
-                                controller.lawsList[index].lawDescription!,
-                                style: getRegularStyle(
-                                  color: ColorsManager.mainColor,
-                                  fontSize: FontSizeManager.s14,
-                                  overflow: TextOverflow.ellipsis,
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      controller.setLaws = controller.lawsList[index];
+                      editOrDeleteRegulation(context);
+                    },
+                    child: Container(
+                      width: 330,
+                      decoration: BoxDecoration(
+                        color: ColorsManager.lightGreyColor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                    right: 10,
+                                    top: 15,
+                                  ),
+                                  child: Text(
+                                    controller.lawsList[index].lawDescription!,
+                                    style: getRegularStyle(
+                                      color: ColorsManager.mainColor,
+                                      fontSize: FontSizeManager.s14,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                controller.setLaws =
-                                    controller.lawsList[index];
-                                editOrDeleteRegulation(context);
-                              },
-                              child: Padding(
+                              Padding(
                                 padding: const EdgeInsets.only(
                                   left: 20,
                                   top: 15,
@@ -124,36 +124,36 @@ Widget regulationList(BuildContext context) {
                                   ImagesManager.more,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 10,
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  controller
-                                      .lawsList[index].punishmentDescription!,
-                                  style: getRegularStyle(
-                                    color: ColorsManager.blackColor,
-                                    fontSize: FontSizeManager.s12, 
-                                    height: 2,
-                                  ),
-                                ),
-                              ),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              right: 10,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    controller
+                                        .lawsList[index].punishmentDescription!,
+                                    style: getRegularStyle(
+                                      color: ColorsManager.blackColor,
+                                      fontSize: FontSizeManager.s12,
+                                      height: 2,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   separatorBuilder: (context, index) => SizedBox(

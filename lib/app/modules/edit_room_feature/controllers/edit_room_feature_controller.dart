@@ -31,7 +31,7 @@ class EditRoomFeatureController extends GetxController {
 
   var provider = RoomFeaturesProvider();
 
-  Future<bool> editRoomFeature() async {
+  Future<void> editRoomFeature() async {
     try {
       final data = await provider.editFeature(
         roomId: roomController.getRooms.roomId!,
@@ -44,23 +44,16 @@ class EditRoomFeatureController extends GetxController {
             : featureDescription,
       );
       print('this is the data: $data');
-      // Refresh features list after successful edit
-      await roomController.refreshRoomFeatures();
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
-      return true;
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_update_feature'.tr);
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
-      return false;
     }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
   }
 
-  Future<bool> deleteFeature() async {
+  Future<void> deleteFeature() async {
     log('this is the feature id: ${getFeatures.featureId}');
     log('this is the room id: ${roomController.getRooms.roomId}');
     try {
@@ -68,34 +61,25 @@ class EditRoomFeatureController extends GetxController {
         roomId: roomController.getRooms.roomId!,
         featureId: getFeatures.featureId!,
       );
-      // Refresh features list after successful deletion
-      await roomController.refreshRoomFeatures();
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
-      return true;
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_delete_feature'.tr);
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
-      return false;
     }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
   }
 
-  Future<bool> checkDeleteFeature() async {
+  checkDeleteFeature() async {
     isLoading.value = true;
     EasyLoading.show(status: 'loading'.tr);
-    final success = await deleteFeature();
-    return success;
+    await deleteFeature();
   }
 
-  Future<bool> checkEditFeature() async {
+  checkEditFeature() async {
     isLoading.value = true;
     EasyLoading.show(status: 'loading'.tr);
-    final success = await editRoomFeature();
-    return success;
+    await editRoomFeature();
   }
 
   @override
