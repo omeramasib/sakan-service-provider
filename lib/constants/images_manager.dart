@@ -71,7 +71,7 @@ class ImagesManager {
   static const String successIcon =
       'assets/images/undraw_completed_re_cisp.svg';
   static const String languageIcon = 'assets/images/g_translate_black_24dp.svg';
-  static const String notification  = 'assets/images/notification.svg';
+  static const String notification = 'assets/images/notification.svg';
   static const String rooms = 'assets/images/rooms.svg';
   static const String building = 'assets/images/dakhlia.svg';
   static const String service = 'assets/images/service.svg';
@@ -94,7 +94,10 @@ class ImagesManager {
   static const String booking_number = 'assets/images/Group 74814.svg';
   static const String cash = 'assets/images/money-Filled.svg';
   static const String id = 'assets/images/Id.svg';
-  static const String omerId = '/Users/pc/Desktop/sakan/assets/images/OmerId.png';
-  static const String edit_profile_icon = 'assets/images/edit-profile-Filled.svg';
+  static const String omerId =
+      '/Users/pc/Desktop/sakan/assets/images/OmerId.png';
+  static const String edit_profile_icon =
+      'assets/images/edit-profile-Filled.svg';
+  static const String subscription = 'assets/images/subscription.png';
   // static const String number = 'aassets/images/booking_number.svg';
 }

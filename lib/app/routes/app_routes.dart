@@ -23,6 +23,8 @@ abstract class Routes {
   static const EDIT_SINGLE_ROOM = _Paths.EDIT_SINGLE_ROOM;
   static const EDIT_MULTIPLE_ROOM = _Paths.EDIT_MULTIPLE_ROOM;
   static const EDIT_ROOM_FEATURE = _Paths.EDIT_ROOM_FEATURE;
+  static const SUBSCRIPTION_PLANS = _Paths.SUBSCRIPTION_PLANS;
+  static const PAYMENT_WEBVIEW = _Paths.PAYMENT_WEBVIEW;
 }
 
 abstract class _Paths {
@@ -47,4 +49,6 @@ abstract class _Paths {
   static const EDIT_SINGLE_ROOM = '/edit-single-room';
   static const EDIT_MULTIPLE_ROOM = '/edit-multiple-room';
   static const EDIT_ROOM_FEATURE = '/edit-room-feature';
+  static const SUBSCRIPTION_PLANS = '/subscription-plans';
+  static const PAYMENT_WEBVIEW = '/payment-webview';
 }

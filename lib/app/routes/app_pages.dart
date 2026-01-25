@@ -40,6 +40,9 @@ import '../modules/services_management/bindings/services_management_binding.dart
 import '../modules/services_management/views/services_management_view.dart';
 import '../modules/splashScreen/bindings/splash_screen_binding.dart';
 import '../modules/splashScreen/views/splash_screen_view.dart';
+import '../modules/subscription/bindings/subscription_binding.dart';
+import '../modules/subscription/views/subscription_plans_view.dart';
+import '../modules/subscription/views/payment_webview_view.dart';
 
 part 'app_routes.dart';
 
@@ -149,6 +152,19 @@ class AppPages {
       name: _Paths.EDIT_ROOM_FEATURE,
       page: () => const EditRoomFeatureView(),
       binding: EditRoomFeatureBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBSCRIPTION_PLANS,
+      page: () => const SubscriptionPlansView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT_WEBVIEW,
+      page: () => const PaymentWebViewView(
+        paymentUrl: '',
+        clientReferenceId: '',
+      ),
+      binding: SubscriptionBinding(),
     ),
   ];
 }

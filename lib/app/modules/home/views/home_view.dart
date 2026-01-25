@@ -109,6 +109,11 @@ class HomeView extends GetView<HomeController> {
         route: Routes.REGULATIONS_MANAGEMENT,
       ),
       _MenuItem(
+        icon: ImagesManager.subscription,
+        title: 'subscription_management'.tr,
+        route: Routes.SUBSCRIPTION_PLANS,
+      ),
+      _MenuItem(
         icon: ImagesManager.setting,
         title: 'settings'.tr,
         route: Routes.MORE_SCREEN,
@@ -163,12 +168,19 @@ class HomeView extends GetView<HomeController> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Flexible(
-                child: SvgPicture.asset(
-                  item.icon,
-                  height: iconSize,
-                  width: iconSize,
-                  fit: BoxFit.contain,
-                ),
+                child: item.icon.endsWith('.png')
+                    ? Image.asset(
+                        item.icon,
+                        height: iconSize,
+                        width: iconSize,
+                        fit: BoxFit.contain,
+                      )
+                    : SvgPicture.asset(
+                        item.icon,
+                        height: iconSize,
+                        width: iconSize,
+                        fit: BoxFit.contain,
+                      ),
               ),
               SizedBox(
                   height: context.responsive(
