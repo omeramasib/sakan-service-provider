@@ -43,10 +43,26 @@ class HomeController extends GetxController {
         // If subscription is NOT active and user is NOT on free plan
         // Redirect to subscription plans screen
         if (!status.hasActiveSubscription && !status.isFreePlan) {
-          Get.toNamed(
+          debugPrint(
+              '⚠️  Redirecting to subscription page (expired/no subscription)');
+
+          // Navigate and wait for user to return
+          await Get.toNamed(
             Routes.SUBSCRIPTION_PLANS,
             arguments: {'canSkip': false},
           );
+
+          // User returned from subscription page
+          // Re-check status in case they subscribed
+          debugPrint(
+              '🔄 User returned from subscription page, re-checking status...');
+          final updatedStatus = await provider.getStatus();
+
+          if (updatedStatus != null && updatedStatus.hasActiveSubscription) {
+            debugPrint('✅ Subscription now active! User can access app.');
+          } else {
+            debugPrint('⚠️  Subscription still not active.');
+          }
         }
       } else {
         debugPrint('   ❌ Status is NULL (Check API or Internet)');

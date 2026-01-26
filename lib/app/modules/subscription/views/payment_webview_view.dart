@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -49,7 +48,7 @@ class _PaymentWebViewWidgetState extends State<PaymentWebViewWidget> {
   bool _isLoading = true;
   bool _paymentCompleted = false;
 
-  // COMMENTED: Polling approach - for investigation
+  // DISABLED: Polling approach - not needed if relying on URL redirect
   // Timer? _verificationTimer;
   // int _pollCount = 0;
   // static const int _maxPolls = 100;
@@ -58,7 +57,7 @@ class _PaymentWebViewWidgetState extends State<PaymentWebViewWidget> {
   void initState() {
     super.initState();
     _initializeWebView();
-    // COMMENTED: Polling approach
+    // Polling disabled - relying on URL redirect detection
     // _startVerificationPolling();
   }
 
@@ -146,21 +145,24 @@ class _PaymentWebViewWidgetState extends State<PaymentWebViewWidget> {
       widget.clientReferenceId,
     );
 
-    if (!mounted) return;
+    debugPrint('📦 Verification result received: ${result != null}');
+    if (result != null) {
+      debugPrint('📦 subscription_active: ${result.subscriptionActive}');
+    }
+
+    if (!mounted) {
+      debugPrint('⚠️ Widget not mounted after verification');
+      return;
+    }
 
     if (result != null && result.subscriptionActive) {
       debugPrint('✅ Payment verified successfully');
 
-      Get.snackbar(
-        'payment_success'.tr,
-        'subscription_activated'.tr,
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-
-      await Future.delayed(const Duration(seconds: 1));
+      // Close immediately - snackbar in WebView context causes issues
+      // Success message will show on subscription page instead
+      debugPrint('🚪 Closing WebView with success result...');
       Get.back(result: {'success': true, 'result': result});
+      debugPrint('✅ Get.back() called');
     } else {
       // Payment pending - show dialog
       debugPrint('⏳ Payment pending, showing dialog...');
@@ -236,48 +238,6 @@ class _PaymentWebViewWidgetState extends State<PaymentWebViewWidget> {
       ),
     );
   }
-
-  // COMMENTED: Polling approach for investigation
-  // void _startVerificationPolling() {
-  //   Future.delayed(const Duration(seconds: 10), () {
-  //     if (!mounted || _paymentCompleted) return;
-  //     debugPrint('� Starting payment verification polling...');
-  //     _verificationTimer = Timer.periodic(
-  //       const Duration(seconds: 3),
-  //       (timer) async {
-  //         if (_paymentCompleted || _pollCount >= _maxPolls) {
-  //           timer.cancel();
-  //           return;
-  //         }
-  //         _pollCount++;
-  //         debugPrint('🔄 Polling verification... ($_pollCount/$_maxPolls)');
-  //         try {
-  //           final result = await widget.controller.verifyPayment(
-  //             widget.clientReferenceId,
-  //           );
-  //           if (result != null && result.subscriptionActive) {
-  //             timer.cancel();
-  //             _paymentCompleted = true;
-  //             debugPrint('✅ Payment verified via polling!');
-  //             if (mounted) {
-  //               Get.snackbar(
-  //                 'payment_success'.tr,
-  //                 'subscription_activated'.tr,
-  //                 snackPosition: SnackPosition.BOTTOM,
-  //                 backgroundColor: Colors.green,
-  //                 colorText: Colors.white,
-  //               );
-  //               await Future.delayed(const Duration(seconds: 1));
-  //               Get.back(result: {'success': true, 'result': result});
-  //             }
-  //           }
-  //         } catch (e) {
-  //           debugPrint('⚠️ Verification poll error: $e');
-  //         }
-  //       },
-  //     );
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -25,6 +25,7 @@ class SubscriptionPlansView extends GetView<SubscriptionController> {
   Widget build(BuildContext context) {
     final isArabic = Get.locale?.languageCode == 'ar';
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => canSkip,
       child: Scaffold(
@@ -41,15 +42,13 @@ class SubscriptionPlansView extends GetView<SubscriptionController> {
               color: ColorsManager.blackColor,
             ),
           ),
-          leading: canSkip
-              ? IconButton(
-                  icon: Icon(
-                    isArabic ? Icons.arrow_back : Icons.arrow_forward,
-                    color: ColorsManager.blackColor,
-                  ),
-                  onPressed: () => Get.back(),
-                )
-              : const SizedBox.shrink(),
+          leading: IconButton(
+            icon: Icon(
+              isArabic ? Icons.arrow_back : Icons.arrow_forward,
+              color: ColorsManager.blackColor,
+            ),
+            onPressed: () => Get.back(),
+          ),
           actions: [
             // Show skip button only when canSkip is true
             if (canSkip)
@@ -397,17 +396,31 @@ class SubscriptionPlansView extends GetView<SubscriptionController> {
         ),
       );
 
-      // Handle payment result
+      // Handle payment result - WebView closed
       if (paymentResult != null && paymentResult['success'] == true) {
+        // Payment successful - refresh subscription data
+        debugPrint('💳 Payment successful, refreshing subscription data...');
+
+        // Refresh both status and plans to update UI
+        await Future.wait([
+          controller.loadStatus(),
+          controller.loadPlans(),
+        ]);
+
+        // Show success message after refresh
         Get.snackbar(
           'success'.tr,
           'subscription_activated'.tr,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: ColorsManager.successStyleColor,
           colorText: ColorsManager.whiteColor,
+          duration: const Duration(seconds: 3),
         );
-        // Refresh status
-        controller.loadStatus();
+
+        debugPrint('✅ Subscription page updated with new status');
+      } else if (paymentResult != null && paymentResult['cancelled'] == true) {
+        // User cancelled payment
+        debugPrint('❌ Payment cancelled by user');
       }
     }
   }
