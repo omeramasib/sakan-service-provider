@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
+import '../../../app/modules/MyAppointments/models/booking_model.dart';
 import '../../../constants/colors_manager.dart';
 import '../../../constants/fonts_manager.dart';
 import '../../../constants/images_manager.dart';
 import '../../../constants/styles_manager.dart';
 
-Widget paymentDetails(BuildContext context) {
+Widget paymentDetails(BuildContext context, BookingModel booking) {
+  // Calculate payment details from booking
+  final double roomPrice = booking.totalPrice ?? 0.0;
+  final double deposit = 0.0; // Fixed deposit amount
+  final double discount =
+      0.0; // Default discount, can be updated if discount data is available
+  final double totalAmount = roomPrice + deposit - discount;
+
   return Container(
     width: 341,
     height: 206,
@@ -86,7 +94,7 @@ Widget paymentDetails(BuildContext context) {
               width: 10,
             ),
             Text(
-              ": 1000",
+              ": ${roomPrice.toStringAsFixed(0)}",
               style: getRegularStyle(
                 color: ColorsManager.blackColor,
                 fontSize: FontSizeManager.s12,
@@ -123,7 +131,7 @@ Widget paymentDetails(BuildContext context) {
               width: 10,
             ),
             Text(
-              ": 20",
+              ": ${deposit.toStringAsFixed(0)}",
               style: getRegularStyle(
                 color: ColorsManager.blackColor,
                 fontSize: FontSizeManager.s12,
@@ -160,7 +168,7 @@ Widget paymentDetails(BuildContext context) {
               width: 10,
             ),
             Text(
-              ": 0",
+              ": ${discount.toStringAsFixed(0)}",
               style: getRegularStyle(
                 color: ColorsManager.blackColor,
                 fontSize: FontSizeManager.s12,
@@ -197,7 +205,7 @@ Widget paymentDetails(BuildContext context) {
               width: 10,
             ),
             Text(
-              ": 1020",
+              ": ${totalAmount.toStringAsFixed(0)}",
               style: getRegularStyle(
                 color: ColorsManager.blackColor,
                 fontSize: FontSizeManager.s12,
