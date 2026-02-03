@@ -77,13 +77,14 @@ flutter_native_splash:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/sakan-logo.png"
+  image_path: "assets/images/app-icon.png"
 
 flutter:
   uses-material-design: true
 
   assets:
-  - assets/images/
+    - assets/images/
+    - shorebird.yaml
 
   fonts:
   - family:  Montserrat-Arabic
