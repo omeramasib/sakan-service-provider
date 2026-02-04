@@ -70,6 +70,14 @@ class ServicesManagementController extends GetxController {
 
   set setServices(ServiceModel serviceModel) {
     myServices = serviceModel;
+    editServiceNameController.text = serviceModel.serviceName ?? '';
+    editServiceDescriptionController.text =
+        serviceModel.serviceDescription ?? '';
+    editServicePriceController.text =
+        serviceModel.servicePrice?.toString() ?? '';
+    editServicePrice = serviceModel.servicePrice?.toString() ?? '';
+    editServiceType.value = serviceModel.serviceType ?? 'free';
+    isAvailable.value = serviceModel.isAvailable ?? true;
     update();
   }
 

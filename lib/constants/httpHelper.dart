@@ -33,4 +33,13 @@ class HttpHelper {
 
   // App configuration endpoint (uses FlavorConfig.baseUrl directly)
   static const appConfiguration = '/api/app-configuration/';
+
+  // Subscription endpoints
+  static String get subscriptionBaseUrl =>
+      '${FlavorConfig.instance.baseUrl}/api/v1/subscription';
+  static const subscriptionPlans = '/plans/';
+  static const subscriptionStatus = '/status/';
+  static const subscriptionPaymentInitiate = '/payment/initiate/';
+  static const subscriptionPaymentVerify = '/payment/verify/';
+  static const subscriptionHistory = '/history/';
 }

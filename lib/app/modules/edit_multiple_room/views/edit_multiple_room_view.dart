@@ -37,6 +37,15 @@ class EditMultipleRoomView extends GetView<EditMultipleRoomController> {
               fontSize: FontSizeManager.s15,
             ),
           ),
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back,
+              color: ColorsManager.whiteColor,
+            ),
+          ),
           centerTitle: true,
         ),
       ),

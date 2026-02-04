@@ -33,6 +33,8 @@ dependencies:
   flutter_local_notifications: ^17.2.4
   package_info_plus: ^8.0.0
   pub_semver: ^2.1.4
+  webview_flutter: ^4.0.0
+
 
 
 dependency_overrides:

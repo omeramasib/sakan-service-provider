@@ -28,6 +28,9 @@ class RegulationsManagementController extends GetxController {
 
   set setLaws(DakliaLawsModel lawModel) {
     myLaws = lawModel;
+    editRegulationTextController.text = lawModel.lawDescription ?? '';
+    editRegulationDescriptionController.text =
+        lawModel.punishmentDescription ?? '';
     update();
   }
 
@@ -105,6 +108,7 @@ class RegulationsManagementController extends GetxController {
       final dakliaId = (await storage.read('dakliaId')).toString();
       await provider.deleteLaw(dakliaId, myLaws.lawId!.toString());
       getLawsList();
+      Get.back();
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_delete_law'.tr);

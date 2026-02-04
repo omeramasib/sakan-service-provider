@@ -187,7 +187,7 @@ appointmentDetailsWidget(BuildContext context) {
           ),
         ),
         SizedBox(height: 15),
-        paymentDetails(context),
+        paymentDetails(context, booking),
       ],
     ),
   );
