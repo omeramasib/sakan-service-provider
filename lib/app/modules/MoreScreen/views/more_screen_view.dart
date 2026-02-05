@@ -12,6 +12,7 @@ import '../../../../constants/values_manager.dart';
 import '../../Auth/change_password/change_password.dart';
 import '../controllers/more_screen_controller.dart';
 import '../../../../core/utils/whatsapp_helper.dart';
+import 'privacy_policy_webview.dart';
 
 class MoreScreenView extends GetView<MoreScreenController> {
   const MoreScreenView({Key? key}) : super(key: key);
@@ -321,55 +322,57 @@ class MoreScreenView extends GetView<MoreScreenController> {
                         ),
 
                         // Privacy Policiy field
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: isArabic
-                                  ? const EdgeInsets.only(top: 20, right: 15)
-                                  : const EdgeInsets.only(top: 20, left: 15),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    ImagesManager.fileIcon,
-                                  ),
-                                  const SizedBox(
-                                    width: 15,
-                                  ),
-                                  Text(
-                                    'privacy_policy'.tr,
-                                    style: getRegularStyle(
-                                      color: ColorsManager.fontColor,
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => const PrivacyPolicyWebView());
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: isArabic
+                                    ? const EdgeInsets.only(top: 20, right: 15)
+                                    : const EdgeInsets.only(top: 20, left: 15),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      ImagesManager.fileIcon,
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Text(
+                                      'privacy_policy'.tr,
+                                      style: getRegularStyle(
+                                        color: ColorsManager.fontColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: isArabic
-                                  ? const EdgeInsets.only(top: 20)
-                                  : const EdgeInsets.only(top: 20),
-                              child: Row(
-                                children: [
-                                  Padding(
-                                    padding: isArabic
-                                        ? const EdgeInsets.only(
-                                            top: 5, left: 30)
-                                        : const EdgeInsets.only(
-                                            top: 5, right: 30),
-                                    child: GestureDetector(
-                                      onTap: () {},
+                              Padding(
+                                padding: isArabic
+                                    ? const EdgeInsets.only(top: 20)
+                                    : const EdgeInsets.only(top: 20),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: isArabic
+                                          ? const EdgeInsets.only(
+                                              top: 5, left: 30)
+                                          : const EdgeInsets.only(
+                                              top: 5, right: 30),
                                       child: const Icon(
                                         Icons.arrow_forward_ios,
                                         color: ColorsManager.mainColor,
                                         size: 10,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         Padding(
                           padding: isArabic

@@ -68,7 +68,8 @@ class HomeView extends GetView<HomeController> {
           child: Align(
             alignment: isArabic ? Alignment.centerLeft : Alignment.centerRight,
             child: GestureDetector(
-              onTap: () => Get.toNamed('/notifications'),
+              onTap: () {},
+              // onTap: () => Get.toNamed('/notifications'),
               child: SvgPicture.asset(
                 ImagesManager.notification,
                 height: context.responsive(

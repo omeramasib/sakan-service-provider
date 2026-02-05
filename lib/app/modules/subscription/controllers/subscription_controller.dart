@@ -42,19 +42,19 @@ class SubscriptionController extends GetxController {
         }
         debugPrint('SubscriptionController: Loaded ${result.length} plans');
       } else {
-        Get.snackbar(
-          'error'.tr,
-          'Failed to load subscription plans',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        // Get.snackbar(
+        //   'error'.tr,
+        //   'Failed to load subscription plans',
+        //   snackPosition: SnackPosition.BOTTOM,
+        // );
       }
     } catch (e) {
       debugPrint('SubscriptionController: loadPlans error: $e');
-      Get.snackbar(
-        'error'.tr,
-        'Failed to load subscription plans',
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      // Get.snackbar(
+      //   'error'.tr,
+      //   'Failed to load subscription plans',
+      //   snackPosition: SnackPosition.BOTTOM,
+      // );
     } finally {
       isLoadingPlans.value = false;
     }
@@ -91,7 +91,7 @@ class SubscriptionController extends GetxController {
       } else {
         Get.snackbar(
           'error'.tr,
-          'Failed to initiate payment',
+          'failed_to_initiate_payment'.tr,
           snackPosition: SnackPosition.BOTTOM,
         );
         return null;
@@ -100,7 +100,7 @@ class SubscriptionController extends GetxController {
       debugPrint('SubscriptionController: initiatePayment error: $e');
       Get.snackbar(
         'error'.tr,
-        'Failed to initiate payment',
+        'failed_to_initiate_payment'.tr,
         snackPosition: SnackPosition.BOTTOM,
       );
       return null;
