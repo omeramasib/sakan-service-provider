@@ -540,4 +540,11 @@ const Map<String, String> enUS = {
   'check_failed': 'Failed to check payment status',
   'check_payment_status': 'Check Payment Status',
   'checking_payment_status': 'Checking payment status...',
+
+  // Network error messages
+  'network_error': 'Network Error',
+  'network_error_title': 'Connection Problem',
+  'network_error_message':
+      'Unable to connect to the server. Please check your internet connection and try again.',
+  'check_connection': 'Check your internet connection',
 };

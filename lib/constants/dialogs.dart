@@ -8,12 +8,10 @@ class Dialogs {
     Get.snackbar(
       '',
       message,
-      messageText: Text(
-        message,
-        style: getRegularStyle(color: Colors.green, fontSize: 16)
-      ),
+      messageText: Text(message,
+          style: getRegularStyle(color: Colors.green, fontSize: 16)),
       leftBarIndicatorColor: Colors.green,
-      borderRadius:  6,
+      borderRadius: 6,
       margin: const EdgeInsets.only(
         top: 10,
         left: 10,
@@ -31,15 +29,13 @@ class Dialogs {
     Get.snackbar(
       '',
       'no_internet'.tr,
-      messageText: Text(
-        'no_internet'.tr,
-        style: getRegularStyle(color: Colors.red, fontSize: 16)
-      ),
+      messageText: Text('no_internet'.tr,
+          style: getRegularStyle(color: Colors.red, fontSize: 16)),
       colorText: Colors.white,
       snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.white,
       leftBarIndicatorColor: Colors.red,
-      borderRadius:  6,
+      borderRadius: 6,
       margin: const EdgeInsets.only(
         top: 10,
         left: 10,
@@ -54,12 +50,10 @@ class Dialogs {
     Get.snackbar(
       '',
       message,
-      messageText: Text(
-        message,
-        style: getRegularStyle(color: Colors.red, fontSize: 16)
-      ),
+      messageText: Text(message,
+          style: getRegularStyle(color: Colors.red, fontSize: 16)),
       leftBarIndicatorColor: Colors.red,
-      borderRadius:  6,
+      borderRadius: 6,
       margin: const EdgeInsets.only(
         top: 10,
         left: 10,
@@ -69,6 +63,28 @@ class Dialogs {
       snackPosition: SnackPosition.TOP,
       backgroundColor: Colors.white,
       duration: const Duration(seconds: 2),
+    );
+  }
+
+  // Network Error Dialog - specifically for network/connection errors
+  static void networkErrorDialog(BuildContext context) {
+    Get.snackbar(
+      '',
+      'network_error'.tr,
+      messageText: Text('network_error_message'.tr,
+          style: getRegularStyle(color: Colors.orange, fontSize: 16)),
+      icon: const Icon(Icons.wifi_off_rounded, color: Colors.orange, size: 28),
+      leftBarIndicatorColor: Colors.orange,
+      borderRadius: 6,
+      margin: const EdgeInsets.only(
+        top: 10,
+        left: 10,
+        right: 10,
+      ),
+      colorText: Colors.orange,
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.white,
+      duration: const Duration(seconds: 3),
     );
   }
 }

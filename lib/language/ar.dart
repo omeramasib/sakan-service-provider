@@ -653,4 +653,11 @@ const Map<String, String> arSA = {
   'check_failed': 'فشل فحص حالة الدفع',
   'check_payment_status': 'فحص حالة الدفع',
   'checking_payment_status': 'جاري فحص حالة الدفع...',
+
+  // Network error messages
+  'network_error': 'خطأ في الشبكة',
+  'network_error_title': 'مشكلة في الاتصال',
+  'network_error_message':
+      'تعذر الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
+  'check_connection': 'تحقق من اتصالك بالإنترنت',
 };

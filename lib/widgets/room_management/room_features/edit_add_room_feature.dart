@@ -26,7 +26,7 @@ editAddRoomFeatures(BuildContext context) {
     builder: (context) {
       return Container(
         width: Get.width,
-        height: Get.height * 0.6,
+        height: Get.height * 0.8,
         decoration: const BoxDecoration(
           color: ColorsManager.whiteColor,
           borderRadius: BorderRadius.only(
