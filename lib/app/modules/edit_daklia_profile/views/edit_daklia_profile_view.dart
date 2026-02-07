@@ -293,20 +293,28 @@ class EditDakliaProfileView extends GetView<EditDakliaProfileController> {
                     GoogleMap(
                       initialCameraPosition: CameraPosition(
                           target: LatLng(
-                            double.parse(
-                                profileController.profileList[0].latitude!),
-                            double.parse(
-                                profileController.profileList[0].longitude!),
+                            double.tryParse(
+                                    profileController.profileList[0].latitude ??
+                                        '') ??
+                                15.5007,
+                            double.tryParse(profileController
+                                        .profileList[0].longitude ??
+                                    '') ??
+                                32.5599,
                           ),
                           zoom: 14),
                       markers: {
                         Marker(
                           markerId: MarkerId("1"),
                           position: LatLng(
-                            double.parse(
-                                profileController.profileList[0].latitude!),
-                            double.parse(
-                                profileController.profileList[0].longitude!),
+                            double.tryParse(
+                                    profileController.profileList[0].latitude ??
+                                        '') ??
+                                15.5007,
+                            double.tryParse(profileController
+                                        .profileList[0].longitude ??
+                                    '') ??
+                                32.5599,
                           ),
                         ),
                       },

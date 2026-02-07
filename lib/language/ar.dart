@@ -297,6 +297,10 @@ const Map<String, String> arSA = {
   'reply': 'رد على تزكرة تأجيل موعد',
   'new_discounts': 'خصومات جديدة',
   'no_notification_yet': 'لايوجد اي إشعارات بعد',
+  'just_now': 'الآن',
+  'minutes_ago': 'دقيقة مضت',
+  'hours_ago': 'ساعة مضت',
+  'days_ago': 'يوم مضى',
   // room management screen
   'no_rooms': 'لايوجد غرف بعد',
   'no_rooms_des':

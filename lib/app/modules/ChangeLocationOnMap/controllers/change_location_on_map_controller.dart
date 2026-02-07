@@ -130,6 +130,42 @@ class ChangeLocationOnMapController extends GetxController {
     }
   }
 
+  /// Update marker position when user taps on the map
+  void updateMarkerPosition(LatLng position) async {
+    print('DEBUG: Map tapped at ${position.latitude}, ${position.longitude}');
+
+    // Update lat/lon values
+    lat.value = position.latitude;
+    lon.value = position.longitude;
+    currentPosition = position;
+
+    // Clear old markers and add new one
+    markers.clear();
+    markers.add(
+      Marker(
+        markerId: MarkerId('currentPosition'),
+        position: position,
+        infoWindow: InfoWindow(
+          title: 'Selected Location',
+        ),
+      ),
+    );
+
+    // Get address for the new position
+    try {
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      Placemark place = placemarks[0];
+      address =
+          "${place.country} , ${place.locality}, ${place.name}, ${place.street}";
+      print('DEBUG: New address = $address');
+    } catch (e) {
+      print('DEBUG: Error getting address: $e');
+    }
+
+    update();
+  }
+
   var addressProvider = ChangeLocationProvider();
 
   var networkController = NetworkController();
@@ -151,9 +187,13 @@ class ChangeLocationOnMapController extends GetxController {
     );
   }
 
-  void checkChangeAddress() async{
+  void checkChangeAddress() async {
+    print('DEBUG: checkChangeAddress() called!');
+    log('DEBUG: checkChangeAddress() called!');
     var isValid = formKey.currentState!.validate();
+    print('DEBUG: isValid = $isValid');
     if (!isValid) {
+      print('DEBUG: Form validation FAILED, returning early');
       return;
     }
     formKey.currentState!.save();
@@ -163,8 +203,18 @@ class ChangeLocationOnMapController extends GetxController {
     // } else {
     //   Dialogs.connectionErrorDialog(Get.context!);
     // }
+
+    // Debug: Print request data
+    print('===== checkChangeAddress Request =====');
+    print('Latitude: ${lat.value}');
+    print('Longitude: ${lon.value}');
+    print('Address: $address');
+    print('Additional Address: $additionalAddress');
+    print('======================================');
+
     EasyLoading.show(status: 'loading'.tr);
-    await changeAdress();
+    var response = await changeAdress();
+    print('DEBUG: changeAdress() response: $response');
     update();
   }
 
@@ -183,5 +233,4 @@ class ChangeLocationOnMapController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
 }

@@ -221,6 +221,10 @@ const Map<String, String> enUS = {
   // notification screen
   'notifications': 'Notifications',
   'no_notification_yet': 'No Notifications Yet',
+  'just_now': 'Just now',
+  'minutes_ago': 'minutes ago',
+  'hours_ago': 'hours ago',
+  'days_ago': 'days ago',
   // room management screen
   'no_rooms': 'No Rooms Yet',
   'add_room': 'Add Room',

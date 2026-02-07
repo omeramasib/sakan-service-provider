@@ -85,6 +85,9 @@ class ChangeLocationOnMapView extends GetView<ChangeLocationOnMapController> {
                         zoom: controller.initZoom,
                       ),
                       markers: controller.markers,
+                      onTap: (LatLng position) {
+                        controller.updateMarkerPosition(position);
+                      },
                     );
                   } else {
                     return Center(
