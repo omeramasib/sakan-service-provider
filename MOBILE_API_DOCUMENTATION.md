@@ -1634,6 +1634,82 @@ Creates a booking request (pending admin approval).
 
 ---
 
+### 8.4 Cancel Booking (NEW)
+
+Cancel a booking. Can be performed by the **student** who made the booking, the **employee** who made it, or the **Daklia owner** of the property. Only **pending** or **approved** bookings can be cancelled. Idempotent: if already cancelled, returns 200 with `already_cancelled: true`.
+
+**Endpoint:** `POST /api/v1/person/bookings/<booking_id>/cancel/`
+
+**Authentication:** Required (Token)
+
+**Who can cancel:**
+- **Student** – only if they are the booking’s customer (`booking.student_id` is their profile)
+- **Employee** – only if they are the booking’s customer (`booking.employee_id` is their profile)
+- **Daklia owner** – only if they own the property of the booking (`booking.room_id.daklia_id` is their Daklia)
+
+**URL Parameters:**
+
+| Parameter   | Type    | Description   |
+|------------|---------|---------------|
+| `booking_id` | integer | Booking ID to cancel |
+
+**Request Body (optional):**
+
+```json
+{
+  "reason": "Change of plans"
+}
+```
+
+| Field   | Type   | Required | Description                    |
+|--------|--------|----------|--------------------------------|
+| `reason` | string | No       | Optional reason for cancellation (stored as admin_notes) |
+
+**Success Response (200 OK):**
+
+```json
+{
+  "message": "Booking cancelled successfully",
+  "booking_id": 40,
+  "booking_status": "cancelled"
+}
+```
+
+**Success Response when already cancelled (200 OK, idempotent):**
+
+```json
+{
+  "message": "Booking cancelled successfully",
+  "booking_id": 40,
+  "booking_status": "cancelled",
+  "already_cancelled": true
+}
+```
+
+**Error Responses:**
+
+| Status | Message |
+|--------|---------|
+| 403 | "You are not allowed to cancel this booking. Only the customer (student/employee) or the Daklia owner can cancel." |
+| 404 | "Booking not found." |
+| 400 | "Only pending or approved bookings can be cancelled." |
+| 400 | "Cannot cancel a rejected booking." |
+
+**Notifications:**
+- When the **Daklia owner** cancels → the **customer** (student or employee) receives a push notification: "تم إلغاء حجزك لـ {daklia_name} من قبل مالك السكن." (`data.type`: `booking_cancelled`, `data.cancelled_by`: `owner`).
+- When the **student or employee** cancels → the **Daklia owner** receives a push notification: "تم إلغاء حجز لـ {daklia_name} من قبل العميل." (`data.type`: `booking_cancelled`, `data.cancelled_by`: `customer`).
+
+**Example:**
+
+```bash
+curl -X POST "https://api.example.com/api/v1/person/bookings/40/cancel/" \
+  -H "Authorization: Token YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"reason": "Change of plans"}'
+```
+
+---
+
 ## 9. Notifications
 
 Notifications are stored when push notifications are sent (e.g. booking approval, subscription activation). The API returns the in-app notification history for the authenticated user (customer or owner).
@@ -2377,6 +2453,7 @@ curl -X POST \
 |--------|----------|------|
 | POST | `/api/v1/person/create-new-booking/` | Yes |
 | GET | `/api/v1/person/bookings/<id>/` | Yes |
+| POST | `/api/v1/person/bookings/<id>/cancel/` | Yes (Student/Employee/Owner) |
 | GET | `/api/v1/person/owner/bookings/` | Yes (Owner) |
 | POST | `/api/v1/person/owner/bookings/<id>/action/` | Yes (Owner) |
 

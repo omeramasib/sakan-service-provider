@@ -1,5 +1,5 @@
 name: sakan
-version: 1.0.3+7
+version: 1.0.4+8
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -7,6 +7,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
+  sentry_flutter: ^9.12.0
   cupertino_icons: ^1.0.5
   get: ^4.7.3
   flutter:
@@ -42,6 +43,7 @@ dependency_overrides:
   win32: ^5.5.0
 
 dev_dependencies:
+  sentry_dart_plugin: ^3.2.1
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
@@ -110,3 +112,9 @@ flutter:
       - asset: assets/fonts/Montserrat-Arabic-Thin.ttf
         weight: 100
 
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: sakan-provider
+  org: sakan-bh

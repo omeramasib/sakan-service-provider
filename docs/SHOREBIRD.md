@@ -108,3 +108,30 @@ shorebird preview --app-id <APP_ID> --release-version <VERSION>
 ```
 
 (You can find your App IDs in `shorebird.yaml`)
+
+## Troubleshooting
+
+### "Could not find io.flutter:armeabi_v7a_release" / "Could not find io.flutter:flutter_embedding_release"
+
+This happens when Gradle cannot resolve Flutter engine artifacts for the version Shorebird is using (e.g. Flutter 3.38.7). Try in order:
+
+1. **Upgrade Shorebird** (newer CLI often ships with fixed artifact support):
+   ```bash
+   shorebird upgrade
+   ```
+
+2. **Pin a Flutter version** that has published artifacts. List available versions:
+   ```bash
+   shorebird flutter versions list
+   ```
+   Then run release with an explicit version (Shorebird recommends always specifying one):
+   ```bash
+   shorebird release android --flavor production --target lib/main_production.dart --split-debug-info=./build/app/outputs/symbols --flutter-version=3.38.9 -- --obfuscate
+   ```
+   Use a version from the list that is marked as available (e.g. 3.38.9 or the latest stable).
+
+3. **Verify the underlying Flutter build** (without Shorebird) to rule out a pure Flutter/Gradle issue:
+   ```bash
+   flutter build appbundle --release --flavor=production --target=lib/main_production.dart --target-platform=android-arm,android-arm64,android-x64 --obfuscate --split-debug-info=./build/app/outputs/symbols
+   ```
+   If this fails, fix the Flutter/Android build first. If it succeeds, the problem is Shorebird's artifact proxy; use step 1 or 2, or contact Shorebird (Discord / [GitHub issues](https://github.com/shorebirdtech/shorebird/issues)).
