@@ -226,4 +226,59 @@ class BookingProvider extends GetConnect {
       return false;
     }
   }
+
+  /// Cancel a booking (pending or approved). Uses POST /bookings/<id>/cancel/
+  Future<bool> cancelBooking(int bookingId, {String? reason}) async {
+    try {
+      EasyLoading.show(status: 'loading'.tr);
+
+      String url = HttpHelper.baseUrlPerson +
+          HttpHelper.bookingDetails +
+          '$bookingId' +
+          HttpHelper.bookingCancel;
+
+      log('Cancelling booking at: $url');
+
+      String? token = await storage.read('token');
+      final body = <String, dynamic>{};
+      if (reason != null && reason.isNotEmpty) body['reason'] = reason;
+
+      final response = await http
+          .post(
+            Uri.parse(url),
+            headers: {
+              'Authorization': 'Token $token',
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: json.encode(body),
+          )
+          .timeout(const Duration(seconds: 30));
+
+      log('Cancel response status: ${response.statusCode}');
+      log('Cancel response body: ${response.body}');
+
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Dialogs.successDialog(Get.context!, 'booking_cancelled'.tr);
+        return true;
+      } else if (response.statusCode == 401) {
+        Dialogs.errorDialog(Get.context!, 'token_is_invalid'.tr);
+        Get.offAllNamed(Routes.AUTH, arguments: 0);
+        return false;
+      } else {
+        final data = json.decode(response.body);
+        Dialogs.errorDialog(Get.context!, data['message'] ?? 'error'.tr);
+        return false;
+      }
+    } catch (e) {
+      log('Error cancelling booking: $e');
+      EasyLoading.dismiss();
+      Dialogs.errorDialog(Get.context!, 'error'.tr);
+      return false;
+    }
+  }
 }

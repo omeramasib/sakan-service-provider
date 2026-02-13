@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import '../../../services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +23,9 @@ class AddRoomProvider extends GetConnect {
   final SecureStorageService storage = SecureStorageService.instance;
   Timer? timer;
 
+  /// Max image size in bytes before compression kicks in (500 KB)
+  static const int _maxImageBytes = 500 * 1024;
+
   @override
   void onInit() {
     httpClient.baseUrl = HttpHelper.baseUrl;
@@ -31,7 +36,44 @@ class AddRoomProvider extends GetConnect {
     });
   }
 
-  Future<DakliaRoomModel> addMultipleRoom({
+  /// Compress image file if it exceeds [_maxImageBytes].
+  /// Returns the (possibly compressed) bytes and the filename.
+  Future<Uint8List> _compressImageIfNeeded(File imageFile) async {
+    final originalBytes = await imageFile.readAsBytes();
+    if (originalBytes.length <= _maxImageBytes) {
+      print('[compress] Image OK (${originalBytes.length} bytes), no compression needed');
+      return originalBytes;
+    }
+    // Compress with quality 70, then retry at 50 if still too large
+    for (final quality in [70, 50, 30]) {
+      final compressed = await FlutterImageCompress.compressWithFile(
+        imageFile.absolute.path,
+        quality: quality,
+        minWidth: 1024,
+        minHeight: 1024,
+      );
+      if (compressed != null) {
+        print('[compress] Compressed from ${originalBytes.length} to ${compressed.length} bytes (quality=$quality)');
+        if (compressed.length <= _maxImageBytes) {
+          return Uint8List.fromList(compressed);
+        }
+      }
+    }
+    // Return best effort (quality 30 result or original)
+    final lastTry = await FlutterImageCompress.compressWithFile(
+      imageFile.absolute.path,
+      quality: 25,
+      minWidth: 800,
+      minHeight: 800,
+    );
+    if (lastTry != null) {
+      print('[compress] Final compress: ${lastTry.length} bytes');
+      return Uint8List.fromList(lastTry);
+    }
+    return originalBytes;
+  }
+
+  Future<DakliaRoomModel?> addMultipleRoom({
     required List<File> roomImages,
     required int roomNumber,
     required String roomType,
@@ -102,33 +144,32 @@ class AddRoomProvider extends GetConnect {
     request.fields['daily_booking'] = dailyBooking.toString();
     request.fields['monthly_booking'] = monthlyBooking.toString();
 
-    // Add multiple images
+    // Add multiple images (compressed)
     try {
       for (int i = 0; i < roomImages.length; i++) {
         final roomImage = roomImages[i];
         if (await roomImage.exists()) {
-          log('Adding image ${i + 1}: ${roomImage.path}');
-          log('Image file size: ${await roomImage.length()} bytes');
+          final compressedBytes = await _compressImageIfNeeded(roomImage);
+          final filename = roomImage.path.split('/').last;
+          log('Adding image ${i + 1}: $filename (${compressedBytes.length} bytes after compression)');
 
           if (i == 0) {
             // First image as room_image (backward compatible)
-            final multipartFile = await http.MultipartFile.fromBytes(
+            request.files.add(http.MultipartFile.fromBytes(
               'room_image',
-              roomImage.readAsBytesSync(),
-              filename: roomImage.path.split('/').last,
+              compressedBytes,
+              filename: filename,
               contentType: MediaType('image', 'jpeg'),
-            );
-            request.files.add(multipartFile);
+            ));
           }
 
           // All images (including first) as images[] array
-          final multipartFile = await http.MultipartFile.fromBytes(
+          request.files.add(http.MultipartFile.fromBytes(
             'images[]',
-            roomImage.readAsBytesSync(),
-            filename: roomImage.path.split('/').last,
+            compressedBytes,
+            filename: filename,
             contentType: MediaType('image', 'jpeg'),
-          );
-          request.files.add(multipartFile);
+          ));
         } else {
           log('Image file does not exist: ${roomImage.path}');
         }
@@ -144,15 +185,42 @@ class AddRoomProvider extends GetConnect {
     log('Files: ${request.files.map((f) => '${f.field}: ${f.filename}')}');
     log('=========================');
 
+    // ========== DEBUG: Full request details ==========
+    print('========== [addMultipleRoom] REQUEST ==========');
+    print('URL: ${request.url}');
+    print('Method: ${request.method}');
+    print('Headers: ${request.headers}');
+    print('Fields: ${request.fields}');
+    print('Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
+    print('================================================');
+
     var response = await request.send();
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
-    var data = json.decode(responseString);
     var statusCode = response.statusCode;
-    log('Status code: $statusCode');
-    log('Response: $responseString');
 
-    if (statusCode == 201) {
+    // ========== DEBUG: Full response details ==========
+    print('========== [addMultipleRoom] RESPONSE ==========');
+    print('Status code: $statusCode');
+    print('Response headers: ${response.headers}');
+    print('Response body (first 2000 chars): ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
+    print('Response body length: ${responseString.length}');
+    print('=================================================');
+
+    Map<String, dynamic>? data;
+    if (responseString.trim().isNotEmpty &&
+        !responseString.trim().toLowerCase().startsWith('<')) {
+      try {
+        final decoded = json.decode(responseString);
+        data = decoded is Map<String, dynamic> ? decoded : null;
+      } catch (e) {
+        print('[addMultipleRoom] JSON parse error: $e');
+      }
+    } else {
+      print('[addMultipleRoom] Response is HTML or empty, not JSON');
+    }
+
+    if (statusCode == 201 && data != null) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
@@ -169,11 +237,15 @@ class AddRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      if (data['message'] == "Daklia account is not verified") {
-        Dialogs.errorDialog(Get.context!, 'account_not_verified'.tr);
+      if (data != null) {
+        if (data['message'] == "Daklia account is not verified") {
+          Dialogs.errorDialog(Get.context!, 'account_not_verified'.tr);
+        } else {
+          Dialogs.errorDialog(
+              Get.context!, data['message']?.toString() ?? 'Error adding room');
+        }
       } else {
-        Dialogs.errorDialog(
-            Get.context!, data['message']?.toString() ?? 'Error adding room');
+        Dialogs.errorDialog(Get.context!, 'validation_error'.tr);
       }
     }
 
@@ -192,6 +264,13 @@ class AddRoomProvider extends GetConnect {
       Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
     }
 
+    if (statusCode == 413) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      Dialogs.errorDialog(Get.context!, 'image_too_large'.tr);
+    }
+
     if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -199,10 +278,13 @@ class AddRoomProvider extends GetConnect {
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
 
-    return DakliaRoomModel.fromJson(data);
+    if (data == null) {
+      EasyLoading.dismiss();
+    }
+    return null;
   }
 
-  Future<DakliaRoomModel> addSingleRoom({
+  Future<DakliaRoomModel?> addSingleRoom({
     required List<File> roomImages,
     required int roomNumber,
     required String roomType,
@@ -235,7 +317,7 @@ class AddRoomProvider extends GetConnect {
     request.fields['numberOfBeds'] = numberOfBeds.toString();
     request.fields['num_Available_Beds'] = numAvailableBeds.toString();
 
-    // Add multiple images
+    // Add multiple images (compressed)
     if (roomImages.isEmpty) {
       throw Exception('At least one image is required');
     }
@@ -243,37 +325,66 @@ class AddRoomProvider extends GetConnect {
     for (int i = 0; i < roomImages.length; i++) {
       final roomImage = roomImages[i];
       if (await roomImage.exists()) {
+        final compressedBytes = await _compressImageIfNeeded(roomImage);
+        final filename = roomImage.path.split('/').last;
+        log('Adding image ${i + 1}: $filename (${compressedBytes.length} bytes after compression)');
+
         if (i == 0) {
           // First image as room_image (backward compatible)
-          final multipartFile = await http.MultipartFile.fromBytes(
+          request.files.add(http.MultipartFile.fromBytes(
             'room_image',
-            roomImage.readAsBytesSync(),
-            filename: roomImage.path.split('/').last,
+            compressedBytes,
+            filename: filename,
             contentType: MediaType('image', 'jpeg'),
-          );
-          request.files.add(multipartFile);
+          ));
         }
 
         // All images as images[] array
-        final multipartFile = await http.MultipartFile.fromBytes(
+        request.files.add(http.MultipartFile.fromBytes(
           'images[]',
-          roomImage.readAsBytesSync(),
-          filename: roomImage.path.split('/').last,
+          compressedBytes,
+          filename: filename,
           contentType: MediaType('image', 'jpeg'),
-        );
-        request.files.add(multipartFile);
+        ));
       }
     }
+
+    // ========== DEBUG: Full request details ==========
+    print('========== [addSingleRoom] REQUEST ==========');
+    print('URL: ${request.url}');
+    print('Method: ${request.method}');
+    print('Headers: ${request.headers}');
+    print('Fields: ${request.fields}');
+    print('Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
+    print('==============================================');
 
     var response = await request.send();
     var responseData = await response.stream.toBytes();
     var responseString = String.fromCharCodes(responseData);
-    var data = json.decode(responseString);
     var statusCode = response.statusCode;
-    log('Status code: $statusCode');
-    log('Response: $responseString');
 
-    if (statusCode == 201) {
+    // ========== DEBUG: Full response details ==========
+    print('========== [addSingleRoom] RESPONSE ==========');
+    print('Status code: $statusCode');
+    print('Response headers: ${response.headers}');
+    print('Response body (first 2000 chars): ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
+    print('Response body length: ${responseString.length}');
+    print('================================================');
+
+    Map<String, dynamic>? data;
+    if (responseString.trim().isNotEmpty &&
+        !responseString.trim().toLowerCase().startsWith('<')) {
+      try {
+        final decoded = json.decode(responseString);
+        data = decoded is Map<String, dynamic> ? decoded : null;
+      } catch (e) {
+        print('[addSingleRoom] JSON parse error: $e');
+      }
+    } else {
+      print('[addSingleRoom] Response is HTML or empty, not JSON');
+    }
+
+    if (statusCode == 201 && data != null) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
@@ -290,11 +401,15 @@ class AddRoomProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      if (data['message'] == "Daklia account is not verified") {
-        Dialogs.errorDialog(Get.context!, 'account_not_verified'.tr);
+      if (data != null) {
+        if (data['message'] == "Daklia account is not verified") {
+          Dialogs.errorDialog(Get.context!, 'account_not_verified'.tr);
+        } else {
+          Dialogs.errorDialog(
+              Get.context!, data['message']?.toString() ?? 'Error adding room');
+        }
       } else {
-        Dialogs.errorDialog(
-            Get.context!, data['message']?.toString() ?? 'Error adding room');
+        Dialogs.errorDialog(Get.context!, 'validation_error'.tr);
       }
     }
 
@@ -313,6 +428,13 @@ class AddRoomProvider extends GetConnect {
       Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
     }
 
+    if (statusCode == 413) {
+      timer = Timer(const Duration(seconds: 1), () {
+        EasyLoading.dismiss();
+      });
+      Dialogs.errorDialog(Get.context!, 'image_too_large'.tr);
+    }
+
     if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -320,6 +442,9 @@ class AddRoomProvider extends GetConnect {
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
 
-    return DakliaRoomModel.fromJson(data);
+    if (data == null) {
+      EasyLoading.dismiss();
+    }
+    return null;
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -8,6 +9,7 @@ import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 import '../models/room_features_model.dart';
+import 'package:http/http.dart' as http;
 
 class RoomFeaturesProvider extends GetConnect {
   static RoomFeaturesProvider get instance => Get.put(RoomFeaturesProvider());
@@ -24,41 +26,64 @@ class RoomFeaturesProvider extends GetConnect {
     });
   }
 
-  // make method to get all features
+  // make method to get all features (uses http.get for safe parsing when server returns HTML)
   Future<List<RoomFeaturesModel>> getAllFeatures({
     required String roomId,
   }) async {
     final token = await storage.read('token');
     final dakliaId = await storage.read('dakliaId');
-    final response = await get(
-        '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/features/',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Token $token',
-        });
+    final url = Uri.parse(
+      '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/features/',
+    );
+    final response = await http.get(
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Token $token',
+      },
+    );
 
-    var data = response.body;
     var statusCode = response.statusCode;
+    final body = response.body;
     log('this is the status code: $statusCode');
-    log('this is the data: $data');
 
-    if (statusCode == 200) {
+    // Only parse as JSON when response looks like JSON (server may return HTML for errors)
+    List<dynamic>? featuresData;
+    Map<String, dynamic>? dataMap;
+    if (body.trim().isNotEmpty && !body.trim().toLowerCase().startsWith('<')) {
+      try {
+        final decoded = json.decode(body);
+        if (decoded is List) {
+          featuresData = decoded;
+        } else if (decoded is Map<String, dynamic>) {
+          dataMap = decoded;
+        }
+      } catch (_) {
+        log('Get all features response is not valid JSON (e.g. HTML error page)');
+      }
+    }
+    if (featuresData != null) {
+      log('this is the data: $featuresData');
+    }
+
+    if (statusCode == 200 && featuresData != null) {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-
-      final List<dynamic> featuresData = response.body;
       final List<RoomFeaturesModel> features = [];
       for (final featureData in featuresData) {
-        final feature = RoomFeaturesModel.fromJson(featureData);
-        features.add(feature);
+        try {
+          features.add(RoomFeaturesModel.fromJson(featureData));
+        } catch (_) {
+          // skip invalid item
+        }
       }
       return features;
     }
 
     if (statusCode == 400) {
-      if (data['message'] != "Room does not belong to this Daklia") {
+      if (dataMap != null && dataMap['message'] != "Room does not belong to this Daklia") {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
@@ -78,17 +103,11 @@ class RoomFeaturesProvider extends GetConnect {
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
-      if (data['message'] != 'Daklia does not exis') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
-        Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
-      }
-      if (data['message'] != 'Room does not exist') {
-        timer = Timer(const Duration(seconds: 1), () {
-          EasyLoading.dismiss();
-        });
+      final message = dataMap?['message']?.toString() ?? '';
+      if (message.contains('Room') && message.contains('not exist')) {
         Dialogs.errorDialog(Get.context!, 'room_does_not_exist'.tr);
+      } else {
+        Dialogs.errorDialog(Get.context!, 'daklia_dosent_exist'.tr);
       }
     }
 
@@ -100,6 +119,11 @@ class RoomFeaturesProvider extends GetConnect {
         },
       );
       EasyLoading.show(status: 'loading'.tr);
+      Dialogs.errorDialog(Get.context!, 'server_error'.tr);
+    }
+
+    if (featuresData == null && dataMap == null && statusCode != 200) {
+      EasyLoading.dismiss();
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
     return [];
@@ -138,6 +162,7 @@ class RoomFeaturesProvider extends GetConnect {
       });
       storage.write('featureId', data['feature_id']?.toString());
       Dialogs.successDialog(Get.context!, 'feature_added_successfully'.tr);
+      Get.offAllNamed(Routes.ROOM_MANAGEMENT);
       return RoomFeaturesModel.fromJson(data);
     }
 

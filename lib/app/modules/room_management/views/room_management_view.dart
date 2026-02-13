@@ -29,9 +29,13 @@ class RoomManagementView extends GetView<RoomManagementController> {
           elevation: 0,
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
+      body: RefreshIndicator(
+        onRefresh: () => controller.refreshRoomsList(),
+        color: ColorsManager.mainColor,
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
             Container(
               color: ColorsManager.mainColor,
               padding: const EdgeInsets.only(bottom: 15),
@@ -227,6 +231,7 @@ class RoomManagementView extends GetView<RoomManagementController> {
               }
             }),
           ],
+        ),
         ),
       ),
     );

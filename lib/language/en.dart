@@ -52,6 +52,7 @@ const Map<String, String> enUS = {
   'unknown_error': 'Unknown error',
   'no_internet': 'No Internet Connection',
   'server_error': 'Server Error',
+  'image_too_large': 'Image size is too large, please choose a smaller image',
   'error': 'Error',
   'success': 'Success',
   'loading': 'Loading',
@@ -134,6 +135,7 @@ const Map<String, String> enUS = {
   'terms': 'Terms',
   // my appointments screen
   'my_appointments': 'My Appointments',
+  'status': 'Status',
   'new_bookings': 'New Appointments',
   'previous_bookings': 'Previous Appointments',
   'awaiting_daklia_approval': 'Awaiting Daklia Approval',
@@ -167,6 +169,9 @@ const Map<String, String> enUS = {
   'beds_booked': 'Beds Booked',
   'booking_approved': 'Booking approved successfully',
   'booking_rejected': 'Booking rejected',
+  'cancel_booking': 'Cancel Booking',
+  'booking_cancelled': 'Booking cancelled successfully',
+  'cancel_booking_confirm': 'Are you sure you want to cancel this appointment?',
   'please_enter_rejection_reason': 'Please enter rejection reason',
   'rejection_reason': 'Rejection Reason',
   'unknown': 'Unknown',
@@ -338,7 +343,6 @@ const Map<String, String> enUS = {
   '80-SAR': '80 SAR',
   'cancelle_appointment_booking': 'Cancelle Bookings',
   'booking_management': 'Booking Management',
-  'cancel_booking': 'Cancel Booking',
   'cancel_appointment': 'Cancel Appointment',
   'cancel_appointment_message':
       'We regret that you will cancel the appointment. Please note that it will be deducted from the total amount paid in the event of cancellation of the reservation',

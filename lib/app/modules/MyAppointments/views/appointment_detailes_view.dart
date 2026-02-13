@@ -76,36 +76,64 @@ class AppointmentDetailesView extends GetView {
             ),
             Obx(() {
               final booking = controller.booking;
-              // Only show accept/reject buttons for pending bookings
-              if (booking?.bookingStatus != 'pending') {
-                return const SizedBox.shrink();
+              final status = booking?.bookingStatus;
+
+              // Pending: show Accept, Reject, Cancel (smaller)
+              if (status == 'pending') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ButtonsManager.primaryButton(
+                        text: 'accept'.tr,
+                        onPressed: () => controller.acceptBooking(),
+                        context: context,
+                        buttonColor: ColorsManager.greenColor,
+                        minimumSize: Size(90, 48),
+                        maximumSize: Size(100, 48),
+                      ),
+                      SizedBox(width: 8),
+                      ButtonsManager.primaryButton(
+                        text: 'reject'.tr,
+                        onPressed: () => appointmentReject(context),
+                        context: context,
+                        buttonColor: ColorsManager.errorColor,
+                        minimumSize: Size(90, 48),
+                        maximumSize: Size(100, 48),
+                      ),
+                      SizedBox(width: 8),
+                      ButtonsManager.primaryButton(
+                        text: 'cancel_booking'.tr,
+                        onPressed: () => controller.showCancelBookingConfirmation(),
+                        context: context,
+                        buttonColor: ColorsManager.greyColor,
+                        textColor: ColorsManager.blackColor,
+                        minimumSize: Size(90, 48),
+                        maximumSize: Size(100, 48),
+                      ),
+                    ],
+                  ),
+                );
               }
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonsManager.primaryButton(
-                      text: 'accept'.tr,
-                      onPressed: () => controller.acceptBooking(),
-                      context: context,
-                      buttonColor: ColorsManager.greenColor,
-                      minimumSize: Size(150, 50),
-                      maximumSize: Size(150, 50),
-                    ),
-                    SizedBox(width: 20),
-                    ButtonsManager.primaryButton(
-                      text: 'reject'.tr,
-                      onPressed: () => appointmentReject(context),
-                      context: context,
-                      buttonColor: ColorsManager.errorColor,
-                      minimumSize: Size(150, 50),
-                      maximumSize: Size(150, 50),
-                    ),
-                  ],
-                ),
-              );
+              // Approved: show only Cancel button
+              if (status == 'approved') {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: ButtonsManager.primaryButton(
+                    text: 'cancel_booking'.tr,
+                    onPressed: () => controller.showCancelBookingConfirmation(),
+                    context: context,
+                    buttonColor: ColorsManager.errorColor,
+                    textColor: ColorsManager.whiteColor,
+                    minimumSize: Size(150, 50),
+                    maximumSize: Size(150, 50),
+                  ),
+                );
+              }
+
+              return const SizedBox.shrink();
             })
           ],
         ));

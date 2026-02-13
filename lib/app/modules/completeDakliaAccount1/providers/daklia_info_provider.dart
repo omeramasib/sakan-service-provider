@@ -94,13 +94,26 @@ class DakliaInfoProvider extends GetConnect {
       );
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
-      var data = json.decode(responseString);
       var statusCode = response.statusCode;
       log('this is the status code: $statusCode');
-      log('this is the data: $data');
-      log('this is the data type: ${data.runtimeType}');
 
-      if (statusCode == 201) {
+      // Only parse as JSON when response looks like JSON (server may return HTML for errors)
+      Map<String, dynamic>? data;
+      if (responseString.trim().isNotEmpty &&
+          !responseString.trim().toLowerCase().startsWith('<')) {
+        try {
+          final decoded = json.decode(responseString);
+          data = decoded is Map<String, dynamic> ? decoded : null;
+        } catch (_) {
+          log('Daklia info response is not valid JSON (e.g. HTML error page)');
+        }
+      }
+      if (data != null) {
+        log('this is the data: $data');
+        log('this is the data type: ${data.runtimeType}');
+      }
+
+      if (statusCode == 201 && data != null) {
         log('this is the statusCode : $statusCode');
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
@@ -116,45 +129,43 @@ class DakliaInfoProvider extends GetConnect {
         });
 
         String errorMessage = 'validation_error'.tr;
-
-        if (data['message'] == 'Daklia is already exist') {
-          errorMessage = 'daklia_already_exist'.tr;
-        } else if (data['user_id'] != null) {
-          errorMessage = 'user_id_already_exist'.tr;
-        } else if (data['daklia_image'] != null || data['image'] != null) {
-          // Handle List<dynamic> error format
-          var imageError = data['daklia_image'] ?? data['image'];
-          if (imageError is List) {
-            List errorList = imageError;
-            errorMessage = errorList.isNotEmpty
-                ? errorList.first.toString()
-                : 'daklia_image_required'.tr;
-          } else {
-            errorMessage = 'daklia_image_required'.tr;
-          }
-        } else if (data['daklia_description'] != null ||
-            data['description'] != null) {
-          // Handle List<dynamic> error format
-          var descError = data['daklia_description'] ?? data['description'];
-          if (descError is List) {
-            List errorList = descError;
-            errorMessage = errorList.isNotEmpty
-                ? errorList.first.toString()
-                : 'daklia_description_required'.tr;
-          } else {
-            errorMessage = 'daklia_description_required'.tr;
-          }
-        } else if (data['numberOfRooms'] != null ||
-            data['number_of_rooms'] != null) {
-          // Handle List<dynamic> error format
-          var roomError = data['numberOfRooms'] ?? data['number_of_rooms'];
-          if (roomError is List) {
-            List errorList = roomError;
-            errorMessage = errorList.isNotEmpty
-                ? errorList.first.toString()
-                : 'number_of_rooms_required'.tr;
-          } else {
-            errorMessage = 'number_of_rooms_required'.tr;
+        if (data != null) {
+          if (data['message'] == 'Daklia is already exist') {
+            errorMessage = 'daklia_already_exist'.tr;
+          } else if (data['user_id'] != null) {
+            errorMessage = 'user_id_already_exist'.tr;
+          } else if (data['daklia_image'] != null || data['image'] != null) {
+            var imageError = data['daklia_image'] ?? data['image'];
+            if (imageError is List) {
+              List errorList = imageError;
+              errorMessage = errorList.isNotEmpty
+                  ? errorList.first.toString()
+                  : 'daklia_image_required'.tr;
+            } else {
+              errorMessage = 'daklia_image_required'.tr;
+            }
+          } else if (data['daklia_description'] != null ||
+              data['description'] != null) {
+            var descError = data['daklia_description'] ?? data['description'];
+            if (descError is List) {
+              List errorList = descError;
+              errorMessage = errorList.isNotEmpty
+                  ? errorList.first.toString()
+                  : 'daklia_description_required'.tr;
+            } else {
+              errorMessage = 'daklia_description_required'.tr;
+            }
+          } else if (data['numberOfRooms'] != null ||
+              data['number_of_rooms'] != null) {
+            var roomError = data['numberOfRooms'] ?? data['number_of_rooms'];
+            if (roomError is List) {
+              List errorList = roomError;
+              errorMessage = errorList.isNotEmpty
+                  ? errorList.first.toString()
+                  : 'number_of_rooms_required'.tr;
+            } else {
+              errorMessage = 'number_of_rooms_required'.tr;
+            }
           }
         }
 
@@ -173,7 +184,7 @@ class DakliaInfoProvider extends GetConnect {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+        Dialogs.errorDialog(Get.context!, 'user_not_active'.tr);
       }
 
       if (statusCode == 500 || statusCode == 502 || statusCode == 503) {
@@ -186,13 +197,13 @@ class DakliaInfoProvider extends GetConnect {
         Dialogs.errorDialog(Get.context!, 'server_error'.tr);
       }
 
-      // Only try to parse as DakliaInfoModel if it's a successful response
-      if (statusCode == 201) {
-        return DakliaInfoModel.fromJson(data);
-      } else {
-        // For error responses, return empty model
-        return DakliaInfoModel();
+      // Non-JSON response (e.g. HTML error page) for any status
+      if (data == null && statusCode != 201) {
+        EasyLoading.dismiss();
+        Dialogs.errorDialog(Get.context!, 'server_error'.tr);
       }
+
+      return DakliaInfoModel();
     } catch (e) {
       log('Error in sendDakliaInfo: $e');
       EasyLoading.dismiss();

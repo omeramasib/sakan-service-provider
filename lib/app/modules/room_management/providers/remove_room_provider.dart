@@ -54,12 +54,26 @@ class RemoveRoomProvider extends GetConnect {
         Get.offAllNamed(Routes.ROOM_MANAGEMENT);
         return null; // No data to return for 204
       } else {
-        // Status 200 means success with content - parse JSON
-        final roomsData = json.decode(response.body);
-        log('this is the rooms data: $roomsData');
-        Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
-        Get.offAllNamed(Routes.ROOM_MANAGEMENT);
-        return roomsData;
+        // Status 200 means success with content - parse JSON only if body looks like JSON
+        final body = response.body;
+        if (body.trim().isEmpty || body.trim().toLowerCase().startsWith('<')) {
+          log('Delete room response is HTML or empty');
+          Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
+          Get.offAllNamed(Routes.ROOM_MANAGEMENT);
+          return null;
+        }
+        try {
+          final roomsData = json.decode(body);
+          log('this is the rooms data: $roomsData');
+          Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
+          Get.offAllNamed(Routes.ROOM_MANAGEMENT);
+          return roomsData;
+        } catch (e) {
+          log('Failed to parse delete response: $e');
+          Dialogs.successDialog(Get.context!, 'delete_room_successufully'.tr);
+          Get.offAllNamed(Routes.ROOM_MANAGEMENT);
+          return null;
+        }
       }
     }
     if (response.statusCode == 401) {

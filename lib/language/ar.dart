@@ -166,6 +166,7 @@ const Map<String, String> arSA = {
   'more': 'المزيد',
   // appointment screen
   'my_appointments': 'حجوزاتي',
+  "status": "الحالة",
   'new_bookings': 'حجوزات جديدة',
   'previous_bookings': 'حجوزات سابقة',
   'awaiting_daklia_approval': 'بإنتظار موافقتك',
@@ -209,6 +210,9 @@ const Map<String, String> arSA = {
   'beds_booked': 'عدد السرائر المحجوزة',
   'booking_approved': 'تمت الموافقة على الحجز بنجاح',
   'booking_rejected': 'تم رفض الحجز',
+  'cancel_booking': 'إلغاء الحجز',
+  'booking_cancelled': 'تم إلغاء الحجز بنجاح',
+  'cancel_booking_confirm': 'هل أنت متأكد من إلغاء هذا الموعد؟',
   'please_enter_rejection_reason': 'الرجاء ادخال سبب الرفض',
   'rejection_reason': 'سبب الرفض',
   'unknown': 'غير معروف',
@@ -340,6 +344,7 @@ const Map<String, String> arSA = {
   'room_added_successfully': 'تم إضافة الغرفة بنجاح',
   'account_not_verified': 'لم يتم تفعيل الحساب بعد يرجى التواصل مع الإدارة',
   'Failed_to_add_room': 'فشل في إضافة الغرفة',
+  'image_too_large': 'حجم الصورة كبير جداً، يرجى اختيار صورة أصغر',
   'edit_multiple_room_info': 'تعديل بيانات الغرفة المشتركة',
   'edit_single_room_info': 'تعديل بيانات الغرفة الفردية',
   'Failed_to_update_multiple_room': 'فشل في تعديل بيانات الغرفة المشتركة',
@@ -458,7 +463,6 @@ const Map<String, String> arSA = {
   '80-SAR': '80 ر.س',
   'cancelle_appointment_booking': 'إلغاء الحجز',
   'booking_management': 'إدارة الحجز',
-  'cancel_booking': 'إلغاء الحجز',
   'cancel_appointment': 'إلغاء الموعد',
   'cancel_appointment_message':
       'يؤسفنا انك ستلغي الموعد يرجى العلم انه سيتم خصم .. من اجمالي المبلغ المدفوع في حالة الغاء الحجز',

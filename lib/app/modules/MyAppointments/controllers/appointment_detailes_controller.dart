@@ -52,6 +52,41 @@ class AppointmentDetailesController extends GetxController {
     }
   }
 
+  /// Shows confirmation dialog; on Yes calls [cancelBooking], on No closes dialog.
+  void showCancelBookingConfirmation() {
+    Get.dialog(
+      AlertDialog(
+        title: Text('cancel_booking'.tr),
+        content: Text('cancel_booking_confirm'.tr),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text('no'.tr),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              cancelBooking();
+            },
+            child: Text('yes'.tr),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  Future<void> cancelBooking() async {
+    if (booking?.bookingId == null) return;
+
+    final success =
+        await myAppointmentsController.cancelBooking(booking!.bookingId!);
+    if (success) {
+      await Future.delayed(Duration(milliseconds: 500));
+      await _refreshSelectedBooking();
+    }
+  }
+
   /// Refresh the selected booking to get updated status from server
   Future<void> _refreshSelectedBooking() async {
     if (booking?.bookingId != null) {

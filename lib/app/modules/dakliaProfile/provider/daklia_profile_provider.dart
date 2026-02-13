@@ -45,17 +45,29 @@ class DakliaProfileProvider {
       );
 
       var statusCode = response.statusCode;
-      var data = jsonDecode(response.body);
+      final body = response.body;
 
       log('this is the status code: $statusCode');
-      log('Profile data: $data');
       print('DEBUG Provider: Status code: $statusCode');
-      print('DEBUG Provider: Response body: $data');
 
-      if (statusCode == 200) {
+      // Only parse as JSON when response looks like JSON (server may return HTML for errors)
+      Map<String, dynamic>? data;
+      if (body.trim().isNotEmpty && !body.trim().toLowerCase().startsWith('<')) {
+        try {
+          data = jsonDecode(body) as Map<String, dynamic>?;
+        } catch (_) {
+          log('Profile response is not valid JSON (e.g. HTML error page)');
+        }
+      }
+      if (data != null) {
+        log('Profile data: $data');
+        print('DEBUG Provider: Response body: $data');
+      }
+
+      if (statusCode == 200 && data != null) {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
-          storage.write('locationId', data['location_id']?.toString());
+          storage.write('locationId', data!['location_id']?.toString());
         });
         return DakliaProfileModel.fromJson(data);
       }
@@ -71,9 +83,8 @@ class DakliaProfileProvider {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-
-        // Check if it's the specific daklia_image error
-        if (data.toString().contains('daklia_image') &&
+        if (data != null &&
+            data.toString().contains('daklia_image') &&
             data.toString().contains('no file associated')) {
           Dialogs.errorDialog(Get.context!, 'profile_image_missing'.tr);
         } else {
@@ -86,6 +97,12 @@ class DakliaProfileProvider {
           EasyLoading.dismiss();
         });
         Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+      }
+
+      // Non-200 or non-JSON response (e.g. HTML error page)
+      if (data == null && statusCode != 401 && statusCode != 404) {
+        EasyLoading.dismiss();
+        Dialogs.errorDialog(Get.context!, 'server_error'.tr);
       }
 
       return null;
