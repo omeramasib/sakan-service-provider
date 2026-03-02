@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
@@ -17,6 +16,7 @@ import '../../../routes/app_pages.dart';
 import '../controllers/room_management_controller.dart';
 import '../models/add_room_model.dart';
 import '../models/daklia_rooms_models.dart';
+import '../../../../core/utils/safe_json_helper.dart';
 
 class AddRoomProvider extends GetConnect {
   static AddRoomProvider get instance => Get.put(AddRoomProvider());
@@ -41,7 +41,8 @@ class AddRoomProvider extends GetConnect {
   Future<Uint8List> _compressImageIfNeeded(File imageFile) async {
     final originalBytes = await imageFile.readAsBytes();
     if (originalBytes.length <= _maxImageBytes) {
-      print('[compress] Image OK (${originalBytes.length} bytes), no compression needed');
+      print(
+          '[compress] Image OK (${originalBytes.length} bytes), no compression needed');
       return originalBytes;
     }
     // Compress with quality 70, then retry at 50 if still too large
@@ -53,7 +54,8 @@ class AddRoomProvider extends GetConnect {
         minHeight: 1024,
       );
       if (compressed != null) {
-        print('[compress] Compressed from ${originalBytes.length} to ${compressed.length} bytes (quality=$quality)');
+        print(
+            '[compress] Compressed from ${originalBytes.length} to ${compressed.length} bytes (quality=$quality)');
         if (compressed.length <= _maxImageBytes) {
           return Uint8List.fromList(compressed);
         }
@@ -191,7 +193,8 @@ class AddRoomProvider extends GetConnect {
     print('Method: ${request.method}');
     print('Headers: ${request.headers}');
     print('Fields: ${request.fields}');
-    print('Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
+    print(
+        'Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
     print('================================================');
 
     var response = await request.send();
@@ -203,7 +206,8 @@ class AddRoomProvider extends GetConnect {
     print('========== [addMultipleRoom] RESPONSE ==========');
     print('Status code: $statusCode');
     print('Response headers: ${response.headers}');
-    print('Response body (first 2000 chars): ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
+    print(
+        'Response body (first 2000 chars): ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
     print('Response body length: ${responseString.length}');
     print('=================================================');
 
@@ -211,7 +215,7 @@ class AddRoomProvider extends GetConnect {
     if (responseString.trim().isNotEmpty &&
         !responseString.trim().toLowerCase().startsWith('<')) {
       try {
-        final decoded = json.decode(responseString);
+        final decoded = safeJsonDecode(responseString);
         data = decoded is Map<String, dynamic> ? decoded : null;
       } catch (e) {
         print('[addMultipleRoom] JSON parse error: $e');
@@ -355,7 +359,8 @@ class AddRoomProvider extends GetConnect {
     print('Method: ${request.method}');
     print('Headers: ${request.headers}');
     print('Fields: ${request.fields}');
-    print('Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
+    print(
+        'Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
     print('==============================================');
 
     var response = await request.send();
@@ -367,7 +372,8 @@ class AddRoomProvider extends GetConnect {
     print('========== [addSingleRoom] RESPONSE ==========');
     print('Status code: $statusCode');
     print('Response headers: ${response.headers}');
-    print('Response body (first 2000 chars): ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
+    print(
+        'Response body (first 2000 chars): ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
     print('Response body length: ${responseString.length}');
     print('================================================');
 
@@ -375,7 +381,7 @@ class AddRoomProvider extends GetConnect {
     if (responseString.trim().isNotEmpty &&
         !responseString.trim().toLowerCase().startsWith('<')) {
       try {
-        final decoded = json.decode(responseString);
+        final decoded = safeJsonDecode(responseString);
         data = decoded is Map<String, dynamic> ? decoded : null;
       } catch (e) {
         print('[addSingleRoom] JSON parse error: $e');

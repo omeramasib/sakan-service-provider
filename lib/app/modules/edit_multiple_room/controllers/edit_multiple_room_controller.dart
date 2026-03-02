@@ -86,8 +86,11 @@ class EditMultipleRoomController extends GetxController {
   }
 
   Future<void> updateMultipleRoom() async {
+    if (isLoading.value) return;
+    isLoading.value = true;
+
     try {
-     await provider.editMultipleRoom(
+      await provider.editMultipleRoom(
           image: image,
           roomNumber: roomNumber == 0
               ? roomNumber = roomController.getRooms.roomNumber!
@@ -95,8 +98,7 @@ class EditMultipleRoomController extends GetxController {
           numberOfBeds: numberOfBeds == 0
               ? numberOfBeds = roomController.getRooms.numberOfBeds!
               : numberOfBeds,
-          numberOfAvailableBeds : numAvailableBeds!,
-
+          numberOfAvailableBeds: numAvailableBeds!,
           dailyBooking: daily_booking == false
               ? daily_booking = roomController.getRooms.dailyBooking!
               : daily_booking,
@@ -112,10 +114,11 @@ class EditMultipleRoomController extends GetxController {
           roomId: roomController.getRooms.roomId!.toString());
     } catch (e) {
       Dialogs.errorDialog(Get.context!, 'Failed_to_update_multiple_room'.tr);
+    } finally {
+      isLoading.value = false;
+      EasyLoading.dismiss();
+      update();
     }
-    isLoading.value = false;
-    EasyLoading.dismiss();
-    update();
   }
 
   checkSubmitEMR() async {

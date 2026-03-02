@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,6 +9,7 @@ import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 import '../models/room_features_model.dart';
 import 'package:http/http.dart' as http;
+import '../../../../core/utils/safe_json_helper.dart';
 
 class RoomFeaturesProvider extends GetConnect {
   static RoomFeaturesProvider get instance => Get.put(RoomFeaturesProvider());
@@ -53,7 +53,7 @@ class RoomFeaturesProvider extends GetConnect {
     Map<String, dynamic>? dataMap;
     if (body.trim().isNotEmpty && !body.trim().toLowerCase().startsWith('<')) {
       try {
-        final decoded = json.decode(body);
+        final decoded = safeJsonDecode(body);
         if (decoded is List) {
           featuresData = decoded;
         } else if (decoded is Map<String, dynamic>) {
@@ -83,7 +83,8 @@ class RoomFeaturesProvider extends GetConnect {
     }
 
     if (statusCode == 400) {
-      if (dataMap != null && dataMap['message'] != "Room does not belong to this Daklia") {
+      if (dataMap != null &&
+          dataMap['message'] != "Room does not belong to this Daklia") {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });

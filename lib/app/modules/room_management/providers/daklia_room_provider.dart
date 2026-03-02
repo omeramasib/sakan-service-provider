@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,6 +10,7 @@ import '../../../routes/app_pages.dart';
 import '../../network/controllers/network_controller.dart';
 import '../models/daklia_rooms_models.dart';
 import 'package:http/http.dart' as http;
+import '../../../../core/utils/safe_json_helper.dart';
 
 class DakliaRoomProvider extends GetConnect {
   var networkController = NetworkController.instance;
@@ -49,7 +49,8 @@ class DakliaRoomProvider extends GetConnect {
         return [];
       }
       try {
-        final List<dynamic> roomsData = json.decode(body);
+        final roomsData = safeJsonDecode(body);
+        if (roomsData == null || roomsData is! List) return [];
         log('this is the rooms data: $roomsData');
         final List<DakliaRoomModel> rooms = [];
 

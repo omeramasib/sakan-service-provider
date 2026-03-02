@@ -20,6 +20,7 @@ class EditDakliaProfileController extends GetxController {
   File image = File('');
   String dakliaDescription = '';
   int roomCount = 0;
+  RxBool isLoading = false.obs;
 
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -51,28 +52,34 @@ class EditDakliaProfileController extends GetxController {
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
       return Dialogs.errorDialog(
-        Get.context!, 'please_select_at_least_one_field'.tr
-      );
+          Get.context!, 'please_select_at_least_one_field'.tr);
     }
 
     formKey.currentState!.save();
-    return await provider
-        .updateProfile(
-      dakliaDescription: dakliaDescription == ''
-          ? dakliaDescription =
-              profileController.profileList[0].dakliaDescription!
-          : dakliaDescription,
-      numberOfRooms: roomCount == 0
-          ? roomCount = profileController.profileList[0].numberOfRooms!
-          : roomCount,
-      image: image
-    )
-        .timeout(
-      Duration(seconds: 3),
-      onTimeout: () {
-        EasyLoading.dismiss();
-      },
-    );
+
+    if (isLoading.value) return;
+    isLoading.value = true;
+
+    try {
+      await provider
+          .updateProfile(
+              dakliaDescription: dakliaDescription == ''
+                  ? dakliaDescription =
+                      profileController.profileList[0].dakliaDescription!
+                  : dakliaDescription,
+              numberOfRooms: roomCount == 0
+                  ? roomCount = profileController.profileList[0].numberOfRooms!
+                  : roomCount,
+              image: image)
+          .timeout(
+        Duration(seconds: 3),
+        onTimeout: () {
+          EasyLoading.dismiss();
+        },
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   @override

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -12,6 +11,7 @@ import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 import '../models/daklia_info_model.dart';
+import '../../../../core/utils/safe_json_helper.dart';
 
 class DakliaInfoProvider extends GetConnect {
   static DakliaInfoProvider get instance => Get.put(DakliaInfoProvider());
@@ -102,7 +102,7 @@ class DakliaInfoProvider extends GetConnect {
       if (responseString.trim().isNotEmpty &&
           !responseString.trim().toLowerCase().startsWith('<')) {
         try {
-          final decoded = json.decode(responseString);
+          final decoded = safeJsonDecode(responseString);
           data = decoded is Map<String, dynamic> ? decoded : null;
         } catch (_) {
           log('Daklia info response is not valid JSON (e.g. HTML error page)');

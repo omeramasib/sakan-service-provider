@@ -6,16 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sakan/app/modules/room_management/controllers/room_management_controller.dart';
 
 import '../../../../constants/colors_manager.dart';
 import '../../../../constants/dialogs.dart';
-import '../../room_management/controllers/room_management_controller.dart';
-import '../provider/edit_single_room_provider.dart';
+import '../provider/edit_multiple_room_provider.dart';
 
-class EditSingleRoomController extends GetxController {
-  //TODO: Implement EditSingleRoomController
-
-  final count = 0.obs;
+class EditMultipleRoomController extends GetxController {
   RxString imagePath = ''.obs;
   File image = File('');
   int roomNumber = 0;
@@ -28,18 +25,19 @@ class EditSingleRoomController extends GetxController {
   int pricePerDay = 0;
   int pricePerMonth = 0;
 
-  int numAvailableBedsSingleRoom = 0;
-  RxBool isAvailable = false.obs;
-  RxBool isLoading = false.obs;
+  final isLoading = false.obs;
+
   var formKey = GlobalKey<FormState>();
   var roomNumberController = TextEditingController();
+  var allBedsNumberController = TextEditingController();
+  var emptyBedsNumberController = TextEditingController();
   var dailyBedPriceController = TextEditingController();
   var monthlyBedPriceController = TextEditingController();
   var pricePerDayController = TextEditingController();
   var pricePerMonthController = TextEditingController();
 
-  var provider = EditSingleRoomProvider();
   var roomController = Get.put(RoomManagementController());
+  var provider = EditMultipleRoomProvider();
 
   void getImageFromGallery(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
@@ -87,53 +85,40 @@ class EditSingleRoomController extends GetxController {
     update();
   }
 
-  chooseIsAvailable(bool value) {
-    isAvailable.value = value;
-    if (isAvailable.value == true) {
-      numAvailableBedsSingleRoom = 1;
-      print('is available is true');
-    } else {
-      numAvailableBedsSingleRoom = 0;
-      print('is available is false');
-    }
-    update();
-  }
-
-  Future<void> editSingleRoom() async {
-    if (isLoading.value) return;
-    isLoading.value = true;
-
+  Future<void> updateMultipleRoom() async {
     try {
-      await provider.editSingleRoom(
+     await provider.editMultipleRoom(
           image: image,
           roomNumber: roomNumber == 0
               ? roomNumber = roomController.getRooms.roomNumber!
               : roomNumber,
-          pricePerMonth: pricePerMonth == 0
-              ? pricePerMonth = roomController.getRooms.pricePerMonth!.toInt()
-              : pricePerMonth,
-          pricePerDay: pricePerDay == 0
-              ? pricePerDay = roomController.getRooms.pricePerDay!.toInt()
-              : pricePerDay,
-          numberOfAvailableBeds: numAvailableBedsSingleRoom,
+          numberOfBeds: numberOfBeds == 0
+              ? numberOfBeds = roomController.getRooms.numberOfBeds!
+              : numberOfBeds,
+          numberOfAvailableBeds : numAvailableBeds!,
+
           dailyBooking: daily_booking == false
               ? daily_booking = roomController.getRooms.dailyBooking!
               : daily_booking,
           monthlyBooking: monthly_booking == false
               ? monthly_booking = roomController.getRooms.monthlyBooking!
               : monthly_booking,
+          pricePerDay: pricePerDay == 0
+              ? pricePerDay = roomController.getRooms.pricePerDay!.toInt()
+              : pricePerDay,
+          pricePerMonth: pricePerMonth == 0
+              ? pricePerMonth = roomController.getRooms.pricePerMonth!.toInt()
+              : pricePerMonth,
           roomId: roomController.getRooms.roomId!.toString());
     } catch (e) {
-      print(e);
-      Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
-    } finally {
-      isLoading.value = false;
-      EasyLoading.dismiss();
-      update();
+      Dialogs.errorDialog(Get.context!, 'Failed_to_update_multiple_room'.tr);
     }
+    isLoading.value = false;
+    EasyLoading.dismiss();
+    update();
   }
 
-  checkSubmitESR() async {
+  checkSubmitEMR() async {
     final isValid = formKey.currentState!.validate();
     if (!isValid) {
       return;
@@ -157,14 +142,18 @@ class EditSingleRoomController extends GetxController {
       pricePerMonth = 0;
     }
 
-    await editSingleRoom();
+    EasyLoading.show(status: 'loading'.tr);
+    await updateMultipleRoom();
     update();
   }
 
+  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
     roomNumberController = TextEditingController();
+    allBedsNumberController = TextEditingController();
+    emptyBedsNumberController = TextEditingController();
     dailyBedPriceController = TextEditingController();
     monthlyBedPriceController = TextEditingController();
     pricePerDayController = TextEditingController();
@@ -180,6 +169,8 @@ class EditSingleRoomController extends GetxController {
   void onClose() {
     super.onClose();
     roomNumberController.dispose();
+    allBedsNumberController.dispose();
+    emptyBedsNumberController.dispose();
     dailyBedPriceController.dispose();
     monthlyBedPriceController.dispose();
     pricePerDayController.dispose();

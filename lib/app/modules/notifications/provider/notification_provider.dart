@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../services/secure_storage_service.dart';
 import 'package:http/http.dart' as http;
+import '../../../../core/utils/safe_json_helper.dart';
 
 class NotificationProvider extends GetConnect {
   static NotificationProvider get instance => Get.put(NotificationProvider());
@@ -43,7 +43,8 @@ class NotificationProvider extends GetConnect {
       log('Notifications response status: ${response.statusCode}');
 
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        final data = safeJsonDecode(response.body);
+        return data is Map<String, dynamic> ? data : {};
       } else {
         log('Failed to fetch notifications: ${response.body}');
         return {};

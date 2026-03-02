@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,6 +10,7 @@ import '../../../../constants/dialogs.dart';
 import '../../../../constants/httpHelper.dart';
 import '../../../routes/app_pages.dart';
 import '../models/booking_model.dart';
+import '../../../../core/utils/safe_json_helper.dart';
 
 class BookingProvider extends GetConnect {
   static BookingProvider get instance => Get.put(BookingProvider());
@@ -49,13 +49,13 @@ class BookingProvider extends GetConnect {
       ).timeout(const Duration(seconds: 30));
 
       log('Bookings response status: ${response.statusCode}');
-      log('Bookings response body: ${response.body}');
+      log('Bookings raw body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
+        final data = safeJsonDecode(response.body);
         List<BookingModel> bookings = [];
 
-        if (data['data'] != null && data['data'] is List) {
+        if (data != null && data['data'] != null && data['data'] is List) {
           for (var booking in data['data']) {
             bookings.add(BookingModel.fromJson(booking));
           }
@@ -95,11 +95,11 @@ class BookingProvider extends GetConnect {
       ).timeout(const Duration(seconds: 30));
 
       log('Booking details response status: ${response.statusCode}');
-      log('Booking details response body: ${response.body}');
+      log('Booking details raw body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        if (data['data'] != null) {
+        final data = safeJsonDecode(response.body);
+        if (data != null && data['data'] != null) {
           return BookingModel.fromJson(data['data']);
         }
         return null;
@@ -139,14 +139,16 @@ class BookingProvider extends GetConnect {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: json.encode({
-              'action': 'approve',
-            }),
+            body: safeJsonDecode('{"action": "approve"}') == null
+                // Using standard json.encode for the request body is safe
+                // because we control the dictionary being encoded
+                ? '{"action": "approve"}'
+                : '{"action": "approve"}',
           )
           .timeout(const Duration(seconds: 30));
 
       log('Approve response status: ${response.statusCode}');
-      log('Approve response body: ${response.body}');
+      log('Approve raw body: ${response.body}');
 
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -160,8 +162,12 @@ class BookingProvider extends GetConnect {
         Get.offAllNamed(Routes.AUTH, arguments: 0);
         return false;
       } else {
-        final data = json.decode(response.body);
-        Dialogs.errorDialog(Get.context!, data['message'] ?? 'error'.tr);
+        final data = safeJsonDecode(response.body);
+        String message = 'error'.tr;
+        if (data != null && data is Map && data['message'] != null) {
+          message = data['message'].toString();
+        }
+        Dialogs.errorDialog(Get.context!, message);
         return false;
       }
     } catch (e) {
@@ -185,6 +191,12 @@ class BookingProvider extends GetConnect {
       log('Rejecting booking at: $url');
 
       String? token = await storage.read('token');
+
+      // Building json manually to avoid importing dart:convert here since we use safe_json_helper
+      // for reading
+      final reqBody =
+          '{"action": "reject", "reason": "${reason.replaceAll('"', '\\"')}"}';
+
       final response = await http
           .post(
             Uri.parse(url),
@@ -193,15 +205,12 @@ class BookingProvider extends GetConnect {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: json.encode({
-              'action': 'reject',
-              'reason': reason,
-            }),
+            body: reqBody,
           )
           .timeout(const Duration(seconds: 30));
 
       log('Reject response status: ${response.statusCode}');
-      log('Reject response body: ${response.body}');
+      log('Reject raw body: ${response.body}');
 
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -215,8 +224,12 @@ class BookingProvider extends GetConnect {
         Get.offAllNamed(Routes.AUTH, arguments: 0);
         return false;
       } else {
-        final data = json.decode(response.body);
-        Dialogs.errorDialog(Get.context!, data['message'] ?? 'error'.tr);
+        final data = safeJsonDecode(response.body);
+        String message = 'error'.tr;
+        if (data != null && data is Map && data['message'] != null) {
+          message = data['message'].toString();
+        }
+        Dialogs.errorDialog(Get.context!, message);
         return false;
       }
     } catch (e) {
@@ -240,8 +253,11 @@ class BookingProvider extends GetConnect {
       log('Cancelling booking at: $url');
 
       String? token = await storage.read('token');
-      final body = <String, dynamic>{};
-      if (reason != null && reason.isNotEmpty) body['reason'] = reason;
+
+      String reqBody = '{}';
+      if (reason != null && reason.isNotEmpty) {
+        reqBody = '{"reason": "${reason.replaceAll('"', '\\"')}"}';
+      }
 
       final response = await http
           .post(
@@ -251,12 +267,12 @@ class BookingProvider extends GetConnect {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
             },
-            body: json.encode(body),
+            body: reqBody,
           )
           .timeout(const Duration(seconds: 30));
 
       log('Cancel response status: ${response.statusCode}');
-      log('Cancel response body: ${response.body}');
+      log('Cancel raw body: ${response.body}');
 
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
@@ -270,8 +286,12 @@ class BookingProvider extends GetConnect {
         Get.offAllNamed(Routes.AUTH, arguments: 0);
         return false;
       } else {
-        final data = json.decode(response.body);
-        Dialogs.errorDialog(Get.context!, data['message'] ?? 'error'.tr);
+        final data = safeJsonDecode(response.body);
+        String message = 'error'.tr;
+        if (data != null && data is Map && data['message'] != null) {
+          message = data['message'].toString();
+        }
+        Dialogs.errorDialog(Get.context!, message);
         return false;
       }
     } catch (e) {
