@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import '../../../services/secure_storage_service.dart';
@@ -59,6 +60,7 @@ class UpdateProfileProvider extends GetConnect {
         );
         statusCode = response.statusCode;
         responseString = response.body;
+        log("this is the request: ${response.request}");
       } else {
         // Use Multipart for image upload
         var request = http.MultipartRequest(
@@ -124,6 +126,7 @@ class UpdateProfileProvider extends GetConnect {
             data['description'] != null) {
           errorMessage =
               "DESCRIPTION ERROR: ${data['daklia_description'] ?? data['description']}";
+          debugPrint("this is the error message: $errorMessage");
         } else if (data['numberOfRooms'] != null ||
             data['number_of_rooms'] != null) {
           errorMessage =

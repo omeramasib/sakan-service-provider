@@ -96,7 +96,7 @@ class DakliaProfileProvider {
         timer = Timer(const Duration(seconds: 1), () {
           EasyLoading.dismiss();
         });
-        Dialogs.errorDialog(Get.context!, 'user_not_exist'.tr);
+        Dialogs.errorDialog(Get.context!, 'user_not_active'.tr);
       }
 
       // Non-200 or non-JSON response (e.g. HTML error page)
