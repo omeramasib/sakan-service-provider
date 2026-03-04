@@ -826,7 +826,7 @@ Widget editProfileRoomCountWidget(
       controller: controller.roomCountController,
       enabled: true,
       onChanged: (value) {
-        controller.roomCount = int.parse(value);
+        controller.roomCount = int.tryParse(value) ?? 0;
       },
       decoration: InputDecoration(
         hintText: hinText,

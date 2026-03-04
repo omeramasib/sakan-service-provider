@@ -63,12 +63,16 @@ class EditDakliaProfileController extends GetxController {
     try {
       await provider
           .updateProfile(
-              dakliaDescription: dakliaDescription == ''
-                  ? dakliaDescription =
-                      profileController.profileList[0].dakliaDescription!
+              dakliaDescription: dakliaDescription.trim().isEmpty
+                  ? (profileController.profileList.isNotEmpty
+                      ? (profileController.profileList[0].dakliaDescription ??
+                          '')
+                      : '')
                   : dakliaDescription,
               numberOfRooms: roomCount == 0
-                  ? roomCount = profileController.profileList[0].numberOfRooms!
+                  ? (profileController.profileList.isNotEmpty
+                      ? (profileController.profileList[0].numberOfRooms ?? 0)
+                      : 0)
                   : roomCount,
               image: image)
           .timeout(

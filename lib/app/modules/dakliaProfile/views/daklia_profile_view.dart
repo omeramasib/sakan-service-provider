@@ -197,8 +197,8 @@ class DakliaProfileView extends GetView<DakliaProfileController> {
                               height: 20,
                             ),
                             Container(
-                              height: 150,
                               width: 340,
+                              padding: const EdgeInsets.only(bottom: 20),
                               decoration: BoxDecoration(
                                 color: ColorsManager.whiteColor,
                                 borderRadius: BorderRadius.circular(10),
