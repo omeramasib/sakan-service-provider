@@ -45,10 +45,11 @@ Authorization: Token <your_auth_token>
 6. [Services](#6-services)
 7. [Rules/Laws](#7-ruleslaws)
 8. [Booking Management](#8-booking-management)
-9. [Location Management](#9-location-management)
-10. [Complaints & Suggestions](#10-complaints--suggestions)
-11. [Status Codes & Error Handling](#11-status-codes--error-handling)
-12. [Mobile App Flow](#12-mobile-app-flow)
+9. [Notifications](#9-notifications)
+10. [Location Management](#10-location-management)
+11. [Complaints & Suggestions](#11-complaints--suggestions)
+12. [Status Codes & Error Handling](#12-status-codes--error-handling)
+13. [Mobile App Flow](#13-mobile-app-flow)
 
 ---
 
@@ -1496,7 +1497,8 @@ Retrieve all bookings for the Daklia owned by the authenticated user.
       "beds_booked": 1,
       "booking_time": "2024-12-20T10:00:00Z",
       "customer_name": "john_doe",
-      "customer_type": "Student"
+      "customer_type": "Student",
+      "customer_phone": "+1234567890"
     }
   ]
 }
@@ -1632,9 +1634,164 @@ Creates a booking request (pending admin approval).
 
 ---
 
-## 9. Location Management
+### 8.4 Cancel Booking (NEW)
 
-### 9.1 Create/Update Daklia Location
+Cancel a booking. Can be performed by the **student** who made the booking, the **employee** who made it, or the **Daklia owner** of the property. Only **pending** or **approved** bookings can be cancelled. Idempotent: if already cancelled, returns 200 with `already_cancelled: true`.
+
+**Endpoint:** `POST /api/v1/person/bookings/<booking_id>/cancel/`
+
+**Authentication:** Required (Token)
+
+**Who can cancel:**
+- **Student** – only if they are the booking’s customer (`booking.student_id` is their profile)
+- **Employee** – only if they are the booking’s customer (`booking.employee_id` is their profile)
+- **Daklia owner** – only if they own the property of the booking (`booking.room_id.daklia_id` is their Daklia)
+
+**URL Parameters:**
+
+| Parameter   | Type    | Description   |
+|------------|---------|---------------|
+| `booking_id` | integer | Booking ID to cancel |
+
+**Request Body (optional):**
+
+```json
+{
+  "reason": "Change of plans"
+}
+```
+
+| Field   | Type   | Required | Description                    |
+|--------|--------|----------|--------------------------------|
+| `reason` | string | No       | Optional reason for cancellation (stored as admin_notes) |
+
+**Success Response (200 OK):**
+
+```json
+{
+  "message": "Booking cancelled successfully",
+  "booking_id": 40,
+  "booking_status": "cancelled"
+}
+```
+
+**Success Response when already cancelled (200 OK, idempotent):**
+
+```json
+{
+  "message": "Booking cancelled successfully",
+  "booking_id": 40,
+  "booking_status": "cancelled",
+  "already_cancelled": true
+}
+```
+
+**Error Responses:**
+
+| Status | Message |
+|--------|---------|
+| 403 | "You are not allowed to cancel this booking. Only the customer (student/employee) or the Daklia owner can cancel." |
+| 404 | "Booking not found." |
+| 400 | "Only pending or approved bookings can be cancelled." |
+| 400 | "Cannot cancel a rejected booking." |
+
+**Notifications:**
+- When the **Daklia owner** cancels → the **customer** (student or employee) receives a push notification: "تم إلغاء حجزك لـ {daklia_name} من قبل مالك السكن." (`data.type`: `booking_cancelled`, `data.cancelled_by`: `owner`).
+- When the **student or employee** cancels → the **Daklia owner** receives a push notification: "تم إلغاء حجز لـ {daklia_name} من قبل العميل." (`data.type`: `booking_cancelled`, `data.cancelled_by`: `customer`).
+
+**Example:**
+
+```bash
+curl -X POST "https://api.example.com/api/v1/person/bookings/40/cancel/" \
+  -H "Authorization: Token YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"reason": "Change of plans"}'
+```
+
+---
+
+## 9. Notifications
+
+Notifications are stored when push notifications are sent (e.g. booking approval, subscription activation). The API returns the in-app notification history for the authenticated user (customer or owner).
+
+### 9.1 List Notifications
+
+**Endpoint:** `GET /api/v1/person/notifications/`
+
+**Authentication:** Required (Token)
+
+**Query Parameters:**
+
+| Parameter   | Type    | Required | Description                                |
+|-------------|---------|----------|--------------------------------------------|
+| `page`      | integer | No       | Page number (default: 1)                   |
+| `page_size` | integer | No       | Items per page (default: 20, max: 100)    |
+| `is_read`   | boolean | No       | Filter by read status (`true` / `false`)  |
+
+**Success Response (200 OK):**
+
+```json
+{
+  "count": 45,
+  "next": "https://api.example.com/api/v1/person/notifications/?page=2&page_size=20",
+  "previous": null,
+  "results": [
+    {
+      "notification_id": 1,
+      "title": "تم تفعيل الاشتراك!",
+      "body": "تم تفعيل اشتراك شهري لـ سكن الرشيد بنجاح.",
+      "data": {
+        "type": "subscription_activated",
+        "subscription_id": "123",
+        "daklia_id": "5"
+      },
+      "is_read": false,
+      "created_at": "2026-02-07T10:30:00Z",
+      "read_at": null
+    }
+  ]
+}
+```
+
+| Field           | Type    | Description                                      |
+|-----------------|---------|--------------------------------------------------|
+| `notification_id` | integer | Unique notification ID                         |
+| `title`         | string  | Notification title                              |
+| `body`          | string  | Notification body text                          |
+| `data`          | object  | Extra payload (e.g. `type`, `booking_id`)       |
+| `is_read`       | boolean | Whether the user has marked it as read         |
+| `created_at`    | string  | ISO 8601 timestamp when notification was sent  |
+| `read_at`       | string  | ISO 8601 timestamp when marked read (or null)  |
+
+### 9.2 Mark Notification as Read
+
+**Endpoint:** `PATCH /api/v1/person/notifications/{notification_id}/read/`
+
+**Alternative:** `POST /api/v1/person/notifications/{notification_id}/read/`
+
+**Authentication:** Required (Token)
+
+**URL Parameters:**
+
+| Parameter        | Type   | Description       |
+|------------------|--------|-------------------|
+| `notification_id` | integer | Notification ID   |
+
+**Success Response (200 OK):**
+
+```json
+{
+  "message": "Notification marked as read"
+}
+```
+
+**Error Response (404 Not Found):** Notification does not exist or does not belong to the authenticated user.
+
+---
+
+## 10. Location Management
+
+### 10.1 Create/Update Daklia Location
 
 **Endpoint:** `POST /api/v1/daklia/daklia-location/`
 
@@ -1667,7 +1824,7 @@ Creates a booking request (pending admin approval).
 
 ---
 
-### 9.2 Verify Daklia Account
+### 10.2 Verify Daklia Account
 
 Uploads verification documents for Daklia account.
 
@@ -1687,11 +1844,11 @@ Uploads verification documents for Daklia account.
 
 ---
 
-## 10. Complaints & Suggestions
+## 11. Complaints & Suggestions
 
 User feedback system for submitting complaints and suggestions.
 
-### 10.1 List/Create Complaints
+### 11.1 List/Create Complaints
 
 **Endpoint:** `GET /api/v1/feedback/complaints/` | `POST /api/v1/feedback/complaints/`
 
@@ -1796,7 +1953,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.2 Get Complaint Details
+### 11.2 Get Complaint Details
 
 **Endpoint:** `GET /api/v1/feedback/complaints/<complaint_id>/`
 
@@ -1840,7 +1997,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.3 Add Comment to Complaint
+### 11.3 Add Comment to Complaint
 
 **Endpoint:** `POST /api/v1/feedback/complaints/<complaint_id>/comment/`
 
@@ -1881,7 +2038,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.4 Cancel Complaint
+### 11.4 Cancel Complaint
 
 **Endpoint:** `POST /api/v1/feedback/complaints/<complaint_id>/cancel/`
 
@@ -1904,7 +2061,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.5 List/Create Suggestions
+### 11.5 List/Create Suggestions
 
 **Endpoint:** `GET /api/v1/feedback/suggestions/` | `POST /api/v1/feedback/suggestions/`
 
@@ -1986,7 +2143,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.6 Get Suggestion Details
+### 11.6 Get Suggestion Details
 
 **Endpoint:** `GET /api/v1/feedback/suggestions/<suggestion_id>/`
 
@@ -1994,7 +2151,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.7 Delete Suggestion
+### 11.7 Delete Suggestion
 
 **Endpoint:** `DELETE /api/v1/feedback/suggestions/<suggestion_id>/delete/`
 
@@ -2012,7 +2169,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.8 Get Complaint Categories
+### 11.8 Get Complaint Categories
 
 **Endpoint:** `GET /api/v1/feedback/complaints/categories/`
 
@@ -2037,7 +2194,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.9 Get Complaint Priorities
+### 11.9 Get Complaint Priorities
 
 **Endpoint:** `GET /api/v1/feedback/complaints/priorities/`
 
@@ -2059,7 +2216,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-### 10.10 Get Suggestion Categories
+### 11.10 Get Suggestion Categories
 
 **Endpoint:** `GET /api/v1/feedback/suggestions/categories/`
 
@@ -2083,7 +2240,7 @@ User feedback system for submitting complaints and suggestions.
 
 ---
 
-## 11. Status Codes & Error Handling
+## 12. Status Codes & Error Handling
 
 ### HTTP Status Codes
 
@@ -2129,7 +2286,7 @@ The API handles various data type representations:
 
 ---
 
-## 12. Mobile App Flow
+## 13. Mobile App Flow
 
 ### Complete User Journey
 
@@ -2296,8 +2453,16 @@ curl -X POST \
 |--------|----------|------|
 | POST | `/api/v1/person/create-new-booking/` | Yes |
 | GET | `/api/v1/person/bookings/<id>/` | Yes |
+| POST | `/api/v1/person/bookings/<id>/cancel/` | Yes (Student/Employee/Owner) |
 | GET | `/api/v1/person/owner/bookings/` | Yes (Owner) |
 | POST | `/api/v1/person/owner/bookings/<id>/action/` | Yes (Owner) |
+
+### Notification Endpoints
+
+| Method | Endpoint | Auth |
+|--------|----------|------|
+| GET | `/api/v1/person/notifications/` | Yes |
+| PATCH | `/api/v1/person/notifications/<id>/read/` | Yes |
 
 ### Feedback Endpoints (Complaints & Suggestions)
 
@@ -2316,4 +2481,4 @@ curl -X POST \
 
 ---
 
-*Last updated: November 2024*
+*Last updated: February 2026*

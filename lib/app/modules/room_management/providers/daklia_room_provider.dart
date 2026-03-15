@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -11,6 +10,7 @@ import '../../../routes/app_pages.dart';
 import '../../network/controllers/network_controller.dart';
 import '../models/daklia_rooms_models.dart';
 import 'package:http/http.dart' as http;
+import '../../../../core/utils/safe_json_helper.dart';
 
 class DakliaRoomProvider extends GetConnect {
   var networkController = NetworkController.instance;
@@ -43,16 +43,27 @@ class DakliaRoomProvider extends GetConnect {
     );
 
     if (response.statusCode == 200) {
-      final List<dynamic> roomsData = json.decode(response.body);
-      log('this is the rooms data: $roomsData');
-      final List<DakliaRoomModel> rooms = [];
-
-      for (final roomData in roomsData) {
-        final room = DakliaRoomModel.fromJson(roomData);
-        rooms.add(room);
+      final body = response.body;
+      if (body.trim().isEmpty || body.trim().toLowerCase().startsWith('<')) {
+        log('Rooms response is HTML or empty, not JSON');
+        return [];
       }
+      try {
+        final roomsData = safeJsonDecode(body);
+        if (roomsData == null || roomsData is! List) return [];
+        log('this is the rooms data: $roomsData');
+        final List<DakliaRoomModel> rooms = [];
 
-      return rooms;
+        for (final roomData in roomsData) {
+          final room = DakliaRoomModel.fromJson(roomData);
+          rooms.add(room);
+        }
+
+        return rooms;
+      } catch (e) {
+        log('Failed to parse rooms JSON: $e');
+        return [];
+      }
     }
     if (response.statusCode == 401) {
       timer = Timer(const Duration(seconds: 1), () {

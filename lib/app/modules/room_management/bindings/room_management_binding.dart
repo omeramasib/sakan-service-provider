@@ -5,8 +5,9 @@ import '../controllers/room_management_controller.dart';
 class RoomManagementBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<RoomManagementController>(
-      () => RoomManagementController(),
+    Get.put<RoomManagementController>(
+      RoomManagementController(),
+      permanent: false,
     );
   }
 }

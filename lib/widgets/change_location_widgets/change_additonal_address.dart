@@ -25,7 +25,7 @@ changeAdditionalAddress(BuildContext context) {
     ),
     builder: (context) {
       return Container(
-        height: Get.height * 0.4,
+        height: Get.height * 0.6,
         width: Get.width,
         decoration: BoxDecoration(
           color: ColorsManager.whiteColor,
@@ -91,6 +91,7 @@ changeAdditionalAddress(BuildContext context) {
                         ButtonsManager.primaryButton(
                           text: 'save_changes'.tr,
                           onPressed: () {
+                            print('DEBUG: Button pressed!');
                             controller.checkChangeAddress();
                           },
                           context: context,

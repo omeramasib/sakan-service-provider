@@ -119,6 +119,15 @@ class MyAppointmentsController extends GetxController {
     return success;
   }
 
+  /// Cancel a booking (pending or approved)
+  Future<bool> cancelBooking(int bookingId, {String? reason}) async {
+    final success = await bookingProvider.cancelBooking(bookingId, reason: reason);
+    if (success) {
+      await fetchBookings();
+    }
+    return success;
+  }
+
   /// Set selected booking
   void setSelectedBooking(BookingModel booking) {
     selectedBooking.value = booking;

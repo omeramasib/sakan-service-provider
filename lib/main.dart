@@ -11,7 +11,7 @@ import 'flavors.dart';
 
 /// Common main function called by flavor-specific entry points.
 /// Assumes F.appFlavor and FlavorConfig are already initialized.
-Future<void> mainCommon() async {
+Future<void> mainCommon({Widget? rootWidget}) async {
   // Initialize Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -29,7 +29,7 @@ Future<void> mainCommon() async {
   // Initialize Notification Service
   await NotificationService().initialize();
 
-  runApp(const App());
+  runApp(rootWidget ?? const App());
 }
 
 /// Main entry point - used by flutter build web

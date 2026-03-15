@@ -1,5 +1,5 @@
 name: sakan
-version: 1.0.1+2
+version: 1.0.7+11
 publish_to: none
 description: A new Flutter project.
 environment:
@@ -7,6 +7,7 @@ environment:
   flutter: ">=3.0.0"
 
 dependencies:
+  sentry_flutter: ^9.12.0
   cupertino_icons: ^1.0.5
   get: ^4.7.3
   flutter:
@@ -34,6 +35,7 @@ dependencies:
   package_info_plus: ^8.0.0
   pub_semver: ^2.1.4
   webview_flutter: ^4.0.0
+  flutter_image_compress: ^2.4.0
 
 
 
@@ -42,6 +44,7 @@ dependency_overrides:
   win32: ^5.5.0
 
 dev_dependencies:
+  sentry_dart_plugin: ^3.2.1
   flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
@@ -79,13 +82,14 @@ flutter_native_splash:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/sakan-logo.png"
+  image_path: "assets/images/app-icon.png"
 
 flutter:
   uses-material-design: true
 
   assets:
-  - assets/images/
+    - assets/images/
+    - shorebird.yaml
 
   fonts:
   - family:  Montserrat-Arabic
@@ -109,3 +113,9 @@ flutter:
       - asset: assets/fonts/Montserrat-Arabic-Thin.ttf
         weight: 100
 
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  project: sakan-provider
+  org: sakan-bh

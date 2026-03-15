@@ -1,3 +1,6 @@
+# Node modules
+node_modules/
+
 # Miscellaneous
 *.class
 *.log
@@ -47,3 +50,10 @@ app.*.map.json
 
 # FVM Version Cache
 .fvm/
+sentry.properties
+
+sentry.properties
+
+sentry.properties
+
+sentry.properties

@@ -166,6 +166,7 @@ const Map<String, String> arSA = {
   'more': 'المزيد',
   // appointment screen
   'my_appointments': 'حجوزاتي',
+  "status": "الحالة",
   'new_bookings': 'حجوزات جديدة',
   'previous_bookings': 'حجوزات سابقة',
   'awaiting_daklia_approval': 'بإنتظار موافقتك',
@@ -209,6 +210,9 @@ const Map<String, String> arSA = {
   'beds_booked': 'عدد السرائر المحجوزة',
   'booking_approved': 'تمت الموافقة على الحجز بنجاح',
   'booking_rejected': 'تم رفض الحجز',
+  'cancel_booking': 'إلغاء الحجز',
+  'booking_cancelled': 'تم إلغاء الحجز بنجاح',
+  'cancel_booking_confirm': 'هل أنت متأكد من إلغاء هذا الموعد؟',
   'please_enter_rejection_reason': 'الرجاء ادخال سبب الرفض',
   'rejection_reason': 'سبب الرفض',
   'unknown': 'غير معروف',
@@ -297,6 +301,10 @@ const Map<String, String> arSA = {
   'reply': 'رد على تزكرة تأجيل موعد',
   'new_discounts': 'خصومات جديدة',
   'no_notification_yet': 'لايوجد اي إشعارات بعد',
+  'just_now': 'الآن',
+  'minutes_ago': 'دقيقة مضت',
+  'hours_ago': 'ساعة مضت',
+  'days_ago': 'يوم مضى',
   // room management screen
   'no_rooms': 'لايوجد غرف بعد',
   'no_rooms_des':
@@ -336,6 +344,7 @@ const Map<String, String> arSA = {
   'room_added_successfully': 'تم إضافة الغرفة بنجاح',
   'account_not_verified': 'لم يتم تفعيل الحساب بعد يرجى التواصل مع الإدارة',
   'Failed_to_add_room': 'فشل في إضافة الغرفة',
+  'image_too_large': 'حجم الصورة كبير جداً، يرجى اختيار صورة أصغر',
   'edit_multiple_room_info': 'تعديل بيانات الغرفة المشتركة',
   'edit_single_room_info': 'تعديل بيانات الغرفة الفردية',
   'Failed_to_update_multiple_room': 'فشل في تعديل بيانات الغرفة المشتركة',
@@ -454,7 +463,6 @@ const Map<String, String> arSA = {
   '80-SAR': '80 ر.س',
   'cancelle_appointment_booking': 'إلغاء الحجز',
   'booking_management': 'إدارة الحجز',
-  'cancel_booking': 'إلغاء الحجز',
   'cancel_appointment': 'إلغاء الموعد',
   'cancel_appointment_message':
       'يؤسفنا انك ستلغي الموعد يرجى العلم انه سيتم خصم .. من اجمالي المبلغ المدفوع في حالة الغاء الحجز',
@@ -550,22 +558,12 @@ const Map<String, String> arSA = {
   'payment_discount': 'الخصم',
   '0 SAR': '0 ريال',
   'total_amount_payment': 'المبلغ الإجمالي',
-  '160 SAR': '160 ريال',
   'choose_payment_method': 'اختر طريقة الدفع المناسبة لك',
   'credit_card': 'البطاقات الإئتمانية',
   'sadad': 'سداد',
   'apple_pay': 'Apple Pay',
   'pay': 'دفع',
-  'coupon_code': ' كوبون الخصم',
-  'card_details': 'تفاصيل البطاقة',
-  'card_holder_name': 'اسم حامل البطاقة',
-  'card_number': 'رقم البطاقة',
-  'cvv': 'الكود السري',
-  'expiry_date': 'تاريخ انتهاء الصلاحية',
-  'save_card': 'حفظ البطاقة لإستخدامها لاحقا',
-  'booking_success': 'تم حجز الموعد بنجاح',
-  'booking_success_des':
-      'تم حجز الموعد بنجاح سيتم ارسال تنبيه لك بعد الموافقة على الموعد من قبل الطبيب',
+  'failed_to_initiate_payment': 'فشل بدء الدفع',
   // change password screen
   'change_password': 'تغيير كلمة المرور',
   'old_password': 'كلمة المرور القديمة',
@@ -648,7 +646,7 @@ const Map<String, String> arSA = {
   'complete_payment': 'إكمال الدفع',
   'subscription_activated': 'تم تفعيل الاشتراك بنجاح!',
   'days': 'يوم',
-  'no_plans_available': 'لا توجد باقات اشتراك متاحة',
+  'no_plans_available': 'لا توجد باقات نشطة متاحة حاليا',
   'cancel': 'إلغاء',
   'payment_status_check': 'فحص حالة الدفع',
   'payment_taking_time':
@@ -659,4 +657,11 @@ const Map<String, String> arSA = {
   'check_failed': 'فشل فحص حالة الدفع',
   'check_payment_status': 'فحص حالة الدفع',
   'checking_payment_status': 'جاري فحص حالة الدفع...',
+
+  // Network error messages
+  'network_error': 'خطأ في الشبكة',
+  'network_error_title': 'مشكلة في الاتصال',
+  'network_error_message':
+      'تعذر الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.',
+  'check_connection': 'تحقق من اتصالك بالإنترنت',
 };

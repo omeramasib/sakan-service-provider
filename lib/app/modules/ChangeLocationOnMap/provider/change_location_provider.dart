@@ -35,25 +35,57 @@ class ChangeLocationProvider extends GetConnect {
     final token = await storage.read('token');
     final userId = await storage.read('userId');
     final locationId = await storage.read('locationId');
-    final response = await put(
-        '${HttpHelper.baseUrl2}${HttpHelper.dakliaLocation}$locationId/', {
-      'user_id': userId,
-      'longitude': longitude,
-      'latitude': latitude,
-      'address': address,
-      'additional_address': additonal_address,
-    },
-        headers: {
-          'Authorization': 'Token $token',
-        });
+    final dakliaId = await storage.read('dakliaId');
+
+    print('DEBUG Provider: locationId = $locationId, dakliaId = $dakliaId');
+
+    Response response;
+
+    // If locationId is null, create a new location with POST
+    // Otherwise, update existing location with PUT
+    if (locationId == null || locationId == 'null' || locationId.isEmpty) {
+      print('DEBUG Provider: Creating NEW location (POST)');
+      response =
+          await post('${HttpHelper.baseUrl2}${HttpHelper.dakliaLocation}', {
+        'user_id': userId,
+        'daklia_id': dakliaId,
+        'longitude': longitude,
+        'latitude': latitude,
+        'address': address,
+        'additional_address': additonal_address,
+      }, headers: {
+        'Authorization': 'Token $token',
+      });
+    } else {
+      print('DEBUG Provider: Updating EXISTING location (PUT)');
+      response = await put(
+          '${HttpHelper.baseUrl2}${HttpHelper.dakliaLocation}$locationId/', {
+        'user_id': userId,
+        'longitude': longitude,
+        'latitude': latitude,
+        'address': address,
+        'additional_address': additonal_address,
+      },
+          headers: {
+            'Authorization': 'Token $token',
+          });
+    }
+
     // print the request url
-    log('this is the url: ${response.request?.url}');
+    print('DEBUG Provider: URL = ${response.request?.url}');
     var data = response.body;
     var statusCode = response.statusCode;
-    log('this is the status code: $statusCode');
-    log('this is the data: $data');
+    print('DEBUG Provider: Status code = $statusCode');
+    print('DEBUG Provider: Response data = $data');
     EasyLoading.show(status: 'loading'.tr);
-    if (statusCode == 200) {
+
+    if (statusCode == 200 || statusCode == 201) {
+      // If we created a new location, save the new locationId
+      if (data != null && data['id'] != null) {
+        await storage.write('locationId', data['id'].toString());
+        print('DEBUG Provider: Saved new locationId = ${data['id']}');
+      }
+
       timer = Timer(const Duration(seconds: 1), () {
         EasyLoading.dismiss();
       });
@@ -83,6 +115,8 @@ class ChangeLocationProvider extends GetConnect {
       EasyLoading.show(status: 'loading'.tr);
       Dialogs.errorDialog(Get.context!, 'server_error'.tr);
     }
-    return ChangeLocationModel.fromJson(data);
+
+    // Return empty model for error cases to avoid parsing errors
+    return ChangeLocationModel();
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:sakan/constants/colors_manager.dart';
-import 'package:sakan/constants/fonts_manager.dart';
-import 'package:sakan/constants/styles_manager.dart';
+import '../../../../constants/colors_manager.dart';
+import '../../../../constants/fonts_manager.dart';
+import '../../../../constants/styles_manager.dart';
 
 import '../controllers/notifications_controller.dart';
 import '../widgets/no_notification_yet.dart';
@@ -22,7 +22,7 @@ class NotificationsView extends GetView<NotificationsController> {
           style: getMediumStyle(
             color: ColorsManager.mainColor,
             fontSize: FontSizeManager.s16,
-            ),
+          ),
         ),
         // create a custom back button with back icon
         leading: IconButton(
@@ -34,8 +34,33 @@ class NotificationsView extends GetView<NotificationsController> {
         ),
         centerTitle: true,
       ),
-      body: notificationExist(context, controller) 
-      // body:noNotificationYet(context),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (controller.hasError.value) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(controller.errorMessage.value),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => controller.loadNotifications(),
+                  child: Text('retry'.tr),
+                ),
+              ],
+            ),
+          );
+        }
+
+        if (controller.notifications.isEmpty) {
+          return noNotificationYet(context);
+        }
+
+        return notificationExist(context, controller);
+      }),
     );
   }
 }

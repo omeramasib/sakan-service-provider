@@ -52,6 +52,7 @@ const Map<String, String> enUS = {
   'unknown_error': 'Unknown error',
   'no_internet': 'No Internet Connection',
   'server_error': 'Server Error',
+  'image_too_large': 'Image size is too large, please choose a smaller image',
   'error': 'Error',
   'success': 'Success',
   'loading': 'Loading',
@@ -134,6 +135,7 @@ const Map<String, String> enUS = {
   'terms': 'Terms',
   // my appointments screen
   'my_appointments': 'My Appointments',
+  'status': 'Status',
   'new_bookings': 'New Appointments',
   'previous_bookings': 'Previous Appointments',
   'awaiting_daklia_approval': 'Awaiting Daklia Approval',
@@ -167,6 +169,9 @@ const Map<String, String> enUS = {
   'beds_booked': 'Beds Booked',
   'booking_approved': 'Booking approved successfully',
   'booking_rejected': 'Booking rejected',
+  'cancel_booking': 'Cancel Booking',
+  'booking_cancelled': 'Booking cancelled successfully',
+  'cancel_booking_confirm': 'Are you sure you want to cancel this appointment?',
   'please_enter_rejection_reason': 'Please enter rejection reason',
   'rejection_reason': 'Rejection Reason',
   'unknown': 'Unknown',
@@ -221,6 +226,10 @@ const Map<String, String> enUS = {
   // notification screen
   'notifications': 'Notifications',
   'no_notification_yet': 'No Notifications Yet',
+  'just_now': 'Just now',
+  'minutes_ago': 'minutes ago',
+  'hours_ago': 'hours ago',
+  'days_ago': 'days ago',
   // room management screen
   'no_rooms': 'No Rooms Yet',
   'add_room': 'Add Room',
@@ -334,7 +343,6 @@ const Map<String, String> enUS = {
   '80-SAR': '80 SAR',
   'cancelle_appointment_booking': 'Cancelle Bookings',
   'booking_management': 'Booking Management',
-  'cancel_booking': 'Cancel Booking',
   'cancel_appointment': 'Cancel Appointment',
   'cancel_appointment_message':
       'We regret that you will cancel the appointment. Please note that it will be deducted from the total amount paid in the event of cancellation of the reservation',
@@ -425,30 +433,7 @@ const Map<String, String> enUS = {
   'discount': 'Discount',
   'deposit': 'Deposit',
   'payment_details': 'Details',
-  'add_coupon': 'Add Coupon',
-  'cost': 'Price',
-  '150': '150 SAR',
-  'tax': 'Tax',
-  '10': '10 SAR',
-  'payment_discount': 'Discount',
-  '0 SAR': '0 SAR',
-  'total_amount_payment': 'Total',
-  '160 SAR': '160 SAR',
-  'choose_payment_method': 'Choose the payment method',
-  'credit_card': 'Credit cards',
-  'sadad': 'Sadad',
-  'apple_pay': 'Apple Pay',
-  'pay': 'Pay',
-  'coupon_code': 'Coupon Code',
-  'card_details': 'Card Details',
-  'card_holder_name': 'Card Holders Name',
-  'card_number': 'Card Number',
-  'cvv': 'CVV',
-  'expiry_date': 'Expiry Date',
-  'save_card': 'Save Card',
-  'booking_success': 'Successfully Booked',
-  'booking_success_des':
-      'Your appointment has been booked\n  successfully, You will been notified\n After the appointment is approved by \n                           the doctor.',
+  'failed_to_initiate_payment': 'Failed to initiate payment',
   // Delete Account Screen
   'delete_account_finally': 'Delete the account Permanently',
   'delete_account_finally_des':
@@ -559,4 +544,11 @@ const Map<String, String> enUS = {
   'check_failed': 'Failed to check payment status',
   'check_payment_status': 'Check Payment Status',
   'checking_payment_status': 'Checking payment status...',
+
+  // Network error messages
+  'network_error': 'Network Error',
+  'network_error_title': 'Connection Problem',
+  'network_error_message':
+      'Unable to connect to the server. Please check your internet connection and try again.',
+  'check_connection': 'Check your internet connection',
 };

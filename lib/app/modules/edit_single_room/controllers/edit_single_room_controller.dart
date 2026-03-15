@@ -30,6 +30,7 @@ class EditSingleRoomController extends GetxController {
 
   int numAvailableBedsSingleRoom = 0;
   RxBool isAvailable = false.obs;
+  RxBool isLoading = false.obs;
   var formKey = GlobalKey<FormState>();
   var roomNumberController = TextEditingController();
   var dailyBedPriceController = TextEditingController();
@@ -99,6 +100,9 @@ class EditSingleRoomController extends GetxController {
   }
 
   Future<void> editSingleRoom() async {
+    if (isLoading.value) return;
+    isLoading.value = true;
+
     try {
       await provider.editSingleRoom(
           image: image,
@@ -122,9 +126,11 @@ class EditSingleRoomController extends GetxController {
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
+    } finally {
+      isLoading.value = false;
+      EasyLoading.dismiss();
+      update();
     }
-    EasyLoading.dismiss();
-    update();
   }
 
   checkSubmitESR() async {

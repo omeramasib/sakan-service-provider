@@ -210,9 +210,12 @@ class RoomManagementController extends GetxController {
         dailyBooking: daily_booking,
         monthlyBooking: monthly_booking,
       );
-      print('this is the data: $data');
-      // Clear images after successful upload
-      clearImages();
+      if (data != null) {
+        print('this is the data: $data');
+        clearImages();
+      } else {
+        Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
+      }
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
@@ -358,9 +361,12 @@ class RoomManagementController extends GetxController {
         dailyBooking: daily_booking,
         monthlyBooking: monthly_booking,
       );
-      print('this is the data: $data');
-      // Clear images after successful upload
-      clearImages();
+      if (data != null) {
+        print('this is the data: $data');
+        clearImages();
+      } else {
+        Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);
+      }
     } catch (e) {
       print(e);
       Dialogs.errorDialog(Get.context!, 'Failed_to_add_room'.tr);

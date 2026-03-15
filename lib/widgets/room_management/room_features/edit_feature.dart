@@ -23,7 +23,7 @@ editFeatures(BuildContext context, dynamic editFC) {
     builder: (context) {
       return Container(
         width: Get.width,
-        height: Get.height * 0.6,
+        height: Get.height * 0.8,
         decoration: const BoxDecoration(
           color: ColorsManager.whiteColor,
           borderRadius: BorderRadius.only(
@@ -60,9 +60,9 @@ editFeatures(BuildContext context, dynamic editFC) {
                     child: Text(
                       'edit_information'.tr,
                       style: getMediumStyle(
-                          color: ColorsManager.blackColor,
-                          fontSize: FontSizeManager.s15,
-                          ),
+                        color: ColorsManager.blackColor,
+                        fontSize: FontSizeManager.s15,
+                      ),
                     ),
                   ),
                   SizedBox(
@@ -89,8 +89,8 @@ editFeatures(BuildContext context, dynamic editFC) {
                   SizedBox(
                     height: 10,
                   ),
-                  editFeatureWidget(context, editFC,
-                   editFC.getFeatures.featureName!),
+                  editFeatureWidget(
+                      context, editFC, editFC.getFeatures.featureName!),
                   SizedBox(
                     height: 20,
                   ),
@@ -115,8 +115,8 @@ editFeatures(BuildContext context, dynamic editFC) {
                   SizedBox(
                     height: 10,
                   ),
-                  editOtherDetailsWidget(context, editFC,
-                   editFC.getFeatures.featureDescription!),
+                  editOtherDetailsWidget(
+                      context, editFC, editFC.getFeatures.featureDescription!),
                   SizedBox(
                     height: Get.height * 0.1,
                   ),
@@ -131,7 +131,7 @@ editFeatures(BuildContext context, dynamic editFC) {
                     context: context,
                     minimumSize: Size(287, 50),
                     maximumSize: Size(287, 50),
-                    )
+                  )
                 ],
               ),
             ),

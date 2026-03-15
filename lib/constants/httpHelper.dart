@@ -30,6 +30,10 @@ class HttpHelper {
   static const ownerBookings = '/owner/bookings/';
   static const bookingDetails = '/bookings/';
   static const bookingAction = '/action/';
+  static const bookingCancel = '/cancel/';
+
+  // Notification endpoints
+  static const notifications = '/notifications/';
 
   // App configuration endpoint (uses FlavorConfig.baseUrl directly)
   static const appConfiguration = '/api/app-configuration/';
