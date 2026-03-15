@@ -93,12 +93,24 @@ class SubscriptionProvider extends GetConnect {
   /// Initiate payment for a subscription plan.
   ///
   /// Endpoint: POST /api/v1/subscription/payment/initiate/
-  Future<SubscriptionPaymentInitModel?> initiatePayment(int planId) async {
+  Future<SubscriptionPaymentInitModel?> initiatePayment(
+    int planId, {
+    String paymentGateway = 'cashipay',
+    bool? requiresOtp,
+    String? walletAccountNumber,
+  }) async {
     try {
       final headers = await _getHeaders();
+      final body = {
+        'plan_id': planId,
+        'payment_gateway': paymentGateway,
+        if (requiresOtp != null) 'requires_otp': requiresOtp,
+        if (walletAccountNumber != null) 'wallet_account_number': walletAccountNumber,
+      };
+
       final response = await post(
         HttpHelper.subscriptionPaymentInitiate,
-        {'plan_id': planId},
+        body,
         headers: headers,
       );
 
@@ -115,6 +127,39 @@ class SubscriptionProvider extends GetConnect {
     } catch (e) {
       debugPrint('SubscriptionProvider: initiatePayment exception: $e');
       return null;
+    }
+  }
+
+  /// Confirm OTP for payment.
+  ///
+  /// Endpoint: POST /api/v1/subscription/payment/confirm/
+  Future<bool> confirmOtp(String clientReferenceId, String otp) async {
+    try {
+      final headers = await _getHeaders();
+      final body = {
+        'client_reference_id': clientReferenceId,
+        'otp': otp,
+      };
+
+      final response = await post(
+        HttpHelper.subscriptionPaymentConfirm,
+        body,
+        headers: headers,
+      );
+
+      debugPrint('SubscriptionProvider: confirmOtp response');
+      debugPrint('Status: ${response.statusCode}');
+      debugPrint('Body: ${response.body}');
+
+      if (response.statusCode == 200 && response.body != null) {
+        final data = response.body as Map<String, dynamic>;
+        return data['success'] == true;
+      }
+
+      return false;
+    } catch (e) {
+      debugPrint('SubscriptionProvider: confirmOtp exception: $e');
+      return false;
     }
   }
 

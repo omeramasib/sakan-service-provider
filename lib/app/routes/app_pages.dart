@@ -42,7 +42,9 @@ import '../modules/splashScreen/bindings/splash_screen_binding.dart';
 import '../modules/splashScreen/views/splash_screen_view.dart';
 import '../modules/subscription/bindings/subscription_binding.dart';
 import '../modules/subscription/views/subscription_plans_view.dart';
+import '../modules/subscription/views/cashipay_payment_view.dart';
 import '../modules/subscription/views/payment_webview_view.dart';
+import '../modules/subscription/views/payment_success_view.dart';
 
 part 'app_routes.dart';
 
@@ -159,12 +161,21 @@ class AppPages {
       binding: SubscriptionBinding(),
     ),
     GetPage(
+      name: _Paths.CASHIPAY_PAYMENT,
+      page: () => const CashiPayPaymentView(),
+      binding: SubscriptionBinding(),
+    ),
+    GetPage(
       name: _Paths.PAYMENT_WEBVIEW,
       page: () => const PaymentWebViewView(
         paymentUrl: '',
         clientReferenceId: '',
       ),
       binding: SubscriptionBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT_SUCCESS,
+      page: () => const PaymentSuccessView(),
     ),
   ];
 }
