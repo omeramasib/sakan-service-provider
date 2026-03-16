@@ -687,7 +687,7 @@ const Map<String, String> arSA = {
 
   // CashiPay OTP Flow
   'reference_and_qr': 'رقم المرجع و QR',
-  'pay_with_otp': 'الدفع برمز التحقق (OTP)',
+  'pay_with_otp': 'الدفع برقم المحفظة',
   'enter_wallet_number': 'أدخل رقم محفظة Cashi',
   'send_otp': 'إرسال رمز التحقق',
   'cashi_otp_step_1': '١. قم بإدخال رقم محفظة Cashi الخاصة بك.',
