@@ -108,6 +108,9 @@ class SubscriptionProvider extends GetConnect {
         if (walletAccountNumber != null) 'wallet_account_number': walletAccountNumber,
       };
 
+      debugPrint('SubscriptionProvider: initiatePayment request');
+      debugPrint('Body: $body');
+
       final response = await post(
         HttpHelper.subscriptionPaymentInitiate,
         body,
@@ -116,7 +119,7 @@ class SubscriptionProvider extends GetConnect {
 
       debugPrint('SubscriptionProvider: initiatePayment response');
       debugPrint('Status: ${response.statusCode}');
-      debugPrint('Body: ${response.body}');
+      debugPrint('Body: ${response.bodyString ?? response.body}');
 
       if (response.statusCode == 200 && response.body != null) {
         return SubscriptionPaymentInitModel.fromJson(
@@ -141,6 +144,9 @@ class SubscriptionProvider extends GetConnect {
         'otp': otp,
       };
 
+      debugPrint('SubscriptionProvider: confirmOtp request');
+      debugPrint('Body: $body');
+
       final response = await post(
         HttpHelper.subscriptionPaymentConfirm,
         body,
@@ -149,7 +155,7 @@ class SubscriptionProvider extends GetConnect {
 
       debugPrint('SubscriptionProvider: confirmOtp response');
       debugPrint('Status: ${response.statusCode}');
-      debugPrint('Body: ${response.body}');
+      debugPrint('Body: ${response.bodyString ?? response.body}');
 
       if (response.statusCode == 200 && response.body != null) {
         final data = response.body as Map<String, dynamic>;
