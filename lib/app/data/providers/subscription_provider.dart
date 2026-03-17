@@ -7,6 +7,7 @@ import '../models/subscription_status_model.dart';
 import '../models/subscription_payment_init_model.dart';
 import '../models/subscription_payment_verify_model.dart';
 import '../models/subscription_history_model.dart';
+import '../models/subscription_otp_confirm_model.dart';
 
 /// Provider for subscription-related API calls.
 ///
@@ -136,7 +137,7 @@ class SubscriptionProvider extends GetConnect {
   /// Confirm OTP for payment.
   ///
   /// Endpoint: POST /api/v1/subscription/payment/confirm/
-  Future<bool> confirmOtp(String clientReferenceId, String otp) async {
+  Future<SubscriptionOtpConfirmModel?> confirmOtp(String clientReferenceId, String otp) async {
     try {
       final headers = await _getHeaders();
       final body = {
@@ -157,15 +158,14 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.bodyString ?? response.body}');
 
-      if (response.statusCode == 200 && response.body != null) {
-        final data = response.body as Map<String, dynamic>;
-        return data['success'] == true;
+      if (response.body != null) {
+        return SubscriptionOtpConfirmModel.fromJson(response.body as Map<String, dynamic>);
       }
 
-      return false;
+      return null;
     } catch (e) {
       debugPrint('SubscriptionProvider: confirmOtp exception: $e');
-      return false;
+      return null;
     }
   }
 

@@ -458,6 +458,7 @@ class SubscriptionPlansView extends GetView<SubscriptionController> {
                 Get.back();
                 controller.cashiPaymentMethod.value = 'reference';
                 controller.isOtpInitiated.value = false;
+                controller.isOtpLocked.value = false;
                 controller.walletNumber.value = '';
                 controller.otpCode.value = '';
                 controller.selectedPlanId.value = planId;

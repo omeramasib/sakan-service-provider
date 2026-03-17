@@ -695,6 +695,9 @@ const Map<String, String> arSA = {
   'cashi_otp_step_3': '٣. قم بإدخال رمز التحقق (OTP) المكون من 6 أرقام.',
   'cashi_otp_step_4': '٤. بعد إدخال الرمز بشكل صحيح، سيتم إتمام عملية الدفع بنجاح.',
   'failed_to_confirm_otp': 'فشل تأكيد رمز التحقق (OTP). يرجى التأكد من رمز التحقق والمحاولة مرة أخرى.',
+  'otp_attempts_exceeded': 'تم تجاوز الحد الأقصى لمحاولات رمز التحقق (OTP). تم قفل طلب الدفع بشكل دائم.',
+  'otp_attempts_remaining': 'فشل تأكيد رمز التحقق. يتبقى لك @attempts محاولة.',
+  'otp_locked_message': 'فشل تأكيد رمز التحقق. تم قفل طلب الدفع الآن.',
 
   // Network error messages
   'network_error': 'خطأ في الشبكة',

@@ -9,9 +9,15 @@ import '../../../data/models/subscription_payment_verify_model.dart';
 import '../../../data/models/subscription_history_model.dart';
 import '../../../data/providers/subscription_provider.dart';
 import '../../../../constants/dialogs.dart';
+import '../../../../constants/colors_manager.dart';
+import '../../../../constants/fonts_manager.dart';
+import '../../../../constants/styles_manager.dart';
 
 class SubscriptionController extends GetxController {
-  final SubscriptionProvider _provider = SubscriptionProvider.instance;
+  final SubscriptionProvider _provider;
+
+  SubscriptionController({SubscriptionProvider? provider})
+      : _provider = provider ?? SubscriptionProvider.instance;
 
   // Observable state
   final RxList<SubscriptionPlanModel> plans = <SubscriptionPlanModel>[].obs;
@@ -34,6 +40,7 @@ class SubscriptionController extends GetxController {
   final RxInt pollCount = 0.obs;
   final RxString otpCode = ''.obs;
   final RxBool isConfirmingOtp = false.obs;
+  final RxBool isOtpLocked = false.obs;
   Timer? _pollingTimer;
   static const int _maxPolls = 20;
 
@@ -103,6 +110,7 @@ class SubscriptionController extends GetxController {
         currentPayment.value = result;
         if (requiresOtp == true) {
           isOtpInitiated.value = true;
+          isOtpLocked.value = false;
         }
         debugPrint('SubscriptionController: Payment initiated - ${result.clientReferenceId}');
         return result;
@@ -125,26 +133,99 @@ class SubscriptionController extends GetxController {
 
   /// Confirm OTP for payment.
   Future<bool> confirmOtp(String clientReferenceId, String otp) async {
+    if (isOtpLocked.value) return false;
+
     try {
       isConfirmingOtp.value = true;
-      final success = await _provider.confirmOtp(clientReferenceId, otp);
+      final result = await _provider.confirmOtp(clientReferenceId, otp);
 
-      if (success) {
+      if (result != null && result.success) {
         // Start polling upon success
         startPolling(clientReferenceId);
         return true;
       } else {
-        if (Get.context != null) {
-          Dialogs.errorDialog(Get.context!, 'failed_to_confirm_otp'.tr);
+        String errorMessage = 'failed_to_confirm_otp'.tr;
+
+        if (result != null) {
+          if (result.errorCode == 'otp_attempts_exceeded') {
+            isOtpLocked.value = true;
+            errorMessage = 'otp_attempts_exceeded'.tr;
+          } else if (result.errorMessage != null && result.errorMessage!.isNotEmpty) {
+            final backendMsg = result.errorMessage!.toLowerCase();
+            if (result.errorCode == 'otp_confirmation_failed' && backendMsg.contains('locked')) {
+              isOtpLocked.value = true;
+              errorMessage = 'otp_locked_message'.tr;
+            } else if (result.errorCode == 'otp_confirmation_failed') {
+              final match = RegExp(r'(\d+)').firstMatch(result.errorMessage!);
+              if (match != null) {
+                final attempts = match.group(1);
+                errorMessage = 'otp_attempts_remaining'.tr.replaceAll('@attempts', attempts!);
+              } else {
+                errorMessage = result.errorMessage!;
+              }
+            } else {
+              errorMessage = result.errorMessage!;
+            }
+          }
         }
+
+        _showErrorDialog(errorMessage);
         return false;
       }
     } catch (e) {
       debugPrint('SubscriptionController: confirmOtp error: $e');
+      _showErrorDialog('failed_to_confirm_otp'.tr);
       return false;
     } finally {
       isConfirmingOtp.value = false;
     }
+  }
+
+  void _showErrorDialog(String message) {
+    if (Get.context == null) return;
+    if (Get.isDialogOpen == true) return;
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: Row(
+          children: [
+            const Icon(Icons.error_outline, color: ColorsManager.errorColor),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                'error'.tr,
+                style: getBoldStyle(
+                  color: ColorsManager.errorColor,
+                  fontSize: FontSizeManager.s16,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: Text(
+          message,
+          style: getRegularStyle(
+            color: ColorsManager.fontColor,
+            fontSize: FontSizeManager.s14,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text(
+              'ok'.tr,
+              style: getMediumStyle(
+                color: ColorsManager.mainColor,
+                fontSize: FontSizeManager.s14,
+              ),
+            ),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
+    );
   }
 
   /// Start polling for payment verification

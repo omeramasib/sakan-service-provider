@@ -556,15 +556,16 @@ class CashiPayPaymentView extends GetView<SubscriptionController> {
               ),
             )),
           ] else ...[
-            TextField(
+            Obx(() => TextField(
               key: const ValueKey('otp_code_input'),
               keyboardType: TextInputType.number,
               maxLength: 6,
               onChanged: (val) => controller.otpCode.value = val,
+              enabled: !controller.isOtpLocked.value,
               decoration: InputDecoration(
                 hintText: 'payment_enter_otp'.tr,
                 filled: true,
-                fillColor: ColorsManager.whiteColor,
+                fillColor: controller.isOtpLocked.value ? ColorsManager.lightGreyColor : ColorsManager.whiteColor,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(color: ColorsManager.borderColor),
@@ -577,11 +578,15 @@ class CashiPayPaymentView extends GetView<SubscriptionController> {
                   borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(color: ColorsManager.mainColor),
                 ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(color: ColorsManager.borderColor),
+                ),
               ),
-            ),
+            )),
             const SizedBox(height: 16),
             Obx(() => ElevatedButton(
-              onPressed: controller.isConfirmingOtp.value || controller.otpCode.value.length < 6
+              onPressed: controller.isConfirmingOtp.value || controller.otpCode.value.length < 6 || controller.isOtpLocked.value
                   ? null
                   : () {
                       controller.confirmOtp(payment.clientReferenceId, controller.otpCode.value);
@@ -610,6 +615,19 @@ class CashiPayPaymentView extends GetView<SubscriptionController> {
                       ),
                     ),
             )),
+            Obx(() => controller.isOtpLocked.value
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      'otp_attempts_exceeded'.tr,
+                      textAlign: TextAlign.center,
+                      style: getMediumStyle(
+                        fontSize: FontSizeManager.s14,
+                        color: ColorsManager.errorColor,
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink()),
           ],
         ],
       ),

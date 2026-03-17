@@ -582,6 +582,9 @@ const Map<String, String> enUS = {
   'cashi_otp_step_3': '3. Enter the 6-digit OTP code.',
   'cashi_otp_step_4': '4. After entering the correct OTP, your payment will be completed successfully.',
   'failed_to_confirm_otp': 'Failed to confirm OTP. Please try again.',
+  'otp_attempts_exceeded': 'Maximum OTP attempts exceeded. Payment request is permanently locked.',
+  'otp_attempts_remaining': 'OTP confirmation failed. @attempts attempt(s) remaining.',
+  'otp_locked_message': 'OTP confirmation failed. Payment request is now locked.',
 
   // Network error messages
   'network_error': 'Network Error',
