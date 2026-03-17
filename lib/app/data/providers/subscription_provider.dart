@@ -18,7 +18,7 @@ class SubscriptionProvider extends GetConnect {
   @override
   void onInit() {
     httpClient.baseUrl = HttpHelper.subscriptionBaseUrl;
-    httpClient.timeout = const Duration(seconds: 30);
+    httpClient.timeout = const Duration(seconds: 3);
     super.onInit();
   }
 
