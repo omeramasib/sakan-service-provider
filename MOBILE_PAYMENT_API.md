@@ -2,7 +2,14 @@
 
 ## Overview
 
-This document provides the complete API reference for integrating subscription payments in the Sakan mobile app (Flutter). The payment system uses YallaPay Sudan as the payment gateway.
+This document provides the complete API reference for integrating subscription payments in the Sakan mobile app (Flutter). The payment system supports **multiple gateways**:
+
+| Gateway   | Code      | Flow                    | Use case                          |
+|-----------|-----------|-------------------------|-----------------------------------|
+| **YallaPay** | `yallapay` | WebView (hosted checkout) | Open `payment_url` in WebView     |
+| **CashiPay** | `cashipay` | Reference / QR (optional OTP) | Show reference/QR; optionally confirm with OTP |
+
+Subscriptions activate only after payment is confirmed (via webhook or provider verification). The app should poll **Verify Payment** or wait for push notification after the user completes payment.
 
 ---
 
@@ -144,7 +151,7 @@ Authorization: Token <user_token>
 
 ### 3. Initiate Payment
 
-Start a new subscription payment. Returns a payment URL to open in WebView.
+Start a new subscription payment. Supports **YallaPay** (WebView) and **CashiPay** (reference/QR, optional OTP). Request body can include gateway and CashiPay options.
 
 **Endpoint:**
 ```
@@ -158,18 +165,44 @@ Content-Type: application/json
 ```
 
 **Request Body:**
+| Field                  | Type    | Required | Description |
+|------------------------|---------|----------|-------------|
+| `plan_id`              | integer | Yes      | Subscription plan ID from `/plans/` |
+| `payment_gateway`      | string  | No       | `yallapay` (default) or `cashipay` |
+| `wallet_account_number`| string  | No       | Required **only** when `payment_gateway` is `cashipay` **and** OTP mode is used |
+| `requires_otp`        | boolean | No       | If `true` and gateway is CashiPay, user will confirm payment with OTP; `wallet_account_number` is then required |
+
+**Example – YallaPay (default, backward compatible):**
 ```json
 {
     "plan_id": 1
 }
 ```
 
-**Response (200 OK):**
+**Example – CashiPay (reference flow, no OTP):**
+```json
+{
+    "plan_id": 1,
+    "payment_gateway": "cashipay"
+}
+```
+
+**Example – CashiPay with OTP:**
+```json
+{
+    "plan_id": 1,
+    "payment_gateway": "cashipay",
+    "requires_otp": true,
+    "wallet_account_number": "1234567890"
+}
+```
+
+**Response (200 OK) – YallaPay:**
 ```json
 {
     "success": true,
-    "payment_url": "https://gateway-dev.yallapaysudan.com/checkout/web/01KFRK2JHB239X9WXK50AKVH37",
-    "client_reference_id": "SUB1P13e050b9896f9",
+    "payment_url": "https://gateway.yallapaysudan.com/checkout/web/...",
+    "client_reference_id": "SUB1_P1_3e050b9896f9",
     "amount": 20000.0,
     "currency": "SDG",
     "plan_name": "Monthly Plan",
@@ -178,25 +211,100 @@ Content-Type: application/json
 }
 ```
 
+**Response (200 OK) – CashiPay:**
+```json
+{
+    "success": true,
+    "payment_gateway": "cashipay",
+    "payment_flow": "reference",
+    "client_reference_id": "SUB1_P1_abc123xyz",
+    "provider_reference": "2549702362",
+    "display_reference": "CASHI-2549702362",
+    "amount": 20000.0,
+    "currency": "SDG",
+    "plan_name": "Monthly Plan",
+    "status": "pending",
+    "expires_at": "2026-03-14T20:00:00Z",
+    "message": "Use display_reference or scan the QR code via MyCashi app or pay at any Cashi merchant location.",
+    "qr_code_data_url": "data:image/png;base64,...",
+    "qr_code_content": "https://www.getcashi.com/ScanAndPay?ref=cashipay|2549702362"
+}
+```
+Use `display_reference` (or `provider_reference`) and/or `qr_code_data_url` for the user to pay. If you used `requires_otp: true`, after the user pays, call **Confirm Payment** with the OTP, then **Verify Payment**.
+
 **Error Response (400):**
 ```json
 {
-    "error": "Invalid plan_id"
+    "wallet_account_number": ["Required when payment_gateway is cashipay and OTP mode is used."]
 }
 ```
 
 **Error Response (404):**
 ```json
 {
-    "error": "No Daklia found for this user"
+    "error": "No Daklia account found for this user"
 }
 ```
 
 ---
 
-### 4. Verify Payment Status
+### 4. Confirm Payment (CashiPay OTP only)
 
-Check if a subscription was successfully activated after payment.
+After the user enters the OTP received from CashiPay, call this endpoint. It does **not** mark the payment as completed; the backend sets status to `processing`. Subscription is activated only when the provider or webhook confirms (then use **Verify Payment** to get `completed`).
+
+Arabic + English OTP guidance for UI:
+
+- **AR:** ١. قم بإدخال رقم محفظة Cashi الخاصة بك.
+- **AR:** ٢. ستستلم رمز تحقق (OTP) عبر رسالة SMS.
+- **AR:** ٣. قم بإدخال رمز التحقق (OTP) المكون من 6 أرقام.
+- **AR:** ٤. بعد إدخال الرمز بشكل صحيح، سيتم إتمام عملية الدفع بنجاح.
+- **EN:** 1) Enter your Cashi wallet number.
+- **EN:** 2) You will receive a 6-digit OTP by SMS.
+- **EN:** 3) Enter the OTP to confirm payment.
+- **EN:** 4) After successful OTP validation, payment moves to processing/completed.
+
+**Endpoint:**
+```
+POST /api/v1/subscription/payment/confirm/
+```
+
+**Headers:**
+```
+Authorization: Token <user_token>
+Content-Type: application/json
+```
+
+**Request Body:**
+| Field                  | Type   | Required | Description |
+|------------------------|--------|----------|-------------|
+| `client_reference_id`  | string | Yes      | Value from initiate response |
+| `otp`                  | string | Yes      | OTP code from user/CashiPay |
+
+**Example:**
+```json
+{
+    "client_reference_id": "SUB1_P1_abc123xyz",
+    "otp": "123456"
+}
+```
+
+**Response (200 OK):**
+```json
+{
+    "success": true,
+    "message": "OTP confirmed. Payment is processing; subscription will activate after provider confirms.",
+    "client_reference_id": "SUB1_P1_abc123xyz",
+    "cashi_ref": "153106-29850086"
+}
+```
+
+**Error (400):** Invalid OTP or wrong gateway. **Error (404):** Transaction not found.
+
+---
+
+### 5. Verify Payment Status
+
+Check if a subscription was successfully activated after payment. Logic is **transaction-centric**: this endpoint validates the exact `client_reference_id` transaction; it does not mark payment completed based on unrelated old subscriptions. If the transaction is pending/processing, backend may query provider and return latest status.
 
 **Endpoint:**
 ```
@@ -209,39 +317,65 @@ Authorization: Token <user_token>
 ```
 
 **Query Parameters:**
-| Parameter | Required | Description |
-|-----------|----------|-------------|
-| `client_reference_id` | Yes | The order ID returned from initiate endpoint |
+| Parameter             | Required | Description |
+|-----------------------|----------|-------------|
+| `client_reference_id` | Yes      | Order ID returned from initiate endpoint |
 
-**Response (200 OK) - Payment Successful:**
+**Response (200 OK) – Payment completed:**
 ```json
 {
     "status": "completed",
     "subscription_active": true,
     "message": "Payment completed and subscription activated",
     "subscription": {
+        "subscription_id": 2,
         "subscription_type": "PAID",
         "status": "ACTIVE",
         "start_date": "2026-01-24T12:00:00Z",
         "end_date": "2026-02-24T12:00:00Z",
         "days_remaining": 30,
-        "plan_name": "Monthly Plan"
-    }
+        "plan_name": "Monthly Plan",
+        "plan_name_ar": "الباقة الشهرية"
+    },
+    "client_reference_id": "SUB1_P1_abc123xyz"
 }
 ```
 
-**Response (200 OK) - Payment Pending:**
+**Response (200 OK) – Payment pending/processing:**
 ```json
 {
     "status": "pending",
     "subscription_active": false,
-    "message": "Payment not yet confirmed. Please wait or try again."
+    "message": "Payment not yet confirmed. Please wait or try again.",
+    "client_reference_id": "SUB1_P1_abc123xyz"
+}
+```
+Poll this endpoint (e.g. every few seconds) until `status` is `completed` or you show a timeout.
+
+**Transaction not found (404):**
+```json
+{
+    "error": "Payment transaction not found",
+    "client_reference_id": "SUB1_P1_abc123xyz"
 }
 ```
 
 ---
 
-### 5. Get Subscription History
+### 5.1 CashiPay Provider APIs (Backend-managed)
+
+These are called by backend integration logic (not by the mobile app directly):
+
+- `GET {CASHIPAY_BASE_URL}/payment-requests/{referenceNumber}` (provider status verification)
+- `POST {CASHIPAY_BASE_URL}/payment-requests/{referenceNumber}/cancel` (cancel pending request)
+- `POST {CASHIPAY_BASE_URL}/payment-requests/payment-confirm` (OTP confirm with `referenceNumber`, `amount`, `otp`, `walletAccountNumber`)
+
+Mobile app should continue calling:
+
+- `/api/v1/subscription/payment/confirm/`
+- `/api/v1/subscription/payment/verify/`
+
+### 6. Get Subscription History
 
 Retrieve all subscription records for the authenticated user's Daklia.
 
@@ -313,16 +447,35 @@ class PaymentService {
     return SubscriptionStatus.fromJson(response);
   }
 
-  // Step 3: Initiate payment
-  Future<PaymentInitResult> initiatePayment(int planId) async {
+  // Step 3: Initiate payment (YallaPay default, or CashiPay with optional OTP)
+  Future<PaymentInitResult> initiatePayment(
+    int planId, {
+    String? paymentGateway,
+    bool requiresOtp = false,
+    String? walletAccountNumber,
+  }) async {
+    final body = <String, dynamic>{'plan_id': planId};
+    if (paymentGateway != null) body['payment_gateway'] = paymentGateway;
+    if (requiresOtp) body['requires_otp'] = true;
+    if (walletAccountNumber != null) body['wallet_account_number'] = walletAccountNumber;
+
     final response = await api.post(
       '/api/v1/subscription/payment/initiate/',
-      body: {'plan_id': planId},
+      body: body,
     );
     return PaymentInitResult.fromJson(response);
   }
 
-  // Step 4: Verify payment after WebView closes
+  // Step 4a: Confirm OTP (CashiPay only, when requires_otp was true)
+  Future<ConfirmResult> confirmPayment(String clientReferenceId, String otp) async {
+    final response = await api.post(
+      '/api/v1/subscription/payment/confirm/',
+      body: {'client_reference_id': clientReferenceId, 'otp': otp},
+    );
+    return ConfirmResult.fromJson(response);
+  }
+
+  // Step 4b: Verify payment (after WebView close or after OTP confirm / polling)
   Future<PaymentVerifyResult> verifyPayment(String clientReferenceId) async {
     final response = await api.get(
       '/api/v1/subscription/payment/verify/',
@@ -332,6 +485,8 @@ class PaymentService {
   }
 }
 ```
+
+**PaymentInitResult** should handle both gateway responses: `payment_url` for YallaPay; `provider_reference`, `payment_flow`, `qr_code_data_url`, `expires_at` for CashiPay.
 
 ### WebView Payment Screen
 
@@ -449,35 +604,32 @@ class _PaymentWebViewScreenState extends State<PaymentWebViewScreen> {
 }
 ```
 
-### Usage Example
+### Usage Example – YallaPay (WebView)
 
 ```dart
-// In your subscription screen
-void _subscribeToPlan(SubscriptionPlan plan) async {
+void _subscribeWithYallaPay(SubscriptionPlan plan) async {
+  setState(() => _isLoading = true);
   try {
-    // Show loading
-    setState(() => _isLoading = true);
-
-    // Initiate payment
     final initResult = await _paymentService.initiatePayment(plan.planId);
-
     if (!initResult.success) {
-      _showError('Failed to initiate payment');
+      _showError(initResult.error ?? 'Failed to initiate payment');
+      return;
+    }
+    if (initResult.paymentUrl == null) {
+      _showError('No payment URL returned');
       return;
     }
 
-    // Open WebView
     final paymentResult = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => PaymentWebViewScreen(
-          paymentUrl: initResult.paymentUrl,
-          clientReferenceId: initResult.clientReferenceId,
+          paymentUrl: initResult.paymentUrl!,
+          clientReferenceId: initResult.clientReferenceId!,
         ),
       ),
     );
 
-    // Handle result
     if (paymentResult != null && paymentResult['success'] == true) {
       _showSuccess('Subscription activated successfully!');
       _refreshSubscriptionStatus();
@@ -494,9 +646,66 @@ void _subscribeToPlan(SubscriptionPlan plan) async {
 }
 ```
 
+### Usage Example – CashiPay (reference / QR ± OTP)
+
+```dart
+void _subscribeWithCashiPay(SubscriptionPlan plan, {bool useOtp = false, String? walletNumber}) async {
+  setState(() => _isLoading = true);
+  try {
+    final initResult = await _paymentService.initiatePayment(
+      plan.planId,
+      paymentGateway: 'cashipay',
+      requiresOtp: useOtp,
+      walletAccountNumber: walletNumber,
+    );
+    if (!initResult.success) {
+      _showError(initResult.error ?? 'Failed to initiate payment');
+      return;
+    }
+
+    // Show UI: provider_reference, qr_code_data_url (if present), expiry
+    // User pays via bank/app using reference or QR.
+    if (useOtp) {
+      // Show OTP input dialog; then:
+      final otp = await _showOtpDialog();
+      if (otp == null) return;
+      await _paymentService.confirmPayment(initResult.clientReferenceId!, otp);
+    }
+
+    // Poll verify until completed or timeout
+    final verified = await _pollVerify(initResult.clientReferenceId!);
+    if (verified) {
+      _showSuccess('Subscription activated successfully!');
+      _refreshSubscriptionStatus();
+    } else {
+      _showMessage('Payment still processing. Check back later.');
+    }
+  } catch (e) {
+    _showError('Error: $e');
+  } finally {
+    setState(() => _isLoading = false);
+  }
+}
+
+Future<bool> _pollVerify(String clientReferenceId) async {
+  for (var i = 0; i < 30; i++) {
+    await Future.delayed(Duration(seconds: 2));
+    final result = await _paymentService.verifyPayment(clientReferenceId);
+    if (result.status == 'completed' && result.subscriptionActive) return true;
+  }
+  return false;
+}
+```
+
 ---
 
 ## Models
+
+### PaymentInitResult (initiate response)
+
+Handle both gateways. Common fields: `success`, `client_reference_id`, `amount`, `currency`, `plan_name`, `message`.  
+**YallaPay:** `payment_url`, `instructions`.  
+**CashiPay:** `payment_gateway` (`"cashipay"`), `payment_flow` (`"reference"`), `provider_reference`, `display_reference`, `qr_code_data_url`, `qr_code_content`, `expires_at`, `status` (`"pending"`).
 
 ### SubscriptionPlan
 
@@ -571,13 +780,15 @@ class SubscriptionStatus {
 | Status Code | Error | Description |
 |-------------|-------|-------------|
 | 401 | `Invalid token` | Authentication token is missing or invalid |
-| 404 | `No Daklia found` | User doesn't have a Daklia account |
-| 400 | `Invalid plan_id` | Plan ID doesn't exist or is inactive |
-| 400 | `Active subscription exists` | User already has an active subscription |
-| 500 | `Failed to create payment` | YallaPay gateway error |
+| 404 | `No Daklia account found` | User doesn't have a Daklia account |
+| 400 | `Invalid plan_id` / serializer errors | Plan ID invalid or validation failed (e.g. wallet required for CashiPay OTP) |
+| 400 | `OTP confirmation failed` | Invalid OTP or confirm only for CashiPay |
+| 404 | `Payment transaction not found` | client_reference_id not found on confirm/verify |
+| 4xx/5xx | `Failed to create payment` | Gateway validation/upstream errors are returned with provider status when available |
 
 ### Error Response Format
 
+Standard errors return:
 ```json
 {
     "error": "Error message here",
@@ -585,39 +796,140 @@ class SubscriptionStatus {
 }
 ```
 
+**CashiPay OTP Confirmation Errors (`/confirm-payment/`)**:
+For OTP confirmation failures, the endpoint returns a nested `error` object so clients can distinguish between remaining attempts and lockout states.
+
+```json
+{
+    "status": "error",
+    "error": {
+        "code": "otp_confirmation_failed",
+        "message": "OTP confirmation failed. 2 attempt(s) remaining."
+    }
+}
+```
+
+Common OTP Error Codes:
+- `otp_confirmation_failed`: Invalid OTP. Look at `message` to see if it's the 1st/2nd wrong attempt or if it just reached the 3rd wrong attempt (e.g., `"OTP confirmation failed. Payment request is now locked."`).
+- `otp_attempts_exceeded`: Returned from the 4th attempt onward, indicating the transaction is permanently locked.
+
+---
+
+## WebView Payment Detection
+
+### How Payment Status Detection Works
+
+After the user completes (or cancels) payment on YallaPay, they are redirected to our success/failure URLs. The WebView can detect this in several ways:
+
+### Method 1: URL Detection (Recommended)
+
+The WebView should monitor navigation and detect when the URL contains:
+- **Success**: `/payment/success`
+- **Failure**: `/payment/failure`
+
+```dart
+NavigationDelegate(
+  onNavigationRequest: (request) {
+    if (request.url.contains('/payment/success')) {
+      _handlePaymentSuccess();
+      return NavigationDecision.prevent;
+    }
+    if (request.url.contains('/payment/failure')) {
+      _handlePaymentFailure();
+      return NavigationDecision.prevent;
+    }
+    return NavigationDecision.navigate;
+  },
+)
+```
+
+### Method 2: JavaScript Channel
+
+The success/failure pages include JavaScript that posts messages to Flutter:
+
+```dart
+// Add JavaScript channel to WebViewController
+_controller.addJavaScriptChannel(
+  'PaymentSuccess',
+  onMessageReceived: (message) {
+    final data = jsonDecode(message.message);
+    if (data['status'] == 'success') {
+      _handlePaymentSuccess();
+    }
+  },
+);
+
+_controller.addJavaScriptChannel(
+  'PaymentFailure',
+  onMessageReceived: (message) {
+    final data = jsonDecode(message.message);
+    _handlePaymentFailure();
+  },
+);
+```
+
+### Success Page Response
+
+When payment succeeds, user is redirected to:
+```
+https://sakan-sd.com/api/v1/subscription/payment/success/
+```
+
+The page displays:
+- Success icon and message
+- Arabic translation
+- Hidden data element with status
+
+### Failure Page Response
+
+When payment fails, user is redirected to:
+```
+https://sakan-sd.com/api/v1/subscription/payment/failure/
+```
+
+The page displays:
+- Failure icon and message
+- Error details
+- Arabic translation
+
 ---
 
 ## Testing
 
 ### Test Credentials
 
-For development/testing, use the YallaPay sandbox:
-- Gateway URL: `https://gateway-dev.yallapaysudan.com`
-- Use test card numbers provided by YallaPay
+- **YallaPay:** Use sandbox (e.g. `https://gateway-dev.yallapaysudan.com`) and test cards from YallaPay.
+- **CashiPay:** Use test credentials and base URL provided by CashiPay.
 
-### Test Flow
+### Test Flow – YallaPay
 
-1. Call `/api/v1/subscription/plans/` to get available plans
-2. Call `/api/v1/subscription/payment/initiate/` with a plan_id
-3. Open the returned `payment_url` in a WebView
-4. Complete payment using test credentials
-5. After redirect, call `/api/v1/subscription/payment/verify/` to confirm
+1. `GET /api/v1/subscription/plans/` to get plans.
+2. `POST /api/v1/subscription/payment/initiate/` with `{"plan_id": 1}` (defaults to YallaPay).
+3. Open returned `payment_url` in a WebView.
+4. Complete payment; WebView detects redirect to `/payment/success` or `/payment/failure`.
+5. Call `GET /api/v1/subscription/payment/verify/?client_reference_id=...` to confirm subscription activation.
+
+### Test Flow – CashiPay
+
+1. Same plans and initiate with `{"plan_id": 1, "payment_gateway": "cashipay"}`.
+2. Show user `provider_reference` and/or `qr_code_data_url`; user pays via bank/app.
+3. If OTP was used: collect OTP, call `POST /api/v1/subscription/payment/confirm/` with `client_reference_id` and `otp`.
+4. Poll `GET /api/v1/subscription/payment/verify/?client_reference_id=...` until `status` is `completed` or timeout.
 
 ---
 
-## Webhook (Backend Only)
+## Webhooks (Backend Only)
 
-The backend automatically receives payment notifications via webhook:
+The backend receives payment notifications from each gateway. The mobile app does not call these; they are used to activate subscriptions when the provider confirms payment.
 
-```
-POST /api/v1/subscription/payment/webhook/
-```
-
-This is handled server-to-server by YallaPay. The mobile app doesn't need to interact with this endpoint.
+| Gateway   | Webhook URL |
+|-----------|-------------|
+| YallaPay  | `POST /api/v1/subscription/payment/webhook/` or `POST /api/v1/subscription/payment/webhook/yallapay/` |
+| CashiPay  | `POST /api/v1/subscription/payment/webhook/cashipay/` |
 
 ---
 
 ## Support
 
-For API issues, contact the backend team.
-For payment gateway issues, contact YallaPay Sudan support.
+For API issues, contact the backend team.  
+For gateway-specific issues: YallaPay Sudan support (YallaPay); CashiPay support (CashiPay).

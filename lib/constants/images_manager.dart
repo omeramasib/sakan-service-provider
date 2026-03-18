@@ -99,5 +99,7 @@ class ImagesManager {
   static const String edit_profile_icon =
       'assets/images/edit-profile-Filled.svg';
   static const String subscription = 'assets/images/subscription-icon.png';
+  static const String bravoLogo = 'assets/images/bravo_logo.png';
+  static const String cashiLogo = 'assets/images/cashi_logo.png';
   // static const String number = 'aassets/images/booking_number.svg';
 }

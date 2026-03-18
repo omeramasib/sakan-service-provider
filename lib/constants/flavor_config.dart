@@ -44,7 +44,7 @@ class FlavorConfig {
         _instance = FlavorConfig._internal(
           flavor: flavor,
           name: 'Development',
-          //baseUrl: 'https://lobster-app-aqlvh.ondigitalocean.app',
+          // baseUrl: 'http://10.0.2.2:8000',
           baseUrl: 'https://clavately-fidgety-nina.ngrok-free.dev',
         );
         break;

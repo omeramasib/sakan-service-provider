@@ -24,7 +24,9 @@ abstract class Routes {
   static const EDIT_MULTIPLE_ROOM = _Paths.EDIT_MULTIPLE_ROOM;
   static const EDIT_ROOM_FEATURE = _Paths.EDIT_ROOM_FEATURE;
   static const SUBSCRIPTION_PLANS = _Paths.SUBSCRIPTION_PLANS;
+  static const CASHIPAY_PAYMENT = _Paths.CASHIPAY_PAYMENT;
   static const PAYMENT_WEBVIEW = _Paths.PAYMENT_WEBVIEW;
+  static const PAYMENT_SUCCESS = _Paths.PAYMENT_SUCCESS;
 }
 
 abstract class _Paths {
@@ -50,5 +52,7 @@ abstract class _Paths {
   static const EDIT_MULTIPLE_ROOM = '/edit-multiple-room';
   static const EDIT_ROOM_FEATURE = '/edit-room-feature';
   static const SUBSCRIPTION_PLANS = '/subscription-plans';
+  static const CASHIPAY_PAYMENT = '/cashipay-payment';
   static const PAYMENT_WEBVIEW = '/payment-webview';
+  static const PAYMENT_SUCCESS = '/payment-success';
 }

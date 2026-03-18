@@ -45,5 +45,6 @@ class HttpHelper {
   static const subscriptionStatus = '/status/';
   static const subscriptionPaymentInitiate = '/payment/initiate/';
   static const subscriptionPaymentVerify = '/payment/verify/';
+  static const subscriptionPaymentConfirm = '/payment/confirm/';
   static const subscriptionHistory = '/history/';
 }
