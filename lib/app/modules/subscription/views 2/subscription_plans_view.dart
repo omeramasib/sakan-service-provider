@@ -7,7 +7,7 @@ import 'package:sakan/constants/responsive_helper.dart';
 import 'package:sakan/constants/values_manager.dart';
 import 'package:sakan/widgets/responsive_builder.dart';
 import '../controllers/subscription_controller.dart';
-import 'payment_webview_view.dart';
+
 
 class SubscriptionPlansView extends GetView<SubscriptionController> {
   const SubscriptionPlansView({Key? key}) : super(key: key);
@@ -385,44 +385,17 @@ class SubscriptionPlansView extends GetView<SubscriptionController> {
   }
 
   void _handleSubscribe(BuildContext context, int planId) async {
-    final result = await controller.initiatePayment(planId);
+    // Store the selected plan ID in controller for the CashiPay flow
+    controller.selectedPlanId.value = planId;
 
-    if (result != null && result.success) {
-      // Navigate to WebView for payment
-      final paymentResult = await Get.to<Map<String, dynamic>>(
-        () => PaymentWebViewView(
-          paymentUrl: result.paymentUrl,
-          clientReferenceId: result.clientReferenceId,
-        ),
-      );
+    // Navigate to CashiPay payment view (new payment flow)
+    await Get.toNamed('/cashipay-payment');
 
-      // Handle payment result - WebView closed
-      if (paymentResult != null && paymentResult['success'] == true) {
-        // Payment successful - refresh subscription data
-        debugPrint('💳 Payment successful, refreshing subscription data...');
-
-        // Refresh both status and plans to update UI
-        await Future.wait([
-          controller.loadStatus(),
-          controller.loadPlans(),
-        ]);
-
-        // Show success message after refresh
-        Get.snackbar(
-          'success'.tr,
-          'subscription_activated'.tr,
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: ColorsManager.successStyleColor,
-          colorText: ColorsManager.whiteColor,
-          duration: const Duration(seconds: 3),
-        );
-
-        debugPrint('✅ Subscription page updated with new status');
-      } else if (paymentResult != null && paymentResult['cancelled'] == true) {
-        // User cancelled payment
-        debugPrint('❌ Payment cancelled by user');
-      }
-    }
+    // After returning, refresh subscription data in case payment succeeded
+    await Future.wait([
+      controller.loadStatus(),
+      controller.loadPlans(),
+    ]);
   }
 
   String _formatDate(DateTime date) {
