@@ -48,6 +48,11 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.body}');
 
+      if (response.statusCode == 401) {
+        await SecureStorageService.handleUnauthorized();
+        return null;
+      }
+
       if (response.statusCode == 200 && response.body != null) {
         final data = response.body as Map<String, dynamic>;
         final plansList = data['plans'] as List<dynamic>? ?? [];
@@ -78,6 +83,11 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('SubscriptionProvider: getStatus response');
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.body}');
+
+      if (response.statusCode == 401) {
+        await SecureStorageService.handleUnauthorized();
+        return null;
+      }
 
       if (response.statusCode == 200 && response.body != null) {
         return SubscriptionStatusModel.fromJson(
@@ -122,6 +132,11 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.bodyString ?? response.body}');
 
+      if (response.statusCode == 401) {
+        await SecureStorageService.handleUnauthorized();
+        return null;
+      }
+
       if (response.statusCode == 200 && response.body != null) {
         return SubscriptionPaymentInitModel.fromJson(
             response.body as Map<String, dynamic>);
@@ -158,6 +173,11 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.bodyString ?? response.body}');
 
+      if (response.statusCode == 401) {
+        await SecureStorageService.handleUnauthorized();
+        return null;
+      }
+
       if (response.body != null) {
         return SubscriptionOtpConfirmModel.fromJson(response.body as Map<String, dynamic>);
       }
@@ -185,6 +205,11 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.body}');
 
+      if (response.statusCode == 401) {
+        await SecureStorageService.handleUnauthorized();
+        return null;
+      }
+
       if (response.statusCode == 200 && response.body != null) {
         return SubscriptionPaymentVerifyModel.fromJson(
             response.body as Map<String, dynamic>);
@@ -211,6 +236,11 @@ class SubscriptionProvider extends GetConnect {
       debugPrint('SubscriptionProvider: getHistory response');
       debugPrint('Status: ${response.statusCode}');
       debugPrint('Body: ${response.body}');
+
+      if (response.statusCode == 401) {
+        await SecureStorageService.handleUnauthorized();
+        return null;
+      }
 
       if (response.statusCode == 200 && response.body != null) {
         return SubscriptionHistoryModel.fromJson(

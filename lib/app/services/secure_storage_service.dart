@@ -1,4 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import '../routes/app_pages.dart';
 
 /// Secure storage service for storing sensitive data like tokens and user info.
 /// This is a singleton service that wraps FlutterSecureStorage.
@@ -49,6 +52,30 @@ class SecureStorageService {
   /// Delete all values from secure storage
   Future<void> deleteAll() async {
     await _storage.deleteAll();
+  }
+
+  static bool _isHandlingUnauthorized = false;
+
+  /// Handle 401 Unauthorized error globally
+  static Future<void> handleUnauthorized() async {
+    if (_isHandlingUnauthorized) {
+      debugPrint('🚨 handleUnauthorized: Already processing a redirect, skipping duplicate.');
+      return;
+    }
+    _isHandlingUnauthorized = true;
+
+    try {
+      debugPrint('🚨 handleUnauthorized: Token invalidated. Clearing storage and redirecting to Login...');
+      await instance.deleteAll();
+      debugPrint('🚨 handleUnauthorized: Storage cleared. Executing navigation to Routes.AUTH...');
+      Get.offAllNamed(Routes.AUTH, arguments: 0);
+    } catch (e) {
+      debugPrint('🚨 handleUnauthorized error: $e');
+    } finally {
+      // Intentionally not resetting _isHandlingUnauthorized to true/false in a loop 
+      // because we are navigating away forever. But safe to leave as-is.
+      _isHandlingUnauthorized = false;
+    }
   }
 
   /// Check if a key exists in secure storage
