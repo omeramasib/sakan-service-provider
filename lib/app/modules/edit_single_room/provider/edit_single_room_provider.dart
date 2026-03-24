@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -48,47 +48,41 @@ class EditSingleRoomProvider extends GetConnect {
       int statusCode;
       String responseString;
 
-      if (image.path == '') {
-        var response = await http.put(
-          Uri.parse(
-              '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/'),
-          headers: {
-            "authorization": "Token $token",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-          body: json.encode({
-            'room_number': roomNumber.toString(),
-            'num_Available_Beds': numberOfAvailableBeds.toString(),
-            'daily_booking': dailyBooking.toString(),
-            'monthly_booking': monthlyBooking.toString(),
-            'price_per_day': pricePerDay.toString(),
-            'price_per_month': pricePerMonth.toString(),
-          }),
-        );
-        statusCode = response.statusCode;
-        responseString = response.body;
-      } else {
-        var request = http.MultipartRequest(
-          'PUT',
-          Uri.parse(
-              '${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/'),
-        );
-        request.headers["authorization"] = "Token $token";
+      var request = http.MultipartRequest(
+        'PUT',
+        Uri.parse('${HttpHelper.baseUrl2}/$dakliaId${HttpHelper.rooms}$roomId/'),
+      );
+      request.headers['authorization'] = 'Token $token';
+      request.fields['room_number'] = roomNumber.toString();
+      request.fields['num_Available_Beds'] = numberOfAvailableBeds.toString();
+      request.fields['daily_booking'] = dailyBooking.toString();
+      request.fields['monthly_booking'] = monthlyBooking.toString();
+      request.fields['price_per_day'] = pricePerDay.toString();
+      request.fields['price_per_month'] = pricePerMonth.toString();
+
+      if (image.path != '') {
         request.files
             .add(await http.MultipartFile.fromPath('room_image', image.path));
-        request.fields['room_number'] = roomNumber.toString();
-        request.fields['num_Available_Beds'] = numberOfAvailableBeds.toString();
-        request.fields['daily_booking'] = dailyBooking.toString();
-        request.fields['monthly_booking'] = monthlyBooking.toString();
-        request.fields['price_per_day'] = pricePerDay.toString();
-        request.fields['price_per_month'] = pricePerMonth.toString();
-
-        var response = await request.send();
-        var responseData = await response.stream.toBytes();
-        responseString = String.fromCharCodes(responseData);
-        statusCode = response.statusCode;
       }
+
+      debugPrint('========== [editSingleRoom] MULTIPART REQUEST ==========');
+      debugPrint('URL: ${request.url}');
+      debugPrint('Method: PUT');
+      debugPrint('Headers: ${request.headers}');
+      debugPrint('Fields: ${request.fields}');
+      debugPrint('Files: ${request.files.map((f) => '${f.field}: ${f.filename} (${f.length} bytes)').toList()}');
+      debugPrint('=========================================================');
+
+      var streamedResponse = await request.send();
+      var responseData = await streamedResponse.stream.toBytes();
+      responseString = String.fromCharCodes(responseData);
+      statusCode = streamedResponse.statusCode;
+
+      debugPrint('========== [editSingleRoom] MULTIPART RESPONSE ==========');
+      debugPrint('Status: $statusCode');
+      debugPrint('Response headers: ${streamedResponse.headers}');
+      debugPrint('Body: ${responseString.length > 2000 ? responseString.substring(0, 2000) : responseString}');
+      debugPrint('==========================================================');
 
       log('this is the status code: $statusCode');
       log('this is the raw response: $responseString');

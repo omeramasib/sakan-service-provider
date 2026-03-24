@@ -385,7 +385,7 @@ class SubscriptionPlansView extends GetView<SubscriptionController> {
   }
 
   void _handleSubscribe(BuildContext context, int planId) async {
-    final result = await controller.initiatePayment(planId);
+    final result = await controller.initiatePayment(planId, 'yallapay');
 
     if (result != null && result.success) {
       // Navigate to WebView for payment
