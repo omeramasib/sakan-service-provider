@@ -19,7 +19,8 @@ class SubscriptionProvider extends GetConnect {
   @override
   void onInit() {
     httpClient.baseUrl = HttpHelper.subscriptionBaseUrl;
-    httpClient.timeout = const Duration(seconds: 3);
+    // Payment initiate calls the gateway; 3s caused null status/body (client timeout in GetConnect).
+    httpClient.timeout = const Duration(seconds: 60);
     super.onInit();
   }
 
@@ -120,11 +121,26 @@ class SubscriptionProvider extends GetConnect {
 
       debugPrint('SubscriptionProvider: initiatePayment response');
       debugPrint('Status: ${response.statusCode}');
+      debugPrint('StatusText: ${response.statusText}');
       debugPrint('Body: ${response.bodyString ?? response.body}');
 
-      if (response.statusCode == 200 && response.body != null) {
-        return SubscriptionPaymentInitModel.fromJson(
+      if (response.statusCode == null) {
+        debugPrint(
+            'SubscriptionProvider: initiatePayment failed (no HTTP status — likely timeout or network). '
+            'See StatusText above.');
+        return null;
+      }
+
+      final code = response.statusCode!;
+      if (response.body is Map<String, dynamic>) {
+        final model = SubscriptionPaymentInitModel.fromJson(
             response.body as Map<String, dynamic>);
+        if (code >= 200 && code < 300) {
+          return model;
+        }
+        debugPrint(
+            'SubscriptionProvider: initiatePayment HTTP $code: ${response.body}');
+        return model;
       }
 
       return null;
